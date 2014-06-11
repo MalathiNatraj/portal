@@ -1,0 +1,59 @@
+﻿@model Diebold.WebApp.Models.UserViewModel
+@{
+    ViewBag.Title = "Create User";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    ViewBag.IsEdit = true;
+}
+
+<script type="text/javascript">
+
+     $(document).ready(function () {
+         $('form').submit(function (event) {
+             event.preventDefault();
+             if ($(this).valid()) {
+                 $(".validation-summary-errors").attr("style", "display:none");
+
+                 var url = '@Url.Action("UpdateUserInfo", "User")';
+                 var data = $(this).serialize();
+
+                 $.post(url, data, "application/html; charset=utf-8")
+                            .done(function (response) {
+                                if (response.success == true) {
+                                    var editUri = '@Url.Action("../User/UserDetails")';
+                                    location.href = editUri;
+                                }
+                                else {
+                                    $("#divErrorInfo").attr("style", "");
+                                    $("#lblErrorInfo").text(response.ErrorMsg);
+                                    alert(response.ErrorMsg);
+                                    errorList.push(response.ErrorMsg);
+                                }
+                                
+                            })
+                            .fail(function (response) {                                
+                                $("#divErrorInfo").attr("style", "");
+                                $("#lblErrorInfo").text(data.ErrorMsg);
+                            });
+             }
+         });
+     });   
+   
+
+     function customValidator() {
+         var errorList = [];
+         if ($(".preferredContact:checked").length == 0) {
+             errorList.push('The preferred contact field is required.');
+         }
+         return errorList;
+     }
+         
+    </script>
+@using (Html.BeginForm())
+{
+<div class="tSpace">
+</div>
+<div id="dvEditUserTitle" class="pallette-detail-header-bg">
+    <p>Edit User</p>
+</div>
+@Html.Partial("_UserInfo")
+}

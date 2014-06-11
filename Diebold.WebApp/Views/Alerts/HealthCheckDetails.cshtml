@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "HealthCheckDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div style="border-color: Gray; border-style: double" class="k-content">
+ <div id="dvHcTitle" class="pallette-detail-header-bg gradient"><p>Health Check Details</p></div><br/>
+<div style = "width:350px; padding-left:305px;"> 
+<div class="chart-wrapper">
+    @(Html.Kendo().Chart()
+        .Name("rptHealth")
+                .Title("Health")     
+        .Legend(legend => legend
+            .Position(ChartLegendPosition.Bottom) 
+        )
+        .Series(series =>
+        {
+            series.Column(new int[] { 4, 2, 1, 3 }).Name("Severity");
+            series.Column(new int[] { 3, 2, 1, 2 }).Name("Normal");
+        })
+        .CategoryAxis(axis => axis
+                        .Categories("02-Nov", "9-Nov", "16-Nov", "23-Nov")
+        )
+        .ValueAxis(axis => axis
+            .Numeric().Labels(labels => labels.Format("{0}"))
+            .Title( "NO.Of Alerts")
+        )
+                   
+        .Tooltip(tooltip => tooltip
+        .Visible(true)
+        .Format("{0}")
+        )
+    ) 
+</div>
+</div>
+</div>

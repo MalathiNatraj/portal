@@ -1,0 +1,111 @@
+﻿@using System.Text.RegularExpressions
+@using Diebold.WebApp.Infrastructure.Helpers
+@model Diebold.WebApp.Models.AlarmConfigurationViewModel
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = string.Format("Alarms{0}", ViewData.TemplateInfo.HtmlFieldPrefix);
+}
+<tr>
+    <td style="display: none">
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.DeviceId)
+        @Html.HiddenFor(model => model.AlarmType)
+        @Html.HiddenFor(model => model.DeviceType)
+        @Html.HiddenFor(model => model.DataType)
+        @Html.HiddenFor(model => model.CompanyId)
+    </td>
+    <td>
+        @{
+            if (Regex.IsMatch(@Model.AlarmType, @"^[A-Z]+$"))
+            {
+            @Html.Label(@Model.AlarmType)
+            }
+            else
+            {
+            @Html.Label(Regex.Replace(@Model.AlarmType, "([A-Z])", " $1", RegexOptions.Compiled).Trim());
+            }
+        }
+    </td>
+    <td>
+        @(Html.Kendo().ComboBoxFor(p => p.Severity)
+                .DataTextField("Text")
+                .DataValueField("Value")
+                .BindTo(Model.AvailableAlarmSeverities)
+                .SelectedIndex(1)
+                        .HtmlAttributes(new { style = "width:99%" })
+            )
+    </td>
+    <td>
+        @switch (@Model.DataType.ToLower())
+        {
+            case "integer":
+                {
+            @(Html.Kendo().ComboBoxFor(p => p.Operator)
+                        .DataTextField("Text")
+                        .DataValueField("Value")
+                        .BindTo(Model.AvailableAlarmOperators)
+                        .SelectedIndex(2)
+                              .HtmlAttributes(new { style = "width:99%" })
+                    )
+                }
+                break;
+
+            case "string":
+                {
+            @(Html.Kendo().ComboBoxFor(p => p.Operator)
+                        .DataTextField("Text")
+                        .DataValueField("Value")
+                        .BindTo(Model.AvailableAlarmOperators)
+                        .SelectedIndex(1)
+                              .HtmlAttributes(new { style = "width:99%" })
+                    )
+                }
+                break;
+            default:
+                {
+            @Html.HiddenFor(p => p.Operator)
+                }
+                break;
+        }
+    </td>
+    <td>
+        @switch (@Model.DataType.ToLower())
+        {
+            case "integer":
+            case "string":
+                {
+            <div class="alrt-config-threshold-txtbx">
+                @Html.TextBoxFor(model => model.Threshold, new { @class = "tbl-ctrl-width" })
+            </div>
+                }
+                break;
+            default:
+                {
+            @Html.HiddenFor(model => model.Threshold)
+                }
+                break;
+        }
+    </td>
+    <td>
+        @Html.CheckBoxFor(model => model.Email)
+        @Html.LabelFor(model => model.Email)
+        @Html.CheckBoxFor(model => model.Emc)
+        @Html.LabelFor(model => model.Emc)
+        @Html.CheckBoxFor(model => model.Log)
+        @Html.LabelFor(model => model.Log)
+        @Html.CheckBoxFor(model => model.Ack)
+        @Html.LabelFor(model => model.Ack)
+        @Html.CheckBoxFor(model => model.Display)
+        @Html.LabelFor(model => model.Display)
+    </td>
+</tr>
+<style>
+    .alrt-config-threshold-txtbx
+    {
+        border: 1px solid;
+        border-color: #C5C5C5;
+    }
+    .tbl-ctrl-width
+    {
+        width: 99%;
+    }
+</style>

@@ -1,0 +1,168 @@
+﻿@{
+    Layout = null;
+    var md5homejsValue = Md5Generator.getMD5Code("/Scripts/home.js");
+    var md5homecssValue = Md5Generator.getMD5Code("/Content/home.css");
+}
+@using Diebold.WebApp.Infrastructure.Helpers;
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <title>Diebold SecureStat</title>
+
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/style.css")" />
+     <!--[if gte IE 9]>
+        <link rel="stylesheet" type="text/css" href="css/gradient-ie6-and-up.css" />
+	<![endif]-->
+    
+    <link href="@Url.Content("~/Content/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="@Url.Content("~/Content/kendo.common.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/kendo.default.min.css")" />
+    <link href="@Url.Content("~/Content/BlockUIForms.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/base/jquery.ui.theme.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/base/jquery.ui.core.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/base/jquery.ui.dialog.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/ie7.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/style.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/base/jquery.ui.resizable.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/jquery.bsmselect.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/chosen.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/home.css?v=" + @md5homecssValue)" rel="stylesheet" type="text/css" />   
+
+    <script src="@Url.Content("~/Scripts/jquery.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/knockout-2.3.0.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/underscore-min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.dataviz.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.aspnetmvc.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.web.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.16.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/nav/multilevel.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/nav/responder.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/nav/slider.js")" type="text/javascript"></script>
+    <!-- script src="https://maps.googleapis.com/maps/api/js?key=NXEs8LPU6tK2vadETfDyY_NWs-A=&sensor=false&libraries=weather,visualization" type="text/javascript"></!-->
+    <script src="https://maps.googleapis.com/maps/api/js?client=gme-dieboldincorporated1&sensor=false&v=3.14&libraries=weather,visualization" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.blockUI.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/BlockUIForms.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.dataviz.chart.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.dataviz.svg.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.dataviz.themes.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.dataviz.vml.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/slides.min.jquery.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.uniform.js")" type="text/javascript" charset="utf-8"></script>
+    <script src="@Url.Content("~/Scripts/jquery.bsmselect.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/chosen.jquery.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.modal.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/main.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/intrusion.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/monitoring.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/devices.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/access.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/CascadingDropDown.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/Common.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/home.js?v="+@md5homejsValue)" type="text/javascript"></script>
+</head>
+<body id="mainBody">
+    <div id="mainContainer">
+        <div class="row">
+            <div class="sixteen columns">
+                <header>
+                    <!--Top Navigation Buttons Starts-->
+                    <div class="row head-bg gradient">
+                        <div class="five columns logo">
+                            <a href="http://www.diebold.com/dnpssec/default.htm" target="_blank">DIEBOLD</a>
+                        </div>
+                        <div class="eleven columns top-nav" align="center">
+                            <ul>
+                                <li><a href="@Url.Content("~/Preferences/DisplayPreferences")" title="Preferences"><img src="@Url.Content("~/Content/images/top-nav-sett-icon.png")" alt="Settings"/></a></li>
+                                <li><a href="@Url.Content("~/Account/LogOff")" title="Logout"><img src="@Url.Content("~/Content/images/top-nav-logout-icon.png")" alt="Logout" /></a></li>
+                                <li><a href="http://www.diebold.com/gsseemcsol/support.htm" target="_blank" title="Help"><img src="@Url.Content("~/Content/images/top-nav-help-icon.png")" alt="Help"/></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--Top Navigation Buttons Ends-->
+                     <!--Menu Items Starts-->
+                       @Html.Partial("_ActionsMenu")   
+                    <!--Menu Items Ends-->
+                </header>
+                <section >
+                	<article>
+                        <div id="contentWell" class="row body-bg">
+        	                 @RenderBody()
+                        </div>  
+                    </article>
+                </section>     
+                <!-- FOOTER STARTS HERE -->
+                <footer>
+                    <div class="row footer">
+        
+                        <div class="four columns">
+                            <div class="foot-logo" align="left">
+                                <a href="http://www.diebold.com/dnpssec/default.htm" target="_blank"><img src="@Url.Content("~/Content/images/footer-logo.png")" alt="" /></a>
+                            </div>
+                            <div class="foot-copy-bg" align="center">
+                                <p>&copy; 2013 Diebold, Inc.&nbsp;&nbsp;
+                                 @*<a href="@Url.Content("~/TermsandConditions/TermsandConditions")" target="_blank">Terms and Conditions</a>&nbsp;&nbsp;*@
+                                 <a href="@Url.Content("~/TermsofUse/TermsofUse")" target="_self">Terms of Use</a>
+                                </p>
+                            </div>
+                        </div>
+        
+                        <div class="eight columns">
+                        </div>
+        
+                        <div class="four columns top-nav" align="center">
+                            <ul>
+                                <li><a href="@Url.Content("~/Preferences/DisplayPreferences")" title="Preferences"><img src="@Url.Content("~/Content/images/top-nav-sett-icon.png")" alt="Settings" /></a></li>
+                                <li><a href="@Url.Content("~/Account/LogOff")" title="Logout"><img src="@Url.Content("~/Content/images/top-nav-logout-icon.png")" alt="Logout" /></a></li>
+                                <li><a href="http://www.diebold.com/gsseemcsol/support.htm" target="_blank" title="Help"><img src="@Url.Content("~/Content/images/top-nav-help-icon.png")" alt="Help"/></a></li>
+                            </ul>
+                        </div>
+                    </div>
+				</footer>
+                <!-- FOOTER ENDS HERE -->
+        		<div align="center">
+                	<img src="@Url.Content("~/Content/images/bottom-shdw.png")" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" value="BUILD42"/>
+    
+    <div class="peoverlay"></div>
+    <div class="pemodal">
+        <a href="#" class="closeBtn">x</a>
+        <div class="modalContent"></div>
+    </div>
+       @* <script src="@Url.Content("~/Scripts/knockout-2.3.0.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/underscore-min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.dataviz.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.aspnetmvc.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.web.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.16.min.js")" type="text/javascript"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?client=gme-dieboldincorporated1&sensor=false&v=3.14&libraries=weather,visualization" type="text/javascript"></script>*@
+    @*<script src="@Url.Content("~/Scripts/jquery.blockUI.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/BlockUIForms.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.dataviz.chart.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.dataviz.svg.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.dataviz.themes.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kendo.dataviz.vml.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/slides.min.jquery.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.uniform.js")" type="text/javascript" charset="utf-8"></script>
+    <script src="@Url.Content("~/Scripts/jquery.bsmselect.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/chosen.jquery.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>*@
+     @*<script src="@Url.Content("~/Scripts/jquery.modal.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/main.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/intrusion.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/monitoring.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/devices.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/app/access.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/CascadingDropDown.js")" type="text/javascript"></script>*@
+    @*<script src="@Url.Content("~/Scripts/app/Common.js")" type="text/javascript"></script>*@
+</body>
+</html>

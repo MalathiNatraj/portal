@@ -1,0 +1,289 @@
+﻿@model Diebold.WebApp.Models.DeviceViewModelForEdit
+<div class="pallette-detail-subheader-bg">
+    <p>Device Information</p>
+</div>
+<!-- Device Page Starts Here -->
+<div class="cont-creation">
+    <div class="one columns"></div>
+    <div id="divDeviceContent" class="six columns">
+        <div class="cont-lft">
+            <div class="comp-lft">
+                <p>@Html.LabelFor(model => model.Name)</p>
+            </div>
+            <div class="comp-right">
+                @Html.TextBoxFor(model => model.Name, new {@class = "comp-txt"})
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.DeviceKey)</p>
+            </div>
+            <div class="comp-right">
+                @(!ViewBag.IsEdit ? Html.TextBoxFor(model => model.DeviceKey) : Html.TextBoxFor(model => model.DeviceKey, new { @class = "comp-txt", @disabled = "disabled" }))
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.AvailableCompanies)</p>
+            </div>
+            <div class="comp-right">
+                @(Html.Kendo().ComboBoxFor(p => p.CompanyId)
+                        .Placeholder("-- Select --")
+                        .HtmlAttributes(new { style = "width:100%" })
+                        .DataTextField("Text")
+                        .DataValueField("Value")
+                        .BindTo(Model.AvailableCompanies)
+                        .Enable(false)
+                         )
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.AvailableSites)</p>
+            </div>
+            <div class="comp-right">
+                @(Html.Kendo().ComboBoxFor(p => p.SiteId)
+                          .Placeholder("-- Select --")
+                          .HtmlAttributes(new { style = "width:100%" })
+                          .DataTextField("Text")
+                          .DataValueField("Value")
+                          .BindTo(Model.AvailableSites)
+                          .Enable(false)
+                        )
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.AvailableGateways)</p>
+            </div>
+            <div class="comp-right">
+                @(Html.Kendo().ComboBoxFor(p => p.GatewayId)
+                                .Placeholder("-- Select --")
+                                .HtmlAttributes(new { style = "width:100%" })
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .Enable(false)
+                                .BindTo(Model.AvailableGateways)
+                          )
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.HealthCheckVersion)
+                </p>
+            </div>
+            <div class="comp-right">
+                @(!ViewBag.IsEdit ?
+                                Html.Kendo().ComboBoxFor(p => p.HealthCheckVersion)
+                                        .HtmlAttributes(new { style = "width:100%" })
+                                        .Placeholder("-- Select --")
+                                        .DataTextField("Text")
+                                        .DataValueField("Value")
+                                        .BindTo(Model.AvailableHealthCheckVersions)
+                               :
+                                Html.Kendo().ComboBoxFor(p => p.HealthCheckVersion)
+                                        .HtmlAttributes(new { style = "width:100%" })
+                                        .Placeholder("-- Select --")
+                                        .DataTextField("Text")
+                                        .Enable(false)
+                                        .DataValueField("Value")
+                                        .BindTo(Model.AvailableHealthCheckVersions)
+                        )
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.DeviceType)</p>
+            </div>
+            <div class="comp-right">
+                @(!ViewBag.IsEdit ?
+                                (Html.Kendo().ComboBoxFor(p => p.DeviceType)
+                                .HtmlAttributes(new { style = "width:100%" })
+                                .Placeholder("-- Select --")
+                                .DataTextField("Text")
+                                .Events(events => events.Change("DeviceTypeChangedAlarms"))
+                                .DataValueField("Text"))
+                       :
+                                (Html.Kendo().ComboBoxFor(p => p.DeviceType)
+                                .HtmlAttributes(new { style = "width:100%" })
+                                .Placeholder("-- Select --")
+                                .Enable(false)
+                                .DataTextField("Text")
+                                .DataValueField("Text"))
+                         )
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.HostName)</p>
+            </div>
+            <div class="comp-right">
+                @Html.TextBoxFor(model => model.HostName, new { @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <div class="one columns">
+    </div>
+    <div class="seven columns">
+        <div class="cont-right">
+            <div class="comp-lft" style="width:40%;">
+                <p>
+                    @Html.LabelFor(model => model.PollingFrequency)</p>
+            </div>
+            <div class="comp-right" style="width:60%;">
+                @(Html.Kendo().ComboBoxFor(p => p.PollingFrequency)
+                            .HtmlAttributes(new { style = "width:100%" })
+                            .DataTextField("Text")
+                            .DataValueField("Value")
+                            .BindTo(Model.AvailablePollingFrequencies)
+                            .SelectedIndex(0)
+                            )
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%;">
+                <p>
+                    @Html.LabelFor(model => model.UserName)</p>
+            </div>
+            <div class="comp-right" style="width:60%;">
+                @Html.TextBoxFor(model => model.UserName, new { @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%;">
+                <p>
+                    @Html.LabelFor(model => model.Password)</p>
+            </div>
+            <div class="comp-right" style="width:60%;">
+                @Html.TextBoxFor(model => model.Password, new { @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%;">
+                <p>
+                    @Html.LabelFor(model => model.PortA)</p>
+            </div>
+            <div class="comp-right" style="width:60%;">
+                @Html.TextBoxFor(model => model.PortA, new { @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%;">
+                <p>
+                    @Html.LabelFor(model => model.PortB)</p>
+            </div>
+            <div class="comp-right" style="width:60%;">
+                @Html.TextBoxFor(model => model.PortB, new { @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            @if (ViewBag.IsEdit)
+            {
+                <div class="comp-lft" style="width:40%;">
+                    <p>
+                        @Html.LabelFor(model => model.ZoneNumber)</p>
+                </div>
+                <div class="comp-right" style="width:60%;">
+                    @Html.TextBoxFor(model => model.ZoneNumber, new {@class = "comp-txt", disabled = "disabled" })
+                </div>
+                <div class="clear">
+                </div>
+            }
+            <div class="comp-lft" style="width:40%;">
+                <p>
+                    @Html.LabelFor(model => model.AvailableTimeZones)</p>
+            </div>
+            <div class="comp-right" style="width:60%;">
+                @(Html.Kendo().ComboBoxFor(p => p.TimeZone)
+                                .HtmlAttributes(new { style = "width:100%" })
+                                .Placeholder("-- Select --")
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .BindTo(Model.AvailableTimeZones)
+                         )
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%;">
+                <p>
+                    @Html.LabelFor(model => model.IsInDST)</p>
+            </div>
+            <div class="comp-right" style="width:60%;">
+                @Html.EditorFor(model => model.IsInDST, new { @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            @if (@Model.DeviceType!=null &&(@Model.DeviceType.ToString().ToUpper() == "COSTAR111" || @Model.DeviceType.ToString().ToUpper() == "IPCONFIGURE530" || @Model.DeviceType.ToString().ToUpper() == "VERINTEDGEVR200"))
+            {
+                <div class="comp-lft" style="width:40%;">
+                    <p>
+                        @Html.LabelFor(model => model.NumberOfCameras)</p>
+                </div>
+                <div class="comp-right" style="width:60%;">
+                    @Html.TextBoxFor(model => model.NumberOfCameras, new { @class = "comp-txt" })
+                </div>
+                <div class="clear">
+                </div>
+            }
+            </div>
+        </div>
+    
+    <div class="one columns"></div>
+    <div class="clear">
+    </div>
+    <!-- Device Page Ends Here -->
+    <div class="pallette-detail-subheader-bg">
+        <p>Alerts Configuration</p>
+    </div>
+    <div id="alarmConfigurationContainer">
+        @Html.Partial("_AlarmConfiguration", (IEnumerable<Diebold.WebApp.Models.AlarmConfigurationViewModel>)@ViewBag.AlarmConfigurationModel)
+        <img id="waitAlarmMessage" src="../../Content/Default/loading.gif" style="display: none" alt="Waiting"/>
+    </div>
+    <div>
+       <div class="add-link" style="float: left; padding-left: 36%;">
+            <div class="link-btn-lft">
+            </div>
+            <div class="link-btn-mid">
+             @if (@Model.DeviceType != null && (@Model.DeviceType.ToString().ToUpper() == "COSTAR111" || @Model.DeviceType.ToString().ToUpper() == "IPCONFIGURE530" || @Model.DeviceType.ToString().ToUpper() == "VERINTEDGEVR200"))
+             {
+                <input id="btnAddCameras" type="button" value="Add Camera" class="btnAddCameras1"
+                    onclick="javascript:fnAddCamerasEditModeClick();" style="clear: both;" />
+             }
+             else
+             {
+                 <div>&nbsp;</div>
+             }
+            </div>
+            <div class="link-btn-right">
+            </div>
+        </div>
+        
+        <div class="add-link" style="float: left; padding-left: 2%;">
+            <div class="link-btn-lft">
+            </div>
+            <div class="link-btn-mid">
+                <input id="btnSubmit" type="button" value="Save" class="btnSubmit1" onclick="javascript:fnSaveDeviceClick();" />
+            </div>
+            <div class="link-btn-right">
+            </div>
+        </div>
+        <div class="add-link" style="float: left; padding-left: 2%;">
+            <div class="link-btn-lft">
+            </div>
+            <div class="link-btn-mid">
+                <input id="btnCancel" type="button" value="Cancel" class="btnSubmit1" onclick="javascript:fnCancel()" />
+            </div>
+            <div class="link-btn-right">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Diebold.WebApp.Models.CameraViewModel>
+
+<h2>DEVICE CAMERAS</h2>   
+
+<table id="deviceCameraTable" class="ui-jqgrid-htable">
+    <thead>
+        <tr>
+            <th class="ui-state-default ui-th-column ui-th-ltr">Monitor Camera</th>
+            <th class="ui-state-default ui-th-column ui-th-ltr">Camera Name</th>
+            <th class="ui-state-default ui-th-column ui-th-ltr">Channel</th>
+            <th class="ui-state-default ui-th-column ui-th-ltr">Actions</th>
+        </tr>
+    </thead>   
+    
+    @Html.EditorForModel()
+
+</table>
+
+<div class="footer">
+    <p>        
+        <input type="button" id="btnFinishAddCameras" class="btnAddCameras" value="Return" />
+    </p>
+</div> 

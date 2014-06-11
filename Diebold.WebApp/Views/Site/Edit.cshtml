@@ -1,0 +1,82 @@
+﻿@model Diebold.WebApp.Models.SiteViewModel
+@{
+    ViewBag.Title = "Edit Site";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    ViewBag.IsEdit = true;
+}
+@*
+@section Head
+{ *@
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#dvsiteIdlabel').hide();
+        $('#dvsiteIdtext').hide();        
+
+        $(".chzn-select").chosen();
+
+        $('.chzn-select').bind("change", function () {
+
+            $('form').validate().element($(this));
+
+        });
+                  
+    });
+
+    function SiteCompanyChanged(e) {
+        var dataItem = { "companyId": this.dataItem(e.item.index()).Value };
+        selectedCpnyId = this.dataItem(e.item.index()).Value;
+        var url = '@Url.Action("AsyncGrouping1Levels", "Site")';
+        $.post(url, dataItem, GetFirstLevelGroupbyCompanyIdCallback, "json");
+    }
+
+    function GetFirstLevelGroupbyCompanyIdCallback(ResultSet) {
+        var combobox = $("#FirstLevelGroupingId").data("kendoComboBox");
+        combobox.dataSource.data(ResultSet);
+    }
+
+    function SiteFirstLevelGroupChanged(e) {
+        var dataItem = { "group1LevelId": this.dataItem(e.item.index()).Value };        
+        var url = '@Url.Action("AsyncGrouping2Levels", "Site")';
+        $.post(url, dataItem, GetSecondGroupbyFirstGroupIdCallback, "json");
+        var GWcombobox = $("#SecondLevelGroupingId").data("kendoComboBox");
+        GWcombobox.value("-- Select --");
+    }
+
+    function GetSecondGroupbyFirstGroupIdCallback(GatewayResultSet) {
+        if (GatewayResultSet.length > 0) {
+            var GWcombobox = $("#SecondLevelGroupingId").data("kendoComboBox");
+            GWcombobox.dataSource.data(GatewayResultSet);
+        }
+        else {
+            var GWcombobox = $("#SecondLevelGroupingId").data("kendoComboBox");
+            var dataSource = $('#SecondLevelGroupingId').data().kendoComboBox.dataSource;
+            var raw = dataSource.data();
+            var length = raw.length;
+            var item, i;
+            for (i = length - 1; i >= 0; i--) {
+                item = raw[i];
+                dataSource.remove(item);
+            }
+            GWcombobox.dataSource.data(dataSource);
+            GWcombobox.value("-- Select --");
+        }
+    }
+</script>
+@*}*@
+@using (Html.BeginForm("EditSiteDetails", "Site"))
+{
+    <div id="dvEditSiteTitle" class="pallette-detail-header-bg">
+        <p>
+            Edit Site</p>
+    </div>
+
+    <div class="tSpace">
+    </div>
+    <div>
+        @Html.Partial("_SiteEditableInfo")
+        @Html.HiddenFor(model => model.Id);
+    </div>
+
+}

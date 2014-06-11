@@ -1,0 +1,23 @@
+﻿@model Diebold.WebApp.Models.CameraViewModel           
+
+<tr>  
+    <td style="display:none">@Html.HiddenFor(model => model.Id)</td>          
+    <td>
+        @Html.HiddenFor(model => model.Active, new { @readonly = "readonly" })
+        @{ 
+            if(Model.Active)
+            {
+                <span class="icon bulletGreen bold"></span>
+            }
+            else
+            {
+                <span class="icon bulletRed bold"></span>
+            }
+         }            
+    </td>
+    <td>@Html.EditorFor(model => model.CameraName, new { @readonly = "readonly" })</td>
+    <td>@Html.EditorFor(model => model.Channel, new { @readonly = "readonly" })</td>    
+    <td>
+       <a title='Edit' href='#' id='editCamera'><img alt ="Edit" src='../../../Content/images/icons/edit.png'/></a>
+    </td>
+</tr>

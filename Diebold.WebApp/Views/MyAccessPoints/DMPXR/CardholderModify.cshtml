@@ -1,0 +1,115 @@
+﻿<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>Cardholder Modify</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="DMPXRCloseModifyPortlet();"/></a>
+            </div>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+           <div id ="dvDMPXRCardholderModify2Contentss">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">
+                <div class="my-access-titile bottom">
+                    <p>
+                        <strong>Step 1: Lookup Fields</strong></p>
+                </div>
+                <div id="dvErrDMPXRCardModify">
+                <ul>
+                
+                </ul>
+                </div>                           
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Name:</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                    @Html.TextBox("txtDMPXRModifyLastName",null, new { @class = "my-access-in", maxlength = 250 })
+                </div>                
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Card Number:</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                    @Html.TextBox("txtDMPXRModifyCardNum", null, new { @class = "my-access-in" })
+                </div>                
+                <div class="clear">
+                </div>
+            </div>
+            <div class="my-access-right-btn" style="width:137px;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Next" onclick="DMPXRCloseLookupOpenModification();"/>
+                </div>
+                <div class="add-link"  align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="DMPXRCloseModifyPortlet();"/>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function DMPXRCloseLookupOpenModification() {
+
+        $("#dvErrDMPXRCardModify ul").empty();
+        var CHModifyFirstName = '';
+        var CHModifyLastName = $('#txtDMPXRModifyLastName').val();
+        var CHModifyNumber = $('#txtDMPXRModifyCardNum').val();
+        var deviceID = $("#AccessViewDeviceList").val();
+        var regModify = /^[0-9]+$/;
+        var isErrModifyCH = "false";
+
+        if (CHModifyLastName == '' && CHModifyNumber == '') {
+            $('#dvErrDMPXRCardModify ul').append('<li class="validation-summary-accesspopup ">Any one of the fields is Required</li>');
+            isErrModifyCH = "true";
+        }
+        else {
+            isErrModifyCH = "false";
+        }
+        if (isErrModifyCH == "false") {        
+            var dataItem = { "firstName": CHModifyFirstName, "lastName": CHModifyLastName, "cardNumber": CHModifyNumber, "deviceId": deviceID };
+            var url = '@Url.Action("GetCardHoldersInformation", "Access")';
+            BlockElement("dvDMPXRCardholderModify2Contentss", 'Connecting...');
+            $.post(url, dataItem, DMPXRGetCardHolderInfoFirstStepCallback, "json");
+        }
+    }
+    function DMPXRGetCardHolderInfoFirstStepCallback(ResultSet) {
+        UnBlockElement("dvDMPXRCardholderModify2Contentss");
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                document.getElementById('dvDMPXRModifyCardHolder').style.visibility = 'hidden';
+                var grid = $("#grdDMPXRCardHolderList").data("kendoGrid");
+                grid.dataSource.data(ResultSet);
+                //centerViewPortDialog("#dvMdfyCrdHldrList");
+                centerViewPortDialog("#dvDMPXRMdfyCrdHldrList");
+            }
+        }
+    }
+    function DMPXRCloseModifyPortlet() {
+        document.getElementById('dvDMPXRModifyCardHolder').style.visibility = 'hidden';
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+    }
+</script>

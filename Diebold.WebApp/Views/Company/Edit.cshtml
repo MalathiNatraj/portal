@@ -1,0 +1,108 @@
+﻿@model Diebold.WebApp.Models.CompanyViewModel
+@{
+    ViewBag.Title = "Edit Company";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    ViewBag.IsEdit = true;
+}
+<script src="@Url.Content("~/Scripts/app/CompanyForm.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var errorList = [];
+    function ShowValiationSummaryErrors(errorList) {
+        var container = $("[data-valmsg-summary=true]"), list = container.find("ul");
+
+        if (list && list.length && errorList.length) {
+            list.empty();
+            container.addClass("validation-summary-errors").removeClass("validation-summary-valid");
+
+            for (var i = 0; i < errorList.length; i++) {
+                $(list).append($("<li />").html(errorList[i]));
+            }
+        }
+    }
+
+    function ClearValidationSummary() {
+        var container = $('form').find('[data-valmsg-summary="true"]');
+        var list = container.find('ul');
+
+        if (list && list.length) {
+            list.empty();
+            container.addClass('validation-summary-valid').removeClass('validation-summary-errors');
+        }
+    }
+
+    $(document).ready(function () {
+        $('#btnSubmitCompany').click(function () {
+            var chkSubscription = $('input[name=Subscription]').attr('checked')
+            if (chkSubscription == null || chkSubscription == '' || chkSubscription == undefined) {
+                errorList.push('The Default Subscriptions: (*) field is required.');
+                ShowValiationSummaryErrors(errorList);
+            }
+            else {
+                if ($(this).valid()) {
+                    $('form').submit();
+                }
+            }
+        });
+    });
+
+    function SelectSubscription(element, Name) {
+        var isChecked = $(element).is(':checked');
+        var data = { Name: Name, isSelected: isChecked }
+        var url = '@Url.Action("UpdateAlarmSelection", "Company")';
+        $.post(url, data, "json")
+                            .done(function (response) {
+                                // $('form').submit();
+                            })
+                            .fail(function (response) {
+                                //alert("Error");
+                                //errorList.push(response.ErrorMsg);
+                            });
+    }
+
+    function checkboxClicked(element, id) {
+        var isChecked = $(element).is(':checked');
+        var url = '@Url.Action("UpdateAlarmDetails", "Company")';
+        var data = { ID: id, OnHold: isChecked }
+        $.post(url, data, "json");
+    }
+
+    function SubmitAlarmconfiguration() {
+        var CompanyDefaultSubscription = [];
+        var DefaultSubscription = '';
+        var grid = $("#grdAlarmconfiguration").data("kendoGrid");
+        var griddataSource = grid.dataSource._data;
+        var i = 0;
+        $.each(griddataSource, function () {
+            DefaultSubscription += this.Id + "," + this.Name + "," + this.isSelected + ":"
+            CompanyDefaultSubscription.push({ Id: this.Id, Name: this.Name, isSelected: this.isSelected });
+            i++;
+        });
+        var data = { Alarmconfigurations: DefaultSubscription };
+        var url = '@Url.Action("UpdateAlarmDetails", "Company")';
+        $.post(url, data, "json")
+                        .done(function (response) {
+                            // $('form').submit();
+                        })
+                        .fail(function (response) {
+                            //alert("Error");
+                            //errorList.push(response.ErrorMsg);
+                        });
+
+        return false;
+    }
+
+</script>
+@using (Html.BeginForm("EditCompanyDetails", "Company"))
+{        
+    <div id="dvEditComp" class="pallette-detail-header-bg">
+        <p>
+            Edit Company
+        </p>
+    </div>
+    <div style="padding-left: 5%;">
+        @Html.ValidationSummary(false, "There were errors editing company.")
+    </div>
+    @Html.Partial("_CompanyEditableInfo")            
+
+    @Html.HiddenFor(model => model.Id);
+}

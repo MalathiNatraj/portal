@@ -1,0 +1,43 @@
+﻿<link href="@Url.Content("~/Content/ie7.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/style.css")" rel="stylesheet" type="text/css" />
+<div id="my-News" class="featured-cont-main">
+    <div class="cont-inner-room">
+        <div class="featured-pallet">
+            <div class="Dashbord-header">
+                <div class="featured-head gradient">
+                    <p>
+                        <strong>Featured News</strong></p>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgNewsClose" src="@Url.Content("~/Content/images/close-icon.png")" onclick="javascript:fnCloseFeaturedNews();return false;" alt="" /></a>
+                    </div>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgfeaturedExpColapse" src="@Url.Content("~/Content/images/collapse-icon.png")" onclick="javascript:fntoggleFeaturedNews();return false;" alt=""/></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div id="divFeaturedNewsContent">
+            <iframe id="ifrmFeatNews" src="@Url.Content("~/Dashboard/FeaturedNews")" width="100%" height="232px"></iframe>
+        </div>
+    </div>
+</div>
+ <script type="text/javascript">
+     function fnCloseFeaturedNews() {
+         var mySplitResultset = {
+             'input': 'FeaturedNews'
+         };
+         var url = '@Url.Action("ClosePortlet", "Preferences")';
+         $.post(url, mySplitResultset, mySplitResultset, "json");
+         $('#my-News').hide();
+         getWidthofColumn();
+         return false;
+     }
+
+     function fntoggleFeaturedNews() {
+         $('#divFeaturedNewsContent').toggle();
+     }
+</script>

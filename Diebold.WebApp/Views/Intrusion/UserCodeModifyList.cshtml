@@ -1,0 +1,46 @@
+﻿@{
+    IList<Diebold.WebApp.Models.IntrusionUserCodeModel> objAccCardHolderModels = new List<Diebold.WebApp.Models.IntrusionUserCodeModel>();
+}
+<div id="dvSearchUserCode_Modify" class="modelDialogAccess">
+    <div style="background-color: #C5C5C5; width: 100%; color: #666666">
+        <strong>
+            <label style="margin: 8% 0 0 1%;">
+                Select a User Code</label></strong></div>
+    <div style="width: 90%; margin: 3% 2% 0 5%;">
+        <p>
+            @(Html.Kendo().Grid(objAccCardHolderModels)
+                .Name("grdUserCodeList")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {                    
+                    columns.Bound(p => p.UserName).Width("20%").Visible(true).Title("Name").Filterable(true).Sortable(true);
+                    columns.Bound(p => p.UserCode).Width("20%").Visible(true).Title("User Code").Filterable(true);
+                    columns.Bound(p => p.UserNumber).Visible(false).Title("User Number");
+                    columns.Bound(p => p.ProfileNumber).Visible(false).Title("Profile Number");                    
+                })
+                .Events(events => events.Change("grdUCListChanged1").DataBound("LoadingDefaultFilter"))
+                .Pageable()
+                .Filterable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .ServerOperation(false)
+                )
+            )
+        </p>
+        <div class="add-link" style="padding-top: 5px; padding-bottom: 5px; width: 100px; margin-left: 43%;">
+            <input type="button" value="Close" id="btnCloseUCModify" onclick="javascript:CloseUCModifyList();" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function CloseUCModifyList() {
+        document.getElementById('dvModifyUserCodeList').style.visibility = 'hidden';
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        $("#dvErrUserCodeEdit ul").empty();
+        centerViewPortDialog("#dvStep1ModifyUserCode");
+    }
+
+</script>

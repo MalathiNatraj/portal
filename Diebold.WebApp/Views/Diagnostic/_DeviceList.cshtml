@@ -1,0 +1,265 @@
+﻿@model Diebold.WebApp.Models.DiagnosticConfigurationViewModel
+<div class="pallette-detail-subheader-bg">
+    <p>
+        Device Filters</p>
+</div>
+<div class="filters">
+    <div style="float: left; margin-right: 20px;">
+        <p>
+            @(Html.Kendo().ComboBox()
+          .Name("Company")
+          .Placeholder("-- Select Company --")
+          .DataTextField("Id")
+          .DataValueField("Name")
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("GetAllCompanyList", "Diagnostic");
+              });
+          })
+    )
+    </p>
+    </div>
+    <div style="float: left; margin-right: 20px;">
+        <p>
+            @(Html.Kendo().ComboBox()
+          .Name("Site")
+          .Placeholder("-- Select Site --")
+          .DataTextField("SiteName")
+          .DataValueField("SiteId")
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("GetCascadeCompanySite", "Diagnostic")
+                      .Data("filtercompany");
+              })
+              .ServerFiltering(true);
+          })
+          .Enable(false)
+          .AutoBind(false)
+          .CascadeFrom("Company")
+    )
+        </p>
+    </div>
+    <div style="float: left; margin-right: 20px;">
+        <p>
+            @(Html.Kendo().ComboBox()
+          .Name("Gateway")
+          .Placeholder("-- Select Gateway --")
+                .DataTextField("GatewayName")
+                .DataValueField("GatewayId")
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("GetCascadeSiteGateway", "Diagnostic")
+                      .Data("filtercompany");
+              })
+              .ServerFiltering(true);
+          })
+          .Enable(false)
+          .AutoBind(false)
+                      .CascadeFrom("Company")
+    )
+        </p>
+    </div>
+    <div style="float: left; margin-right: 20px;">
+        <div class="add-link" style="margin: 0;">
+            <div class="link-btn-lft">
+            </div>
+            <div class="link-btn-mid">
+                <input type="button" value="Apply" onclick='javascript:fnSubmitClick();' />
+            </div>
+            <div class="link-btn-right">
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<p>
+    @(Html.Kendo().Grid<Diebold.WebApp.Models.DeviceDiagnosticViewModel>()
+    .Name("DiagnosticGrid")
+    .HtmlAttributes(new { style = "height: 400px" })
+    .Resizable(resize => resize.Columns(true))
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Id).Hidden();
+        columns.Bound(p => p.DeviceName).Groupable(false);
+        columns.Bound(p => p.CompanyName);
+        //columns.Bound(p => p.SiteId).Width(60);
+        columns.Bound(p => p.GatewayName);
+        columns.Bound(p => p.LastReceived).Format("{0:dd-MMM-yyyy}").Width(120);
+        columns.Bound(p => p.CurrentAlerts);
+        columns.Bound(p => p.ActionColumn).Filterable(false).Title("Available Actions").ClientTemplate("<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/test.png") + "' alt='test connection'  title='Test Connection' onclick='doDiagnosticAction(#=Id#,\"Diagnostics\",\"Test Device Connection \");' /></a>" +
+                                                          "# if (DeviceType == 'VerintEdgeVr200' || DeviceType == 'Costar111' || DeviceType == 'eData524' || DeviceType == 'eData300' || DeviceType == 'dmpXR100' || DeviceType == 'dmpXR500' || DeviceType == 'bosch_D9412GV4'|| DeviceType == 'videofied01'|| DeviceType == 'dmpXR100Access'|| DeviceType == 'dmpXR500Access') { #" + "<a class='showStatusLink' style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/refresh.png") + "' alt='Refresh' style='opacity:.4' title='Refresh'/></a>" +
+                                                                "# } else { #" + "<a class='showStatusLink' style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/refresh.png") + "' alt='Refresh' title='Refresh' onclick='doDiagnosticAction(#=Id#,\"ReloadDevice\",\"Reload Device\");' #}#</a>" +
+                                                          "<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/undo.png") + "' alt='reboot service'  title='Restart Services' onclick='doDiagnosticAction(#=Id#,\"RestartDevice\",\"Restart Device\");'/></a>" +
+                                                          "<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/new.png") + "' style='opacity:.4' alt='reboot service'  title='Audit'/></a>" +
+                                                          "<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/view.png") + "' alt='reboot service'  title='Show Status' onclick='fnGetDeviceLiveStatus(\"ShowStatusDevice\",\"null\",\"onSuccess\",#=Id#);'/></a>");
+
+    })
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Filterable()
+    .Events(events => events.DataBound("LoadingDefaultFilter"))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+                .Read(read => read.Action("DeviceDiagnostic_Read", "Diagnostic").Data("loadExtraParams"))
+        .ServerOperation(false)
+     )
+
+)
+</p>
+@(Html.Kendo().Window().Name("Details")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(300)
+)
+@(Html.Kendo().Window().Name("DeviceStatusInfo")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(500)
+    .Height(600)
+)
+<script type="text/javascript">
+    var bar;
+    var ActPath;
+    function doDiagnosticAction(itemId, actionPath, title) {
+        if (actionPath == "Diagnostics") {
+            ActPath = '@Url.Action("TestConnectionDevice")';
+        }
+        else if (actionPath == "ReloadDevice") {
+            ActPath = '@Url.Action("ReloadDevice")';
+        }
+        else if (actionPath == "RestartDevice") {
+            ActPath = '@Url.Action("RestartDevice")';
+        }
+        bar = { item: itemId, ap: ActPath };
+        var wnd = $("#Details").data("kendoWindow");
+        wnd.content("<p style='height:100px'>Do you want to continue?</p><p style='text-align:center;'>" +
+                "<input type='button' value='Ok' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='ConfirmOk(bar)'>" +
+                 "<input type='button' value='Cancel' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='ConfirmCancel()'></p>");
+        wnd.title(title);
+        wnd.center().open();
+    }
+    function ConfirmCancel() {
+        $("#Details").data("kendoWindow").close();
+    }
+    function ConfirmOk(bar) {
+        $("#Details").data("kendoWindow").close();
+        BlockElement('mainContainer', 'Connecting...');
+        $.ajax({
+            url: bar.ap,
+            type: 'POST',
+            data: { Id: bar.item },
+            success: function (data) {
+                UnBlockElement('mainContainer');
+                fngetError(data);
+            },
+            error: function (errordata) {
+                UnBlockElement('mainContainer');
+                alert('Failure')
+            }
+        });
+
+    }
+
+    function fngetError(data) {
+        fnShowAlertInfo(data.Message);
+    }
+
+    function getCurrentStatus(deviceId) {
+        fillPartial('@Url.Action("CurrentReadings", "Diagnostic")', { id: deviceId, deviceType: 'Device', liveFromDevice: true }, "#statusList", "#statusList");
+    }
+
+    function fillPartial(url, data, containerId, blockArea, onSuccess) {
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function (result) {
+                $(containerId).html(result);
+                if (onSuccess){
+                    onSuccess();
+                }
+            },
+            error: function (xhr) {
+                $(blockArea).html("<div class='inBoxMessage'><div>Information is not available</div></div>");
+            },
+            beforeSend: function (jqXHR, settings) {
+                $(blockArea).block({
+                    message: '<img src="../../Content/Default/loading.gif" />',
+                    css: { border: 'none' },
+                    overlayCSS: { backgroundColor: '#fff' }
+                });
+            },
+            complete: function (jqXHR, textStatus) {
+                $(blockArea).unblock();
+            }
+        });
+    }
+
+    function blockUI(blockArea) {
+        $("<div class='k-overlay'><label id='lblpleasewait' for='Please wait...'></label><span>Please wait...</span></div>").appendTo($(document.body));
+    };
+
+    function RemoveblockUI() {
+        $('.k-overlay').remove();
+    };
+
+    function fnGetDeviceLiveStatus(url, data, onSuccess, pk) {
+        if (url == "ShowStatusDevice") {
+            ActPath = '@Url.Action("ShowStatusDevice", "Diagnostic", new { id = 0 })'.replace(0, pk);
+        }
+        $.ajax({
+            url: ActPath,
+            type: 'POST',
+            data: data,
+            success: function (ResultSet) {
+                UnBlockElement('mainContainer');
+                if (ResultSet != null && ResultSet != undefined) {
+                    if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                        fnShowAlertInfo(ResultSet.Message);
+                    }
+                    else {
+                        if (onSuccess) {
+
+                            showDeviceStatusInformation(ResultSet);
+                        } 
+                    }
+                }
+            },
+            error: function (xhr) {
+                // showDialog("An error occurred while processing this action.", "Error");
+                UnBlockElement('mainContainer');
+                var wnd = $("#Details").data("kendoWindow");
+                wnd.content("<p style='height:100px'>An error occurred while processing this action.</p>");
+                wnd.title("Error");
+                wnd.center().open();
+            },
+            beforeSend: function () {
+                BlockElement('mainContainer', 'Connecting...');
+            },
+            complete: function () {
+                UnBlockElement('mainContainer');
+            }
+        });
+    }
+    function showDeviceStatusInformation(result) {
+        $('.k-overlay').remove();
+        if (result != undefined)
+            result = "<div id='dvDeviceStatusInfo'>" + result + "</div>";
+        var wnd = $("#DeviceStatusInfo").data("kendoWindow");
+        wnd.content(result);
+        wnd.title("Current Readings");
+        wnd.center().open();
+    }
+
+</script>

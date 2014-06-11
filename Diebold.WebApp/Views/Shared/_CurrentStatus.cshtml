@@ -1,0 +1,231 @@
+﻿@using Diebold.WebApp.Models
+
+@model Diebold.Platform.Proxies.DTO.StatusDTO
+
+@*@helper DisplayCollection(DeviceStatusViewModel deviceStatusModel, IList<DvrDrivesViewModel> driveModels)
+    {
+    <ul style="margin-left: 40px">
+    @if(driveModels.Count() == 0)
+    {
+        if(deviceStatusModel.IsCollection)
+         {
+              @:No active drives
+         }
+        else
+         {
+              @:No active cameras
+         }
+    }
+    
+    @foreach (var item in driveModels)
+    {
+        <li>                         
+             @item.Name : 
+             
+             @if (deviceStatusModel.IsCollection)
+             {
+                 @item.Value
+             }
+             
+             @if (!deviceStatusModel.IsCollection)
+             {
+                 if (bool.Parse(item.Value.ToString()))
+                 {
+                    <span class="icon bulletRed bold"></span>
+                 }
+                 else
+                 {
+                    <span class="icon bulletGreen bold"></span>
+                 }
+             }             
+             
+        </li>
+    }
+    </ul>
+}*@
+
+<div id="current">
+@*<h2 class="blueTitle">Current readings</h2>*@
+<div id="currentStatus" class="currentStatus">    
+    <ul>
+    <li>
+            @if (Model !=null)
+            {
+                if (Model.isGateWay == "NO")
+                {
+                    if (Model.payload != null && Model.payload.SparkDvrReport != null && Model.payload.SparkDvrReport.properties != null && Model.payload.SparkDvrReport.properties.property != null)
+                    {
+                        foreach (var property in Model.payload.SparkDvrReport.properties.property)
+                        {
+                            string strType = string.Empty;
+                            switch (@property.name)
+                            {
+                                case "SMART":
+                                    strType = "SMART";
+                                    break;
+                                case "deviceFirmware":
+                                    strType = "Device Firmware";
+                                    break;
+                                case "timeStampRecorder":
+                                    strType = "TimeStamp Recorder";
+                                    break;
+                                case "timeStampAgent":
+                                    strType = "TimeStamp Agent";
+                                    break;
+                                case "isNotRecording":
+                                    strType = "IsNotRecording";
+                                    break;
+                                case "estimatedFreeRecording":
+                                    strType = "Estimated FreeRecording";
+                                    break;
+                                case "raidStatus":
+                                    strType = "Raid Status";
+                                    break;
+                                case "startedOn":
+                                    strType = "Started On";
+                                    break;
+                                case "deviceIdentifier":
+                                    strType = "DVR Identifier";
+                                    break;
+                                case "daysRecorded":
+                                    strType = "Days Recorded";
+                                    break;
+                                case "networkDown":
+                                    strType = "Network Down";
+                                    break;
+                                case "dvrErrorCode":
+                                    strType = "DVR ErrorCode";
+                                    break;
+                                case "upTime":
+                                    strType = "UpTime";
+                                    break;
+                                case "driveTemp":
+                                    strType = "DriveTemp";
+                                    break;
+                                case "videoLoss":
+                                    strType = "Video Loss";
+                                    break;
+                            }
+                            <span style="width:100px; font-weight: bold">@strType:&nbsp;&nbsp;</span>@property.value<br/>
+                        }
+                        if (Model.payload.SparkDvrReport.properties.propertyList != null)
+                        {
+
+                            foreach (var property in Model.payload.SparkDvrReport.properties.propertyList)
+                            {
+                                string strType = string.Empty;
+                                switch (@property.name)
+                                {
+                                    case "SMART":
+                                        strType = "SMART";
+                                        break;
+                                    case "driveTemp":
+                                        strType = "Drive Temp";
+                                        break;
+                                    case "raidStatus":
+                                        strType = "Raid Status";
+                                        break;
+                                    case "videoLoss":
+                                        strType = "Video Loss";
+                                        break;
+                                }
+                                <span style="width:100px; font-weight: bold">@strType:&nbsp;&nbsp;</span><br/>
+                                foreach (var value in @property.propertyItem)
+                                {
+                                    @value.value<br />
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (Model.payload != null && Model.payload.SparkGatewayReport != null && Model.payload.SparkGatewayReport.properties != null && Model.payload.SparkGatewayReport.properties.property != null)
+                    {
+                        foreach (var property in Model.payload.SparkGatewayReport.properties.property)
+                        {
+                            string strType = string.Empty;
+                            switch (@property.name)
+                            {
+                                case "networkDown":
+                                    strType = "Network Down";
+                                    break;
+                                case "smartData":
+                                    strType = "Smart Data";
+                                    break;
+                                case "gatewayIdentifier":
+                                    strType = "Gateway Identifier";
+                                    break;
+                                case "timeStamp":
+                                    strType = "TimeStamp";
+                                    break;
+                                case "cpuUsage":
+                                    strType = "CPU Usage";
+                                    break;
+                                case "memoryUsage":
+                                    strType = "Memory Usage";
+                                    break;
+                                case "freeSpaceOnDrives":
+                                    strType = "Free Space On Drives";
+                                    break;
+                            }
+                            <span style="width:100px; font-weight: bold">@strType:&nbsp;&nbsp;</span>@property.value<br/>
+                        }
+                    }
+                }
+            }
+    </li>
+    </ul>
+  </div>
+</div>
+
+@if (ViewBag.ShowViewMore)
+{
+    <a id="viewMoreCurrentReadings" href="#" class="viewMore"><span class="icon more bold"></span>View More</a>
+}
+
+<script language="javascript" type="text/javascript">
+
+    $(document).ready(function() {
+        $(window).resize(function() {
+            $(".currentStatus").dialog("option", "position", "center");
+        });
+    });
+
+    function getCurrentReadings() {
+        fillPartial('@Url.Action("CurrentReadings", "Dashboard")', { id: '@ViewBag.DeviceId', deviceType: '@ViewBag.DeviceType', liveFromDevice: true }, "#current", ".currentStatus", onCurrentReadingSuccess);
+    }
+
+    $('a#viewMoreCurrentReadings').click(function () {
+        showCurrentStatusModal();
+    });
+
+    function showCurrentStatusModal() {
+        $(".currentStatus").dialog("close");
+        $("#currentStatus")
+            .clone()
+            .dialog({
+                dialogClass: 'fixed-dialog',
+                autoOpen: true,
+                resizable: false,
+                width: 340,
+                height: 400,
+                modal: true,
+                //title: 'Current Readings for device {name}'.replace('{name}', '@ViewBag.DeviceName'),
+                buttons: {
+                    "Get Live": function () {
+                        getCurrentReadings();
+                    },
+                    Close: function () {
+                        $(this).dialog("close");
+                        $(this).html('');
+                    }
+                }
+            }).addClass("currentStatusClone").find('li').removeAttr('style');
+    }
+
+    function onCurrentReadingSuccess() {
+        showCurrentStatusModal();
+    } 
+    
+</script>

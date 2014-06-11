@@ -1,0 +1,396 @@
+﻿@{
+    IList<Diebold.WebApp.Models.SiteViewModel> objSiteViewModel = new List<Diebold.WebApp.Models.SiteViewModel>();
+}
+<div id="Monitoring">
+    <div class="cont-inner-room">
+        <div class="dark-blue">
+            <div class="Dashbord-header">
+                <div class="dark-blue-head gradient">
+                    <div class="pallet-icon">
+                        <img src="@Url.Content("~/Content/images/monitoring-icon.png")" alt="Monitoring (MAS" />
+                    </div>
+                    <p>
+                        <strong>Monitoring</strong></p>
+                    <div class="close-icon">
+                        <a href="#">
+                        <img id="imgMasClose" onclick="javascript:fnCloseMas();return false;" src="@Url.Content("~/Content/images/close-icon.png")" alt="Close" /></a>
+                    </div>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgMasExpColapse" onclick="javascript:fntoggleMas();return false;" src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+                    </div>
+                </div>
+            </div>
+            <div id="divMonitoringContent" style="display: block;">
+                <div class="dark-blue-body gradient">
+                    <div class="mas-body-cont" style="width:100%">
+                        <div class="mas-acc-list bottom" style="float:left;width:55%;padding-left:8px;">
+                                @(Html.Kendo().ComboBox()
+                                .HtmlAttributes(new { style = "width:94%;" })
+                                .Name("MASAccountList")
+                                .Placeholder("Site List")
+                                .DataTextField("Name")
+                                .DataValueField("Id")
+                                .Suggest(true)
+                                .Template("<div id='rowcell'>${ AccountNumber }</div><div id='rowcell'>${ Name }</div><div id='rowcell'>${ Address1 }</div><div id='rowcell'>${ Address2 }</div><div id='rowcell'>${ City }</div><div id='rowcell'>${ State }</div><div id='rowcell' style='border-right:0px'>${ Zip }</div>").HtmlAttributes(new { style = "width:210px;" })
+                                //  .DataSource(source =>
+                                // {
+                                //    source.Read(read =>
+                                //    {
+                                //        read.Action("GetAccountList", "PortletsDefaultFns");
+
+                                //    });
+                                // })
+                                .Events(e =>
+                                {
+                                    e.Open("openMonitorDeviceList").Close("closeMonitorDeviceList");
+                                    e.Change("MASAccountListChanged");
+                                })
+                                )
+                       <img id="imgsearchMASLogo" src="@Url.Content("~/Content/images/SearchIcon.png")" style="vertical-align:bottom;cursor:pointer; padding-bottom: 5px;" alt=""  onclick="fnOpenMASDetails();"/>
+                        </div>
+                        <div class="add-link bottom" style="margin-left:22px">
+                         <input type="button" value="Place on Test" onclick="fnPlaceonTest();" id="btnPlaceonTest"/>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <p><strong>Reports</strong></p>
+                        <div class="mas-reports">
+                            <div class="mas-report-bg">
+                                <div>
+                                    <div>
+                                        @(Html.Kendo().ComboBox()
+                                            .HtmlAttributes(new { style = "width:47%" })
+                                            .Name("MASReportType")
+                                            .Events(events => { events.Select("ReportTypeSelected"); })
+                                            .Placeholder("Report Type")
+                                            .DataTextField("Name")
+                                            .DataValueField("Id")
+                                            //.DataSource(source =>
+                                            //{
+                                            //    source.Read(read =>
+                                            //    {
+                                            //        read.Action("GetAllReportTypes", "Dashboard");
+
+                                            //    });
+                                            //})
+                                        )
+                                    </div>
+                                     <div class="add-link bottom" style="float:right; margin: -5% 18% 5% 0;">
+                                        <input type="button" value="Run Report" onclick="fnRunReport();"/>
+                                     </div>
+                                </div>
+                                <div id="dvMASReportStartTime" style="padding-left: 15px; padding-top: 6px; visibility: hidden;">
+                                    <label id="lblStartDate" style="float: left; margin: 1% 1% 0 0;">Start Date:</label>
+                                    <div>
+                                        @(Html.Kendo().DateTimePicker()
+                                        .Name("dpStartDate")
+                                        .Value(DateTime.Now.AddHours(-24))
+                                        .HtmlAttributes(new { style = "width:31%" }))
+                                    </div>
+                                </div>
+                            
+                                <div id="dvMASReportEndTime" style="padding-left: 15px; padding-top: 6px; visibility: hidden;">
+                                    <label id="lblEndDate" style="float: left; margin: 1% 1% 0 0;"> End Date :</label>
+                                    <div>
+                                        @(Html.Kendo().DateTimePicker()
+                                        .Name("dpEndDate")
+                                        .Value(DateTime.Now)
+                                        .HtmlAttributes(new { style = "width:31%" })
+                                    )
+                                    </div>
+                                </div>
+
+                                <div class="clear">
+                                    </div>
+                            </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div class="dark-blue-set">
+                    <div class="sett-icon">
+                        <a href="#">
+                            <img src="@Url.Content("~/Content/images/move-icon.png")" alt="Description" onclick="javascript:ShowMASDesc();return false;"/></a>
+                    </div>
+                    <div class="sett-icon">
+                     <a href="javascript:void(0);">
+                       <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="Settings" /></a>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+@(Html.Kendo().Window()
+    .Name("MasDescription")
+    .Title("Monitoring Portlet Description")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+        <div>
+            <p>
+                See alarm monitoring events within a selected time range by panel or site. Generate open/close reports, display site lists, place an account on test and view a list of alarm points per site.
+            </p>
+        </div>
+    </text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)
+
+<div id="dvReports" class="modelDialog" style="display: none;background-color:#FFF;">
+<div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;" id="lblMASReportType" runat="server"></label><label>Report</label></strong></div>
+<div style="width:90%; margin:3% 2% 0 5%; display:none;" id="dvAllReports">
+        <p>
+           @(Html.Kendo().Grid<Diebold.WebApp.Models.MonitoringViewModel>()
+            .HtmlAttributes(new { style = "width:99.5%" })
+            .Name("grdReports") 
+            .Resizable(resize => resize.Columns(true))
+            .Columns(columns =>
+            {
+                columns.Bound(model => model.sig_date).Title("Event Date");
+                columns.Bound(p => p.events).Title("Event");
+                columns.Bound(p => p.eventhistcomment).ClientTemplate(
+                    "# if (events == \"Video Reference\") { #" +
+                    "<a href=\"\\#\" class=\"modalLink\" onclick=\"javascript:Diebold.Monitoring.getMASMedia('#= extraData1#');return false;\">" + "View Event Video #= extraData1#" + "</a>" +
+    "# } else { #" +
+        "#: eventhistcomment != null ? eventhistcomment : \"\" #" +
+    "# } #"
+                
+                ).Title("Comments");
+                columns.Bound(model => model.zone_comment_additional_info).Title("Comment / Location");
+            })
+            .Pageable()
+            .Sortable()
+            .AutoBind(false)
+            .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(5)
+            .ServerOperation(false)
+            )
+            )
+        </p>
+        <div class="add-link" style="padding-top:5px; width:100px; margin-left: 43%;">
+            <input type="button" value="Cancel" id="btnInfoPopupCancel" onclick="javascript:btnCancelReportsClicked();" />
+        </div>
+    </div>
+<div style="width:90%; margin:3% 2% 0 5%; display:none;" id="dvZoneListReport">
+        <p>
+           @(Html.Kendo().Grid<Diebold.WebApp.Models.MonitoringViewModel>()
+            .HtmlAttributes(new { style = "width:99.5%" })
+            .Name("grdZoneListReports")
+            .Resizable(resize => resize.Columns(true))
+            .Columns(columns =>
+            {
+                columns.Bound(model => model.zone_id).Title("Zone");
+                columns.Bound(p => p.event_id).Title("Event ID");
+                columns.Bound(p => p.Description).Title("Description");
+                columns.Bound(model => model.comment).Title("Comment");
+                columns.Bound(model => model.restore_reqd_flag).Title("Restore Required");
+            })
+            .Pageable()
+            .Sortable()
+            .AutoBind(false)
+            .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(5)
+            .ServerOperation(false)
+            )
+            )
+        </p>
+        <div class="add-link" style="padding-top:5px; width:100px; margin-left: 43%;">
+            <input type="button" value="Cancel" id="btnInfoPopupCancel" onclick="javascript:btnCancelReportsClicked();" />
+        </div>
+    </div>
+<div style="width:90%; margin:3% 2% 0 5%; display:none;" id="dvContactListReport">
+        <p>
+           @(Html.Kendo().Grid<Diebold.WebApp.Models.MonitoringViewModel>()
+            .HtmlAttributes(new { style = "width:99.5%" })
+            .Name("grdContactListReports")
+            .Resizable(resize => resize.Columns(true))
+            .Columns(columns =>
+            {
+                columns.Bound(model => model.ContactName).Title("Contact Name");
+                columns.Bound(p => p.CSSeqNumber).Title("CS Seq#");
+                columns.Bound(p => p.Pin).Title("PIN");
+                columns.Bound(model => model.Phone1).Title("Contact Phone 1");
+                columns.Bound(model => model.Phone2).Title("Contact Phone 2");
+                columns.Bound(model => model.UserId).Title("User#");
+            })
+            .Pageable()
+            .Sortable()
+            .AutoBind(false)
+            .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(5)
+            .ServerOperation(false)
+            )
+            )
+        </p>
+        <div class="add-link" style="padding-top:5px; width:100px; margin-left: 43%;">
+            <input type="button" value="Cancel" id="btnInfoPopupCancel" onclick="javascript:btnCancelReportsClicked();" />
+        </div>
+    </div>
+     <br />
+</div>
+<div id="dvUserPinValidate" class="modelDialogUP" style="display: none;background-color:#FFF;">
+<div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">User Pin</label></strong></div>
+<div>
+      <div class="clear"></div>
+      <br />
+    <p>
+        <label id="lblTestDuration" style="color:Black;padding-left:15%;">Test Duration :</label> 
+                                @(Html.Kendo().ComboBox()
+                                .HtmlAttributes(new { style = "width:40%;" })
+                                .Name("MASHoursList")
+                                .Placeholder("Test Duration")
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .Suggest(true)
+                                )
+    </p>
+    <p>
+     <label id="lblUserPin" style="color:Black;padding-left:15%;">User Pin :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+     @*@Html.TextBox("txtAccessUserpinAccount", null, new { @class = "UserPinstyle", maxlength = 4 })*@
+     <input type="password" id="txtAccessUserpinAccount" class="UserPinstyle" maxlength="6"/>
+    </p>
+    <div class="clear"></div>
+     <div class="add-link" style="padding-top:5px; width:100%; margin-left: 25%; margin-top:5%;margin-bottom:10%;">
+        <input type="button" value="Validate" id="btnUserInfoValidate" onclick="javascript:btnValidateUserpinClicked();" style="width:20%; margin-right:2%; float:left;" />
+         <input type="button" value="Cancel" id="btnUserInfoCancel"  onclick="javascript:btnCancelUserInfoClicked();" style="width:20%; float:left;" />
+    </div>
+</div>
+</div>
+<div id="dvSearchMASDevices" class="modelDialog" style="display: none;">
+    <div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Select a Acc No</label></strong></div>
+        <div style="width:90%; margin:3% 2% 0 5%;">
+            <p>
+              @(Html.Kendo().Grid(objSiteViewModel)
+                .Name("grdSearchMASDetails")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Id).Visible(false);
+                    columns.Bound(p => p.AccountNumber).Width("20%").Visible(true).Title("Acct No").Filterable(true).Sortable(true);
+                    columns.Bound(p => p.Name).Width("20%").Visible(true).Title("Site").Filterable(true);
+                    columns.Bound(p => p.Address1).Width("20%").Visible(true).Title("Address1").Filterable(true);
+                    columns.Bound(p => p.Address2).Width("20%").Visible(true).Title("Address2").Filterable(true);
+                    columns.Bound(p => p.City).Width("20%").Filterable(true).Title("City").Visible(true);
+                    columns.Bound(p => p.State).Width("20%").Visible(true).Title("State").Filterable(true);
+                    columns.Bound(p => p.Zip).Width("20%").Visible(true).Title("Zip").Filterable(true);                    
+                })
+                .Events(events => events.Change("grdSearchMASChanged").DataBound("LoadingDefaultFilter"))
+                .Pageable()
+                .Filterable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .ServerOperation(false)
+                )
+            )
+            </p>
+            <div class="add-link" style="padding-top:5px; width:100px; margin-left: 43%;">
+            <input type="button" value="Close" id="btnSearchMASCancel" onclick="javascript:btnSearchMASCancelClicked();" />
+        </div>
+        </div>
+        <br />
+        </div>
+
+
+@(Html.Kendo().Window().Name("WarningMessage")
+    .Visible(false)
+    .Title("Warning Message")
+    .Modal(true)
+    .Draggable(true)
+    .Width(350)    
+)
+
+<script type="text/javascript">
+    var masGetAccountListforSearchUrl = '@Url.Action("GetAccountListforSearch", "PortletsDefaultFns")';
+    var masGetAccountListUrl = '@Url.Action("GetAccountList", "PortletsDefaultFns")';
+    var masGetAllReportTypesUrl = '@Url.Action("GetAllReportTypes", "Dashboard")';
+    var masSaveReportinSessionUrl = '@Url.Action("SaveReportinSession", "PortletsDefaultFns")';
+    var masValidateUserPinUrl = '@Url.Action("ValidateUserPin", "PortletsDefaultFns")';
+    var masPlaceonTestUrl = '@Url.Action("PlaceonTest", "PortletsDefaultFns")';
+    var masSaveAccountinSessionUrl = '@Url.Action("SaveAccountinSession", "PortletsDefaultFns")';
+    var masRunReportUrl = '@Url.Action("RunReport", "PortletsDefaultFns")';
+    var masClosePortletUrl = '@Url.Action("ClosePortlet", "Preferences")';
+    var masGetTestDurationUrl = '@Url.Action("GetTestDurationDetails", "PortletsDefaultFns")';
+
+    var masDDChangePlaceonTestUrl = '@Url.Action("PlaceonTestDDChange", "PortletsDefaultFns")';
+
+    $(document).ready(function () {
+        // Bind ComboboxItems
+        GetAccountDetailsList();
+        GetTestDurationDetails();
+        GetAllReportTypes();
+        // To hide the title bar of the div
+        $(".ui-dialog-titlebar").hide();
+        //        $('#imgLiveViewSettings').click(function (event) {
+        //            $("#dvSettings").dialog("option", "position", {
+        //                my: "left top",
+        //                at: "bottom",
+        //                collision: "flip",
+        //                of: event,
+        //                offset: "20 40"
+        //            });
+        //            $('#dvSettings').empty();
+        //            $('#dvSettings').append('<a href="#" id="imgLiveViewSaveDefaults" onclick="javascript:fnLiveViewSaveDefaults();return false;" class="divLiveViewdynamiclink">Save Defaults</a>');
+        //            $('#dvSettings').append('<a href="#" id="imgLiveViewAddCamera" onclick="javascript:fnLiveViewAddCamera();return false;" class="divLiveViewdynamiclink">Add Camera</a>');
+        //            $('#dvSettings').dialog('open');
+        //            return false;
+        //        });
+        // Close Pop-up If the user clicks anywhere else on the page
+        jQuery('body').bind('click', function (e) {
+            if (jQuery('#dvSettings').dialog('isOpen')
+            && !jQuery(e.target).is('.ui-dialog, a')
+            && !jQuery(e.target).closest('.ui-dialog').length
+         ) {
+                jQuery('#dvSettings').dialog('close');
+            }
+        });
+
+        var MASInterval = '@System.Web.Configuration.WebConfigurationManager.AppSettings["MASFeedInterval"]';
+        var SelectedHrs = 0;
+        var MASSiteId;
+        var accName;
+        var masaccountlistcombobox = $("#MASAccountList").data("kendoComboBox");
+
+        var refreshId = setInterval(function () {
+            MASSiteId = $("#MASAccountList").val();
+            if (MASSiteId != 'undefined' && MASSiteId != null && MASSiteId != '') {
+                var selectedMASInfo = masaccountlistcombobox.select();
+                accName = masaccountlistcombobox.dataItem(selectedMASInfo).AccountNumber;
+                var Resultset = {
+                    'SelectedSite': MASSiteId,
+                    'SelectedHour': SelectedHrs,
+                    'AccountNumber': accName
+                };
+                $.post(masDDChangePlaceonTestUrl, Resultset, PlaceonTestCallbackforDDChange, "json");
+            }
+        }, MASInterval);
+
+        $(function () {
+            $('.modalLink').modal({
+                trigger: '.modalLink',
+                olay: 'div.peoverlay',
+                modals: 'div.pemodal',
+                animationEffect: 'slidedown',
+                animationSpeed: 400,
+                moveModalSpeed: 'slow',
+                background: '00c2ff',
+                opacity: 0.8,
+                openOnLoad: false,
+                docClose: true,
+                closeByEscape: true,
+                moveOnScroll: true,
+                resizeWindow: false,
+                video: 'http://player.vimeo.com/video/9641036?color=eb5a3d',
+                close: '.closeBtn'
+            });
+        });
+    });
+</script>

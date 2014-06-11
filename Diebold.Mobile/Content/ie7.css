@@ -1,0 +1,24 @@
+@charset "utf-8";
+/* CSS Document */
+/* IE 7 hacks --------------------------------------- */
+
+
+
+#center-cont-bg { background:url(../images/center-cont-bg.png) repeat-y; width:466px; height:900px; }
+/*#center-cont-bot-bg {background:url(../images/center-cont-bot-bg.png) no-repeat; width:466px; height:21px;}*/
+
+
+#footer .foot-left-cont img{margin:0px 134px 0 28px;}
+#footer .bot-nav {float:right;}
+
+
+/*Preference page*/
+#featured-widgets .featured-widgets-lft {float:left; width:177px; padding-bottom:13px;}
+
+
+
+/*My Access Points-Add Access Group step2 (GREY)*/
+.access-wid-right .time-periods {width:392px; background:#efefef;}
+.access-wid-right .time-periods .time-periods-inner-cont td {padding:0 0 6px 0;}
+
+.access-wid-right .time-periods .time-periods-title {width:400px;}

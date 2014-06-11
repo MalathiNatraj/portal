@@ -1,0 +1,35 @@
+﻿@{Layout = null;}
+@model IEnumerable<Diebold.WebApp.Models.CameraViewModel>
+@(Html.Kendo().Grid(Model)
+.Name("grdDeviceCamera")
+        .ToolBar(toolbar =>
+        {
+            toolbar.Template("<a class='k-button k-button-icontext' onclick='customSaveCommand()'></span>Save Changes</a>" + 
+                             "<a class='k-button k-button-icontext' onclick='customCancelCommand()'></span>Cancel Changes</a>");
+           // toolbar.Save();
+         })
+    .Editable(editing => editing.Mode(Kendo.Mvc.UI.GridEditMode.InCell))
+    .Columns(columns =>
+         {
+             columns.Bound(model => model.Id).Hidden();
+             columns.Bound(model => model.Active).Title("Monitor Camera").ClientTemplate("# if(Active == true){ #" + "<img class='icon bulletGreen bold' alt='Connected' />" +
+                           "# } else { #" + "<img class='icon bulletRed bold' alt='not Connected' /> #}#");
+             columns.Bound(model => model.CameraName).Title("Camera Name");
+             columns.Bound(model => model.Channel).Title("Channel");
+         })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Batch(true)
+        .ServerOperation(false)
+        .Model(model =>
+            {
+                model.Id(o => o.Id);
+                model.Field(o => o.Channel).Editable(false);
+            }
+            )
+                //.Read(read => read.Action("SelectedCameraData", "Device"))
+                .Update(update => update.Action("SelectedCameras_Update", "Device"))
+                .Destroy(delete => delete.Action("EditingCamera_Cancel", "Device"))
+            )
+        )
+        

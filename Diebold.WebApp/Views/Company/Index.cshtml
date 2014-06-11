@@ -1,0 +1,149 @@
+﻿@model IEnumerable<Diebold.WebApp.Models.CompanyViewModel>
+@{
+    ViewBag.Title = "Companies";
+}
+
+@{
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div id="dvUsrTitle" class="pallette-detail-header-bg">     
+    <p>Companies</p>     
+</div>
+<br />
+
+ @(Html.Kendo().Grid(Model)
+    .Name("grdCompany")
+    .Resizable(resize => resize.Columns(true)) 
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Name).Title("Company Name");
+        columns.Bound(p => p.PrimaryContactName).Title("Primary Contact Name");
+        columns.Bound(p => p.PrimaryContactEmail).Title("Primary Contact E-Mail");
+        columns.Bound(p => p.PrimaryContactOffice).Title("Primary Contact Nr.");
+        columns.Bound(p => p.PrimaryContactMobile).Title("Phone").Visible(false);
+        columns.Bound(p => p.ActionColumn).Title("Available Actions").ClientTemplate("<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/edit.png") + "' alt='Edit'  title='Edit' onclick='doDiagnosticAction(#=Id#,\"Edit\",\"Edit\");' /></a>" +
+                                    "<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/grouping.png") + "' style='opacity:.4' alt='Edit Company Grouping'  title='Edit Company Grouping' onclick='doDiagnosticAction(#=Id#,\"EditGrouping\",\"EditGrouping\");' /></a>" +
+                                     "# if (IsDisabled == true) { #" + "<a class='showStatusLink' style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/enable.png") + "' alt='Enable' onclick='doDiagnosticAction(#=Id#,\"Enable\",\" Enable Company\");' title='Enable'/></a>" +
+                                     "# } else { #" + "<a class='showStatusLink' style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/disable.png") + "' alt='Disable' title='Disable' onclick='doDiagnosticAction(#=Id#,\"Disable\",\" Disable Company\");' #}#</a>" +
+                                    "<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/delete.png") + "' alt='delete'  title='Delete' onclick='doDiagnosticAction(#=Id#,\"delete\",\"Delete Company\");'/></a>").Filterable(false);
+    })
+    .Selectable()
+    .ToolBar(toolbar => toolbar.Template("<a class='k-button k-button-icontext k-grid-update' href='#' onclick='CreateCompany()'>Create Company</a>"))    
+    .Pageable()
+    .Sortable()    
+    .Scrollable(scr => scr.Height(450))
+    .Groupable()
+    .Filterable()
+    .Events(events => events.DataBound("LoadingDefaultFilter"))
+    .DataSource(dataSource => dataSource
+    .Ajax()
+    .PageSize(10)
+    .ServerOperation(false)
+    .Events(events => events.Error("error_handler")
+    .Change("change_handler"))
+    .Model(model => model.Id(p => p.Id))   
+    .Create(create => create.Action("Users_Create", "User"))
+    .Update(update => update.Action("Users_Update", "User"))
+    .Destroy(destroy => destroy.Action("Users_Destroy", "User"))
+    )
+)
+
+@(Html.Kendo().Window().Name("Details")
+    .Visible(false)
+    .Title("Disable Company")
+    .Modal(true)
+    .Draggable(true)
+    .Width(300)    
+)
+
+<script type="text/javascript">
+
+    function error_handler(args) {
+        if (args.errors) {
+            var grid = $("#grdCompany").data("kendoGrid");
+            grid.one("dataBinding", function (e) {
+                e.preventDefault();   // cancel grid rebind if error occurs                             
+            });
+        }
+    }
+
+    function change_handler(e) {
+        if (e.items.length > 0) {
+            if (e.items[0].companies != null && e.items[0].companies != 'undefined')
+                e.items[0].CompanyId = e.items[0].companies.Id;
+            else if (e.items[0].Roles != null && e.items[0].Roles != 'undefined')
+                e.items[0].RoleId = e.items[0].Roles.Id;
+        }
+    }
+
+    function CreateCompany() {
+        var strUrl = '@Url.Content("~/Company/Create/")';
+        location.href = strUrl;
+    }
+    var bar;
+    var ActPath;
+    function doDiagnosticAction(itemId, actionPath, title) {
+        if (actionPath == "delete") {
+            ActPath = '@Url.Action("Delete")';
+        }
+        if (actionPath == "Edit") {
+            var strUrl = '@Url.Content("~/Company/Edit/")' + itemId;
+            
+            location.href = strUrl;
+        }
+        if (actionPath == "EditGrouping") {
+            var strUrl = '@Url.Content("~/Company/EditCompanyGrouping/")' + itemId;            
+            location.href = strUrl;
+        }
+        else if (actionPath == "Disable") {
+            ActPath = '@Url.Action("Disable")';
+        }
+        else if (actionPath == "Enable") {
+            ActPath = '@Url.Action("Enable")';
+        }
+
+        if (actionPath != "Edit" && actionPath != "EditGrouping") {
+            bar = { item: itemId, ap: ActPath };
+            var wnd = $("#Details").data("kendoWindow");
+
+            if (actionPath == "delete") {
+                wnd.content("<p style='margin-bottom:20%'>Are you sure you want to delete this item?</p><p style='text-align:center;'>" +
+                "<input type='button' value='Ok' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 10px 6px 10px;margin-right:4px;' onclick='ConfirmOk(bar)'>" +
+                 "<input type='button' value='Cancel' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 10px 6px 10px;margin-left:5px;' onclick='ConfirmCancel()'></p>");
+            }
+            else {
+                wnd.content("<p style='margin-bottom:20%'>Do you want to continue?</p><p style='text-align:center;'>" +
+                "<input type='button' value='Ok' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 10px 6px 10px;margin-right:4px;' onclick='ConfirmOk(bar)'>" +
+                 "<input type='button' value='Cancel' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 10px 6px 10px;margin-left:5px;' onclick='ConfirmCancel()'></p>");
+            }
+            wnd.title(title);
+            wnd.center().open();
+        }
+    }
+
+    function ConfirmCancel() {
+        $("#Details").data("kendoWindow").close();
+    }
+
+    function showDetails(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var CompanyId = dataItem.id;
+        var strUrl = "Edit/" + CompanyId;
+        location.href = strUrl;
+    }
+
+    function ConfirmOk(bar) {
+        var strUrl = bar.ap + "/" + parseInt(bar.item);
+        location.href = strUrl;
+    }
+
+</script>
+<style>
+     .k-block > .k-header, .k-window-titlebar
+     {
+        height: 1.7em;
+     }
+</style>
+

@@ -1,0 +1,276 @@
+﻿@{
+    List<Diebold.WebApp.Models.WeatherAlertViewModel> objlstWeatherAlertViewModel = new List<Diebold.WebApp.Models.WeatherAlertViewModel>();
+    IList<Diebold.WebApp.Models.SiteDocumentViewModel> objSiteDocumentViewModel = new List<Diebold.WebApp.Models.SiteDocumentViewModel>();   
+}
+<div id="dvSiteMap">
+    <div class="cont-inner-room">
+        <div class="dark-green">
+            <div class="Dashbord-header">
+                <div class="dark-green-head gradient">
+                    <div class="pallet-icon">
+                        <img src="@Url.Content("~/Content/images/sitemap-icon.png")" alt="" />
+                    </div>
+                    <p>
+                        <strong>Site Maps</strong></p>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img onclick="fnCloseSiteMap();" src="@Url.Content("~/Content/images/close-icon.png")" alt="Close" /></a>
+                    </div>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img onclick="fntoggleSiteMap();" src="@Url.Content("~/Content/images/collapse-icon.png")" alt="Minimize" /></a>
+                    </div>
+                </div>
+            </div>
+            <div id="divSiteMapContent">
+                <div class="dark-green-body gradient">
+                    <div class="site-map-body-cont">
+                        <div class="site-map">
+                            <div id="dvSiteGmap" style="height: 350px; color:Black;">
+                            </div>
+                        </div>
+                        <div class="site-map-info">
+                            <div class="site-map-info-cont">
+                                <p style="display:none;">SiteId: <strong><label id="dvSiteId"></label></strong></p>
+                                <p>Site: <strong><label id="dvLocation"></label></strong></p>
+                                <p>Address: <strong><label id="dvAddress" class="word-wrap"></label></strong></p>
+                                <p>Site Contact: <strong><label id="dvLContact"></label></strong></p>
+                                <p>Contact Email: <strong><a id="lblContEmail" onmouseout="hideTooltip(t1)" onmouseover="showTooltip(t1, '', 'Dynamic')"></a></strong></p>
+                                <div style='display:none; z-index:9999999;' id='t1'></div>
+                                <p>Contact Phone: <strong><label id="lblContPhone"></label></strong></p>                         
+                                <p>Access Devices: <strong><label id="lblAcsDvsCount"></label></strong></p>
+                                <p>Intrusion Devices: <strong><label id="lblIntrnDvsCount"></label></strong></p>
+                                <p>Video Health Devices: <strong><label id="lblVHDCount"></label></strong></p>
+                                <p>&nbsp;
+                                    <a id="lnkWeatherAlert" href="" style="float:left; display:none; color:Red" onclick="javascript:fnWeatherAlertDisplay(); return false;">Weather Alert</a>
+                                    <a id="lnkSitemap" href="" style="float:right;" onclick="javascript:OpenSiteMap(); return false;">View Site Map</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dark-green-set">
+                    <div class="sett-icon">
+                        <a href="#">
+                            <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" onclick="javascript:ShowSiteMapDesc();return false;"/></a>
+                    </div>
+                    <div class="sett-icon">
+                        <a href="#">
+                            <img id="imgSiteMapSettings" src="@Url.Content("~/Content/images/settings-icon.png")" alt=""/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dvSettings" class="context-menu">
+</div>
+<input type="hidden" id="hdnContactEmail" />
+<div>
+<input id="hdnsiteImage" type="hidden"/>
+@(Html.Kendo().Window()
+    .Name("SiteMapDescription")
+    .Title("Site Maps Portlet Description")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+        <div>
+            <p>
+                Quickly access and view all defined locations, devices and addresses on an interactive map.
+            </p>
+        </div>
+    </text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)
+
+<div id="wndSiteMapInfoDetail" class="modelDialog" style="display: none;">
+    <div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Site Image</label></strong></div>
+    <div>
+        @(Html.Kendo().Grid(objSiteDocumentViewModel)
+                        .Name("grdSiteMapDocument")
+                        .Selectable()
+                        .Resizable(resize => resize.Columns(true))
+                        .Columns(columns =>
+                        {
+                            columns.Bound(p => p.DisplayDate).Width("20%").Title("Uploaded Date");
+                            columns.Bound(p => p.FileName).Width("25%").Title("File Name");
+                            columns.Bound(p => p.UserName).Width("25%").HtmlAttributes(new { style = "word-wrap: break-word;" });
+                            columns.Bound(p => p.FileURL).Title("Actions").Width("15%").ClientTemplate(
+                                            "# if (isDocumentsViewable == true) { #" +
+                                            "<a href='" +
+                                            Url.Action("ViewSiteMapDocumentFileContent", "PortletsDefaultFns") +
+                                            "/#= Id #'" +
+                                            "><img src= '" + @Url.Content("~/Content/images/icons/view.png") + "' alt='View' title='View'/></a>" +
+                                            "# } else { #" +
+                                            "<a target='_blank' " +
+                                            "/#= Id #'" +
+                                            "><img src= '" + @Url.Content("~/Content/images/icons/view.png") + "' alt='View' title='View' style='opacity:.4'/></a>" + " #}#"
+                                            ).HtmlAttributes(new { target = "_Blank" });
+
+                        })
+                        .Pageable()
+                        .Sortable()
+                        .DataSource(dataSource => dataSource
+                        .Ajax()
+                        .PageSize(5)
+                        .ServerOperation(false)
+                        )
+                    )
+        <div>
+            <div class="clear">
+            </div>
+            <div style="margin-left: auto; margin-right: auto; margin-top: 20px">
+               <img id="imgSiteMapImagePlaceHolder" src=""  style="max-width:500px; max-height:500px" alt="" />
+            </div>
+            
+        </div>
+        <div class="add-link" id="dvActionButtonContent" style="text-align:center; margin-left: auto; margin-right:auto; width:100px; margin-bottom: 15px; margin-top: 15px;">
+            <input type="button" value="Close" onclick="javascript:fncloseSiteMapPopup();return false;" />
+        </div>
+    </div>
+        <br />
+    </div>
+</div>
+
+<div id="dvWeatherAlerts" class="modelDialog" style="display: none; height:600px; overflow:auto;">
+<div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Weather Alerts</label></strong></div>
+<div style="width:90%; margin:3% 2% 0 5%;">
+        <p>
+            @(Html.Kendo().Grid(objlstWeatherAlertViewModel)
+                .Name("grdWeatherAlert")
+                .HtmlAttributes(new { style = "height:40%" })
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Message).Width("100%").Title("Message").Encoded(false).ClientTemplate("#= getHtmlNewLinesString(Message) #");
+                })
+                .Pageable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(1)
+                .ServerOperation(false)
+                )
+            )
+        </p>
+        <div id="img" style="padding-top:5px; width:100px; margin-left: 43%;">
+            <img src="@Url.Content("~/Content/images/Wunderground.png")" alt="" style="max-width:100px;"/>
+        </div>
+        <div class="add-link" style="padding-top:5px; width:100px; margin-left: 43%;">
+            <input type="button" value="OK" id="btnInfoPopupCancel" onclick="javascript:btnCancelWeatherAlertClicked();" />
+        </div>
+    </div>
+     <br />
+</div>
+<script type="text/javascript">
+    var map;
+    var siteMapClosePortletUrl = '@Url.Action("ClosePortlet", "Preferences")';
+    var siteMapGetSiteImageUrl = '@Url.Action("GetSiteImage", "PortletsDefaultFns")';
+    var siteMapEditUri = '@Url.Action("../Site/Index")';
+    var siteMapNotAvailableImageUrl = '@Url.Content("~/Content/images/ImgNotAvalable.jpg")';
+    var SiteWeatherAlertURL = '@Url.Action("GetWeaterAlerts","PortletsDefaultFns")';
+    var SiteMapRefreshURL = '@Url.Action("SiteInfo","PortletsDefaultFns")';
+    var siteMapDocumentGetUrl = '@Url.Action("GetSiteMapDocumentsbySiteId", "PortletsDefaultFns")';
+
+    var siteMapSaveDefaultValueUrl = '@Url.Action("SavesiteMapDefaultValue", "PortletsDefaultFns")';
+    var siteMapClearDefaultValueUrl = '@Url.Action("ClearsiteMapDefaultValue", "PortletsDefaultFns")';
+
+
+    function getHtmlNewLinesString(text) {
+        var regexp = new RegExp('\n', 'g');
+        return text.replace(regexp, '<br>');
+    }
+
+    $(function () {
+        if (map == undefined) {
+            $.ajax({
+                url: '@Url.Action("SiteInfo", "PortletsDefaultFns")',
+                type: 'POST',
+                success: function (data) {
+                    // console.log(data);
+                    populateMarkers(data);
+                },
+                statusCode: {
+                    404: function (content) { alert('cannot find resource'); },
+                    505: function (content) { alert('Internal Server Error'); },
+                    500: function (content) { alert('Internal Server Error'); }
+                },
+                error: function (req, status, errorObj) {
+                }
+            });
+        }
+
+        var wWidth = $(window).width();
+        var dWidth = wWidth * 0.2;
+        $("#dvSettings").dialog(
+               {
+                   draggable: false,
+                   closeOnEscape: true,
+                   resizable: false,
+                   height: 'auto',
+                   width: dWidth,
+                   autoOpen: false,
+                   show: 'blind'
+
+               }
+               );
+
+        // To hide the title bar of the div
+        $(".ui-dialog-titlebar").hide();
+        $('#imgSiteMapSettings').click(function (event) {
+            $("#dvSettings").dialog("option", "position", {
+                my: "left top",
+                at: "bottom",
+                collision: "flip",
+                of: event,
+                offset: "20 40"
+            });
+            $('#dvSettings').empty();
+            $('#dvSettings').append('<a href="#" id="imgSiteMapRefresh" onclick="javascript:fnSiteMapRefresh();return false;" class="divdynamiclink">Refresh</a>');
+
+            $('#dvSettings').append('<a href="#" id="imgSiteMapSaveDefaultValues" onclick="javascript:fnAddSiteMapDefaultValuesClick();return false;" class="divdynamiclink">Save Defaults</a>');
+            $('#dvSettings').append('<a href="#" id="imgSiteMapClearDefaultValues" onclick="javascript:fnClearSiteMapDefaultValuesClick();return false;" class="divdynamiclink">Clear Defaults</a>');
+
+            $('#dvSettings').dialog('open');
+            return false;
+        });
+        // Close Pop-up If the user clicks anywhere else on the page
+        jQuery('body').bind('click', function (e) {
+            if (jQuery('#dvSettings').dialog('isOpen')
+            && !jQuery(e.target).is('.ui-dialog, a')
+            && !jQuery(e.target).closest('.ui-dialog').length
+         ) {
+                jQuery('#dvSettings').dialog('close');
+            }
+        });
+    });
+
+    function showTooltip(div, title, desc) {
+        div.style.display = 'inline';
+        div.style.position = 'absolute';
+        div.style.width = '200';
+        div.style.backgroundColor = '#EFFCF0';
+        div.style.border = 'dashed 1px black';
+        div.style.padding = '10px';
+        desc = document.getElementById('hdnContactEmail').value;
+        var splitValues = addNewlines(desc);
+        div.innerHTML = '<b>' + title + '</b><div style="padding-left:10; padding-right:5; color:black;">' + splitValues + '</div>';
+    }
+
+    function hideTooltip(div) {
+        div.style.display = 'none';
+    }
+
+    function addNewlines(str) {
+        var result = '';
+        while (str.length > 0) {
+            result += str.substring(0, 75) + '\n';
+            str = str.substring(75);
+        }
+        return result;
+    }
+</script>

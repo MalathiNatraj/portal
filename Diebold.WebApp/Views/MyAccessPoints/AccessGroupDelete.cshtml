@@ -1,0 +1,110 @@
+﻿@model Diebold.WebApp.Models.AccessCardholderViewModel
+<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>My Access Points - Access Group Delete</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="fnCloseAccessGroupDelete();"/></a>
+            </div>
+            <div class="close-icon">
+                <a>
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        <div id="dvDeleteAGContent">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">
+                <div class="my-access-titile bottom">
+                    <p>
+                        <strong>Step 1: Lookup Fields</strong></p>
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Access Group:</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                     @(Html.Kendo().ComboBox()
+                        .Name("cboCHDeleteAccessGroup")
+                        .Placeholder("-- Select --")
+                        .HtmlAttributes(new { style = "width:100%" })
+                        .DataTextField("Name")
+                        .DataValueField("Id")
+                        .BindTo(Model.AccessGroupList)
+                        .Suggest(true)
+                        )
+                </div>
+                <div class="clear">
+                </div>
+                <div id="DeleteGroupListValidations">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            <div class="my-access-right-btn" style="width: 143px;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Delete" onclick="fnDeleteAccessGroup();" />
+                </div>
+                <div class="add-link" align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="fnCloseAccessGroupDelete();" />
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a>
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a>
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">    
+    function fnDeleteAccessGroup() {        
+        $("#DeleteGroupListValidations ul").empty();        
+        if ($('#cboCHDeleteAccessGroup').val() == null && $('#cboCHDeleteAccessGroup').val() == '' && $('#cboCHDeleteAccessGroup').val() == "-- Select --") {
+            $('#DeleteGroupListValidations ul').append('<li class="validation-summary-accesspopup">Please select a Group List</li>');
+        }
+        else {            
+            var deviceID = $("#AccessViewDeviceList").val();
+            var dataItem = { "accessgroupId": $('#cboCHDeleteAccessGroup').val(), "deviceId": deviceID };
+            var url = '@Url.Action("AccessGroupDelete", "Access")';
+            BlockElement("dvDeleteAGContent", 'Connecting...'); 
+            $.post(url, dataItem, GetAccessGroupDeleteCallback, "json");           
+        }
+    }
+
+
+    function GetAccessGroupDeleteCallback(ResultSet) {        
+        UnBlockElement("dvDeleteAGContent");        
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                if (ResultSet == "OK") {
+                    fnShowAlertInfo('Access group deleted successfully.');
+                    document.getElementById('my_overlay').style.visibility = 'hidden';
+                    document.getElementById('dvDeleteAccessGroups').style.visibility = 'hidden';
+                    $('#cboCHDeleteAccessGroup').val('');
+                }
+            }
+        }
+    }
+
+    function fnCloseAccessGroupDelete() {
+        $("#DeleteGroupListValidations ul").empty();
+        document.getElementById('dvDeleteAccessGroups').style.visibility = 'hidden';
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        $('#cboCHDeleteAccessGroup').val('');
+    }
+</script>

@@ -1,0 +1,171 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+
+	<!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=320,user-scalable=false" />
+
+	<link rel="stylesheet" type="text/css" href="../../Content/style.css">
+    <!--[if gte IE 9]>
+        <link rel="stylesheet" type="text/css" href="css/gradient-ie6-and-up.css" />
+	<![endif]-->
+	<title>Diebold</title>
+</head>
+
+<body>
+        <!-- Main Row Starts here -->
+        <div class="row">
+        	<div class="sixteen columns">
+            	<header>
+                    <div class="sixteen columns logo-small" align="center">
+                        
+                    	<a href="http://www.diebold.com/dnpssec/default.htm" target="_blank"><img src="../../Content/images/logo-small.png" alt="" /></a>
+	                    
+                        <div class="log-out">
+                        	<a href="@Url.Content("~/Account/LogOff")"><img src="../../Content/images/logout-icon.png" alt="" /></a>
+                        </div>
+                    </div>
+				</header>
+                
+                <div class="clear"></div>	
+                
+                <!-- MAIN CONTAINER STARTS HERE -->
+                <section>
+                	<article>
+
+                        <div class="body-bg">
+                            <div class="inner-cont">
+                                
+                                <!-- MAIN PAGE STARTS HERE-->
+                                <div class="main-page">
+                                    
+                                    <div class="lft-cont">
+                                        <img src="../../Content/images/alerts-icon.png" alt="" />
+                                        <p><strong>Alerts</strong></p>
+                                    </div>
+                                    
+                                    <div class="right-cont">
+                                        <div class="view-btn">
+                                            <p><a href="../Alerts/Alert"><strong>View</strong></a></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="clear"></div>
+                                    
+                                    <div class="bor-bott"></div>
+                                
+                                    <div class="lft-cont">
+                                        <img src="../../Content/images/status-icon.png" alt="" />
+                                        <p><strong>Status</strong></p>
+                                    </div>
+                                    
+                                    <div class="right-cont">
+                                        <div class="view-btn">
+                                            <p><a href="../SystemSummary/SystemSummary"><strong>View</strong></a></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="clear"></div>
+                                    
+                                    <div class="bor-bott"></div>
+                                
+                                    <div class="lft-cont">
+                                        <img src="../../Content/images/video-icon.png" alt="" />
+                                        <p><strong>Video</strong></p>
+                                    </div>
+                                    
+                                    <div class="right-cont">
+                                        <div class="view-btn" style="cursor:default;">
+                                            <p><a href="../Video/LiveView"><strong>View</strong></a></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="clear"></div>
+                                    
+                                    <div class="bor-bott"></div>
+                                
+                                    <div class="lft-cont">
+                                        <img src="../../Content/images/monitor-icon.png" alt="" />
+                                        <p><strong>Monitoring</strong></p>
+                                    </div>
+                                    
+                                    <div class="right-cont">
+                                        <div class="view-btn">
+                                            <p><a href="@Url.Action("MAS", "Dashboard")"><strong>View</strong></a></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="clear"></div>
+                                    
+                                    <div class="bor-bott"></div>
+                                
+                                    <div class="lft-cont">
+                                        <img src="../../Content/images/intrusion-icon.png" alt="" />
+                                        <p><strong>Intrusion</strong></p>
+                                    </div>
+                                    
+                                    <div class="right-cont">
+                                        <div class="view-btn" style="cursor:default;">
+                                            <p><a href="../Intrusion/IntrusionDetailPortlet"><strong>View</strong></a></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="clear"></div>
+                                    
+                                    <div class="bor-bott"></div>
+                                
+                                    <div class="lft-cont">
+                                        <img src="../../Content/images/access-icon.png" alt="" />
+                                        <p><strong>Access</strong></p>
+                                    </div>
+                                    
+                                    <div class="right-cont">
+                                        <div class="view-btn">
+                                            <p><a href="../Access/AccessView"><strong>View</strong></a></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="clear"></div>
+                                    
+                                    <div class="bor-bott"></div>
+                                    
+                                    <div style="padding-bottom:5%;"></div>
+                                    
+                                </div>
+                                <!-- MAIN PAGE ENDS HERE-->
+                            
+                            </div>
+                        </div>
+
+                    </article>
+                </section>
+                <!-- MAIN CONTAINER ENDS HERE -->
+                        
+                <!-- FOOTER STARTS HERE -->
+                <footer>
+                	<div class="sixteen columns user-info" align="center">
+                    	<p><strong>@ViewBag.Message</strong></p>
+                        <span>@DateTime.Now.ToString("D").ToUpper()</span>
+                        <span>&copy; 2013 Diebold, Inc.&nbsp;&nbsp;
+                        <a href="@Url.Content("~/TermsofUse/TermsofUse")" target="_self">Terms of Use</a></span>
+                        <div class="sel-web" align="center">
+                        	<a href="#" class="selected">mobile website</a> | <a href="@System.Configuration.ConfigurationManager.AppSettings["FullWebsiteURL"]">full website</a>
+                        </div>
+                    </div>
+				</footer>
+                <!-- FOOTER ENDS HERE -->
+                
+            </div>
+        </div>
+        <!-- Main Row Ends here -->
+	
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿@model Diebold.WebApp.Models.GatewayViewModel
+
+@{
+    ViewBag.Title = "Edit Gateway";
+    ViewBag.IsCreate = false;
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+    <script type="text/javascript">
+
+            $.actionColumnFormatter = function(cellvalue, options, rowObject) {
+                return "<a onclick='selectMacAddress(\"" + options.rowId + "\")' title='Select Mac Address'><img src='../../Content/images/icons/crosshair.png'/></a>  ";
+            };
+      
+            function updateModel(macName)
+            {
+                $("#MacAddressName").text(macName);
+                $("#MacAddressName").val(macName);
+                $("#MacAddress").val(macName);
+            };
+            
+            function selectMacAddress(macName)
+            {
+                $('.macSelected').removeClass('macSelected');
+                $('#gatewayMacSelect').jqGrid('setRowData', macName, false, 'macSelected'); 
+                
+                $("#MacAddressName").val(macName);
+            } 
+            
+            function beforeSelectRow(rowid, e) {
+                return false;
+            }
+
+    </script>
+
+    <script type="text/javascript">
+          $(document).ready(function() {
+              @if(ViewBag.EMCAccountIsInvalid == true) {
+                  @:ConfirmationEMCDialog();
+              }
+          });
+    </script>
+
+<div class="pallette-detail-header-bg">
+    <p>Edit Gateway</p>
+</div>
+@Html.Partial("_GatewayEditableInfo")

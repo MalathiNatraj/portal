@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Shared/_EmptyTemplateLayout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AccessDenied</title>
+</head>
+<body>
+    <div id="dvAccessDeniedHeading" class="pallette-detail-header-bg">
+        <p>
+            Access Denied</p>
+    </div>
+    <div style="border: 1px solid #999; width: 50%; margin: 25%;" id="dvOuterBorder">
+        <ul style="list-style: none; padding: 0 6px;">
+            <li style="font-size: 17px; font-weight: normal; color: #667;">
+                <img src="@Url.Content("~/Content/images/icons/close.png")"  width="24" height="24" alt="" style="vertical-align:middle;" />Error
+                : Access Denied</li>
+            <li style="font-size: 13px; font-weight: normal; color: #667;">Access to this page is denied. Please contact your administrator for access privileges.</li>
+        </ul>
+    </div>
+</body>
+</html>

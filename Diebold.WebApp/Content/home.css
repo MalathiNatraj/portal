@@ -1,0 +1,510 @@
+﻿.divdynamiclink
+{
+    margin-top: 0cm;
+    padding: 3px 0 6px 15px;
+    display: block;
+    text-decoration: none;
+}
+.divdynamiclink:hover
+{
+    background: #eee;
+}
+#SiteNoteInformationGrid .k-grid-header .k-header .k-link
+{
+    width: 16px;
+    font-size: 10px;
+    padding-left: 1px;
+}
+#SiteNoteInformationGrid .k-grid-header .k-header:first-child, .k-grid tbody td:first-child, .k-grid td
+{
+    font-size: 10px;
+    max-width:20px;
+}
+.k-block > .k-header, .k-window-titlebar
+{
+    height: 1.5em;
+}
+/* css elements are removed as conflict is occuring in IE dropdown */
+#LocationList-list
+{
+    width:405px !important;
+    max-height:200px !important;
+   /* overflow-y: auto !important;
+    overflow-x: hidden !important;*/
+}
+    
+#LocationList-list ul
+{
+   /* display: table;*/
+    padding: 0;
+    width: 400px;
+    max-height: 160px !important;
+}
+/*#LocationList-list ul li{
+    display: table-row;
+}*/  
+#LocationList-list ul li:hover{
+    background-color: #02D3D2;
+}  
+/* css elements are removed as conflict is occuring in IE dropdown */    
+#DDsiteheader
+{
+    width:400px !important;
+    background-color:#696969;
+    font-weight:bold;
+    color:#fff;        
+}
+    #SiteNoteInformationGrid .k-state-selected
+{
+    background-color:#02B1AF;
+}         
+.span-img-close
+{
+    background-image: url("../Content/Default/sprite.png");
+} 
+/* css elements are removed as conflict is occuring in IE dropdown */
+/* Access View */
+    #AccessViewDeviceList-list
+    {
+        width: 565px !important;
+        max-height: 200px !important;
+        /*overflow-y: auto !important;
+        overflow-x: hidden !important;*/
+    }
+    
+    #AccessViewDeviceList-list ul
+    {
+        /*display: table;*/
+        padding: 0;
+        width: 560px;
+        max-height: 160px !important;
+    }
+   /* #AccessViewDeviceList-list ul li
+    {
+        display: table-row;
+    }*/
+    
+    #AccessViewDeviceList-list ul li:hover
+    {
+        background-color: #9097DE;
+    }
+    /* css elements are removed as conflict is occuring in IE dropdown */
+    #DDAccessheader
+    {
+        width: 560px !important;
+        background-color: #696969;
+        font-weight: bold;
+        color: #fff;
+    }
+    .validation-summary-accesspopup 
+    {
+        color: #ff0000;
+        padding-left: 7%;
+        padding-bottom: 1%;
+    }
+/* links */
+
+    .usertxtboxEdit
+    {
+        border: 1px solid;
+        border-color: #C5C5C5;
+    }
+    #grdlnkDetails .k-grid-header .k-header {
+       display: none !important;
+    }
+    #grdlinkDet_Popup .k-grid-header .k-header {
+       display: none !important;
+    } 
+    #grdlnkDetails .k-alt {
+         background:#ced1d8;
+    }
+     
+    #grdlnkDetails tbody tr {
+    background: #E4E4E4;
+    color: white;
+    }
+
+    #grdlnkDetails tbody tr:hover {
+    background: #B5B2BE;
+    }
+   
+/* RSS */
+
+    .userRSStxtboxEdit
+    {
+        border: 1px solid;
+        border-color: #C5C5C5;
+    }
+    #grdRssFeed .k-alt {
+         background:#ced1d8;
+    }
+    
+    #grdRssFeed tbody tr {
+    background: #E4E4E4;
+    color: white;
+    }
+
+    #grdRssFeed tbody tr:hover {
+    background: #B5B2BE;
+    }
+
+    #grdRssFeed .k-grid-header .k-header {
+       display: none !important;
+    }
+    #grdRSSFeed_Popup .k-grid-header .k-header {
+       display: none !important;
+    }
+    
+    #AddRSSFeedwindow .k-block > .k-header, .k-window-titlebar
+    {
+        height: 1.8em;
+    }
+/* css elements are removed as conflict is occuring in IE dropdown */
+/* Fire Alarm */
+#cboFireAlarmSite-list
+    {
+        width: 215px !important;
+        max-height: 200px !important;
+        /*overflow-y: auto !important;
+        overflow-x: hidden !important;*/
+    }
+    
+    #cboFireAlarmSite-list ul
+    {
+        /*display: table;*/
+        padding: 0;
+        width: 210px;
+        max-height: 160px !important;
+    }
+   /* #cboFireAlarmSite-list ul li
+    {
+        display: table-row;
+    }*/
+    
+    #DDFireAlarmheader
+    {
+        width: 210px !important;
+        background-color: #696969;
+        font-weight: bold;
+        color: #fff;
+    }
+    
+/* Intrusion */
+/* css elements are removed as conflict is occuring in IE dropdown */
+    #IntrusionCategories-list
+    {
+        width: 565px !important;
+        max-height: 200px !important;
+       /* overflow-y: auto !important;
+        overflow-x: hidden !important;*/
+    }
+    
+    #IntrusionCategories-list ul
+    {
+        /*display: table;*/
+        padding: 0;
+        width: 560px;
+        max-height: 160px !important;
+    }
+   /* #IntrusionCategories-list ul li
+    {
+        display: table-row;
+    }*/    
+    /* css elements are removed as conflict is occuring in IE dropdown */
+    
+    #DDIntrusionheader
+    {
+        width: 560px !important;
+        background-color: #696969;
+        font-weight: bold;
+        color: #fff;
+    }
+    .validation-summary-intrusionpopup 
+    {
+        color: #ff0000;
+        padding-left: 7%;
+        padding-bottom: 1%;
+    }
+    .usertxtboxEditIntrusion
+    {
+        border: 1px solid;
+        border-color: #C5C5C5;
+    }
+
+/* Alert */
+
+#grdAlerts .k-state-selected
+    {
+    	background-color:#02B1AF;
+    }
+    
+    .k-header
+    {
+    	height:25px;
+    }    
+    /* css elements are removed as conflict is occuring in IE dropdown */ 
+    #cmbDeviceTypeList-list
+    {
+        width: 565px !important;
+        max-height: 200px !important;
+       /* overflow-y: auto !important;
+        overflow-x: hidden !important;*/
+    }
+    
+    #cmbDeviceTypeList-list ul
+    {
+       /* display: table;*/
+        padding: 0;
+        width: 560px;
+        max-height: 160px !important;
+    }
+   /* #cmbDeviceTypeList-list ul li
+    {
+        display: table-row;
+    }*/
+    
+    #cmbDeviceTypeList-list ul li:hover
+    {
+        background-color: #02c7c6;
+    }
+    /* css elements are removed as conflict is occuring in IE dropdown */
+    
+    #DDAlertsheader
+    {
+        width: 560px !important;
+        background-color: #696969;
+        font-weight: bold;
+        color: #fff;
+    }
+
+/* account details */
+
+    .ui-helper-clearfix
+    {
+        display: inline-block;
+        width: 350px;
+    }
+
+/* video health check */
+    .ui-button
+    {
+       margin-left:50%;
+       font-size:xx-large;
+    }
+    
+    .ui-dialog-titlebar
+    {
+        height:20px;        
+    }
+    
+    .ui-dialog .ui-dialog-titlebar 
+    {
+        padding:0 0 0 0 !important;
+    }
+    .ui-dialog-buttonpane 
+    {
+        text-align:center !important;
+    }
+    .ui-dialog-buttonset
+    {
+        float: none !important;
+    }
+    /* css elements are removed as conflict is occuring in IE dropdown */
+    #cmbDevicelist-list
+    {
+        width:485px !important;
+        max-height:200px !important;
+        /*overflow-y: auto !important;
+        overflow-x: hidden !important;*/
+    }
+    
+    #cmbDevicelist-list ul
+    {
+       /* display: table;*/
+        padding: 0;
+        width: 480px;
+        max-height: 160px !important;
+    }
+    /*#cmbDevicelist-list ul li{
+        display: table-row;
+    }*/
+    #cmbDevicelist-list ul li:hover{
+        background-color:#AB4D66;
+    }
+    /* css elements are removed as conflict is occuring in IE dropdown */
+    #DDvideoheader
+    {
+        width:480px !important;
+        background-color:#696969;
+        font-weight:bold;
+        color:#fff;
+    }
+/*monitoring */
+
+
+/* css elements are removed as conflict is occuring in IE dropdown :: Pramod*/
+#MASAccountList-list
+    {
+       width: 565px !important;
+        max-height: 190px !important;
+      
+    }
+    
+    #MASAccountList-list ul
+    {
+       
+        padding: 0;
+        width: 560px;
+        max-height: 150px !important;
+    }
+   
+    
+    #MASAccountList-list ul li:hover
+    {
+        background-color: #0194E8;
+    }
+/* css elements are removed as conflict is occuring in IE dropdown :: Pramod*/
+
+    #DDMonitorheader
+    {
+        width: 560px !important;
+        background-color: #696969;
+        font-weight: bold;
+        color: #fff;
+    }
+    .modelDialog
+    {
+        background-color:White;
+        width:50%; 
+        left:330px !important;
+    }
+    .modelDialogUP 
+    {
+        background-color:White;
+        width:30%; 
+        left:400px !important;
+        top:250px !important;
+    }
+    
+    .UserPinstyle {
+	border:2px solid #456879;
+	height: 22px;
+	width: 150px;
+    }
+    .modelDialogAccess
+    {
+        background-color:White;
+        width:100%; 
+        left:330px !important;
+    }
+
+    
+.peoverlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: none;
+}
+
+.pemodal {
+  display: none;
+  background: #FFF;
+  overflow: auto;
+  z-index: 1001;
+  color: #000;
+  position: absolute;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+    -webkit-box-shadow: 0 3px 5px #464646;
+    -moz-box-shadow: 0 3px 5px #464646;
+  box-shadow: 0 3px 5px #464646;
+  min-height: 320px;
+  min-width: 320px;
+}
+.pemodal h1 {
+  font-weight: 500;
+  background: #eb5a3d;
+  border-bottom: 1px solid #d6d0af;
+  color: #fffceb;
+  margin: 0 0 20px;
+  padding: 12px 10px 10px;
+  text-align: center;
+  font-size: 20px;
+  -webkit-border-radius: 10px 10px 0 0;
+  -moz-border-radius: 10px 10px 0 0;
+  -ms-border-radius: 10px 10px 0 0;
+  -o-border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 0 0;
+  -webkit-box-shadow: inset 0 1px 1px #f9d0c8;
+  -moz-box-shadow: inset 0 1px 1px #f9d0c8;
+  box-shadow: inset 0 1px 1px #f9d0c8;
+  border: 1px solid #de3817;
+}
+
+.pemodal .closeBtn {
+  position: absolute;
+  display: block;
+  top: 12px;
+  right: -1px;
+  background: url(../images/closeBtn.png) no-repeat 0 0;
+  width: 22px;
+  height: 22px;
+}
+
+.pemodal .modalContent {
+  position: absolute;
+  margin: 34px auto 0px auto;
+
+}
+
+/*Reports*/
+.validation-summary-reports 
+    {
+        color: #ff0000;
+        padding-left: 1%;
+        padding-bottom: 1%;
+    }
+.validation-summary-customreports 
+{
+        color: #ff0000;
+        padding-left: 4%;
+        padding-bottom: 1%;
+        font-weight: bold;
+}
+#rowcell {
+        display: table-cell;
+        padding: 3px;
+        width:80px;
+        border-right:1px solid #ccc;        
+        word-break: break-all !important;
+    }
+    
+    .rowcellheader
+    {
+        display: table-cell;
+        padding: 3px;
+        width:75px;
+        border-right:1px solid #ccc;        
+        word-break: break-all !important;
+    }
+   
+    .validation-summary-createDevice 
+    {
+        color: #ff0000;
+        padding-left: 1%;
+        padding-bottom: 1%;
+    }
+    .validation-summary-createDevice_header {
+    color: #FF0000;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 30px;
+    text-transform: uppercase;
+    padding-left: 1%;
+}

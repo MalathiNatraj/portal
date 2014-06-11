@@ -1,0 +1,53 @@
+﻿@{
+    IList<Diebold.WebApp.Models.AccessCardHolderModel> objAccCardHolderModels = new List<Diebold.WebApp.Models.AccessCardHolderModel>();
+}
+<div id="dvSearchCardholder_Modify" class="modelDialogAccess">
+    <div style="background-color: #C5C5C5; width: 100%; color: #666666">
+        <strong>
+            <label style="margin: 8% 0 0 1%;">
+                Select a Cardholder</label></strong></div>
+    <div style="width: 90%; margin: 3% 2% 0 5%;">
+        <p>
+            @(Html.Kendo().Grid(objAccCardHolderModels)
+                .Name("grdDMPXRCardHolderList")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.CardHolderId).Visible(false).Title("CHId");
+                    columns.Bound(p => p.firstName).Width("20%").Visible(false).Title("FirstName").Filterable(true).Sortable(true);
+                    columns.Bound(p => p.lastName).Width("20%").Visible(true).Title("Name").Filterable(true);
+                    columns.Bound(p => p.cardNumber).Width("20%").Visible(true).Title("CardNumber").Filterable(true);
+                    columns.Bound(p => p.pin).Width("20%").Visible(false).Title("Pin");
+                    columns.Bound(p => p.cardActivationDate).Width("20%").Title("CADate").Visible(false);
+                    columns.Bound(p => p.cardExpirationDate).Width("20%").Visible(false).Title("CEDate");
+                    columns.Bound(p => p.isActive).Width("20%").Visible(false).Title("IsActive");
+                    columns.Bound(p => p.accessGroupId).Width("20%").Visible(false).Title("AGId");
+                })
+                .Events(events => events.Change("grdDMPXRCHListChanged").DataBound("LoadingDefaultFilter"))
+                .Pageable()
+                .Filterable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .ServerOperation(false)
+                )
+            )
+        </p>
+        <div class="add-link" style="padding-top: 5px; padding-bottom: 5px; width: 100px; margin-left: 43%;">
+            <input type="button" value="Close" id="btnCloseCHModify" onclick="javascript:CloseDMPXRCHModifyList();" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function CloseDMPXRCHModifyList() {
+        //document.getElementById('dvMdfyCrdHldrList').style.visibility = 'hidden';
+        document.getElementById('dvDMPXRMdfyCrdHldrList').style.visibility = 'hidden';        
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        $("#dvErrDMPXRCardModify ul").empty();
+        //centerViewPortDialog("#dvModifyCardHolder");
+        centerViewPortDialog("#dvDMPXRModifyCardHolder");        
+    }
+
+</script>

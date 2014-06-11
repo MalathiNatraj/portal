@@ -1,0 +1,1484 @@
+31m9aef711 - (HEAD, origin/v2.5, v2.5) .SVN Directory Removal (8 hours ago) <brenak>
+31m920bbc6 - .SVN Directory Removal (8 hours ago) <brenak>
+31m1dd94c4 - Changed http to https for google api (12 hours ago) <Ryan Stephens>
+31m1d8c5cf - Change google maps API call to use client id instead of api key as per Google reqirements (12 hours ago) <Ryan Stephens>
+31mf5bf478 - Custom pagination issue has been fixed in Site Details page. (4 days ago) <Malathi>
+31m8b506d5 - Custom pagination implementation in Site List page (4 days ago) <Malathi>
+31m10dad96 - Duplicate alarms has been deleted from DB. (8 days ago) <Malathi>
+31m8535e6b - Account Number and FireMonitoring columns are deleted. (11 days ago) <Malathi>
+31mcecf801 - Duplicate alarm configuration issue has been fixed. (11 days ago) <Malathi>
+31m0c6b9c0 - alert message has been changed. (11 days ago) <Malathi>
+31m017f2e0 - Button text has been changed. (12 days ago) <Malathi>
+31m9ef6567 - Mobile user oin changes (12 days ago) <Malathi>
+31m1e8e4bd - Default site loading issue fixed in Fire Alarm Portlet (12 days ago) <Malathi>
+31m29306fd - site related changes (2 weeks ago) <Malathi>
+31m396fbc4 - Site Information changes for Mobile (2 weeks ago) <Malathi>
+31m8df66f0 - Site Logo issue fixed (3 weeks ago) <Malathi>
+31m34242c7 - Duplicate Device Key issue fixed (4 weeks ago) <Malathi>
+31md3850f1 - log is added in Home and Account controller (4 weeks ago) <Malathi>
+31mf3637ec - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 weeks ago) <Malathi>
+31m5cd5e8c - MAS portlet changes (4 weeks ago) <Malathi>
+31me17d009 - Added convert to string fn (4 weeks ago) <Priyadarsan>
+31md745e8f - MAS periodic interval is added (4 weeks ago) <Malathi>
+31m768bac1 - SiteMap & Device Create changes done (4 weeks ago) <Malathi>
+31meab4152 - Place on Test implemented for MAS (4 weeks ago) <Malathi>
+31m2688680 - Place on Test implementation in MAS portlet (4 weeks ago) <Malathi>
+31m2511b08 - Changes done in Alarm, Device and Monitor pages (5 weeks ago) <Malathi>
+31m4dfaeec - dropdown style issue fixed. (5 weeks ago) <Malathi>
+31m3418242 - Duplicate alarm issue fixed (5 weeks ago) <Malathi>
+31m951ab2a - Duplicate alarm configuration issue has been fixed (5 weeks ago) <Malathi>
+31m410f9cd - Combobox scrolling issue has been fixed for IE9 (5 weeks ago) <Malathi>
+31m1471763 - Fixed task #2103 (5 weeks ago) <Malathi>
+31m7f27547 - Fixed Task #2103: Monitoring - Warning Text Update in both web and mobile app (5 weeks ago) <Malathi>
+31mb16314f - Fixed Task #2100 Monitoring - Dates checked for reports not needing dates (5 weeks ago) <Malathi>
+31m7b0ca20 - Start and End time validations has been removed (5 weeks ago) <Malathi>
+31m41066a0 - Search criteria added for Reports (6 weeks ago) <Malathi>
+31mb69b25a - Text changed from "Reports" to "Report" (6 weeks ago) <Malathi>
+31m2a6bd8d - Account Number add issue in site page has been fixed. (6 weeks ago) <Malathi>
+31m2ac1d8b - logs added for reports (6 weeks ago) <Malathi>
+31maeabefc - User Code issue fixed for Bosch devices and Time issue fixed in access group modify page (6 weeks ago) <Malathi>
+31m4bee98c - Save and Cancel button alignment has been changed in Access Group Modify page (6 weeks ago) <Malathi>
+31mbc5cff3 - Design issue fixed, extra div has been removed (6 weeks ago) <Malathi>
+31m9bd0a74 - Issues fixed in Cardholder actions and Access group modify for new access devices (6 weeks ago) <Malathi>
+31mda3a0ef - reverted doctype changes (6 weeks ago) <Priyadarsan>
+31m41f4494 - Removed console.log as it may effect performance #2098 (6 weeks ago) <Priyadarsan>
+31ma5e1f4a - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (6 weeks ago) <Priyadarsan>
+31mb327d5e - fixed few browser warning #2098 (6 weeks ago) <Priyadarsan>
+31mddaab3b - AutoBind set as false for MAS portlet (6 weeks ago) <Malathi>
+31mf55d56b - Validation issues has been fixed (6 weeks ago) <Malathi>
+31ma478458 - Date issue fixed in Cardholder Add & Modify request formats (6 weeks ago) <Malathi>
+31maafaa8e - Reader check box issue has been fixed in Access Group Modify (6 weeks ago) <Malathi>
+31m8ffbd24 - Issues fixed in Cardholder actions and fixed task 2040 (6 weeks ago) <Malathi>
+31m6e86e05 - Fixed task 2039 for Site Maps - Change order (6 weeks ago) <Malathi>
+31m92d7d5d - Fixed task 2038 - Video Health Check Change Info (6 weeks ago) <Malathi>
+31mbfd4f47 - Close button issue has been fixed in AccessGroupModify page (6 weeks ago) <Malathi>
+31m44b27cb - Access Group modify page has been implemented for new access devices (6 weeks ago) <Malathi>
+31m67f94d9 - Gateway Edit issue has been fixed (7 weeks ago) <Malathi>
+31m07f34bc - Issue fixed for Task #2034 (7 weeks ago) <Malathi>
+31m1073e58 - validation issue fixed in Add User Code page (7 weeks ago) <Malathi>
+31ma23a793 - Fix for Task 2033 and 2034 (7 weeks ago) <Malathi>
+31ma04fd72 - Spinner issue fixed and validation removed for user code field in Add User code (7 weeks ago) <Malathi>
+31m848ca9f - Issue fixed for GetAccessgroupList in Add Access Group page (7 weeks ago) <Malathi>
+31me54ad24 - Modified for Add Access Group for new access devices (7 weeks ago) <Malathi>
+31mb84f820 - Modified for Access group delete of new access device (7 weeks ago) <Malathi>
+31m727abfc - Modified for Access Group page for new access devices (7 weeks ago) <Malathi>
+31m5b67492 - Modified for new access device types (8 weeks ago) <Malathi>
+31m76b1668 - code modified for dmpxr500Access device (8 weeks ago) <Malathi>
+31m82eff95 - AccessGroup Add has been modified for new access devices (8 weeks ago) <Malathi>
+31md76f9eb - Access Geoup Add has been modified for new access devices (8 weeks ago) <Malathi>
+31m7de839f - New device types has been added (8 weeks ago) <Malathi>
+31m609d131 - Issue fixed for Test device connection, Refresh, Restart, Show status functionalities for dmpXR100Access, dmpXR500Access and bosch devices (8 weeks ago) <Malathi>
+31m9fe3f2e - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (8 weeks ago) <Malathi>
+31m39ee4f8 - Network Down alert issue fixed for dmpXR100Access and dmpXR500Access Devices (8 weeks ago) <Malathi>
+31mab0c459 - updates footer logo (8 weeks ago) <johncox00>
+31m7cd4151 - Modifications for new access device types (9 weeks ago) <Malathi>
+31m32f3373 - Cardholder Modify page has been changed for new access devices (9 weeks ago) <Malathi>
+31mf898cf4 - Cardholder Modify has been changed for new access device (9 weeks ago) <Malathi>
+31m70bae88 - Cardholder delete modified for new access devices (9 weeks ago) <Malathi>
+31m40bb46f - Changes in Cardholder delete for new access devices (9 weeks ago) <Malathi>
+31m3bcaa23 - Cardholder delete for new access device (9 weeks ago) <Malathi>
+31m2d1d4d2 - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (9 weeks ago) <Malathi>
+31m0ef9660 - Device id added for new access devices (9 weeks ago) <Malathi>
+31m32d1ab7 - Access device type changes for mobile (10 weeks ago) <Malathi>
+31m70e85c4 - Access device type changes (10 weeks ago) <Malathi>
+31mbd0e62f - New access device type changes (10 weeks ago) <Malathi>
+31m22d2548 - CSS and Logo changes (10 weeks ago) <Ryan Stephens>
+31me68e124 - LastorDefault is changed to FirstOrDefault in AlertService (2 months ago) <Malathi>
+31mb7cdcbe - Setting default value of filter menu as Contains (2 months ago) <Malathi>
+31m580202e - Setting contains as Default filter value in Grid filter menu (2 months ago) <Malathi>
+31mab3753d - Task 1368 - Setting Contains as Default filter menu (2 months ago) <Malathi>
+31m2271109 - Alerts - Site Contact not bring shown - Ticket1944 (2 months ago) <Malathi>
+31m1c3d6f0 - File name encoding issue fixed (2 months ago) <Malathi>
+31m0c8a169 - Issue fixed when File name containing # character (2 months ago) <Malathi>
+31m0851232 - Alert Callback Timeouts issue fixed (2 months ago) <Malathi>
+31mae1fb44 - Multiple Acc num issue fixed in MAS & Fire portlet (3 months ago) <Malathi>
+31md16ac89 - Gateway create error has been fixed when company not selected (3 months ago) <Malathi>
+31mba8ca1b - Role Create and Edit issue fixed when not selecting time (3 months ago) <Malathi>
+31m70d5322 - User specific has been removed for multiple account number (3 months ago) <Malathi>
+31m9283239 - Setting Default value for Site Map Portlet (3 months ago) <Malathi>
+31m6de4976 - Modified for Custom Activity Report (3 months ago) <Malathi>
+31m9a2951d - Modified files for Multiple Account Number for a site (3 months ago) <Malathi>
+31m2c4960e - Multiple Account Number implementation in MAS (3 months ago) <Malathi>
+31m78d85db - Multiple account number has been added for a site (3 months ago) <Malathi>
+31ma95dc9a - Optimize query (3 months ago) <Ryan Stephens>
+31maf19004 - Bug fix for 2025 (3 months ago) <sudhir>
+31mf3e4d19 - Bug fix for Task 2025 (3 months ago) <sudhir>
+31m5aff24a - Task 2025-User PIN Code change (3 months ago) <sudhir>
+31m3a2155a - Standard Alert Report has been changed (3 months ago) <Malathi>
+31ma907337 - Standard Audit report has been changed (3 months ago) <Malathi>
+31m0ea7529 - Standard audit report has been modified (3 months ago) <Malathi>
+31me325945 - Standard reports has been modified (3 months ago) <Malathi>
+31m95246fc - Standard Alert and Activity Report Changes (3 months ago) <Malathi>
+31m5f8df3a - Redmine Task 1934 and 1939 (3 months ago) <sudhir>
+31mac2d1a4 - Event text is changed to Alert in ActionsMenu (3 months ago) <Malathi>
+31mf458083 - Standard audit log report path has been added (3 months ago) <Malathi>
+31mbd8e461 - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (3 months ago) <Malathi>
+31mafff272 - Standard Audit Log Report has been added. (3 months ago) <Malathi>
+31m1a3fef4 - Standard Audit Log report has been added (3 months ago) <Malathi>
+31m7931581 - Added Submenu for the Reports menu. (3 months ago) <sudhir>
+31me46e932 - Error message has been displayed while clicking on Run report without selecting any site in Monitoring portlet. (4 months ago) <Malathi>
+31m6e99436 - changes some aspects of the site map portlet (4 months ago) <johncox00>
+31ma86b696 - changed how the content type header gets set (4 months ago) <johncox00>
+31mfa876ab - sets content-type header for pdf downloads (4 months ago) <johncox00>
+31m82b8fe9 - Mobile fixes to show connection spinner (4 months ago) <Ryan Stephens>
+31mb538798 - Make Site Docs load all at once. (4 months ago) <Ryan Stephens>
+31m70b44a1 - Fix place on test (4 months ago) <Ryan Stephens>
+31md96c365 - Fix View Site squished image (4 months ago) <Ryan Stephens>
+31m599793a - changed to tel to enforce maxlength 6 (4 months ago) <Ryan Stephens>
+31md6b2f0c - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal.git (4 months ago) <Ryan Stephens>
+31mcc28c94 - Removed max from pin field (4 months ago) <Ryan Stephens>
+31m272aaf1 - Video Loss command name for last run report has been changed. (4 months ago) <Malathi>
+31mb90d547 - Added videoloss to system summary count for Health devices. (4 months ago) <Malathi>
+31me3df10c - Monitoring reports validation has been changed to 3 days instead of current 1 day allowed. (4 months ago) <Malathi>
+31m8c605d7 - Site Information save defaults issue has been fixed. (4 months ago) <Malathi>
+31m3a5c2da - changed monitoring permission (4 months ago) <Eddie>
+31m4c39bc8 - removed test data from MAS call (4 months ago) <Eddie>
+31m67f20e0 - updated return value for hyperlink click (4 months ago) <Eddie>
+31ma7c9afe - added web.config entries for mobile, fixed mp4->mpg issue in the device media service (4 months ago) <Eddie>
+31m56c74d8 - jquery search fixed for modify dropdown (4 months ago) <Eddie>
+31mb363e88 - bosch delete callback (4 months ago) <Eddie>
+31m35909e1 - modify bosch callback (4 months ago) <Eddie>
+31m37f88ca - fixed modified dropdown, added modify submit (4 months ago) <Eddie>
+31m48049ba - fixed modified url (4 months ago) <Eddie>
+31m81bd53e - cleaning up front end for bosch (4 months ago) <Eddie>
+31m6e40bee - cleaning up front end for bosch (4 months ago) <Eddie>
+31m65eb137 - serialized userinfo response (4 months ago) <Eddie>
+31me801e38 - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie Flores>
+31mf23f154 - updated bosch modify and add (4 months ago) <Eddie Flores>
+31m78fdfa8 - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal.git (4 months ago) <johncox00>
+31m732404a - adds js timer to media retrieval (4 months ago) <johncox00>
+31m7a67029 - device add id fix,w orks on refresh now, disabled alarms for videofied (4 months ago) <Eddie>
+31m8253de8 - banner-img2 has been included in project for Featured News portlet (4 months ago) <Malathi>
+31m95b6383 - Center spinner on Monitor report (4 months ago) <Ryan Stephens>
+31m9a3c98b - changed script to mpg (4 months ago) <Eddie>
+31me6bcb37 - updated video modal for monitoring widget (4 months ago) <Eddie>
+31m0955303 - updated intrusion panel for lightbox (4 months ago) <Eddie>
+31m7d568a4 - updated intrusion panel for lightbox (4 months ago) <Eddie>
+31m75e381c - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie>
+31m8b90e6c - updated video modal for monitoring widget (4 months ago) <Eddie>
+31m1d09010 - Build fixes (4 months ago) <Ryan Stephens>
+31m3d5e051 - Spinner has been added for Notes, Inventory and Documents in SiteInformation portlet. (4 months ago) <Malathi>
+31mc986296 - Added new intrusion device types Videofied and Bosch to existing code. (4 months ago) <unknown>
+31ma19bf14 - remove unused depenency (4 months ago) <Eddie>
+31m8952555 - fixed broken html (4 months ago) <Eddie>
+31md8b9898 - fixed video json for monitoring (4 months ago) <Eddie>
+31m04f8895 - fixed regex (4 months ago) <Eddie>
+31md29268d - added additional loging for MAS (4 months ago) <Eddie>
+31mf7d89dd - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie>
+31m5e7a167 - added additional loging for MAS (4 months ago) <Eddie>
+31m48e0368 - Fire alarm portlet issue fixed (4 months ago) <sudhir>
+31m56bfc63 - Add new banner for Featured News (4 months ago) <sudhir>
+31m407e1bf - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie>
+31me8d19a4 - removed test project (4 months ago) <Eddie>
+31m6e90d14 - Added namespace for System.Web.Script.Serialization.JavaScriptSerializer (4 months ago) <Ryan Stephens>
+31mc7736e5 - Added Passed value for smart rule of Intrusion Device (4 months ago) <unknown>
+31m1c1635b - Site detail page issue fixed (4 months ago) <unknown>
+31m782ac1c - Update Web.config for new device (4 months ago) <Ryan Stephens>
+31mf45877f - add html5 tag (4 months ago) <Eddie>
+31m21bd990 - add videos to monitoring, possible fix for weather bug (4 months ago) <Eddie>
+31m7286054 - disabled buttons / fix for non-bosch devices (4 months ago) <Eddie>
+31ma29be41 - removed always success from powershell script (4 months ago) <Eddie>
+31mb5cb9c9 - fixed capture media action on controller (4 months ago) <Eddie>
+31m37d021c - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie>
+31mfb60851 - handled media response from platform (4 months ago) <Eddie>
+31m3d9fcda - Cahnge popup url for Intrusion.js (4 months ago) <Ryan Stephens>
+31mbc93a8f - Open new window for media (4 months ago) <Ryan Stephens>
+31m646278f - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie>
+31m5f11259 - merge (4 months ago) <Eddie>
+31m2f0a669 - MAS URL Change for videos (4 months ago) <Ryan Stephens>
+31m509a7ac - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie>
+31mc177093 - merge (4 months ago) <Eddie>
+31m369d41c - Stubs for MAS Media (4 months ago) <Ryan Stephens>
+31mc04181a - Change to get Monitoring Panel working (4 months ago) <Ryan Stephens>
+31mc700090 - added logging for timeout (4 months ago) <Eddie>
+31mb7ddc51 - chanced local copy attribute for automation reference (4 months ago) <Eddie>
+31md8a14e4 - changes for videofied (4 months ago) <Eddie>
+31md41fe0e - Change to match videofied type (4 months ago) <Ryan Stephens>
+31md54922e - fixed merge issues (4 months ago) <Eddie>
+31mf671903 - updated device name to correct device (4 months ago) <Eddie>
+31m90b7397 - Fix getMedia parameters (4 months ago) <Ryan Stephens>
+31m679773f - Changes for Videofied front end (4 months ago) <Ryan Stephens>
+31m9156794 - videofied service (4 months ago) <Eddie>
+31md4da3d7 - Adding postgress reference (4 months ago) <Ryan Stephens>
+31me7037ff - Changes for GetImage (4 months ago) <Ryan Stephens>
+31mf4b3d8b - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie>
+31m753a02c - removed psql depenency (4 months ago) <Eddie>
+31m807c690 - merging XC change (4 months ago) <Ryan Stephens>
+31m01640b8 - merged XC change (4 months ago) <Ryan Stephens>
+31m2689371 - bosch add completed (4 months ago) <Eddie>
+31m74bb798 - added fixed service call added required infomation (4 months ago) <Eddie>
+31m1269b95 - added dynamic json serializer (4 months ago) <Eddie>
+31m497d665 - updating json for addusercode (4 months ago) <Eddie>
+31me34af0b - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie>
+31m4a9bb1d - updated get profile for bosch call (4 months ago) <Eddie>
+31m0e0e20b - Fix unmatchable code (4 months ago) <Ryan Stephens>
+31m5d47797 - syncing fixes for bosch (4 months ago) <Eddie>
+31m4a0a347 - syncing fixes for bosch (4 months ago) <Eddie>
+31mfff5344 - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie>
+31m97454e8 - Role Page Functionalities (4 months ago) <RaghulVarma>
+31ma681448 - MAS Portlet Mobile Changes (4 months ago) <RaghulVarma>
+31m28f30dd - passing device typeto view level, added commands property to list (4 months ago) <Eddie>
+31m813302a - #1906 Changes (4 months ago) <RaghulVarma>
+31md2f736d - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie>
+31mb9abc0e - updated project (4 months ago) <Eddie>
+31m7efd48c - Updated HealthCheckDeviceTypeRelation to include HealthCheckVersion2. (4 months ago) <johncox00>
+31mc19adf3 - Added comments for eddie to find. Look for 'EDDIE'. (4 months ago) <johncox00>
+31m4b8d02b - uncommented get user profile numbers post (4 months ago) <johncox00>
+31m3ed976d - allow get on device async actions (4 months ago) <Eddie>
+31m533ecd8 - merge (4 months ago) <Eddie>
+31m03a9681 - added device type for list call (4 months ago) <Eddie>
+31m0429cfa - adds underscore map file (4 months ago) <johncox00>
+31m2190abd - added support for new devices, updated hard values (4 months ago) <Eddie>
+31mb7baa24 - Eddies changes adding (4 months ago) <RaghulVarma>
+31md07e1c2 - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie>
+31mb0038fa - updated alarm controller for new devices (4 months ago) <Eddie>
+31md90bd58 - Merge branch 'v2.5' of github.com:Mach19/diebold_portal into v2.5 (4 months ago) <RaghulVarma>
+31m08aa746 - MAS Platform Call. (4 months ago) <RaghulVarma>
+31m93da339 - fixed device panel, added UI for videofied (4 months ago) <Eddie>
+31m2c97b82 - Removed unwanted alerts from Home.js (4 months ago) <RaghulVarma>
+31mfba5331 - Task 1905 Fix. (4 months ago) <RaghulVarma>
+31m80c1e94 - Site Inventory Issue Fix. Issues Reported by Ravi (4 months ago) <RaghulVarma>
+31m1e37a26 - Site Map Issue Reported by Greg (4 months ago) <RaghulVarma>
+31me0522cf - Site Inventory Changes (4 months ago) <RaghulVarma>
+31m587a881 - UI Design Changes for Inventory (4 months ago) <RaghulVarma>
+31m6d2fa0e - Merge branch 'v2.5' of github.com:Mach19/diebold_portal into v2.5 (4 months ago) <RaghulVarma>
+31m3735697 - Site Inventory and Company Inventory Details CR Fix (4 months ago) <RaghulVarma>
+31m40dfb6f - updated service calls (4 months ago) <Eddie>
+31m2d1e691 - added javascript libs, and updated maintenence screens (4 months ago) <Eddie>
+31mac52f1f - Site Inventory Non UI layers created (4 months ago) <RaghulVarma>
+31m2898382 - Site Document Issue Fix. (4 months ago) <RaghulVarma>
+31m31a3f50 - Site Document Issue Fixed for Download of file. (4 months ago) <RaghulVarma>
+31m8c20533 - Site Document Changes (4 months ago) <RaghulVarma>
+31m1bf8ae6 - Task Id 1993 in Redmine (4 months ago) <RaghulVarma>
+31m8073521 - Merge branch 'v2.5' of github.com:Mach19/diebold_portal into v2.5 (4 months ago) <RaghulVarma>
+31mc2bc720 - Site Document Changes (4 months ago) <RaghulVarma>
+31m2fa2378 - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie>
+31m93eda67 - Site Document Changes (4 months ago) <RaghulVarma>
+31m13f0405 - fixed misspelling (4 months ago) <Eddie>
+31m751acd6 - added namespacing for javascript (4 months ago) <Eddie>
+31ma5d81cc - updated copy (4 months ago) <Eddie>
+31m028b602 - updated copy (4 months ago) <Eddie>
+31m84acfc5 - added bosch intrusion views, changes to use partial views via ajax (4 months ago) <Eddie>
+31md36081d - Merge branch 'v2.5' of https://github.com/Mach19/diebold_portal into v2.5 (4 months ago) <Eddie>
+31m212173c - added partial view to controller (4 months ago) <Eddie>
+31mcbb16e8 - Site Document Changes (5 months ago) <RaghulVarma>
+31mbf91418 - Alert Service file changes for Intrusion device (5 months ago) <RaghulVarma>
+31m73bc002 - Duplicate alarm configuration creation Issue Fix (5 months ago) <RaghulVarma>
+31m356d981 - Alerts related fix. (5 months ago) <RaghulVarma>
+31m43155a9 - Site Notes Issue Fix (5 months ago) <RaghulVarma>
+31me7d8265 - #1891 : Change Site Information portlet to have 3 buttons at bottom: Notes, Documents, Inventory (5 months ago) <RaghulVarma>
+31mbdbf60f - Contact email fix (5 months ago) <RaghulVarma>
+31m59dead9 - Video Loss Alert Issue Fix (5 months ago) <RaghulVarma>
+31md210193 - Fire widget Preference page description change (5 months ago) <RaghulVarma>
+31mdf59e1c - Site Details Page - Contact Email - truncate issue Fix (5 months ago) <RaghulVarma>
+31m23bcc6f - image width change (5 months ago) <RaghulVarma>
+31m6c7fbad - Account Portlet Design Issue (5 months ago) <RaghulVarma>
+31m102de6c - Fire widget Issues Reported by Greg. (5 months ago) <RaghulVarma>
+31mcd0be46 - Fire Widget Issue Fix (5 months ago) <RaghulVarma>
+31m0c6a45f - Close context menu in Fire widget after selecting the default value. (5 months ago) <RaghulVarma>
+31m1c17766 - Intrusion related Fix (5 months ago) <RaghulVarma>
+31me45203f - Intrusion Alert related Fix (5 months ago) <RaghulVarma>
+31m2ede2e7 - Validation Check done for Fire Widget Default value selection (5 months ago) <RaghulVarma>
+31md9407a9 - MAS Changes (5 months ago) <RaghulVarma>
+31m93d10b3 - Validation message to be displayed when account number is not selected. (5 months ago) <RaghulVarma>
+31md6fa39a - Access Group Fix for Ver 2.0 (5 months ago) <RaghulVarma>
+31mb5032ce - Alert related Push for Mobile App (5 months ago) <RaghulVarma>
+31m19205d3 - <Bug Id : 1948> | Area Issue in Itrusion | (5 months ago) <RaghulVarma>
+31m405aec3 - Weather Alert related Issue Fix (5 months ago) <RaghulVarma>
+31m12f4f0e - Weather Alert Related Fix (5 months ago) <RaghulVarma>
+31m4453fbc - Pending changes in Fire Widget (5 months ago) <RaghulVarma>
+31m9e3282b - Web.config Changes (5 months ago) <RaghulVarma>
+31mb704ea3 - Cached files are Ignored. (5 months ago) <RaghulVarma>
+31m0f80f51 - Fire widget and Weather Alert Changes (5 months ago) <RaghulVarma>
+31m60cb28d - Removed the hard coded values (5 months ago) <RaghulVarma>
+31m2826cc5 - Fire widget changes (5 months ago) <RaghulVarma>
+31md248791 - Version 2.5 Changes made for Fire Widget and Weather Alert (5 months ago) <RaghulVarma>
+31mb39f719 - Spinner has been added in Access Group Modify (5 months ago) <CAMKMG-BLR\SN2037>
+31m7f58f3d - Access Group Modify Implementation (5 months ago) <CAMKMG-BLR\SN2037>
+31m7cfd26a - <#1943> | Latitude and Longitude issue |< Raghul> (5 months ago) <CAMKMG-BLR\SN2037>
+31m3586505 -  (5 months ago) <CAMKMG-BLR\SN2037>
+31m1adcc48 - Access Group Response Json format has been changed. (5 months ago) <CAMKMG-BLR\SN2037>
+31md9ed286 - AGModify_July31 (5 months ago) <CAMKMG-BLR\SN2037>
+31m108af30 -  (5 months ago) <CAMKMG-BLR\SN2037>
+31m26092a4 -  (5 months ago) <CAMKMG-BLR\SN2037>
+31m3550ae7 - Access and Intrusion Platform call (5 months ago) <CAMKMG-BLR\SG1408>
+31meb0c364 - Log supress (5 months ago) <CAMKMG-BLR\SN2080>
+31m6e9b7d7 - Issue fixed in Access Group Create . (5 months ago) <CAMKMG-BLR\SN2037>
+31md7837b6 - Issue fixed in access group delete. (5 months ago) <CAMKMG-BLR\SN2037>
+31mf33c61b - Alerts Issue Fix with respect to Notify Alert (5 months ago) <CAMKMG-BLR\SN2080>
+31m708efe8 - Alerts Related issues for Intrusion Device Fix. (5 months ago) <CAMKMG-BLR\SN2080>
+31m20f86c2 -  (5 months ago) <CAMKMG-BLR\SN2037>
+31mb29c3b2 - Ticket 1936: Access - Group Create does not require "Cycle" (5 months ago) <CAMKMG-BLR\SN2037>
+31m3ae3887 - Ticket 1938 - Access Group Delete not working (5 months ago) <CAMKMG-BLR\SN2037>
+31m14d24f8 - Zone Bypass Issue Fix. (6 months ago) <CAMKMG-BLR\SN2080>
+31m25b5ae7 - Alert Related Fix for Zone Bypass (6 months ago) <CAMKMG-BLR\SN2080>
+31mfc5185b - Alerts Related Issues. (6 months ago) <CAMKMG-BLR\SN2080>
+31m04d91a4 - Alert Related Fix. (6 months ago) <CAMKMG-BLR\SN2080>
+31m464f406 - Alert Related Fix (6 months ago) <CAMKMG-BLR\SN2080>
+31m288250a - Removing the API Call made to Google to get the Latitude and Longitude details. (6 months ago) <CAMKMG-BLR\SN2080>
+31m699541e - Avoid Duplicate Rules in Alarm Config Page (6 months ago) <CAMKMG-BLR\SN2080>
+31m365204e - <Redmine Id # 1935> | Offering a gateway that would support multiple customers | <Raghul> (6 months ago) <CAMKMG-BLR\SN2080>
+31m9b074e1 - Alerts Clear Fix. (6 months ago) <CAMKMG-BLR\SN2080>
+31m3e9189b - DVR related Alerts Fix (6 months ago) <CAMKMG-BLR\SN2080>
+31m836479d - MAS issue Fix (6 months ago) <CAMKMG-BLR\SN2080>
+31mc9c4f21 - DVR Days Recorded, Network Down, Is not recording. (6 months ago) <CAMKMG-BLR\SN2080>
+31m73db5c5 - Intrusion Related Issue Fix (6 months ago) <CAMKMG-BLR\SN2080>
+31m23ccf01 - Access Related Alert Issue Fix. (6 months ago) <CAMKMG-BLR\SN2080>
+31m01a9627 - Access Related Alerts Fix (6 months ago) <CAMKMG-BLR\SN2080>
+31m580d9bb - Bypass Alert in Intrusion Fix (6 months ago) <CAMKMG-BLR\SN2080>
+31mc9d41a1 - Clear Alerts Intrusion  Issues  Fix. (6 months ago) <CAMKMG-BLR\SN2080>
+31m3114d86 - Intrusion Related Alerts Fix. (6 months ago) <CAMKMG-BLR\SN2080>
+31m3cfdd82 - Intrusion Related Activities - Fixed (6 months ago) <CAMKMG-BLR\SN2080>
+31m39877ea - Alerts Related Activities (6 months ago) <CAMKMG-BLR\SN2080>
+31m82cdb6b - Alerts Related Activities (6 months ago) <CAMKMG-BLR\SN2080>
+31mb635790 - Alert related activities (6 months ago) <CAMKMG-BLR\SN2080>
+31m0daa49e - Reverted the Intrusion Platform Call. (6 months ago) <CAMKMG-BLR\SN2080>
+31m873cb4e - Alerts Related Activities (6 months ago) <CAMKMG-BLR\SN2080>
+31ma39e7ef - Spinner issue has been fixed (6 months ago) <CAMKMG-BLR\SN2037>
+31m02732b8 - Numeric validation has been removed from CardNumber and UserCode fields for multiple response #1654 (6 months ago) <CAMKMG-BLR\SN2037>
+31m25b8fc5 - Alert changes (6 months ago) <CAMKMG-BLR\SN2037>
+31m874fa91 - Error message changed if gateway has associated with devices. (6 months ago) <CAMKMG-BLR\SN2037>
+31mc417204 - Ok button issue in Confirmation window has been fixed. (6 months ago) <CAMKMG-BLR\SN2037>
+31m1962a4d - Jquery 1.9.1.min has been deleted - Priyadharsan (6 months ago) <CAMKMG-BLR\SN2037>
+31m6003619 - Delete confirmation window has been removed (6 months ago) <CAMKMG-BLR\SN2037>
+31mae4534f - Title has been changed. (6 months ago) <CAMKMG-BLR\SN2037>
+31m1a1d344 -  (6 months ago) <CAMKMG-BLR\SN2037>
+31m0947f26 - <#1849>|The user name and password for devices should be stored encrypted in the database|<raghul> (6 months ago) <CAMKMG-BLR\SN2080>
+31mc76657d - add url for site map platform call (6 months ago) <CAMKMG-BLR\SG1408>
+31m0d0be35 -  (6 months ago) <CAMKMG-BLR\SG1408>
+31mcd135ea - removed reference for jquery 1.9.1 (6 months ago) <CAMKMG-BLR\SG1408>
+31mc80cc40 - Monitoring portlet multiple home post fixed (6 months ago) <CAMKMG-BLR\SG1408>
+31m625fbcd - fixed data format for alert history (6 months ago) <CAMKMG-BLR\SG1408>
+31m22e0b35 - Pin validation changed for cardholder modify (6 months ago) <CAMKMG-BLR\SN2037>
+31m5ecd7f6 - Pin validation changes for Task 1654 (6 months ago) <CAMKMG-BLR\SN2037>
+31mbf0437c - Command name "GetusercodeInformation" has been changed to "GetUserCodesInformation". (6 months ago) <CAMKMG-BLR\SN2037>
+31ma2c5245 - Command name "GetCardholderInformation" has been changed to "GetCardholdersInformation" (6 months ago) <CAMKMG-BLR\SN2037>
+31m4b7d3f5 - Pin filed validation has been removed for task 1654 (6 months ago) <CAMKMG-BLR\SN2037>
+31me000bfc - versioning of custom css and js using md5 (6 months ago) <CAMKMG-BLR\SG1408>
+31m70548ad - fixed dashboard css (6 months ago) <CAMKMG-BLR\SG1408>
+31m1d4a74a - fixed dashboard css (6 months ago) <CAMKMG-BLR\SG1408>
+31me36b538 - Multiple Response JSON format changed for GetCardholder Information & GetUserCode Information. (6 months ago) <CAMKMG-BLR\SN2037>
+31mccede8c - Multiple Response for Get UserCode Information in UserCode Delete page. (6 months ago) <CAMKMG-BLR\SN2037>
+31ma845c75 - Change to Site Name after Account Number Selected in mas (6 months ago) <CAMKMG-BLR\SG1408>
+31m967e41d - Multiple Response for getting User code and Carholder information - Intrusion Usercode modify and Access Cardholder Delete (6 months ago) <CAMKMG-BLR\SN2037>
+31m16d4a9e - added background for Alert cog wheel selection (6 months ago) <CAMKMG-BLR\SG1408>
+31mb6c3b10 - CardholderModify_MultipleResponse (6 months ago) <CAMKMG-BLR\SN2037>
+31m904072d - Added new method for alert check (6 months ago) <CAMKMG-BLR\SN2080>
+31m5e58865 - Alert related Issues (6 months ago) <CAMKMG-BLR\SN2080>
+31mf128dd7 - Alerts Related Issues Fixed. (6 months ago) <CAMKMG-BLR\SN2080>
+31mbebd24d - #1845 Changes (6 months ago) <CAMKMG-BLR\SN2080>
+31m3e46122 - #1845 (6 months ago) <CAMKMG-BLR\SN2080>
+31md6ed5f7 - <#1845> | Review of Field Authentication | <Raghul> (6 months ago) <CAMKMG-BLR\SN2080>
+31m84732bc - reverted changes (6 months ago) <CAMKMG-BLR\SG1408>
+31mdef69f8 - dashboard multiple home load fixed (6 months ago) <CAMKMG-BLR\SG1408>
+31mfe50ae9 - Ticket 1242 Fix for popup position when Refresh click in Access, Intrusion and VHC portlets (6 months ago) <CAMKMG-BLR\SN2037>
+31ma30db8a - Revereted Priyadharshans changes (6 months ago) <CAMKMG-BLR\SN2080>
+31m4e6adaf - UserPin Data type changes (6 months ago) <CAMKMG-BLR\SN2080>
+31m5c67bb5 - Account Detail - View Profile Issue with Role - Task 1660 (6 months ago) <CAMKMG-BLR\SN2037>
+31m5dce7dc - fixed dashboard home load multiple times (6 months ago) <CAMKMG-BLR\SG1408>
+31m207d2a4 - dashboard left to right portlet fixed (6 months ago) <CAMKMG-BLR\SG1408>
+31m6c1cd8d - Removed Logger (6 months ago) <CAMKMG-BLR\SN2080>
+31m7de59db - removed red border (6 months ago) <CAMKMG-BLR\SG1408>
+31m7f951d3 - Dashboard left to right movement fixed (6 months ago) <CAMKMG-BLR\SG1408>
+31m7053900 - <#1850> | Allow Alphanumeric Zip codes | <Raghul> (6 months ago) <CAMKMG-BLR\SN2080>
+31m8a279d9 - <#1847> | User column resizing on tables | <Raghul> (6 months ago) <CAMKMG-BLR\SN2080>
+31md5274a0 - <#1847> | User column resizing on tables | <Raghul> (6 months ago) <CAMKMG-BLR\SN2080>
+31mff02b5a - fixed home.css (6 months ago) <CAMKMG-BLR\SG1408>
+31m83d4223 - BugId 1840 Fix (6 months ago) <CAMKMG-BLR\SN2080>
+31m885fc6e - version changed for home.js and home.css (6 months ago) <CAMKMG-BLR\SG1408>
+31m7c37eff - Alert 'all' checkbox fixed (6 months ago) <CAMKMG-BLR\SG1408>
+31mc59673c - Gateway delete issue fixed | <Malathi> (6 months ago) <CAMKMG-BLR\SN2037>
+31m089781d - For Checking added Logs (6 months ago) <CAMKMG-BLR\SN2080>
+31m0c1928c - Changed MAS image in preferences page (6 months ago) <CAMKMG-BLR\SG1408>
+31me241a29 - Allow Special Characters in User screen Error Message change in Access Denied (6 months ago) <CAMKMG-BLR\SN2080>
+31m80f3028 - Rename from Legal Document to Terms of Use (6 months ago) <CAMKMG-BLR\SN2080>
+31m4474db5 -  (6 months ago) <CAMKMG-BLR\SN2037>
+31me9934f3 - Bug fix 591 & 589 | Gateway Delete (6 months ago) <CAMKMG-BLR\SN2037>
+31mc62255c - Removed caps lock (6 months ago) <CAMKMG-BLR\SN2080>
+31mb5d560f - <#1840> | User Login - Fail if passed by SecureAuth but not defined on Portal | <Raghul> (6 months ago) <CAMKMG-BLR\SN2080>
+31m700bf8f - <#1846> | Change Default Layout for new user | <Raghul> DB Changes has also to be done. (6 months ago) <CAMKMG-BLR\SN2080>
+31m184d807 - video health check alarm link updated (6 months ago) <CAMKMG-BLR\SG1408>
+31m172910d - Issue Reported by Ravi and Satya regarding Terms and Conditions (6 months ago) <CAMKMG-BLR\SN2080>
+31md7ecbc7 - <#1841> | Terms and Conditions Issues | <Raghul> (6 months ago) <CAMKMG-BLR\SN2080>
+31md16e122 - LIVE VIEW FIXED (6 months ago) <CAMKMG-BLR\SG1408>
+31mb0ee972 - #1841 - Changes | Raghul (7 months ago) <CAMKMG-BLR\SN2080>
+31m32128bf - Issues raised by ravi and #1841 Defect Fix (7 months ago) <CAMKMG-BLR\SN2080>
+31m14ab778 - live view fixed (7 months ago) <CAMKMG-BLR\SG1408>
+31m76d0710 - <Task#1841> | Create Blank Pages for Diebold Terms and Conditions Legal Language | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31m094889c - Issue fixed while creating the device (7 months ago) <CAMKMG-BLR\SN2037>
+31m1ba30a1 -  (7 months ago) <CAMKMG-BLR\SN2080>
+31m04f501a - Systemsummary Issue Raised by Ravi (7 months ago) <CAMKMG-BLR\SN2080>
+31md1f2bed -  (7 months ago) <CAMKMG-BLR\SG1408>
+31meaf3b88 - fixed duplicate javascript method name (7 months ago) <CAMKMG-BLR\SG1408>
+31mfdf0e11 - Task #942 | Delete alerts while deleting the devices (7 months ago) <CAMKMG-BLR\SN2037>
+31m2d326d7 - Alerts related activities (7 months ago) <CAMKMG-BLR\SN2080>
+31mc013d84 - some css changes (7 months ago) <CAMKMG-BLR\SG1408>
+31m904fd87 - Moved all inline js and css from dashboard page (7 months ago) <CAMKMG-BLR\SG1408>
+31m660c662 - Issues Raised by Ravi before deployment mail dated 24 Jun (7 months ago) <CAMKMG-BLR\SN2080>
+31mc479913 - <Redmine #1836> | Pin Code Entry should be hidden | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31m30332bf - EMC Request JSON format change (7 months ago) <CAMKMG-BLR\SN2037>
+31mc58d0d1 - <RedmineId #1832> | Monitoring - contacts list retrieval connecting spinner | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31ma333762 -  (7 months ago) <CAMKMG-BLR\SN2037>
+31m5e80989 - Reverted Priyadarshans changes and Fixed Bug Id 1843 Bug Id 1842 (7 months ago) <CAMKMG-BLR\SN2080>
+31m30d667e -  (7 months ago) <CAMKMG-BLR\SN2037>
+31m84596c8 -  (7 months ago) <CAMKMG-BLR\SN2037>
+31m40a2675 -  (7 months ago) <CAMKMG-BLR\SN2037>
+31m510421f -  (7 months ago) <CAMKMG-BLR\SN2037>
+31m381ba78 - Site map portlet changes (7 months ago) <CAMKMG-BLR\SG1408>
+31ma781710 - Alert Related Issues 1. Notify Method Issue 2. Display Site name and then the alert name in element identifier column (7 months ago) <CAMKMG-BLR\SN2080>
+31mfbce8ba - Alerts_Related_Isssues (7 months ago) <CAMKMG-BLR\SN2080>
+31mbe1295e - Task #942 Device Delete - Whenever, a device is deleted, the rules also shall be deleted from the portal database (7 months ago) <CAMKMG-BLR\SN2037>
+31mbfde540 -  (7 months ago) <CAMKMG-BLR\SN2037>
+31mf853830 -  (7 months ago) <CAMKMG-BLR\SN2037>
+31mec86111 - Alert - EMC Implementation (7 months ago) <CAMKMG-BLR\SN2037>
+31m6300ef9 - Alert - EMC Implementation (7 months ago) <CAMKMG-BLR\SN2037>
+31m08ba102 - Alert - EMC Implementation (7 months ago) <CAMKMG-BLR\SN2037>
+31mab76215 - Alert - EMC Implementation (7 months ago) <CAMKMG-BLR\SN2037>
+31m7f9594c - Alert Related Activities (7 months ago) <CAMKMG-BLR\SN2080>
+31maef3a41 - site map changes (7 months ago) <CAMKMG-BLR\SG1408>
+31m849572d - Increase field size for title on user create & edit_1659 | <Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31mc05880b - fixed site view issue (7 months ago) <CAMKMG-BLR\SG1408>
+31m74f9c4f - site map chnages (7 months ago) <CAMKMG-BLR\SG1408>
+31m32ce4c6 - Changes_as_per_John_in_Alerts (7 months ago) <CAMKMG-BLR\SN2080>
+31mdb2564a - revert change (7 months ago) <CAMKMG-BLR\SG1408>
+31m8620aa4 - fixed url encoding issue in site (7 months ago) <CAMKMG-BLR\SG1408>
+31mf6052ed - site map changes (7 months ago) <CAMKMG-BLR\SG1408>
+31m13e9102 - site map changes (7 months ago) <CAMKMG-BLR\SG1408>
+31m2b6303b - featured news chnages reverted (7 months ago) <CAMKMG-BLR\SG1408>
+31m9eff68b - removed duplicate Javascript reference (7 months ago) <CAMKMG-BLR\SG1408>
+31m18bef25 - MAS_Portlet_Issue_Fix (7 months ago) <CAMKMG-BLR\SN2080>
+31m92bad6e - fixed Dashboard page multiple loads 2 - links 3- mas (7 months ago) <CAMKMG-BLR\SG1408>
+31m1bf9fe5 - Site Geo coordinated update (7 months ago) <CAMKMG-BLR\SG1408>
+31m2eb9102 -  (7 months ago) <CAMKMG-BLR\SN2037>
+31mbf8e30c -  (7 months ago) <CAMKMG-BLR\SN2037>
+31me3114fc - hardcoded the threshold value for smart and raid status (7 months ago) <CAMKMG-BLR\SN2080>
+31meddce1f - Changed ByPass to ByPassed VideoLoss threshold value to VL (7 months ago) <CAMKMG-BLR\SN2080>
+31m60d1007 - Issue fixed in deleting alarmconfiguration when device delete. (7 months ago) <CAMKMG-BLR\SN2037>
+31m74bccb4 - Performance Tuning for MAS Portlet (7 months ago) <CAMKMG-BLR\SN2080>
+31m313fd74 - Logger Added (7 months ago) <CAMKMG-BLR\SN2080>
+31mc4e7945 - <Ticket :1367> | Alignment of search Icon on portlets | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31me07644c - Device delete Issue fixed when getting error from Gateway - Device delete | <Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31m5f0c0d8 - Device Delete - Whenever, a device is deleted, the rules also shall be deleted from the portal database|Task 942|Malathi (7 months ago) <CAMKMG-BLR\SN2037>
+31m703374b - <Task Id: 1363> | Monitoring - New report "Contact List" has to be added | <Raghul> <Task Id: 1364> | Monitoring - Events have to be updated based on the MAS API V5 | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31m3570409 - Ticket #1642|System Summary Does Not Display Summary when user has devices - PROD|<Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31m76885ef -  (7 months ago) <CAMKMG-BLR\SG1408>
+31m42f0748 - No devices label issue fixed (7 months ago) <CAMKMG-BLR\SN2037>
+31m427f719 - system summary mobile portlet updated (7 months ago) <CAMKMG-BLR\SG1408>
+31m28ea2c8 -  (7 months ago) <CAMKMG-BLR\SG1408>
+31m95e42b7 - system summary added blocking element at startup (7 months ago) <CAMKMG-BLR\SG1408>
+31m5fceb37 - System summary mobile portlet updated (7 months ago) <CAMKMG-BLR\SG1408>
+31m965f387 - System summary replaced error popup to error message | Priyadarsan (7 months ago) <CAMKMG-BLR\SG1408>
+31m81e178b - Alert door forced  - make a platform call to get the last report of Intrusion device and parse it.|<Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31m0f13337 - fixed dropdown list table header missing while dragging and dropping portlet (7 months ago) <CAMKMG-BLR\SG1408>
+31mff20300 - <RedmineI d770> | Door Held in Alerts | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31mb56b937 - Task 1362 Alphanumeric Fields required in Site Information (7 months ago) <CAMKMG-BLR\SN2037>
+31m4cba9a7 - Live View - secondary live view portlet displays improper cameras (7 months ago) <CAMKMG-BLR\SN2037>
+31m34e8e3b - Set Is acknowledged to false every time the alert gets triggered. (7 months ago) <CAMKMG-BLR\SN2080>
+31m1fbee61 - No reports if no devices available to user (7 months ago) <CAMKMG-BLR\SN2080>
+31m97f0e53 - BugId:1245 | Mas Portlet | Temp Fix (7 months ago) <CAMKMG-BLR\SN2080>
+31m657eae6 - Alerts Issue Fix - Remove Isacknowledged to default value (7 months ago) <CAMKMG-BLR\SN2080>
+31me4cfb9c - <RedmineId 1140> | FAIL on System Summary when no devices allowed for user | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31m1886741 - BugId:1245 | Monitoring Account Number Incorrect | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31m3395ef7 - Alerts_DisplayinGrid (7 months ago) <CAMKMG-BLR\SN2080>
+31mc29de52 - <Redmine:1093> | Reassigning User Company causes FAIL | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31m59c376e - Ticket 1291| Monitoring(IE9)- Clicking on Run report button,without selecting Report type should throw an Error as " please select the report type". |<Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31mc326b4e - Task #1286 Site information: Add Notes window is not showing Text area boundary. | <Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31me304c3f - SystemSummary - Issue raised by Ravi on Jun 4 - Fixed (7 months ago) <CAMKMG-BLR\SN2080>
+31m7fb24cf - <RedmineId:1244> |The site account number must allow alphanumeric input. MAS account numbers will have alpha characters. | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31m3cc0e40 - Device dropdown grid alignment issue has been fixed|<Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31ma4bc2f7 - Model Dialog window white background issue fixed | <Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31m92e0a40 - Rules Related Issue (7 months ago) <CAMKMG-BLR\SN2080>
+31mc3ca7f4 - Rules based on Johns Mail (7 months ago) <CAMKMG-BLR\SN2080>
+31mb547971 - Alerts Issue Raised by Ravi -- Status not getting displayed (7 months ago) <CAMKMG-BLR\SN2080>
+31m04fbab9 - Grid header and textbox border issue fixed in Links & Rss Portlets (7 months ago) <CAMKMG-BLR\SN2037>
+31m1ae300e - SystemSummary Issue Fixed (7 months ago) <CAMKMG-BLR\SN2080>
+31m13cd61b - <RedmineId 574> | Dashboard - After moving all portlets on to left side, doesn't allow the portlets to move to the right side | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31m538678e - Items displayed in same line in context menu (IE9) issue fixed (7 months ago) <CAMKMG-BLR\SN2037>
+31mdeff26b - <RedmineId853> | Alerts - Alert date time shall display time as well | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31m2375818 - SearchdropdownPopup_Task 185|<Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31mf0ceadf - Clear Alerts only when ack has been checked and clear alerts are received (7 months ago) <CAMKMG-BLR\SN2080>
+31maaa87f3 - Style issue fixed for Links portlet grid and context menu (7 months ago) <CAMKMG-BLR\SN2037>
+31m4c4ce89 - Links and RSS style issue has been fixed | <Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31md63ef96 - Design issue fixed in context menu, model dialog window - Bug id 213 and 215 | <Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31md872a5f - <Redmine id 184> | Add a refresh button to query the device again as if you just selected it. | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31m743173a -  (7 months ago) <CAMKMG-BLR\SN2037>
+31mbfd3595 - design changes done for search dropdown (7 months ago) <CAMKMG-BLR\SN2037>
+31m3cc4926 - <Redmine ID 560> | Mobile Site - have an ALL selection or checkbox on the alerts | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31m623fbac - Search dropdown implementation | <Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31m663b34c - Searchdropdown popup page added for Task#185 | <Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31m224bbc3 - Removed Session State Behavior (7 months ago) <CAMKMG-BLR\SN2080>
+31mea94cca - External Device Id should be ack's _Id what we receive. Changed and Fixed. (7 months ago) <CAMKMG-BLR\SN2080>
+31m775c05d - SessionStateBehavior.Readonly (7 months ago) <CAMKMG-BLR\SN2080>
+31m064e3cd - Search popup has been added in Intrusion Portlet | <Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31m4e62bec - Pagination issue fixed in site search popup | <Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31me2c0fac - Add camera has been removed from Cog wheel - Task 588 | <Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31m79a12fd -  (7 months ago) <CAMKMG-BLR\SN2037>
+31m7041b9c -  (7 months ago) <CAMKMG-BLR\SN2037>
+31m56c05c3 - Fixed issue 587 | <Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31m90edcb2 - <RedminId 569> | System Summary - Report has to be driven through user hierarchy | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31m5d4b650 - <Redmine Id 586> | User Keychains in MAS | <Raghul> (7 months ago) <CAMKMG-BLR\SN2080>
+31m6836cea - Clear Defaults should be an option on the cog menu to remove a previously saved default selection. | <Malathi> (7 months ago) <CAMKMG-BLR\SN2037>
+31m4ee092a - Added Spinner for Gateway show status (8 months ago) <CAMKMG-BLR\SN2080>
+31m373f41f - Add Spinner for Device Create, Edit and Delete (8 months ago) <CAMKMG-BLR\SN2080>
+31mfaf8835 - Spelling mistake issue (8 months ago) <CAMKMG-BLR\SN2080>
+31mc4d81ae - <Redmine Bug Id 522> | System Summary - Access Control conditions | <Raghul> (8 months ago) <CAMKMG-BLR\SN2080>
+31m0197527 - <Redmine Id 534> | System Summary - Graph changes colors each time a report is selected | <Raghul> (8 months ago) <CAMKMG-BLR\SN2080>
+31m9fc7bcd - <RedmineBug Id 567> | incorrect Platform rule for Access door held or forced | <Raghul> (8 months ago) <CAMKMG-BLR\SN2080>
+31mf77d52b - Issue Fix in MAS Portlet (8 months ago) <CAMKMG-BLR\SN2080>
+31m2d7cabc -  (8 months ago) <CAMKMG-BLR\SN2037>
+31m489fdcc - <Redmin Id : 534> | System Summary - Graph changes colors each time a report is selected | <Raghul> (8 months ago) <CAMKMG-BLR\SN2080>
+31mbf79549 - Actual alert status has been added in Alert portlet. (8 months ago) <CAMKMG-BLR\SN2037>
+31md8c3689 - grid is added and when the user clicks on search icon then the grid gets loaded and on selection the items in the portlet gets loaded. for story #185 (8 months ago) <CAMKMG-BLR\SN2037>
+31m644d6b2 - <Redmine Id : 227 > | Monitoring - Report shall be filtered based on the account/site | <Raghul> (8 months ago) <CAMKMG-BLR\SN2080>
+31me55bd49 - Pagination issue fixed in Link To Alarm grid | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31m37d1b3a - Pagination issue fixed for Link to Alarms grid (8 months ago) <CAMKMG-BLR\SN2037>
+31m33adeac - <Redmine Id 171> | Alerts: Video loss alerts should have the defined camera name in the description. | <Raghul> (8 months ago) <CAMKMG-BLR\SN2080>
+31mc4139c0 - <RedMine Id 212> | Configuration/Alarms - Intrusion is saving the defaults for a company, if you change the default, then create a device it works. | <Raghul> (8 months ago) <CAMKMG-BLR\SN2080>
+31mbefd77b - Search Icon Added (8 months ago) <CAMKMG-BLR\SN2080>
+31m4aeef74 - Issue fixed when clicking on link to Alarms in Videohealthcheck portlet is showing wrong data in the window | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31m19665ac - Remove from Platform only when an error occours while creating and the same way delete from platform when success of delete device. (8 months ago) <CAMKMG-BLR\SN2080>
+31m5ddaedd - Task# 530 Camera name should be displayed along with Videoloss alert description in Link to Alarms window. | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31mda5ce8f - Create and Delete Functionality for Device Create and Device Delete (8 months ago) <CAMKMG-BLR\SN2080>
+31m6dee80f - "No Current Status Available" message has been displayed  if no reports available | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31m92b5b5d - Storing external Device ID from the _Id received from acknolwdgement which we receive while device creating. (8 months ago) <CAMKMG-BLR\SN2080>
+31maa3f08f - <Story#188> | Storing combobox selected Values in Session | <Raghul> (8 months ago) <CAMKMG-BLR\SN2080>
+31mfeb665e - Empty array issue fixed in Intrusion Portlet for getting status from platform (8 months ago) <CAMKMG-BLR\SN2037>
+31mee122c6 - Empty Dvr Status issue fixed for Costar device (8 months ago) <CAMKMG-BLR\SN2037>
+31m8bf660d - Reverting the cog wheel changes (8 months ago) <CAMKMG-BLR\SN2080>
+31mf6a98bd - Remove Hand symbol in Cog Wheel in MAS Portlet. (8 months ago) <CAMKMG-BLR\SN2080>
+31m45bd2ec - Reuse Deleted Mac Address while creating a gateway. (8 months ago) <CAMKMG-BLR\SN2080>
+31m857ea94 - Check for General Administrator Role and Diebold Administrator Role for Deleting Site Note. (8 months ago) <CAMKMG-BLR\SN2080>
+31mc36e8a4 - Processing has been changed to Connecting | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31mcc04a18 - Text "Processing" has been changed to "Connecting" | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31md6122cb - Design Issue Change in MAS Portlet, for displaying the POPUP of userpin. (8 months ago) <CAMKMG-BLR\SN2080>
+31m4ba1546 - Search criteria issue has been fixed | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31ma5d238d - Issue fixed in getting Dvr Status from platform (8 months ago) <CAMKMG-BLR\SN2037>
+31m1213a97 - Alerts Issue Fix. 1. Remove Sign In from Action List combo box 2. Remove Validate Pin 3. Wrap text in Alerts Portlet 4. Spinner Added in Alerts Portlet (8 months ago) <CAMKMG-BLR\SN2080>
+31me36e592 -  (8 months ago) <CAMKMG-BLR\SN2037>
+31m7799040 -  (8 months ago) <CAMKMG-BLR\SN2037>
+31m28b41cb -  (8 months ago) <CAMKMG-BLR\SN2037>
+31m88b65ab -  (8 months ago) <CAMKMG-BLR\SN2037>
+31ma30b579 - Issue fixed in UserCode modify | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31m0446f2f - New Player min.js given by Greg on May 13 (8 months ago) <CAMKMG-BLR\SN2080>
+31md72a910 -  (8 months ago) <CAMKMG-BLR\SN2037>
+31m806fc00 - Issue Fix in Clear Alerts. Added the portal Admin User to insert as current user details in Log History. (8 months ago) <CAMKMG-BLR\SN2080>
+31mfd4c46f - Method name has been changed | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31m6a420e5 - Changes done for getting Dvr Status from Platform | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31m3cdccfd - Changes done for Get Dvr status from platform (8 months ago) <CAMKMG-BLR\SN2037>
+31m023c404 -  (8 months ago) <CAMKMG-BLR\SN2080>
+31m6dbf0f3 - Added ALL in the Action Types (8 months ago) <CAMKMG-BLR\SN2080>
+31m0da3561 - Remove the validation where the user need not select any of the filters. (8 months ago) <CAMKMG-BLR\SN2080>
+31m519d3c0 - CheckBox issue fix for getting alerts for all device types (8 months ago) <CAMKMG-BLR\SN2080>
+31md29d97e -  (8 months ago) <CAMKMG-BLR\SN2080>
+31m4ee4389 -  (8 months ago) <CAMKMG-BLR\SN2037>
+31ma0792fc - Changes done for Dvr status in Video health check portlet (8 months ago) <CAMKMG-BLR\SN2037>
+31m0c167b5 - Logentry made in Alerts (8 months ago) <CAMKMG-BLR\SN2080>
+31m0701eb0 -  (8 months ago) <CAMKMG-BLR\SN2037>
+31m0999a81 - log history layout changes | <Priyadarsan> (8 months ago) <CAMKMG-BLR\SG1408>
+31m22ba4b0 - Audit layout fixed  | <Priyadarsan> (8 months ago) <CAMKMG-BLR\SG1408>
+31m52ff9d7 - Need to Confirm (8 months ago) <CAMKMG-BLR\SN2080>
+31m547c34c - Changes done for Dvr Status in Video Health Check portlet | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31md7ebf74 - reporting layout fix | <Priyadarsan> (8 months ago) <CAMKMG-BLR\SG1408>
+31ma71c957 - reporting pagelayout changes | <Priyadarsan> (8 months ago) <CAMKMG-BLR\SG1408>
+31m8f02702 - Alerts Portlet Issue Fix (8 months ago) <CAMKMG-BLR\SN2080>
+31m606e3e0 - Site Issue Fixed. (8 months ago) <CAMKMG-BLR\SN2080>
+31m4612901 - Alerts issue Fixed. (8 months ago) <CAMKMG-BLR\SN2080>
+31m7de3c10 - Site Issue Fix -- Grouping level 2 cbo remove items when ever there is a change in the grouping level 1 (8 months ago) <CAMKMG-BLR\SN2080>
+31mebe4651 - Momentary unlock issue fixed in Access Portlet | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31m515c647 - Reports Issue Fix - Raised by Ravi. (8 months ago) <CAMKMG-BLR\SN2080>
+31m964b227 - removed validation for monitor view | <Priyadarsan> (8 months ago) <CAMKMG-BLR\SG1408>
+31mbd2b538 - Access mobile portlet fixed | <Priyadarsan> (8 months ago) <CAMKMG-BLR\SG1408>
+31mc665bfe - Intrusion mobile portlet fixed | <Priyadarsan> (8 months ago) <CAMKMG-BLR\SG1408>
+31m0042381 - Alert fixed | <Priyadarsan> (8 months ago) <CAMKMG-BLR\SG1408>
+31mf1e564d -  (8 months ago) <CAMKMG-BLR\SN2037>
+31mbe27b63 -  (8 months ago) <CAMKMG-BLR\SN2037>
+31m9fd4dd5 - Changes done for getting access response from platform | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31m54f1003 - Readers Id issue fixed while doing Momentary unlock in Access portlet | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31me5a8ef3 - system summary fixed | <Priyadarsan> (8 months ago) <CAMKMG-BLR\SG1408>
+31md377b2e -  (8 months ago) <CAMKMG-BLR\SN2037>
+31m86a7616 - user hierarchy for site information portlet fixed | <Priyadarsan> (8 months ago) <CAMKMG-BLR\SG1408>
+31mefd2d08 - changes done for getting access status from platform | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31med3380c - Changes done for getting access status from platform | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31m83c609f - parenttype ALL added | <Priyadarsan> (8 months ago) <CAMKMG-BLR\SG1408>
+31mcbcc6ae - User view changes | <Priyadarsan> (8 months ago) <CAMKMG-BLR\SG1408>
+31mafbd827 - Reports_Hierarchy_Issue_Fixed. (8 months ago) <CAMKMG-BLR\SN2080>
+31m9694d19 - DB changed | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31m934b933 - Alerts_Clear Issue_Fix (8 months ago) <CAMKMG-BLR\SN2080>
+31m03f0941 - Changes done for Get Intrusion Platform status | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31me82d289 - Changes done for Platform Intrusion status | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31meb31c9c - Changes done for Platform Intrusion status in Intrusion portlet | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31m90f50aa - Fixed for ExternalDeviceId for Intrusion platform response (8 months ago) <CAMKMG-BLR\SN2037>
+31mfd76f72 - ExternalDeviceId added for testing intrusion platform response (8 months ago) <CAMKMG-BLR\SN2037>
+31m2de326e - Alerts_Portlet_Issue_Fixed. (8 months ago) <CAMKMG-BLR\SN2080>
+31ma45d251 - Intrusion platform response url added | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31mffb5ea2 - Changes done for getting Intrusion status from platform |<Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31mcb1389f - alert related changes (8 months ago) <CAMKMG-BLR\SG1408>
+31m3b8d0f3 - player js file updated (8 months ago) <CAMKMG-BLR\SG1408>
+31meb25a7c - Monitor changes (8 months ago) <CAMKMG-BLR\SG1408>
+31maed208a - monitor view changes (8 months ago) <CAMKMG-BLR\SG1408>
+31m5790ebe - Monitor view changes (8 months ago) <CAMKMG-BLR\SG1408>
+31m83b9369 - Alerts_Portlet_Issues Reporting Page Issues (8 months ago) <CAMKMG-BLR\SN2080>
+31m7de2d60 - live view fix (8 months ago) <CAMKMG-BLR\SG1408>
+31m6c0592e - Alerts Portlet Changed Redmine - Ids 515,516,517,518,519,520 (8 months ago) <CAMKMG-BLR\SN2080>
+31m3de5150 - Get values from Web.config for Navigate URL (8 months ago) <CAMKMG-BLR\SN2080>
+31m9f29579 - Refresh icon is disabled for Access and Intrusion devices | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31mfddca68 - Changes done for Reload and Restart in Diagnostics | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31me1b18f8 - Live view mobile changes (8 months ago) <CAMKMG-BLR\SG1408>
+31ma3da7b2 - Alert controller updated (8 months ago) <CAMKMG-BLR\SG1408>
+31m8edefa2 - Changes done for Diagnostics - Ping | <Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31m36eddbe - Live view changes (8 months ago) <CAMKMG-BLR\SG1408>
+31mab35bf8 - Alert loading symbol added (8 months ago) <CAMKMG-BLR\SG1408>
+31ma29da1b - MAS changes (8 months ago) <CAMKMG-BLR\SG1408>
+31mf3f19ff - Issue Fix for Device Creation, Alerts (8 months ago) <CAMKMG-BLR\SN2080>
+31mb7b15e6 - system summary mobile changes (8 months ago) <CAMKMG-BLR\SG1408>
+31m85f8124 - system summary  mobile changes (8 months ago) <CAMKMG-BLR\SG1408>
+31mc2bfbb4 - Changed from SparkDvr to SparkDvrReport (8 months ago) <CAMKMG-BLR\SN2080>
+31mfd1bc18 - IssueFix for Device Create Json Format. (8 months ago) <CAMKMG-BLR\SN2080>
+31m7825010 - Fixed Issues when creating a device. (8 months ago) <CAMKMG-BLR\SN2080>
+31m72caf90 - MAS mobile changes (8 months ago) <CAMKMG-BLR\SG1408>
+31mda10133 - MAS mobile updated (8 months ago) <CAMKMG-BLR\SG1408>
+31m178d0e6 - API Change as per Johns mail on 7 May (8 months ago) <CAMKMG-BLR\SN2080>
+31m9ea08c1 - MAS mobile portlet changes (8 months ago) <CAMKMG-BLR\SG1408>
+31mff0b93c - Logger added for creating a device and also did changes to Properties as per clients requirement. (8 months ago) <CAMKMG-BLR\SN2080>
+31mb536c8b - Removed Device Ids condition -- To be reverted back Changed the condition. (8 months ago) <CAMKMG-BLR\SN2080>
+31m4849792 - Alerts - Portlet display only alerts with timestamp Alerts - Portlet spinner added AccessView - display successful message after momentary unlock. (8 months ago) <CAMKMG-BLR\SN2080>
+31m4e9e5ff - Live View changes (8 months ago) <CAMKMG-BLR\SG1408>
+31m5d3e0b5 - Design Issues for Reporting Completed. Need to implement the Hierarchy Issues. (8 months ago) <CAMKMG-BLR\SN2080>
+31ma6dfc5a - Alert Message when user not selects report type in Intruision and Access Portlet -- Issue raised by Greg on 4-May-2013 User views – hierarchy issue -- Fixed for Alerts, Intrusion, Access, siteInformation Access/Intrusion -- Delete and Update screen should not have all the items as required Access -- Momentary unlock should not have two screens, once pin number is correct it should trigger the call. (8 months ago) <CAMKMG-BLR\SN2080>
+31mb73d85a - Time Issue (12:00:00) Fix in MAS Portlet (8 months ago) <CAMKMG-BLR\SN2080>
+31mc166a42 - null datetime issue fixed for Alerts |<Malathi> (8 months ago) <CAMKMG-BLR\SN2037>
+31m32eb52a - Bug Id : 323 | Monitoring Reports - filtering issues | <Raghul> Bug Id : 401 | Monitoring Reports - Open/Close Normal | <Raghul> Bug Id : 402 | Monitoring Reports - Open/Close Irregular | <Raghul> (8 months ago) <CAMKMG-BLR\SN2080>
+31ma8ef604 - Log added for BaseURL (8 months ago) <CAMKMG-BLR\SN2080>
+31mffd85be - Adding URL to Log. (8 months ago) <CAMKMG-BLR\SN2080>
+31meddc6fa - Ticket #323 | Monitoring Reports - filtering issues | <Raghul> (8 months ago) <CAMKMG-BLR\SN2080>
+31mb3f820d - Bug Id 336 | Intrusion: Change from "DisArmed" to "Disarmed" | <Raghul> Bug Id 335 |  Intrusion: Zone Detail change "By Pass" to "Bypass" | <Raghul> Bug Id 334 | Alerts: Change "ALL" to "All" | <Raghul> (8 months ago) <CAMKMG-BLR\SN2080>
+31mc8bcab5 - Task #221 | SQL Server - If a field is left blank, the default should not be the word NULL, it should be blank | <Raghul> (8 months ago) <CAMKMG-BLR\SN2080>
+31m8b55929 - Story #191 - Filter for Status and Ack. (8 months ago) <CAMKMG-BLR\SN2080>
+31m8e6c8e0 - Unselect the selected device when user selects or unselects the all check box (9 months ago) <CAMKMG-BLR\SN2080>
+31m6ebf9c3 -  (9 months ago) <CAMKMG-BLR\SN2080>
+31ma8b60bb -  (9 months ago) <CAMKMG-BLR\SN2080>
+31md738a0f - Context menu tranparent issue fixed | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31ma90a963 - Site new columns added for Contact Name, Contact email, Contact number,  Alerts All Check box added.  SiteInfo Retrive info based on site SteMap Retrive info based on site (9 months ago) <CAMKMG-BLR\SN2080>
+31mcd20361 - Fixed - In account portlet, Instead of Company Name , it should be the "FirstName LastName" of the logged in user. | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31ma5f8ad1 - Fixed 24 Hour searches, Allow for date range but only allow 1 day range | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m966e192 - Refresh issue fixed | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m392db2b - Refresh issue fixed in RSS (9 months ago) <CAMKMG-BLR\SN2037>
+31mc633d8b - Removed Unwanted files (9 months ago) <CAMKMG-BLR\SN2080>
+31m3d37448 - "Object reference not set to an instance of an object."  issue fixed | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mcca71eb - SystemSummary_Implementation_Completed_Except_Access (9 months ago) <CAMKMG-BLR\SN2080>
+31m5522e23 - Costar and IpConfig device model name changes | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m46cf3dc - Reports_IssueFix (9 months ago) <CAMKMG-BLR\SN2080>
+31mf1d3cb9 - Removed dvSettings for portlet movement issue | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m2b0cf13 - Spinner added for Access Group delete | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m7ac90a0 - Reports_Issue_Fix | <Raghul> District and Area fields are displaying default value as "Next Level". duplicate Validation in Audit and Activity Report Deletion in Activity and Audit Report Column name should be changed from DVR type to Device Type. Data is not recording into the grid. (9 months ago) <CAMKMG-BLR\SN2080>
+31me605dfa - Bug Fix Rss Feed and Alerts Interval | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m1e2e9d8 - Issue fixed onclicking of Save button in Access Group Create | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mc07abf7 - Popup displayed at the same position where site information is displayed. (9 months ago) <CAMKMG-BLR\SN2080>
+31m2d075f3 - Changed for Readers list in Access Group Create | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mb177e2d - Sharepoint Document - key added for Server UserName,Password,DomainName (9 months ago) <CAMKMG-BLR\SN2365>
+31mf11aa56 -  (9 months ago) <CAMKMG-BLR\SN1664>
+31m36265b4 - dvSettings added for Intrusion portlet | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m706fa21 - New Partial View Added for Video Health Check - Which was deleted unknowingly (9 months ago) <CAMKMG-BLR\SN2080>
+31m5dda08a - Style changes done for Context menu issue and header issue | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m83a64a2 - VideoHealthCheck Issue Raised by Ravi SystemSummary display image instead of label (9 months ago) <CAMKMG-BLR\SN2080>
+31mda4572d -  (9 months ago) <CAMKMG-BLR\SN2037>
+31m9a7214b - ExporttoPDF_XLS_Audit_Activity_Report_Completed (9 months ago) <CAMKMG-BLR\SN2080>
+31m3e1456f - Date Issue fixed for Intrusion & Access Reports | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mb3be353 - Style changed to display the links properly inside context menu | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m94f27b8 - name, context menu issues fixed by malathi | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m5bba195 - Site image issue fixed | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m8febad8 - dropdown width is changed | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mbae7b11 - MAS and System Summary Fix (9 months ago) <CAMKMG-BLR\SN2080>
+31m229d46b - Updated code to get the messages from platform call | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m59df0d4 - Spinners added for Zone By pass and zone reset bypass | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31me4bdeeb - Start date & End date validation is added for access report| <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31me6259f6 - ZoneResetBypass Issue is fixed | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m1a39466 - Start date & End date validation is added for Intrusion Report | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mfb462a2 -  (9 months ago) <CAMKMG-BLR\SN1664>
+31m626718c -  (9 months ago) <CAMKMG-BLR\SN2037>
+31m00debc6 -  (9 months ago) <CAMKMG-BLR\SN2037>
+31med5a59c -  (9 months ago) <CAMKMG-BLR\SN2037>
+31m6917e82 -  (9 months ago) <CAMKMG-BLR\SN2037>
+31m7e4ea78 -  (9 months ago) <CAMKMG-BLR\SN2037>
+31m8017d0e - Applied try/catch in video health check | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m5b798d8 - Displayed information window on clicking of Delete button without selecting device | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31me3dd327 - applied message from controller | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mc616731 - try/catch added|<Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m23c39f0 - Max length validations removed for card number and Pin fields |<Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m80624c7 -  (9 months ago) <CAMKMG-BLR\SN2037>
+31m89ed943 - Bugs Reported on 17 April By client 1. MAS Portlet Filter by Date in Web App 2. Account Number Filteration in MAS Portlet in Web App 3. User Pin Validation for MAS Portlet in Web App 4. Site Map View site link button in bottom of Portlet (9 months ago) <CAMKMG-BLR\SN2080>
+31m9294275 - Maxlength validation removed for cardnumber field | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m1743d70 - maxlength validation removed for card number and pin fields |<Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m66297a2 - Max length validation removed for card number | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m31e3445 - Mandatory symbol has been removed | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31ma87a76f - Modified for Access Group Modify Request JSON format changes | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m5a1823d - Alert message changed | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m73ea55c - Implemented enable and Disable and Delete functionality | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m114ce99 - Non UI changes done for Access Group Modify | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m3ff01b3 - UIChanges for Access Group Modify done by Raghul | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m0a20fbe - Changes done for AccessGroupModify | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31md1003f7 -  (9 months ago) <CAMKMG-BLR\SN2037>
+31mdfcc17d -  (9 months ago) <CAMKMG-BLR\SN2037>
+31m6cb284c - RSS popup early binding issue fixed | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m7990f58 - Changed for Access Group Modify | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31me879423 -  (9 months ago) <CAMKMG-BLR\SN2037>
+31mf03e666 -  (9 months ago) <CAMKMG-BLR\SN2037>
+31m88362fa -  (9 months ago) <CAMKMG-BLR\SN2037>
+31mc832cbf - DTO for Access Group Modify Request| <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m518bfb2 - Early binding issue fixed with links | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31me2f6515 - IssueFix for UI - Access Group Modify Known Issue - When we add row all items are added in single td (9 months ago) <CAMKMG-BLR\SN2037>
+31ma176cae - Url hard code changed to read from configuration | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31me8e220b - Fixed multiple calls for getting device counts based on parent type | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m1accc5d - Access Group Modify Implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m57833ed - Live view issue fixed in preference  & code optimization, try catch included | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m4d76563 -  (9 months ago) <CAMKMG-BLR\SN2037>
+31m2b5db7b - changes done by Raghul | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mc71c13e -  (9 months ago) <CAMKMG-BLR\SN2037>
+31mc4b27f1 - Updated max link value from Web configuration | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m58ebd01 - Add button functionality implementation in Access Group Modify | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mac26a90 - Delete Functionality - Remove the selected row from table (9 months ago) <CAMKMG-BLR\SN2080>
+31mfb637cf - Delete Functionality with out hiding the row in access group modify (9 months ago) <CAMKMG-BLR\SN2080>
+31m015f92c - Edit functionality implemented in Access Group Modify |<Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m631bea1 - Access Group Modify implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31md3de205 - Optimized code | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mb14c1ae - Fixed Issue in System Summary. (9 months ago) <CAMKMG-BLR\SN2080>
+31me4530b7 - Changes for Access Group Modify | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mb53fad8 - Reports_Audit_and_ActivityReport_Completed (9 months ago) <CAMKMG-BLR\SN2080>
+31m9019dd8 - SystemSummary_CheckedIn_Need to get Response and then change the hard coded value and get the value from API (9 months ago) <CAMKMG-BLR\SN2080>
+31m0947e55 - Deleted unused files, deleted debugger | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m85fe5e1 - Featured news fix and Code cleanup |<Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mbc0fcaa - Applied messags fix | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m3810754 -  (9 months ago) <CAMKMG-BLR\SN2037>
+31mb03c171 - Deleted unused code and applied messages functionality in Access | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mc437ea8 - Access Group Modify Implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m05b21f5 - messages code included | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m84590b2 - Access Group modify implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mce57b65 - Response DTO for Access Group | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m4624f7f - Logo url updated, Log out redirection issue fixe | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m5890bbf - Reverted connection string | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mb77332d - Messages implemented for Intrusion | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m3ae6f24 - Failure response issue fixe | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mfc34c4b - Null issue fixed for Access report | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m70718cb - Audit Report Design Issue Fix (9 months ago) <CAMKMG-BLR\SN2080>
+31m866f520 - Portlets Default Functionality to a common controller (9 months ago) <CAMKMG-BLR\SN2080>
+31mc47ff83 - Added log message for Req Ack | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m896ba11 - duplicate call removed | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m127c4c2 -  (9 months ago) <CAMKMG-BLR\SN2037>
+31m8f3f499 - Hardcode the testcat_id to 1 always as per client requirement (9 months ago) <CAMKMG-BLR\SN2080>
+31m34e3bc6 - MAS Portlet - Place on Test Issue Fix Video Health Check - Added method in dashboard (9 months ago) <CAMKMG-BLR\SN2080>
+31m05b0268 - Report design changed | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mb7fdc3b - Intrusion Report design changed | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mcfd5cfc - divId removed |<Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m5b3f0b5 - Issue Fix for Default Values. (9 months ago) <CAMKMG-BLR\SN2080>
+31m586e597 -  (9 months ago) <CAMKMG-BLR\SN2037>
+31m7d76360 - Activity design changes | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m1dade3c - site model (9 months ago) <CAMKMG-BLR\SG1408>
+31m922ab30 -  (9 months ago) <CAMKMG-BLR\SN2080>
+31m9301cc8 - deleted unused code from dashboard controller | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m4e0717a - Account number field will allow - character (9 months ago) <CAMKMG-BLR\SG1408>
+31mb61c5b2 - Load Sitemaps and MAS Account Details irrespective of rights (9 months ago) <CAMKMG-BLR\SN2080>
+31m07472ed -  (9 months ago) <CAMKMG-BLR\SN2080>
+31md7eda9f - spinner issue fixed  | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m34012a5 - Spinner position has been changed | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31ma346f1e - Device Counts query optimization | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mb5f3f9f - Spinner position is changed | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m9c59558 - video save default fix (9 months ago) <CAMKMG-BLR\SG1408>
+31m291409b - video health check fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31m342ffe3 - Spinner position is changed | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31ma2bde72 - Commented the Logs in Intrusion, Video Health check and Access (9 months ago) <CAMKMG-BLR\SN2080>
+31m793c0d8 - Spinner location changed | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31ma0e84f3 - Access, intrusion added try catch (9 months ago) <CAMKMG-BLR\SG1408>
+31m9baba94 - div Id has been changed  | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31madaefe3 - Spinner added in MAS portlet | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m439904c - Reverted changes in web.config(connection string, platform authorization token) | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m411b074 -  (9 months ago) <CAMKMG-BLR\SN1664>
+31mf80c138 - Spinners added for User pin in Access portlet | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m5190c68 - Access & Intrusion added jsonerror (9 months ago) <CAMKMG-BLR\SG1408>
+31md69cf34 - Intrusion added try and catch (9 months ago) <CAMKMG-BLR\SG1408>
+31m4dff740 - Spinner added for user pin window in Intrusion | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m7fae8f8 - added try and catch to all method (9 months ago) <CAMKMG-BLR\SG1408>
+31m6e41029 - Alert population issue fixed | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31med34004 - Logger Added for Service in Intrusion, Video health check and Access (9 months ago) <CAMKMG-BLR\SN2080>
+31mca84590 - RemovedTimeCombobox (9 months ago) <CAMKMG-BLR\SN2080>
+31m0570cda - Spinners added in Intrusion | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m7597ad9 - Alerts devicename added to alert name (9 months ago) <CAMKMG-BLR\SG1408>
+31m20db505 - system summary mobile dummy data (9 months ago) <CAMKMG-BLR\SG1408>
+31m8a2cc11 - dubby data for system summary (9 months ago) <CAMKMG-BLR\SG1408>
+31m25e98a7 - Video health check portlet auto refresh added and last updated field removed (9 months ago) <CAMKMG-BLR\SG1408>
+31mf8fa623 - alert changes |<Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31ma3ff809 - new method implemented get dvr by device instance name | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31me5bfb32 - changes to verify response at alerts | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mc6a6270 - Alert portal spinner added (9 months ago) <CAMKMG-BLR\SG1408>
+31m9b8b2b6 - Check for Time out and also display bad request when the selected value is not present. (9 months ago) <CAMKMG-BLR\SN2080>
+31m8993472 - fixed IE9 issue to display extra RSS title (9 months ago) <CAMKMG-BLR\SG1408>
+31m0a9a786 - usercode validation added | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m012301d - fixed site add note multiple click issue (9 months ago) <CAMKMG-BLR\SG1408>
+31m50984e0 - logger message added to verify response |<Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m372fe18 - fixed video health check device list (9 months ago) <CAMKMG-BLR\SG1408>
+31mbd34186 - Julian time format issue fixed in Access Group Create | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31maa1a0fb - Site Information address fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31m603fba7 - Account portlet device count fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31mecfe57c - Processing Panel Issue Fixed. (9 months ago) <CAMKMG-BLR\SN2080>
+31mea31c9f - edit user fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31m503d433 - Changes done for Access Group Add | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31ma275656 - Changed for Access Group Add | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m3668853 - MobileApp Monitoring Completed. (9 months ago) <CAMKMG-BLR\SN2080>
+31m95f88a6 - Access Group delete implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m006f5ae - Access Group delete implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m1029498 - Changes done for Access Group delete | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mb1b1aa2 - Access Group Delete functionality fix. (9 months ago) <CAMKMG-BLR\SN1278>
+31md888f01 - Removed unused code. (9 months ago) <CAMKMG-BLR\SN1278>
+31m6ac4f8d - Access Group  Modification Popup close issue fix. (9 months ago) <CAMKMG-BLR\SN1278>
+31m0d867bb - changed dropdown label (9 months ago) <CAMKMG-BLR\SG1408>
+31m576ca20 - Monitor mobile (9 months ago) <CAMKMG-BLR\SG1408>
+31mcebe8fb - Changes done after add access group deployment | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mcf2cfe1 - Reports Issue Fixed. (9 months ago) <CAMKMG-BLR\SN2080>
+31mff101d0 - Add Access Group implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m495dcb0 - Add Access group implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31me23cda3 - Add AccessGroup implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m3824dbe - MASReport_and_PlaceonTest (9 months ago) <CAMKMG-BLR\SN2080>
+31mb26f323 - Refresh Time changes | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mb16e8af -  (9 months ago) <CAMKMG-BLR\SN2080>
+31mc627c1b - Access group add request format implementation | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m485531d - LiveView if save default not set default to my camera list (9 months ago) <CAMKMG-BLR\SG1408>
+31m882944f - Place on Test API Call (9 months ago) <CAMKMG-BLR\SN2080>
+31m8cf0380 - Device name editable (9 months ago) <CAMKMG-BLR\SG1408>
+31mb177be0 - Dropdown fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31m88708c5 - MAS Portlet Check for API Integration (9 months ago) <CAMKMG-BLR\SN2080>
+31m5a41142 - Logging alert response from platform to inspect | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m390467c - Video and Access portlet timezone issue fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31mc2ab54a - Access auto refresh even no device selected - fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31m97a7957 - Monitoring portlet account number null display fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31m1ab7891 - Intrusion refresh interval fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31m841511a - Site map device count fix (9 months ago) <CAMKMG-BLR\SG1408>
+31mf63384d - Pagination issue fixed intrusion panel reports | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m4629a9c - fixed missed intrusion device count (9 months ago) <CAMKMG-BLR\SG1408>
+31m4ad57c2 - SiteInformation device count fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31m322b990 - Pagination issue fixed & default item to device id in mobile intrusion | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m60c0a10 - User Pin validation code implementation for Momentary unlock in Access portlet| <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m7696d67 - added spinner to site information portlet (9 months ago) <CAMKMG-BLR\SG1408>
+31me084598 - Acces action button implementation, Access to full site from home page | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mbb9d49a - spinner added in alert information dialog (9 months ago) <CAMKMG-BLR\SG1408>
+31mc8dd3bf - Issue fixed for Access Report | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m9abb97d - video health check save default fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31m9d4f72f - Intrusion portlet save dafault fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31m390c1fc - Added missing method for GetAccess report callback method | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m966984f - Video health check save default fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31m9c0e2ff - Response Issue fixed for Momentary unlock | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31me210d3d - Code merged for Momentary unlock changes | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mc38ac4d - Intrusion polling status based on user's timezone (9 months ago) <CAMKMG-BLR\SG1408>
+31m8f6565a - Access portlet add validation to select a device (9 months ago) <CAMKMG-BLR\SG1408>
+31mbe12d60 - Momentary unlock Implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m5e54155 - Momentary unlock implementation in Access portlet | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m2250498 - Video health check portlet add validation to prevent action when no device is been selected (9 months ago) <CAMKMG-BLR\SG1408>
+31mf4456b4 - Intrsuion action button implementation, Home page datetime issue fixed | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m9b5615f - Response Command Name mismatch issue fixed | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m88434d1 - Intrusion Portlet add validation to select a device before any action (9 months ago) <CAMKMG-BLR\SG1408>
+31md6357ba - implemented Alert number of alert to show (9 months ago) <CAMKMG-BLR\SG1408>
+31m0a0d500 - Alert mobile portlet changes (9 months ago) <CAMKMG-BLR\SG1408>
+31me119bd5 - Alert mobile Portlet (9 months ago) <CAMKMG-BLR\SG1408>
+31mb783460 - Access Report Implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mdd69b76 - Access Report Implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m8c1c9f8 - Issues fixed for Export Functionality, Filter functionality and Paging Issue in both Audit and Activity Report. (9 months ago) <CAMKMG-BLR\SN2080>
+31md31c768 - Intrusion Report changes | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31md6eaf2c -  (9 months ago) <CAMKMG-BLR\SN2080>
+31m03aec6c7c - Access portlet without action button implementation, spinner added to Intrusion | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m7b02768 - Door list validation modified | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mc0783cd - AuditReport_and_ActivityReport_Issue_Fixed (9 months ago) <CAMKMG-BLR\SN2080>
+31md95474d - ResponseDTO is changed for Intrusion Report|<Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mda96e8c - Zone population issue fixed | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m57c3fe7 - video health check added spinner (9 months ago) <CAMKMG-BLR\SG1408>
+31mfb1e37b - Intrusion report implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m9a54640 - Intrusion report implementation | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m1a3b6ed - AuditReport_Completed_withoutExport (9 months ago) <CAMKMG-BLR\SN2080>
+31m948b4ef - Access portlet fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31md7223f5 - Intrusion portlet fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31m5b2bf7c - live view mobile override video fix (9 months ago) <CAMKMG-BLR\SG1408>
+31m2e920c2 - Live view mobile fix (9 months ago) <CAMKMG-BLR\SG1408>
+31m6a79ce7 - Live view mobile player control fix (9 months ago) <CAMKMG-BLR\SG1408>
+31ma998eaa - Intrusion implementation without Zone report and action button | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m8487357 - Live view mobile fix (9 months ago) <CAMKMG-BLR\SG1408>
+31meeae574 - added play and stop images to live view (9 months ago) <CAMKMG-BLR\SG1408>
+31mba7cd19 - Live view mobile changes (9 months ago) <CAMKMG-BLR\SG1408>
+31m7e54903 - ActivityReport_Completion. (9 months ago) <CAMKMG-BLR\SN2080>
+31mee6fda9 - Changes for cardholder delete | <malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m002064c - fixed Video health check portlet (9 months ago) <CAMKMG-BLR\SG1408>
+31mc20f3fe - Changes done for Cardholder Modify |<Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mc554f81 - Changes done for Cardholder Modify |<Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m2ed222b - Changed for Cardholder Modify | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m34ef5b3 - Removed mandatory for Address information from gateway (9 months ago) <CAMKMG-BLR\SG1408>
+31mef96455 - Video health check portlet fixed (9 months ago) <CAMKMG-BLR\SG1408>
+31m70aa334 - Validations added in Cardholder Add | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m7ae5211 - Edit gateway server error fixe | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m43b9576 - Issues fixed by Priyadarsan|<Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mbe82188 - Exception handling for audit event. (9 months ago) <CAMKMG-BLR\SN1278>
+31ma6516dd - References added | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mca42801 - Removed old mobile app, added required references to new mobile site | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31mef53a8e - New image for ajax loading. (9 months ago) <CAMKMG-BLR\SN1278>
+31mdfc4af5 - UI issues fixed for Diagnostics page. (9 months ago) <CAMKMG-BLR\SN1278>
+31m380d98c - Introduced Gateway address information | <PriyaDarsan> (9 months ago) <CAMKMG-BLR\SN1664>
+31mac6036f - Mobile version under Diebold solution as initial version | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31ma1a87f5 - center aligned the dialog buttons. (9 months ago) <CAMKMG-BLR\SN1278>
+31m580ac7a - Issues fixed by Priya Darsan | <Ravindra> (9 months ago) <CAMKMG-BLR\SN1664>
+31m1d8ddf7 - common block UI for access view, diagnostic page. (9 months ago) <CAMKMG-BLR\SN1278>
+31mb66b654 - Changed for Cardholder Modify Response Json format| <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m892b987 - changes done for Cardholder Modify | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mdea4a38 - instance renamed to restManager (9 months ago) <CAMKMG-BLR\SN1278>
+31m4e352f5 - Changes done for CardholderAdd | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m1ab43e7 - Access Feed and Alert Feed interval added by Priyadarsan | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m4cdcaa7 - Changes done for VideoHealthCheck by Priyadarsan | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m396ee47 - Issue fixed Bypass, BypassReset in Intrusion | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m4d69625 - Mandatory field validation changed | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m6d54c1e - Fixed Area online status and Access Feed Interval by Priyadarsan | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mf7fbbd9 - Issue fixed for Cardholder Add in Access portlet | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mddc1365 - Fixed issue in ZoneBypass and ZoneResetBypass | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31ma14e14c - Semicolon removed from command name | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31mcdaddbe - Fixed issue Access Door Online status is showing wrong value | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m939354c - Fixed issue : Access Door Reader values are repeating | <Malathi> (9 months ago) <CAMKMG-BLR\SN2037>
+31m5551cfc - UI issues fixed by priya darsan | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m158f61c - Monitor duplicate issue fixed by priyadarsan | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m4b0ee7b - Loading panel applied for Access | <Ravindta> (10 months ago) <CAMKMG-BLR\SN1664>
+31m7259344 - Loading Panel image and css updated | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m3a5b3dd - Block Portlet UI while processing... (10 months ago) <CAMKMG-BLR\SN1278>
+31m76fa7df - Block UI for selected Portlet. (10 months ago) <CAMKMG-BLR\SN1278>
+31m764c675 - Command name updated with log message | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31mff8e055 - Issue fixed for cardholder add | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mb6e2eed - Changes done for card holder delete | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31ma2bf90d - Changes done for cardholder delete | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m4d843eb - Cardholder delete changes | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m8287d0c - Cardholder delete implementation | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31md81225f - Cardholder delete implementation |<Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31ma391ac9 - Cardholder delete implementation | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mbafe5d3 - Provided temporary fix for device delete association issue | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31md925d32 - Access Group development objects for add,edit,delete|<Pavan> (10 months ago) <CAMKMG-BLR\SN2362>
+31m95e68a8 - Issues fixed  by Priyadarsan | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31mcc5cf56 - Intrusion Report Changes | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m4bcce4e - Intrusion Report changes | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m92bbadf - CardHolder Modify Implementation | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m8958952 - CardHolder Modify Implementation | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m5f867c6 - CardHolder Modify implementation | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m24918cc - Card holder modify implementation | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mbbc5821 - Implementation of Card holder modify in Access portlet (10 months ago) <CAMKMG-BLR\SN2037>
+31m73755b4 - Implementation of Cardholder Modify in Access Portlet | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m1709872 - Bypass Reset issue fixed in Intrusion portlet | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31ma8709c7 - Integration issues fixed | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m63554eb - delete device issue fixed | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31md986f88 - Intrusion Report | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m00f2f59 - Modified for Intrusion report | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m93b5440 - Intrusion report implementation | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31ma79a393 - Gateway revoke and device delete command issues fixed | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m331016d - Remove Device command corrected from Delete | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m26089a0 - Connection string reverted | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m8252a4f - Issues fixed by Priyadarsan | <Priyadarsan> (10 months ago) <CAMKMG-BLR\SN1664>
+31m1ace90c - syntax error fixed | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m7c50e33 - Device Create/Edit/Delete issue fixed | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31md10aa5e - Arm DisArm ByPass and Reset changes in Intrusion portlet | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m7ea1587 - Delete device issue fixed | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31mdc65ca7 - Alarm configuration issue fixed | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31mec9e3eb - Design changes in Intrusion portlet | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mfd508dd - Display position for Intrusion Add, Modify and Delete popup has been modified | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m0efe997 - Popup display position is changed in Access portlet | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m8e91ea3 - Access popups render at center | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m4403175 - JSON Request format modified for Cardholder ADD and Modify in Access portlet| <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mfceddb3 - Removed extra semicolon at dialog end. (10 months ago) <CAMKMG-BLR\SN1278>
+31me2c1046 - Common method to center dialogs to view port. (10 months ago) <CAMKMG-BLR\SN1278>
+31mebaa461 - Logs enabled for exceptions, priyadarsan issue resolutions | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31meb8e1e8 - Integration issue fixed | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31mdb83e94 - Cardholder Add implementation in Access | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m054178b - Cardholder Add implementation in Access portlet | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m722807f - Connection string change reverted | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m1c04c04 - Issues and platform integration issues fixed | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m798c7b3 - device id check added | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m0ed83ee - Integration issues fixed | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31md6820f1 - Fixed Gateway status response issue | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31mf17c871 - Design changes in mandatory fields in Intrusion portlet | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m45bbc21 - Intrusion User Code Delete implementation | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m420eb5c - RSS Changes Reverted | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31maabc60e - updated logger messags | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31mc92d851 - Command names corrected | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m838b475 - UI Issues fixed | <Priyadarsan> (10 months ago) <CAMKMG-BLR\SN1664>
+31m13c8fba - Access portlet implementation |<Pavan> (10 months ago) <CAMKMG-BLR\SN1664>
+31m2fc209c - Design changes done by yasaar | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m3c174e8 - Changes donefor user code modify in Intrusion | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mfe89008 - Changes done for Intrusion User code modify | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m9312511 - dropdown design changes done by Yasaar | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m72cfe9f - Changes done for Intrusion user code modify | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m1990a32 - Intrsion user code modify changes |<Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m53d4475 - design changes for dropdown header done by Yasaar | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mec9d9d7 - Changes done for Intrusion User Code Modify | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m2c409c2 - Build error | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m18a4548 - Device id missmatch isue fixed | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m1b22b34 - style changes in chart and kendo dropdown done by yasaar | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m30acbf2 - Mandatory filed symbol position changed | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m513368c - User code add popup position is changed | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m4967fd9 - Changes done for Intrusion user code add | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mb87028f - Changes done for Intrusion user code add | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31ma0c48f9 - Changes done for Intrusion user code add | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m2283949 - Changes done for Intrusion user code add | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m9b6ef2b - Changes done for Intrusion user code add | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mfba95f4 - Changes done for user code add | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mba1e625 - Changes done for user code add |<Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31ma1fa397 - Dropdown id empty for first time issue fixed | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m451379d - Intrusion Area and Zones implemented wit the help of Pavan, Deleted unnecessary code, files | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31md24ed81 - return type changed for api methods | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31mcf6557d -  (10 months ago) <CAMKMG-BLR\SN2037>
+31md60ac07 - IntrusionChanges new objects created|<Pavan> (10 months ago) <CAMKMG-BLR\SN1664>
+31m4fa4257 - Revert the changes | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m7ba3734 -  (10 months ago) <CAMKMG-BLR\SN2037>
+31ma290755 - Implementation of Intrusion | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m4a0c654 - Intrusion Changes | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m2352b92 - Intrusion changes | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m93adb28 - Device type issue fixed for intrusion requests | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m0800ef9 - UI issues fixed | <Priyadarsan> (10 months ago) <CAMKMG-BLR\SN1664>
+31m53f456a - Device type blank, device id update for response key  | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m0c47859 - API changes | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m4680a59 - Alarm Configuration issue fixed | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m87be68b - API changes | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m8ea9961 - Build number updated to BUILD41 | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31md36aac7 - Disable condition not required with links, which will not work with master database| <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31mca05e41 - javascript issue fixed on no default value | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m8ca1296 - java script error handled on no default value | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m32513b0 - Bug Fixes in System Summary and Video Health Check | <Ashok> (10 months ago) <CAMKMG-BLR\SN2037>
+31mcab2f33 - Build number chaged to BUILD40 (10 months ago) <CAMKMG-BLR\SN2037>
+31m3d06d09 - Changes done for user pin in user page | <Ashok> (10 months ago) <CAMKMG-BLR\SN2037>
+31me86e890 - Fixed site map address issue & renamed title from MAS Reports to Reports for MAS portlet | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m3c93f7d - User pin added in user page and cancel button added in portlet popup | <Ashok> (10 months ago) <CAMKMG-BLR\SN2037>
+31mc71b08f - Build number updated to BUILD39 | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m2786119 - Issue fixed while creating role with existing role name | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m2fc9eaa - word wrap issue fixed|Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31m881afae -  (10 months ago) <CAMKMG-BLR\SN2037>
+31m522f927 - Added cancel button in all popup |<Ashok> (10 months ago) <CAMKMG-BLR\SN2037>
+31m77bc3c2 - Cancel Button added all popup |<Ashok> (10 months ago) <CAMKMG-BLR\SN2037>
+31m62c2b3e - Cancel Button added in all popup by Ashok |<Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m9d40d97 - Category change in system summary portlet and Video tab change done by Ashok | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m19d3f41 - Cog selection is added | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m1ff76e4 - Add default values has been changed to Save Defaults | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m5d8382c - Fixed bug "When deleting a note, the user should be given a secondary popup to confirm delete" by Ashok | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mf3a6140 - Fixed bug - Portlets should be draggable only by top bar by Ashok| <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m416300d - Access Portlet Implementation | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m7d7cd9e - Create platform response object | Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31m04d3018 - Entity and Service has been added for Access Portlet | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m93c1e05 - API integration first cut| Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31m88cc67f - Changes done for Access portlet | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31me08fcf3 - Enabled Sitemap default controls as Greg Requested| Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31md505dbc - Device id changed in Intrusion portlet | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m2725b1b - label changes done by Pavan | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m64e46f1 - Intrusion and Access changes | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m0754d87 - Label changes in portlets done by Ashok | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m770f312 - Description text has been changed in System Summary | <Pavan> (10 months ago) <CAMKMG-BLR\SN2037>
+31m0e555b5 - Style added foraddress label in Site Information and SiteMap portlets | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m6433787 - Fixed issue in Edit Company |<Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mbaaeed4 - Config changes done by Raveendra | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m1d780f9 - Issue fixed in User Role mapping | <Ashok> (10 months ago) <CAMKMG-BLR\SN2037>
+31m32a67ad - Preference page image changed for Featured News portlet | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mfa97e50 - Build number updated as BUILD35 | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m0a62f21 - Fixed issue with description for portlet (10 months ago) <CAMKMG-BLR\SN1664>
+31m6cf95bb - Fixed issue with title description. (10 months ago) <CAMKMG-BLR\SN1664>
+31m6662673 - Fixed performance issue with alert information fetch. (10 months ago) <CAMKMG-BLR\SN1664>
+31m058c89f - Alignment fixes for Jquery popup. (10 months ago) <CAMKMG-BLR\SN1664>
+31m4114ff0 - log file moved to root/logs/ folder (10 months ago) <CAMKMG-BLR\SN1664>
+31m13e5b41 - Fixed issue with site view grig height. (10 months ago) <CAMKMG-BLR\SN1664>
+31m376d66b - Fixed cosmetic issues related to Company Grouping. (10 months ago) <CAMKMG-BLR\SN1664>
+31mbcc3785 - Header font weight fixed. (10 months ago) <CAMKMG-BLR\SN1664>
+31m2941198 - Fix for Header text for Selected Group Levels (10 months ago) <CAMKMG-BLR\SN1664>
+31m64097ae - label changes in Alarm Configuration | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mb0f9008 - Fixed collapse functionality for Monitoring portlet. (10 months ago) <CAMKMG-BLR\SN1664>
+31m43ed877 - Update RoleActions - MonitorAssignment to ManageViews | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m1723b1c - Foldrer created for DB scripts (10 months ago) <CAMKMG-BLR\SN1664>
+31mea61b00 - Fixes Brian Observation Mar09|<Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mcab01e0 - Vertical align fix for View Notes popup. (10 months ago) <CAMKMG-BLR\SN1664>
+31m54d9f91 - Image clear on close and Null check. (10 months ago) <CAMKMG-BLR\SN1664>
+31m300fd0f - Null handled for defualt selection| Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31m31e6fd7 - loading site map data issue fixe | <Ravindra> (10 months ago) <CAMKMG-BLR\SN1664>
+31m1de585b - MAS label change and SiteMap Device Count | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m99054e6 - Reporting_Shelve2 (10 months ago) <CAMKMG-BLR\SN2080>
+31m7eff5b4 - Label changed | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31me98e3d9 - Sorting dropdown in SystemSummary |<Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m9a8eff4 - When mousing over the Cog (Context Menu) it should turn the cursor into a hand representing a link. | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m27526fa - Dropdown Sorting in portlets | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m4a6a4f1 - Revoke and Reassign icons swapped  |<Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31me387a31 -  (10 months ago) <CAMKMG-BLR\SN2080>
+31m034f28f - Sorting has been implemented for dropdown| <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m7e89c82 - Label Changes |<Ashok> (10 months ago) <CAMKMG-BLR\SN2080>
+31me6592d5 - Sorting order has been changed for dropdown | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31me158444 - Brain UI observations fixed| Ashok (10 months ago) <CAMKMG-BLR\SN2080>
+31m4401147 - Brian observation fixed(UI) | Pavan (10 months ago) <CAMKMG-BLR\SN2080>
+31m87d429e - Brian observations fixed|Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31maa75a17 - Change in RSS and Links Name which needs to be added dynamiclly when the user gets created. (10 months ago) <CAMKMG-BLR\SN2080>
+31mf787f4c - corrected links & rss urls|Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31m8bd1dab - updated build referecne for internal purpose|Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31m022153b - Gregs Issues and Satyas Issues which was reported on 06 Mar | <Raghul> (10 months ago) <CAMKMG-BLR\SN2080>
+31mefa2707 - API Integration changes| Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31m7c27112 - New Image for Featured News | <Raghul> (10 months ago) <CAMKMG-BLR\SN2080>
+31m461c725 - New Style for Diebold Logo (10 months ago) <CAMKMG-BLR\SN2080>
+31m7a74983 - MAS Portlet Design Issue and Links for Help and Terms and conditions | <Raghul> (10 months ago) <CAMKMG-BLR\SN2080>
+31m0a0615f - Display User Name instead of Role Name and Remove the default selected value from combo box if it is deleted | <Raghul> (10 months ago) <CAMKMG-BLR\SN2080>
+31mdc1c306 - Bind RSS Feeds with 25 Feeds and 5 Feeds per Page with Paging | <Raghul> (10 months ago) <CAMKMG-BLR\SN2080>
+31m630fed2 - Rebind Grid after Action Button Clicked | <Raghul> (10 months ago) <CAMKMG-BLR\SN2080>
+31md1431ec - Add Company Logo in Account Detail Portlet | <Raghul> (10 months ago) <CAMKMG-BLR\SN2080>
+31m4d87ce5 - Add Company Logo In Account Details Portlet | <Raghul> (10 months ago) <CAMKMG-BLR\SN2080>
+31m156cfd0 - URL Link for Diebold logo (10 months ago) <CAMKMG-BLR\SN2080>
+31m9520355 - Gateway Design Issue and Disable functionality Implemented. (10 months ago) <CAMKMG-BLR\SN2080>
+31m6e5d0ac - Removed Site Id in Dianostics page for both Gateway and Site and made device as default selected value (10 months ago) <CAMKMG-BLR\SN2080>
+31m408fb38 - Delete Site notes in Site information portlet, Only admin can delete the site note. (10 months ago) <CAMKMG-BLR\SN2080>
+31m5ebf05b - Enable Disable actions not working in Site Page has been Fixed. (10 months ago) <CAMKMG-BLR\SN2080>
+31ma224ab8 - Display Panel Reports as per Intrusion in Access Page (10 months ago) <CAMKMG-BLR\SN2080>
+31mf069414 - RSS Portlet Need to display only 5 Feeds at any point of time. (10 months ago) <CAMKMG-BLR\SN2080>
+31me1f643d - RSS Changes|<Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m2bd2966 - RSS and Links (10 months ago) <CAMKMG-BLR\SN2037>
+31m7bf285d - Bug Fix Userdetails page | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m1112367 - Get gateway based on company (10 months ago) <CAMKMG-BLR\SN2080>
+31mfd23d11 - Avoid Duplicate RSS Feed add (10 months ago) <CAMKMG-BLR\SN2080>
+31ma780a9f - Site Map Issues| Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31m9c6e873 - Live View issue resolution| Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31m076e434 - Issue Fix for User Update, when the company is changed in update that does not get saved because the links and RSS are getting null, now condition is checked for RSS and Links and then if not  it is updated (10 months ago) <CAMKMG-BLR\SN2080>
+31m1706108 - Issue fix for Device creation. (10 months ago) <CAMKMG-BLR\SN2080>
+31m96fabf9 - Preferred Contact issue in Company |<Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31mf1053ca - Bug Fix in Company and Site | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m9b92efb - Site Information Portlet issue and display Gateway details page in edit mode. (10 months ago) <CAMKMG-BLR\SN2080>
+31m41cb77b - Bug Fix 309 | <Malathi> (10 months ago) <CAMKMG-BLR\SN2037>
+31m8cac124 - Live View Display Location instead of server Id (10 months ago) <CAMKMG-BLR\SN2080>
+31m3719fb2 - Show Alert when not able to connect to Live view Style inssue for Label Site information changes (10 months ago) <CAMKMG-BLR\SN2080>
+31m83f0d05 - Gregs Issues Reported | Raghul | Changed the image that is displayed in MAS Preference Page Changed teh item that needs to be displayed in Live view Server Combobox Adding Live View portlet more than once (10 months ago) <CAMKMG-BLR\SN2080>
+31ma93cc99 - Style issue fixed to display uploded file name | Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31m62f3975 - Sanity issues fixed with user preferences| Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31m2ba4f1b - Addressed duplicate live view information in role edit screen| Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31mce6af9d - Changing Relation ship between Gateway Site and Company - Here after it will be Gateway and Company. Implemented API call for Device, Gateway and Diagnostics page (10 months ago) <CAMKMG-BLR\SN2080>
+31ma52f3db - Dropdown grid layout by priyadarsan| Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31mf98d8fd - Live view changes | Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31m1b1afc2 - JSON formation for Platform API has been completed (10 months ago) <CAMKMG-BLR\SN1740>
+31m1295f2f - Updated styles | Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31maa49581 - Formatted header for portlets |Ravindra (10 months ago) <CAMKMG-BLR\SN1664>
+31md20ecf5 -  (10 months ago) <CAMKMG-BLR\SN1664>
+31ma549d73 - RSS Feed Issue Fixed |<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m529086f - Portlet xml not required since portlet visibility integrated with database |Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m072710d - Context menu issue fixed | <Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31mc020fb6 - As per Gregs mail on 24 Feb, Remove just the radio button but display the content (11 months ago) <CAMKMG-BLR\SN2080>
+31m7b11b32 - Deleted unused files from solution|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31mfa61420 - RSS and Links Portlet (11 months ago) <CAMKMG-BLR\SN2080>
+31mff07a34 - changes for Dropdown implementaion (11 months ago) <CAMKMG-BLR\SN1740>
+31ma0d65c9 - Add Image to Preferences Page (11 months ago) <CAMKMG-BLR\SN2080>
+31m47ce727 - RSS Changes |<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m0c925c5 - Priyadarsan UI changes (11 months ago) <CAMKMG-BLR\SN1740>
+31m663b29e - Context menu Issue solved |<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m98e6622 - Context menu changes | <Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31mbbe74b9 - Context menu issue |<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m6b71608 -  (11 months ago) <CAMKMG-BLR\SN2037>
+31m01379ef -  (11 months ago) <CAMKMG-BLR\SN2080>
+31m5394d3b -  (11 months ago) <CAMKMG-BLR\SN2037>
+31m9a581d0 - Link Portlet bug fix | <Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m471e225 - Role based menu implementation completed (11 months ago) <CAMKMG-BLR\SN1740>
+31m62febac - Bu Fix - Release 25|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31mbdbdaee - Bug Fix - Release 25 | <Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m9b4676c - Partial View Created for Group Level Reporting (11 months ago) <CAMKMG-BLR\SN2080>
+31mfd36c1b - Navigation added for link names | <Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31mbb821eb - Greg Issues reported on 21 Feb (11 months ago) <CAMKMG-BLR\SN2080>
+31ma35c1da - RSS Feed portlet changes (11 months ago) <CAMKMG-BLR\SN2037>
+31md234a44 - RSS Feed portlet changes|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m5b74e1f - design changes (11 months ago) <CAMKMG-BLR\SN1740>
+31m1e0ce7c - Added Playback and stop functionality (11 months ago) <CAMKMG-BLR\SN1740>
+31m24aa6e2 - SiteNote Empty Files added (11 months ago) <CAMKMG-BLR\SN2080>
+31m817b369 - <#0000> | Gregs Issues as per mail on 21 Feb | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m4c73f6b - Design Issue fixed (11 months ago) <CAMKMG-BLR\SN1740>
+31m4715a89 - LiveView Functionality implemented (11 months ago) <CAMKMG-BLR\SN1740>
+31m6e2cf28 - LiveView changes (11 months ago) <CAMKMG-BLR\SN1740>
+31m6f6eaa5 - Bug fix Role - Release 23 (11 months ago) <CAMKMG-BLR\SN2037>
+31m981ceca - Bug Fix - Release 23 - Feb21 (11 months ago) <CAMKMG-BLR\SN2037>
+31ma05f124 - New File added for Live View (11 months ago) <CAMKMG-BLR\SN2080>
+31mc4ce4c5 - Live View Initial work completed (11 months ago) <CAMKMG-BLR\SN1740>
+31mecfb54f - Bug Fixes - Release 23 (11 months ago) <CAMKMG-BLR\SN2037>
+31mbee4e28 - <#00003541> | List box style issue in Role page | <Raghul> <#00003511> | System summary and Featured News Portlet Display issue | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31mcacb5fc -  (11 months ago) <CAMKMG-BLR\SN2080>
+31m2ac1763 - Refreshed the grid after delete the link (11 months ago) <CAMKMG-BLR\SN1740>
+31m52913b3 - Context menu close issue fixed|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m09894b0 - Fixed user screen critical issue (11 months ago) <CAMKMG-BLR\SN1740>
+31m4a2eaea - Site images issue fixed|Malathi,Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31mee8a5d6 - Site information file upload issue fixed|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m02d9382 - Add Featured news and system summary portlets (11 months ago) <CAMKMG-BLR\SN2080>
+31m59869d8 -  (11 months ago) <CAMKMG-BLR\SN2080>
+31m38d7508 - Issue Fixing (11 months ago) <CAMKMG-BLR\SN1740>
+31me3c3701 -  (11 months ago) <CAMKMG-BLR\SN2037>
+31m1070deb - #00003824|RSS Portlet UI and Non UI Integration|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m8151973 - Check null value when add portlets prefrences (11 months ago) <CAMKMG-BLR\SN1740>
+31m515f3db - #00003824|RSS Portlet UI and Non UI Integration|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m1b860f9 - Add and remove the user prefrence portlet based on the role selection (11 months ago) <CAMKMG-BLR\SN1740>
+31mc0aebc8 - Site Information Save Defaults|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m1be0199 - <#00003829> | Default Search Criteria | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31mede77e5 -  (11 months ago) <CAMKMG-BLR\SN2080>
+31m45a69a7 - <#00003829> | Implementation for default search criteria for portlets | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m80b5fb9 - Random issues fixed while going with flow|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m456722b - Changed the grid button into icon (11 months ago) <CAMKMG-BLR\SN1740>
+31m15263fe -  #00003817|Links Portlet implementation|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m59ef341 - New Files created for User Defaults (11 months ago) <CAMKMG-BLR\SN2080>
+31mceed56c - #00003817|Links Portlet implementation|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m31c9623 - <#00003825> | Conversion from xml to table | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m03641c9 - #00003541|Portlet actions access permision related changes completed|<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m7ddc1ec - RssLinks popup styles added|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m0503276 - Links and Rss Style changes | <Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31mc032c16 - #00003541|Porlet role configuration related partialy completed|<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m3e47066 - Bug Fix Site Information |  <Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31ma25797f - Bug fixes |<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m8285673 - Bug Fix in Site page|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m5287d45 - Detail page desing issues fixed|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m7b2f109 - Alignment and Featured news issue fix|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m0eb6fda - Cog, Dotteted selection area issue|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31me1b330c - System summary modren grid layout completed|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31me69b500 - Live View modren grid design|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31mf51c2b2 - Style Issues for RSS and Links Portlet (11 months ago) <CAMKMG-BLR\SN2037>
+31mf30d5b4 -  (11 months ago) <CAMKMG-BLR\SN2037>
+31m2b74ae2 - #00003817|Links Portlet implementation|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31me335eda -  (11 months ago) <CAMKMG-BLR\SN2080>
+31m71bd9c4 - #00003817|Links Portlet implementation|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m0389f91 - #00003824|RSS Portlet UI and Non UI Integration|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m638aab9 - New user login issue fixed|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m479e1d3 - Site Information Top button controls alignment fixed|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31mc293e4e -  (11 months ago) <CAMKMG-BLR\SN2037>
+31mae544ea - #00003824|RSS Portlet UI and Non UI Integration|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31ma7cfa1e - <#00003820> | Default RSS Feeds and Links for User | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m7430a58 - Menu loading issue fixed|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m90a4530 - <#00003532> | Menu Headings change to Plural | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31ma46ad47 - Bug fix for 18th Build |<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m93b3829 - <#00003601> | Device Page Issues with popup Delete confirmation Text message | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31me1fad55 - Bug fixes for 17th Release|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31mdcbfd9a -  (11 months ago) <CAMKMG-BLR\SN1664>
+31m9830763 - fixed company issues|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m497a294 - bugs fix for alerts date format issue and added report types for Intrusion portlet (11 months ago) <CAMKMG-BLR\SN2080>
+31m56b3e6e - Lable changes (11 months ago) <CAMKMG-BLR\SN1740>
+31m9b38ed0 -  (11 months ago) <CAMKMG-BLR\SN2080>
+31me422a86 - Context menu changes for account and video Helth check portlet (11 months ago) <CAMKMG-BLR\SN1740>
+31m1318d0a - Context menu has been removed|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m784e27a -  (11 months ago) <CAMKMG-BLR\SN2037>
+31mc1d8355 - Selection Area for Icons fixed|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m4ab0dff - <#00003601> | Device Page Issues Edit Device Button is not functioning. Disable Device Button is not functioning. Clicking on “Create Another Device Button” button without selecting any items in the page is throwing error message “The number of cameras should be between 1 and 32” in the popup.  | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m621893b - Defects fixe|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m4e86107 - Medium and Low level Bug Fixes|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m066de93 - Closing Context menu Issue has been fixed|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m4c49f8b - changes for display the description of the portlet. (11 months ago) <CAMKMG-BLR\SN1740>
+31m7f8d219 -  (11 months ago) <CAMKMG-BLR\SN2037>
+31md5b16fe - Changes for User page bug fixing. (11 months ago) <CAMKMG-BLR\SN1740>
+31mdc8b3be - Alerts removed|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31mffad2b3 - Defects fixed (Site Map & Home Page), Description added in preferences page|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m677f72d - Resolved the site list critical issue (11 months ago) <CAMKMG-BLR\SN1740>
+31m14f912c - #00003817|Links Portlet implementation|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m56e4ba4 - #00003817|Links Portlet implementation|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31md1add6c - #00003808|Site Information Portlet with modern grid layout|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31mcf375bc - <#00003525> | Intrusion Portlet Design Issues and Portlet Description | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31md07ab8a - <#00003570> | Alert Portlet Design Issues and Portlet Description | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31mfade515 - <#00003570> | Access Portlet Design Issues and Portlet Description | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31ma3c53c2 - <#00003525> | Intrusion Portlet Grid Layout and supporting Popups | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m4036f76 - <#00003583> | Access Portlet and its supporting Popups Design issue Fix | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m8d624be - Deleted unnecessary file - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m769b755 -  (11 months ago) <CAMKMG-BLR\SN1664>
+31m248e668 - Site Map implementation|Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m69c1fea - #00003552|Changes for RSSFeed NONUI Implementation|<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m93e84cb - <#00003570> |Alert Portlet issue Fix | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m819cca1 - #00003525|Added new portlet for add,edit and delete the user code details|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m2dab213 - #00003525|Design Changes|<Arunachalam| (11 months ago) <CAMKMG-BLR\SN1740>
+31mc3f5653 - <#00003570> | Alerts Portlet Context Menu Implementation User Pin Number Implemented | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31md2a8485 - #00003818|Links portlet NONUI Implementation|<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m0943397 - Design changes for RSS portlet |<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m38a16a0 - Design changes for Links portlet|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m44a7601 - Style issue fixed by Yassar| Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31mb5bf064 - <#00003570> | Alerts Portlet Issues Raised by Brian | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m32878a4 - Device address issue fixed (11 months ago) <CAMKMG-BLR\SN1740>
+31m128198b - #00003525|Added missing files|<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m580da13 - #00003525|Added new portlet for add,edi and delete the user Code details|<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m73e9543 - Bug Fixed for Add Notes Issue|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m4259183 - Account detail portlet height has been increased little bit | <Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m1e60fd4 -  (11 months ago) <CAMKMG-BLR\SN2080>
+31me763501 - debugger has been removed | <Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31mf1654e3 -  (11 months ago) <CAMKMG-BLR\SN2037>
+31meb6a9a9 - Issue fixed in account portlet (11 months ago) <CAMKMG-BLR\SN2037>
+31m97329a1 - Fixed Issue while saving siteinformation |<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m997af85 -  (11 months ago) <CAMKMG-BLR\SN2080>
+31mf290f73 - <#00003525> | Intrusion Portlet with out API | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31me80ad31 - #00003808|Changes for update device count|<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m8a7fd01 -  (11 months ago) <CAMKMG-BLR\SN2037>
+31mf10a87c - #00003811|Account Portlet implementation|<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m6c23957 -  (11 months ago) <CAMKMG-BLR\SN2037>
+31m6a9899f - #00003816|Completed Video helth check implementaion with out API call|<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m8fc28bd - #00003815|Monitors page new design changes|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m2e5f283 - Camera popup design issues fixed - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m819c60d - <#00003597> | Alarm Page Design Issues fix | <Raghul> <#00003814> | Site Page Design Issues fix | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31ma838039 - Gateway design issues fixed - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m85879d8 - #00003813|New Design Changes for Create and Edit user pages|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m8026691 - Device design aligned with Modren grid - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m7eb260a - #00003812|New Design Changes in View user profile information page|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m3ddc4f6 - #00003812|New Design Changes in View user profile information page|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m52469fb - Added styles for subheading - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31md22dbac - #00003808|Site Information Portlet with modern grid layout|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m2c47f21 - #00003811|Account Portlet Implementation|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m259dff3 - #00003808|Site Information Portlet with modern grid layout|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31mb1ebbd8 - #00003600|Completed company edit Grouping functionality|<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m6672d35 - <#00003579> | Alarm Page Design Issue | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31mb6e695e - <#00003570> | Alert Portlet Intrusion Implemented | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m7690c7a - <#00003809> | Company Based Gateway Selection | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m3adf1c2 - #00003808 | Site Information Portlet with modern grid layout | <Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31mf52e758 - #00003808 | Site Information Portlet with modern grid layout | <Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m1c777e1 - <#00003570> | Alert Access Portlet Implementation | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m1a04303 - New Portlet for Alerts Access and Intrusion (11 months ago) <CAMKMG-BLR\SN2080>
+31m2e50e57 - <#00003570> | Alerts Portlet - DVR | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m348c554 - Style issues fixed given by yassar (11 months ago) <CAMKMG-BLR\SN1740>
+31mf980c2e - Missing Styles updated & unused files deleted- Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31mbbef461 - Modren grid design issues fixed - Ravindra N (11 months ago) <CAMKMG-BLR\SN1664>
+31m71e1aef - Secure auth Integration issue fix - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m2b51133 - Model lyout design changes completed for company screen (11 months ago) <CAMKMG-BLR\SN1740>
+31m5ceec3c - View name updated in Home page - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m1676b77 - Added new script file and renamed Video Health Check portlet name - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m814741f - Cursor icon on portlet header - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m56f41c6 - modren grid implementation for preference - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m1e82867 - #00003694|Site details issue resolution|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m30c6520 - #00003694|Site details issue resolution|<Malathi> Filter criteria has been implemented. (11 months ago) <CAMKMG-BLR\SN2037>
+31m9680f17 - #00003694|Site details issue resolution|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m5a89dd1 - inculded live view - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m0729b29 - Unused file - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m922f2aa - Modren grid layout integration for Home, Preferences, Login, SiteMap, Account, Video Health check Portlets - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31mc18c3a3 - <#00003779> | Device Page Implementation along with bug fixes | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m89883fa - #00003694|Site details issue resolution|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m8462fab - #00003600 | Company creation issue fixed |<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31mc40cce8 - #00003600|Company creation and updation issues are completed|<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m429f648 - #00003694|Site details issue resolution|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m5696c0c - #00003694|Site details issue resolution|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31mfc03d4f - Added new model for company default subscription (11 months ago) <CAMKMG-BLR\SN1740>
+31m0d398e0 - Image added - Raghul (11 months ago) <CAMKMG-BLR\SN2080>
+31m8089a7e - Delete refresh fixed - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31mb85eecb - Create Device issues fixed - Ravindra N (11 months ago) <CAMKMG-BLR\SN1664>
+31me11fcbf - Site Implementation|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m48efbae -  (11 months ago) <CAMKMG-BLR\SN2080>
+31mdaa7a97 - <#00003634> | Gateway Page Implemtation Completed except API Integration | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31meea2221 - <#00003634> | Menu Implemetation | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m37f2726 -  (11 months ago) <CAMKMG-BLR\SN2080>
+31m13b565c - #00003600|Comapny page implementation:Edit and bug fixng|<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m4228871 - Site Implementation|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31mb8005a0 - Site page implementation|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m4b27163 - <#00003601> | Menu created for Device Page Implementation | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m2dca23a - <#00003601> | Device Page Implementation | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m78807d1 - #00003600|Companu Page implementation partialy Completed |<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m991c47c - Implemented Tab grouping - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m5f1ae01 - SiteImplementation|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m9dbff5a - Empty Script files to separate scripts from pages- Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m1e256fb - Fixed resource not found issues -Ravindra.N (11 months ago) <CAMKMG-BLR\SN1664>
+31m009a55a - Replaced old images with colored images and deleted unnecessary files - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m2aa61e8 - New File Created for View Edit Device Camera (11 months ago) <CAMKMG-BLR\SN2080>
+31m3cb272c - Greg Issues fixed - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31mf9c5e05 - #00003559|Monitoring Implementation|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31maa4c804 - Title style has been modified for all views|<Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m85e4057 - #00003540|User Page Popup and validation issues Fixed|<Arunachalam> (11 months ago) <CAMKMG-BLR\SN1740>
+31m95854db - <#00003596> | Role issue | <Raghul> <#00003597> | Alarm issue | <Raghul> <#00003598> | Diagnostics issue | <Raghul> (11 months ago) <CAMKMG-BLR\SN2080>
+31m8a4e33b - <#00003559> | Mas Page Implementation | <Malathi> (11 months ago) <CAMKMG-BLR\SN2037>
+31m35ab893 - Menu Devider issue fixed - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31mbffb22e - Role Issues fixed - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31m68c6ac3 - Page header title style issue fixed - Ravindra (11 months ago) <CAMKMG-BLR\SN1664>
+31mbdbdf3b -  (11 months ago) <CAMKMG-BLR\SN2080>
+31mda727d4 - <#00003541> | <Issue in Role Page Integration> | <Raghul> <#00003540> | <Issue in User Page Integration> | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m619e607 - User details Issues|<Malathi> (12 months ago) <CAMKMG-BLR\SN1740>
+31m1f58c4a - Monitoring integration completed (12 months ago) <CAMKMG-BLR\SN1740>
+31m6e6853a - <#00003597> | Alarm Config Issue Fix | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31mc7eda7f - User details changes|<Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31m8f7ad5d - <#00003598> | Migration of Diagnostics Page using Kendo UI Designs | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m8c885e6 - #00003540|User Management screen design and bug fixing |<Arunachalam> (12 months ago) <CAMKMG-BLR\SN1740>
+31mb654c4b - Styles added for Monitors page (12 months ago) <CAMKMG-BLR\SN2037>
+31m3a447cc - Alarm menu has been added in Master Layout|<Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31mb564083 - <#00003597> | Alarm Configuration Phase 1 Integration Completed| <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m8ee1641 - Integrated with User profile information| <Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31m6882f22 - #00003596|Completed rolemanagement design|<Arunachalam> (12 months ago) <CAMKMG-BLR\SN1740>
+31mdbf1fb0 - <#00003458>| Style Change | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m28242c1 - Bug Fixing|<Arunachalam> (12 months ago) <CAMKMG-BLR\SN1740>
+31mce2c1aa - #00003594|New Changes in Intrusion Portlet|<Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31m8ca72df - #00003593|New Changes in Alerts portlet|<Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31m00d25a5 - #00003592|New Changes in Site information portlet|<Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31m0f7a174 -  (12 months ago) <CAMKMG-BLR\SN2080>
+31m1ac2fd3 - Fixed Design Issue |<Arunachalam> (12 months ago) <CAMKMG-BLR\SN1740>
+31m28d7846 -  (12 months ago) <CAMKMG-BLR\SN2080>
+31m5cba3a8 -  (12 months ago) <CAMKMG-BLR\SN2037>
+31m806bce1 - Remove Unused code (12 months ago) <CAMKMG-BLR\SN1740>
+31m85922e1 - 4577,4578,4579 | Role Management bug fixing | <Arunachalam> (12 months ago) <CAMKMG-BLR\SN1740>
+31m2938fcb - <#00003591> | Alarm Page Phase 1 integration | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31mf9a944d - #00004608|Mobile number fielded is accepting alphabets and special characters in  Personal Information page.|<Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31me743bb6 - <#00004717> | Portlet dropdown select event issue fixed | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m250b8fd - <#00003562> | Access Portlet Action Screen Issue Fix <Raghul> <#00003563> | Access Portlet Action Screen Issue Fix <Raghul> <#00003566> | Access Portlet Action Screen Issue Fix <Raghul> <#00003567> | Access Portlet Action Screen Issue Fix <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31mbf4657f -  (12 months ago) <CAMKMG-BLR\SN2080>
+31maba55f4 - <#00003583> | Access Portlet Action Popups | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m43e81d6 - #00003587 | Dashbord design issue completed | <Arunachalam> (12 months ago) <CAMKMG-BLR\SN1740>
+31m73bab35 - <#00003559> | MAS Calender Control Gets Expanded and Change DDL to Cbo | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m50e8b7b - Reverted Intrusion Page Changes (12 months ago) <CAMKMG-BLR\SN2080>
+31m7129176 - #00003584 | Removed old portlet images and fixed some design issues | <Arunachalam> (12 months ago) <CAMKMG-BLR\SN1740>
+31mc967920 - <#00003525> | Intrution Portlet Design Issue Fix | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31mb65a473 - <#00003562> | New Actions Portlet Implementation | <Raghul> <#00003563> | New Actions Portlet Implementation | <Raghul> <#00003566> | New Actions Portlet Implementation | <Raghul> <#00003567> | New Actions Portlet Implementation | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m3b20f24 - <#00003558> | Color Change for Chart | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m9accf2d - <#00003552> | Bug Fix as the portlet gets collapsed | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m3b60e5b - <#00003559> | MAS Style issue | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m079f533 - <#00003559> | <Reports Button Partially Visible Bug Fix> | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m9f4b0a0 - In preference page, Live video Portlet and My profile has been removed|<Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31m2898ad5 - #00003584 | Fixed Preference page design issues | <Arunachalam> (12 months ago) <CAMKMG-BLR\SN1740>
+31m1b37905 - Site information Portlet displays even after deleting the Portlet. Delete and refresh the page, Portlet reappears. | <Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31mb0f69a5 - My profile has been removed from Preferences page|<Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31mbc82478 - My profile has been removed from home page | <Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31m4ea1f65 - #00003583 |Access Portlet prototype implementation |<Arunachalam> (12 months ago) <CAMKMG-BLR\SN1740>
+31m760f103 - Preferences Link has been added in context menu of Account portlet|<Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31mfefff28 - <#00003562> | Browser issue Fix | <Raghul and Yasser> (12 months ago) <CAMKMG-BLR\SN2080>
+31m3af606e - #<00003567> | Access Group portlet View Added <| <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m46dfae3 - #<00003519> | Adding Inner Content Div | <Raghul> Changes made as per Yassers Advice (12 months ago) <CAMKMG-BLR\SN2080>
+31md2dcf33 - LiveView portal Issue <Arunachalam> (12 months ago) <CAMKMG-BLR\SN1740>
+31me1d3447 - #<00003562> | Add Card Holder | <Raghul> #<00003563> | Modify Card Holder | <Raghul> #<00003566> | Delete Card Holder | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31mcaa1070 - #<00003562>| Implementation of Card Holder Add | <Raghul> (12 months ago) <CAMKMG-BLR\SN2080>
+31m556ac05 - List View Implementation|<Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31m0eae5af - LiveView Implementation | <Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31m29b761a - LiveView Implementation | <Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31m5943ae5 - LiveView Implementation | <Malathi> (12 months ago) <CAMKMG-BLR\SN2037>
+31m0e5c29b - UI Design issues fixed - Ravindra (12 months ago) <CAMKMG-BLR\SN1664>
+31mf06fea1 - Added Controller and View for Access (12 months ago) <CAMKMG-BLR\SN2080>
+31m23cabf3 - #00003570 | Alert Portlet implementation completed. | <Arunachalam> (12 months ago) <CAMKMG-BLR\SN1740>
+31m3877d61 - #00003559 |  Monitoring Portal implementation| <Arunachalam> (12 months ago) <CAMKMG-BLR\SN1740>
+31m5499d93 - Added New Model for Account list (12 months ago) <CAMKMG-BLR\SN1740>
+31m584348c - #00003568|Live View Portlet Implementation|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31mdffeb36 - New Controller Added for Site Information (1 year ago) <CAMKMG-BLR\SN2080>
+31m23f6789 - #00003559|Monitoring (MAS) Implementation|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m2275b59 - #00003567|My Access Points - Add Access Group portlet Implementation|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31macedf37 - #00003566|My Access Point - Delete portlet Implementation|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m784cc59 - #00003563|My Access Points - Cardholder  Modify|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m2293297 - #00003562|My Access Points Cardholder Add Implementation|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m0e881cf - Issue to Preference Page Fixed. (1 year ago) <CAMKMG-BLR\SN2080>
+31m7048dad - Fixed Script issue|<Arunachalam> (1 year ago) <CAMKMG-BLR\SN1740>
+31m0231ba8 - Move Cursor for all Portlets (1 year ago) <CAMKMG-BLR\SN2080>
+31m9fa437c - New portal implementaion <Arunachalam> (1 year ago) <CAMKMG-BLR\SN1740>
+31mdf5b95d - alert portlet design changes|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31mb36ee6c - System Summary Completed. Cannot add more than One series to Chart. (1 year ago) <CAMKMG-BLR\SN2080>
+31mb5fef88 - AlertPortlet Implementation|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31ma4fed4a - SiteInformation DesignChanges|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m3f3d32c - Controller and Service added for System Summary (1 year ago) <CAMKMG-BLR\SN2080>
+31mbffa642 - #00003559|Monitoring (MAS) Implementation|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m4d94f5d - #00003558|System Summary Implementation|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m7d5bc13 - Issue to Position Change Issue Fixed. Intrusion Portlet Fixed with Design Issues. User Page combo Box added (1 year ago) <CAMKMG-BLR\SN2080>
+31m0169f94 - #00003541|Role Management integration|<Arunachalam> (1 year ago) <CAMKMG-BLR\SN1740>
+31mc110ace - #00003558|System Summary Implementation|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31mafe93a6 - Navigate URL for links has been modified|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m3e8086b - #00003557|Run Report Button is not Completely Visible in Intrusion Portlet.(observed in FF and safari).|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m331a08d - #00003556|Menu bar Links text need to be changed to Caps.(Users, Role)|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m439a564 - #00003554|Unable to delete Intrusion Portlet.|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m334f312 - #00003553|RSS Feed Portlet is not Moving to any direction.|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31ma9788b0 - #00003551|Collapse and Delete of RSS Feed Portlet is not working.|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m9435976 - Links Portlet changes|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m2fba03a - Portlet Movement Issue Fixed. Except column 2. (1 year ago) <CAMKMG-BLR\SN2080>
+31ma2b1c01 - IssueFix_forComboboxSelectionChange (1 year ago) <CAMKMG-BLR\SN2080>
+31mf266ca1 - Added Images for Preference Page and removed alerts in Preference page. (1 year ago) <CAMKMG-BLR\SN2080>
+31m1df2b5e - Issue Fix for RSS Portlet (1 year ago) <CAMKMG-BLR\SN2080>
+31mf068ebd - Expand Collapse issue in Intrusiondetails Portlet|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31ma64c23b -  (1 year ago) <CAMKMG-BLR\SN2080>
+31mdcaf897 - Desigh Issue (1 year ago) <CAMKMG-BLR\SN2080>
+31m5ab1212 - VideoHealthCheck portlet drag and drop, Expand/Collapse, Context menu implementation|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31mc74d024 -  (1 year ago) <CAMKMG-BLR\SN2080>
+31m79c1359 - New images has been added for Links and Account Details portlets (Preferences Page) |<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31mca1189b - SiteMap - Implementation completed without more information - Ravindra (1 year ago) <CAMKMG-BLR\SN1664>
+31mc8271d9 - #00003546|Account Details Implementation|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m874ab3a - AccountModel and Account Service has been added for AccountDetails Portlet <Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m94df453 - Intrusion Page Changes - Raghul (1 year ago) <CAMKMG-BLR\SN2080>
+31m9bd1342 - #00003546|Account Details Portlet Implementation|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m58a0e09 - #0003547|New design changes in Featured News Portlet|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m83a865e - Site Map Portlet implementation intial commit - Ravindra (1 year ago) <CAMKMG-BLR\SN1664>
+31mdf38a09 - VideoHealthCheck_PortletCompleted (1 year ago) <CAMKMG-BLR\SN2080>
+31ma9626ba - #00003545|New Portlet - Links Portlet Implementation|<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m0031f42 - Settings image name has been changed  to main-settings<Malathi> (1 year ago) <CAMKMG-BLR\SN2037>
+31m2bb3e09 - These file will generate on build (1 year ago) <CAMKMG-BLR\SN1664>
+31mff39b3d -  (1 year ago) <CAMKMG-BLR\SN1664>
+31m4dd9599 - Diebold project source (1 year ago) <CAMKMG-BLR\SN1664>

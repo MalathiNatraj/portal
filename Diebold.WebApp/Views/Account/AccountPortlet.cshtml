@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "AccountDetails";
+}
+<script type="text/javascript">
+    var accountGetAccountDetailsUrl = '@Url.Action("GetAccountDetails", "Dashboard")';
+    var accountViewUserProfileUri = '@Url.Action("ViewUserProfile", "PortletsDefaultFns")';
+    $(document).ready(function () {
+        var wWidth = $(window).width();
+        var dWidth = wWidth * 0.2;
+        $("#dvSettings").dialog(
+               {
+                   draggable: false,
+                   closeOnEscape: true,
+                   resizable: false,
+                   height: 'auto',
+                   width: dWidth,
+                   autoOpen: false,
+                   show: 'blind'
+               }
+               );
+
+        // To hide the title bar of the div
+        $(".ui-dialog-titlebar").hide();
+        $('#imgAccountPortletSettings').click(function (event) {
+            $("#dvSettings").dialog("option", "position", {
+                my: "left top",
+                at: "bottom",
+                collision: "flip",
+                of: event,
+                offset: "20 40"
+            });
+            $('#dvSettings').empty();
+            $('#dvSettings').append('<a href="#" id="imgAccountDetMoreDetails" onclick="javascript:fnAccountsMoreOptionsClick();return false;" class="divdynamiclink">View Profile</a>');
+            $('#dvSettings').append('<a href="@Url.Content("~/Preferences/DisplayPreferences")" id="imgAccountPortletPreferences" class="divdynamiclink">Preferences</a>');
+            $('#dvSettings').dialog('open');
+            return false;
+        });
+        // Close Pop-up If the user clicks anywhere else on the page
+        jQuery('body').bind('click', function (e) {
+            if (jQuery('#dvSettings').dialog('isOpen')
+            && !jQuery(e.target).is('.ui-dialog, a')
+            && !jQuery(e.target).closest('.ui-dialog').length
+         ) {
+                jQuery('#dvSettings').dialog('close');
+            }
+        });
+
+        fnGetAccountInfo();
+    });
+
+</script>
+<div id="my-AccountDet">
+    <div class="cont-inner-room">
+        <div class="dark-blue">
+            <div class="Dashbord-header">
+            <div class="dark-blue-head gradient">
+                <div class="pallet-icon">
+                    <img src="@Url.Content("~/Content/images/acc-detail-icon.png")" alt="" />
+                </div>
+                <p>
+                    <strong>Account Detail</strong></p>
+                <div class="close-icon">
+                    <a href="#">
+                        <img onclick="javascript:fntoggleAccountDet();return false;" src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+                </div>
+            </div>
+            </div>
+            <div id="divAccountDetContent">
+            <div class="dark-blue-body gradient">
+                <div class="account-body-cont">
+                        
+                    <div class="body-cont-lft">
+                        <p>
+                            <strong><label id="lblCompanyName" class="word-wrap"></label><br />
+                                Sites: <label id="lblSiteCount"></label><br />
+                                Managing</strong></p>
+                        <div class="account-info">
+                            <p><strong> Intrusion: <label id="lblIntrusionCount"></label></strong></p>
+                        </div>
+                        <div class="account-info">
+                            <p><strong>Health: <label id="lblHealthCount"></label></strong></p>
+                        </div>
+                        <div class="account-info">
+                            <p><strong>Access: <label id="lblAccessCount"></label></strong></p>
+                        </div>
+                    </div>
+                    <div class="body-cont-right">
+                        <div class="profile-photo">
+                            <img id="imgCompanyLogo" src="" width="215" height="122" alt="" style='max-width: 100%;'/>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    </div>
+                   
+            </div>
+            <div class="dark-blue-set">
+                <div class="sett-icon">
+                    <a href="#">
+                        <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" onclick="javascript:ShowAccountPortletDescription();return false;"/></a>
+                </div>
+                <div class="sett-icon">
+                    <a href="#">
+                        <img id="imgAccountPortletSettings" src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+                </div>
+            </div>
+                </div>
+        </div>
+    </div>
+</div>
+<div id="dvSettings" class="context-menu">
+</div>
+
+@(Html.Kendo().Window()
+    .Name("AccountDescriptionwindow")
+    .Title("Account Detail Portlet Description")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+        <div>
+            <p>
+                View overall account details including the user account currently logged on, plus number of sites and devices defined in your environment. 
+            </p>
+        </div>
+    </text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)

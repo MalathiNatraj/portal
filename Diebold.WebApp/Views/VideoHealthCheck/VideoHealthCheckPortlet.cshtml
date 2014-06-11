@@ -1,0 +1,265 @@
+﻿@model IEnumerable<Diebold.WebApp.Models.DeviceListDashboardViewModel>
+@{
+  IList<Diebold.WebApp.Models.DeviceModel> objDeviceModel = new List<Diebold.WebApp.Models.DeviceModel>();
+}
+<link href="@Url.Content("~/Content/themes/base/jquery.ui.dialog.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/themes/base/jquery.ui.theme.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/themes/base/jquery.ui.core.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/app/AlertListConfig.js")" type="text/javascript"></script>
+
+<div id="dvDisplayVideoHealthCheck">
+    
+        <div class="cont-inner-room">
+            <div class="purple">
+              <div class="Dashbord-header">
+                <div class="purple-head gradient">
+                    <div class="pallet-icon">
+                        <img src="@Url.Content("~/Content/images/health-video-check-icon.png")" alt="" />
+                    </div>
+                    <p>
+                        <strong>Video Health Check</strong></p>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgVideoHealthCheckClose" onclick="javascript:fnCloseVideoHealthCheck();return false;" src="@Url.Content("~/Content/images/close-icon.png")" alt="" /></a>
+                    </div>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgVideoHealthCheckExpColapse" onclick="javascript:fntoggleVideoHealthCheck();return false;" src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+                    </div>
+                </div>
+              </div>
+                <div id="divVideoHealthCheckContent">
+                    <div class="purple-body">
+                        <div class="video-hlth-chk-body-cont">
+                            <div class="video-hlth-chk-camera-list">
+                                @(Html.Kendo().ComboBox()
+                                  .Name("cmbDevicelist")
+                                  .HtmlAttributes(new { style = "width:85%" })
+                                  .Events(ev => { ev.Select("selectDevice"); })                                  
+                                  .Placeholder("Device List")
+                                  .DataTextField("Name")
+                                  .DataValueField("Id")                                  
+                                  .Suggest(true)
+                                  .Template("<div id='rowcell'>${ Name }</div><div id='rowcell'>${ SiteName }</div><div id='rowcell'>${ Address1 }</div><div id='rowcell'>${ City }</div><div id='rowcell'>${ State }</div><div id='rowcell' style='border-right:0px'>${ Zip }</div>")
+                                  .Events(e =>
+                                    {
+                                        e.Open("openVideoheader").Close("closeVideoheader");
+                                    })
+                                )
+                            <img id="imgsearchVideoHCLogo" src="@Url.Content("~/Content/images/SearchIcon.png")" style="vertical-align:bottom;cursor:pointer; padding-bottom:5px;" alt=""  onclick="fnOpenVHCDetails();"/>
+                            </div>
+                            <div class="polling-status">
+                                <p>
+                                    Polling Status:
+                                    <label id="lblPollingStatus"></label></p>
+                                <ul>
+                                    <li>Days Recorded: <span>
+                                        <label id="lblDaysRecorded"></label></span></li>
+                                    <li>Currently Recording: <span>
+                                        <label id="lblCurrentlyRecording"></label></span></li>
+                                    <li>Network Status: <span>
+                                        <label id="lblStatus"></label></span></li>
+                                    <li>Alarm Present:                                     
+                                    <span id="videoalertlink" style="display:none"><a href="javascript:displayGrid_VHCheck();">Current Alarms</a></span>
+                                    </li>                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="purple-set">
+                        <div class="sett-icon">
+                            <a href="#">
+                                <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" onclick="javascript:ShowHelthcheckDescription();return false;"/></a>
+                        </div>
+                        <div class="sett-icon">
+                            <a href="#">
+                                <img id="imgVideoHealthCheckSettings" src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</div>
+<div id="dvSettings" class="context-menu">
+</div>
+@(Html.Kendo().Window()
+    .Name("HelthcheckDescriptionwindow")
+        .Title("Video Health Check Portlet Description")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+        <div>
+            <p>
+               Check the current status of video recorders. Filter by device to detect camera loss, quickly access the number of days recorded for compliance and view hard drive smart information status. 
+            </p>
+        </div>
+    </text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)
+@(Html.Kendo().Window().Name("Details")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(300)
+)
+@(Html.Kendo().Window().Name("DeviceStatusInfo")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(500)
+    .Height(600)
+)
+ @(Html.Kendo().Window()
+    .Name("VideoErrorPopup")
+    .Title("Info")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+    <div style="padding:5px">Please select a device</div>
+    </text>)
+    .Width(250)
+    .Height(120)
+    )
+
+
+<div id="viewMoreAlertsGridPopUp" class="modelDialog" style="display: none;">
+    <div style="background-color: #C5C5C5; width: 100%; color: #666666">
+        <strong>
+            <label style="margin: 8% 0 0 1%;">
+                Alert Information</label></strong></div>
+    <div style="width: 90%; margin: 3% 2% 0 5%;">
+        <p>
+     @(Html.Kendo().Grid(Model)
+    .Name("LinkToAlarmGrid")
+    .Resizable(resize => resize.Columns(true))
+    .HtmlAttributes(new { style = "width:99.9%; height:95%" })
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.LastAlertS).Title("Date Time").Filterable(false).Width("20%");
+        columns.Bound(p => p.Ack).Width(50).ClientTemplate("# if (Ack == 'True') { #" + "<img class='icon bulletGreen bold' alt='Connected' />" +
+                "# } else { #" + "<img class='icon bulletRed bold' alt='not Connected'  #}#");
+        columns.Bound(p => p.AlertName).Width(250);
+        columns.Bound(p => p.IsDeviceOk).Width(75).Title("Status").ClientTemplate("# if ((IsDeviceOk == false && Ack != 'True')||(IsDeviceOk == false && Ack == 'True')) { #" + "Alert" +
+                "# } else { #" + "OK #}#");
+    })
+    .Pageable()
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(10)
+            .ServerOperation(false))
+     )
+        </p>
+        
+        <div class="add-link" style="padding-top: 5px; width: 100px; margin-left: 43%;">
+            <input type="button" value="Close" id="btnCancelLinkToAlarm" onclick="javascript:btnCancelLinkToAlarmClicked();" />
+        </div>
+        </div>
+    </div>
+<div id="dvSearchVHCDevices" class="modelDialog" style="display: none;">
+    <div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Select a Device</label></strong></div>
+        <div style="width:90%; margin:3% 2% 0 5%;">
+            <p>
+              @(Html.Kendo().Grid(objDeviceModel)
+                .Name("grdSearchVHCDeviceDetails")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Id).Visible(false);
+                    columns.Bound(p => p.Name).Width("20%").Visible(true).Title("Device").Filterable(true).Sortable(true);
+                    columns.Bound(p => p.SiteName).Width("20%").Visible(true).Title("Location").Filterable(true);
+                    columns.Bound(p => p.Address1).Width("20%").Visible(true).Title("Address").Filterable(true);                    
+                    columns.Bound(p => p.City).Width("20%").Filterable(true).Title("City").Visible(true);
+                    columns.Bound(p => p.State).Width("20%").Visible(true).Title("State").Filterable(true);
+                    columns.Bound(p => p.Zip).Width("20%").Visible(true).Title("Zip").Filterable(true);
+                })
+                .Events(events => events.Change("grdSearchVHCChanged").DataBound("LoadingDefaultFilter"))
+                .Pageable()
+                .Filterable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .ServerOperation(false)
+                )
+            )
+            </p>
+            <div class="add-link" style="padding-top:5px; width:100px; margin-left: 43%;">
+            <input type="button" value="Close" id="btnSearchVHCCancel" onclick="javascript:btnSearchVHCCancelClicked();" />
+        </div>
+        </div>
+        <br />
+        </div>
+<script language="javascript" type="text/javascript">
+    var videoHCGetDevicesByUserforSearchUrl = '@Url.Action("GetDevicesByUserforSearch", "Video")';
+    var videoHCGetPlatformDevicePollingStatusUrl = '@Url.Action("GetPlatformDevicePollingStatus", "Video")';
+    var videoHCClosePortletUrl = '@Url.Action("ClosePortlet", "Preferences")';
+    var videoHCGetDevicesByUserUrl = '@Url.Action("GetDevicesByUser", "Video")';
+    var videoHCGetDevicePollingStatusUrl = '@Url.Action("GetDevicePollingStatus", "Video")';
+    var videoHCSaveDefaultValueUrl = '@Url.Action("SaveDefaultValue", "Video")';
+    var videoHCClearVHCDefaultValueUrl = '@Url.Action("ClearVHCDefaultValue", "Video")';
+    var videoHCGetActiveAlertsbyDeviceIdUrl = '@Url.Action("GetActiveAlertsbyDeviceId", "Alerts")';
+    var videoHCShowStatusDeviceUrl = '@Url.Action("ShowStatusDevice", "Dashboard", new { id = 0 })';
+
+     $(document).ready(function () {
+         // Get DeviceType and bind with Default Value Combobox
+         GetDeviceTypes();
+         var wWidth = $(window).width();
+         var dWidth = wWidth * 0.2;
+         $("#dvSettings").dialog(
+               {
+                   draggable: false,
+                   closeOnEscape: true,
+                   resizable: false,
+                   height: 'auto',
+                   width: dWidth,
+                   autoOpen: false,
+                   show: 'blind'
+
+               }
+               );
+
+         // To hide the title bar of the div
+         $(".ui-dialog-titlebar").hide();
+         $('#imgVideoHealthCheckSettings').click(function (event) {
+             $("#dvSettings").dialog("option", "position", {
+                 my: "left top",
+                 at: "bottom",
+                 collision: "flip",
+                 of: event,
+                 offset: "20 40"
+             });
+             $('#dvSettings').empty();
+             $('#dvSettings').append('<a href="#" id="imgHealthCheckMoreDetails" onclick="javascript:fnVideoHealthCheckMoreOptionsClick();return false;" class="divdynamiclink">View More</a>');
+             $('#dvSettings').append('<a href="#" id="imgVHCDefaultValuesDetails" onclick="javascript:fnAddDefaultValuesClick();return false;" class="divdynamiclink">Save Defaults</a>');
+             $('#dvSettings').append('<a href="#" id="imgVHCClearDefaultValues" onclick="javascript:fnClearVHCDefaultValuesClick();return false;" class="divdynamiclink">Clear Defaults</a>');
+             $('#dvSettings').append('<a href="#" id="imgVHCRefreshValues" onclick="javascript:fnVHCRefreshClick();return false;" class="divdynamiclink">Refresh</a>');
+             $('#dvSettings').dialog('open');
+             return false;
+         });
+         // Close Pop-up If the user clicks anywhere else on the page
+         jQuery('body').bind('click', function (e) {
+             if (jQuery('#dvSettings').dialog('isOpen')
+            && !jQuery(e.target).is('.ui-dialog, a')
+            && !jQuery(e.target).closest('.ui-dialog').length
+         ) {
+                 jQuery('#dvSettings').dialog('close');
+             }
+         });
+
+        var videoInterval = '@System.Web.Configuration.WebConfigurationManager.AppSettings["VideoFeedInterval"]';
+        var refreshId = setInterval(function () {
+            var deviceID = $("#cmbDevicelist").val();
+            if(deviceID != '') {
+                var dataItem = { "DeviceId": deviceID };
+                var url = '@Url.Action("GetPlatformDevicePollingStatus", "Video")';
+                BlockElement("divVideoHealthCheckContent", 'Connecting...');
+                $.post(url, dataItem, GetVideoDeviceDetailbyDeviceIdCallback, "json");
+            }
+        }, videoInterval);
+     });
+</script>
+

@@ -1,0 +1,448 @@
+﻿@model Diebold.WebApp.Models.SiteViewModel
+         @*  @{
+    Layout = null;
+    var md5homejsValue = Md5Generator.getMD5Code("/Scripts/home.js");
+    var md5homecssValue = Md5Generator.getMD5Code("/Content/home.css");
+}
+@using Diebold.WebApp.Infrastructure.Helpers;*@
+
+@{
+    IList<Diebold.WebApp.Models.SiteAccNumberViewModel> objSiteAccNumberViewModel = new List<Diebold.WebApp.Models.SiteAccNumberViewModel>();
+}
+
+<script src="@Url.Content("~/Scripts/app/ExtendedFunction.js")" type="text/javascript"></script>
+@*<script src="@Url.Content("~/Scripts/app/Common.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/home.css?v=" + @md5homecssValue)" rel="stylesheet" type="text/css" />*@
+<script language="javascript" type="text/javascript">
+    var siteEditAccNumUrl = '@Url.Action("EditSiteAccNumberDetails", "Site")';
+    var siteAddAccNumUrl = '@Url.Action("AddsiteAccNumber", "Site")';
+    var ViewEditSiteAccNumUrl = '@Url.Action("ViewEditSiteAccNumberDetails", "Site")';
+    var siteRemoveSiteAccNum = '@Url.Action("RemoveSiteAccNumber", "Site")';
+    var GetsiteAccNumberUrl = '@Url.Action("GetSiteAccNumberInformation", "Site")';
+    
+</script>
+<div class="cont-creation">
+    <div class="one columns"></div>
+    <div id="divCompanyContent" class="six columns">
+        <div>
+         @if (ViewBag.IsCreate == true)
+         {         
+            @Html.ValidationSummary(false, "There where errors creating the Site")
+         }
+         @if (ViewBag.IsEdit == true)
+         {
+            @Html.ValidationSummary(false, "There where errors editing the Site")
+         }
+        </div>
+        <div class="cont-lft">
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.SiteId)
+                </p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @(!ViewBag.IsEdit ? Html.TextBoxFor(model => model.SiteId, new { @class = "comp-txt" }) : Html.TextBoxFor(model => model.SiteId, new { @readonly = "readonly", @class = "comp-txt" }))
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.AccountNumber)
+                </p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @*@Html.TextBoxFor(model => model.AccountNumber, new { maxlength = 32, @class = "comp-txt" })*@                 
+                  <input type="button" class="k-button k-button-icontext k-grid-update" value="Add Account Number" onclick="fnAddAccNumber();return false;" />
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>@Html.LabelFor(model => model.ParentAssociation)</p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.ParentAssociation, new { maxlength = 70, @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.DieboldName)
+                </p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.DieboldName, new { maxlength = 70, @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.Address1)
+                </p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.Address1, new { maxlength = 70, @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.Address2)
+                </p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.Address2, new { maxlength = 70, @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.City)
+                </p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.City, new { maxlength = 32, @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.State)
+                </p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.State, new { maxlength = 52, @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.Zip)
+                </p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.Zip, new { maxlength = 32, @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.County)
+                </p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.County, new { maxlength = 60, @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.Country)
+                </p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.Country, new { maxlength = 60, @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.CCMFStatus)
+                </p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.CCMFStatus, new { maxlength = 32, @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <div class="one columns">
+    </div>
+    <div class="seven columns">
+        <div class="cont-right">
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.Name)</p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.Name, new { maxlength = 70, @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.CompanyName)</p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                <p>
+                    @if (ViewBag.IsCreate == true)
+                    {
+                        @(Html.Kendo().ComboBoxFor(p => p.CompanyId)
+                        .Placeholder("-- Select --")
+                        .HtmlAttributes(new { style = "width:99%" })
+                        .DataTextField("Text")
+                        .DataValueField("Value")
+                        .BindTo(Model.AvailableCompanies.OrderBy(x=>x.Text))
+                        .Events(events => events.Select("SiteCompanyChanged"))
+                         )                              
+                    }
+                    @if (ViewBag.IsEdit == true)
+                    {
+                        @Html.TextBoxFor(model => model.CompanyName, new { disabled = "disabled", @class = "comp-txt" })              
+                        @Html.HiddenFor(model => model.CompanyId)
+                        @Html.HiddenFor(model => model.CompanyName)
+                    }
+                </p>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.FirstLevelGroupingId)</p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                <p>
+                    @(Html.Kendo().ComboBoxFor(p => p.FirstLevelGroupingId)
+                          .Placeholder("-- Select --")
+                          .HtmlAttributes(new { style = "width:99%" })
+                          .DataTextField("Text")
+                          .DataValueField("Value")
+                          .BindTo(Model.AvailableCompanyGrouping1Levels.OrderBy(x=>x.Text))
+                          .Events(events => events.Select("SiteFirstLevelGroupChanged"))
+                        )
+                </p>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.SecondLevelGroupingId)</p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                <p>
+                    @(Html.Kendo().ComboBoxFor(p => p.SecondLevelGroupingId)
+                                .Placeholder("-- Select --")
+                                .HtmlAttributes(new { style = "width:99%" })
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                        .BindTo(Model.AvailableCompanyGrouping2Levels.OrderBy(x=>x.Text))
+                          )
+                </p>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.SharepointURL)</p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.SharepointURL, new { maxlength = 250, @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.Notes)</p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextAreaFor(model => model.Notes, new { maxlength = 512, cols = "16", rows = "5", @class = "comp-txt", @style = "resize: none;" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.ContactName)</p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.ContactName, new { maxlength = 64, @class = "comp-txt" })
+            </div>
+            
+            <div class="clear"></div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.ContactEmail)</p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.ContactEmail, new { maxlength = 100, @class = "comp-txt" })
+            </div>
+
+            <div class="clear"></div>
+            <div class="comp-lft" style="width:40%">
+                <p>
+                    @Html.LabelFor(model => model.ContactNumber)</p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                @Html.TextBoxFor(model => model.ContactNumber, new { maxlength = 64, @class = "comp-txt" })
+            </div>
+            <div class="clear"></div>
+              <div class="comp-lft" style="width:40%">
+                <p>
+                    Upload Site Image:</p>
+            </div>
+            <div class="comp-right" style="width:60%">
+                
+                @if (ViewBag.IsEdit && Model.FileName != null)
+                {
+                    <div style="width:50%; float:left; margin-top:2%; font-family:Arial;">
+                    @Html.Label("lblFileNameHeader", Model.FileName) <br />
+                    </div>
+                    <div style="float:left; width:50%;">
+                        @(Html.Kendo().Upload().Name("files").Multiple(false))
+                    </div>
+                }
+                else
+                {
+                <div>
+                    @(Html.Kendo().Upload().Name("files").Multiple(false))
+                </div>
+                }
+            </div>
+            
+            <div class="clear"></div>
+               <div class="comp-lft" style="width:40%; display:none;">
+                <p>
+                @Html.LabelFor(model => model.FireMonitoringAccNumber)</p>
+                </p>
+            </div>
+            <div class="comp-right" style="width:60%; display:none;">
+                @Html.TextBoxFor(model => model.FireMonitoringAccNumber, new { maxlength = 32, @class = "comp-txt" })
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="one columns"></div>
+    <div class="clear">
+    </div>
+    <div class="add-link" align="center" style="margin-top:3%;">
+        <input type="submit" id="btnsubmitSite" style="width: 10%;" value="Save" />
+        <input type="button" id="btnCancelSite" value="Cancel" style="width: 10%;" />
+    </div>
+</div>
+ <input id="hdnSiteAccNumId" type="hidden"/>
+ <input id="hdnisAssociated" type="hidden"/>
+@* Site Account Number popup window starts *@
+
+@*<div id="dvSiteAccountNumber" class="modelDialog" style="display: none;">
+<div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Site Notes</label></strong></div>
+<div style="width:90%; margin:3% 2% 0 5%; background-color:Black">*@
+
+<div class="my_overlay" id="my_overlay" style="background-color: #000000; opacity: .7;
+    position: absolute; z-index: 200; width: 100%; height: 100%; margin: 0px; padding: 0px;
+    visibility: hidden; top:0; left:0;">
+</div>
+
+<div id="dvSiteAccountNumber" class="modelDialog" style="display: none;">
+<div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Site Account Number</label></strong></div>
+<div style="width:90%; margin:3% 2% 0 5%;">
+
+        <p>
+            @(Html.Kendo().Grid(objSiteAccNumberViewModel)
+                .Name("grdSiteAccNumber")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.DisplayDate).Width("16%").Title("Display Date");
+                    columns.Bound(p => p.AccountNumber).Width("20%").Title("Account Number");
+                    columns.Bound(p => p.IsAssociatedWithFA).Width("16%").Title("Fire Account Number");
+                    columns.Bound(p => p.UserName).Width("26%").HtmlAttributes(new { style = "word-wrap: break-word;" });
+                    columns.Bound(p => p.UserName).Filterable(false).Title("Actions").ClientTemplate("<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/view.png") + "' alt='View' title='View'  onclick='ViewSiteAccNumber(#=Id#);'/></a>" +
+                                                                                                                    "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/edit.png") + "' alt='Edit' title='Edit'  onclick='EditSiteAccNumber(#=Id#);'/></a>" +
+                                                                                                                     "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/Delete.png") + "' alt='Delete' title='Delete'  onclick='DeleteSiteAccNumber(#=Id#);'/></a>");
+                })
+                .Pageable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(5)
+                .ServerOperation(false)
+                )
+            )
+        </p>        
+
+    <div style="margin: 0 0 0 170px;">
+        <div class="add-link" style="float: left; margin-right: 3px; margin-top: 5px; margin-bottom: 10px;">
+            <input type="button" value="Add Account Number" id="btnInfoPopupAddNotes"  onclick="javascript:fnshowAddAccountNumber();"/>
+        </div>
+        <div class="add-link" style="float: left; margin-top: 5px;">
+            <input type="button" value="Cancel" id="btnAccNumberPopupCancel" onclick="javascript:btnCancelViewAccNumberClicked();" />
+        </div>
+    </div>
+    </div>
+     <br />
+</div>
+@* Site Account Number popup window ends *@
+
+@(Html.Kendo().Window()
+    .Name("SiteAddAccNumberwindow")
+    .Title("Add Account Number")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div class="link-pop-cont">     
+     <div class="cont-lft">      
+        <div class="comp-lft" style="width:45%">
+       <label for="isAssociated">
+                Fire Account Number: </label>             
+        </div>
+        <div class="comp-right" style="width:55%">
+        <input type="checkbox" name="chk_isAssociated" id="chk_isAssociated" />  
+       
+       </div>
+       <div class="clear">
+            </div>
+        @*<div class="k-edit-label">*@
+        <div class="comp-lft" style="width:45%">
+            <label for="SiteAccountNumber">
+                Account Number: </label>
+        </div>
+        <div class="comp-right" style="width:55%">        
+        @*<input type="text" id="txtSiteAccNumber" maxlength="32" class="k-widget k-autocomplete k-header k-state-default k-input" style="border-color:#000;" />*@
+         @Html.TextBox("txtSiteAccNumber", null, new { @class = "usertxtboxEdit", maxlength = 32 })  
+        </div>         
+
+    </div>
+    <div class="clear">
+    </div>
+    <div style="margin: 4% 0 0 11%;">
+        @*<div class="add-link" style="float: left; margin-right: 3px; margin-top: 5px;"> *@           
+        <div class="add-link" align="center">
+            <input type="button" value="OK" id="btnOk" onclick="javascript:btnOkSiteAccNumClicked();" style="width: 26%;"/>
+       @* </div>
+        <div class="add-link" style="float: left; margin-top: 5px;">*@            
+            <input type="button" value="Cancel" id="btnCancel" onclick="javascript:btnCancelSiteAccNumberClicked();" style="width: 26%;"  />
+        </div>
+    </div>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(350)
+    .Height(250)
+)
+
+@(Html.Kendo().Window().Name("DeleteAccountNumber")
+    .Visible(false)
+    .Modal(true)
+    .Title("Delete Account Number")
+    .Draggable(true)
+    .Width(300)    
+)
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#lblFileNameHeader").css('color', '#373737');
+        $("#btnCancelSite").click(function () {
+            var editUri = '@Url.Action("../Site/Index")';
+            location.href = editUri;
+        });
+        $("#files").closest(".k-upload-button").find("span").text("Browse Site Map").width("100px");
+    });
+
+</script>
+<style>
+    .k-upload-button
+    {
+        width: 100%;
+    }
+</style>

@@ -1,0 +1,330 @@
+﻿<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>My Access Points - Add Access Group</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="fnCloseAccessGroup();"/></a>
+            </div>
+            <div class="close-icon">
+                <a>
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt=""/></a>
+            </div>
+        </div>
+        <div id="dvAddAGContent">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">
+                <div class="my-access-titile bottom">
+                    <p>
+                        <strong><label id="lblAGheader">Step 1: Enter General Group Details</label></strong></p>
+                </div>
+                <div id="dvErrAGAdd">
+                    <ul>
+                    </ul>
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Name:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">                     
+                     @Html.TextBox("txtAddAGName", null, new { @class = "my-access-in", maxlength = 10 })
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p><strong>Description:</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                    @Html.TextBox("txtAddAGDescription", null, new { @class = "my-access-in", maxlength = 150 })
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Time Periods:</strong></p>
+                </div>
+                 <div class="my-access-tables bottom" id="dvTImeAddbtn" style="display:block">
+                    <div class="my-access-right-btn" style="width:137px;">
+                        <div class="add-link" align="center" style="float: left;">
+                            <input type="button" value="Add" onclick="fnShowTimePeriodsdiv();" />
+                        </div>                        
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div id="dvAGTimePeriods" style="display:none">
+                <div class="my-access-tables bottom">
+                    <div class="sixteen columns">
+                        <div class="time-periods">
+                            <table cellpadding="0" cellspacing="0" border="0" class="responsive" id="tblTimePeriods">
+                                <tr class="time-periods-title">
+                                    <th>
+                                        Begin Time |
+                                    </th>
+                                    <th>
+                                        End Time |
+                                    </th>
+                                    <th>
+                                        M |
+                                    </th>
+                                    <th>
+                                        Tu |
+                                    </th>
+                                    <th>
+                                        W |
+                                    </th>
+                                    <th>
+                                        Th |
+                                    </th>
+                                    <th>
+                                        F |
+                                    </th>
+                                    <th>
+                                        Sa |
+                                    </th>
+                                    <th>
+                                        Su |
+                                    </th>
+                                    <th>
+                                        C1 |
+                                    </th>
+                                    <th>
+                                        C2 |
+                                    </th>
+                                    <th>
+                                        C3 |
+                                    </th>
+                                    <th>
+                                        Readers
+                                    </th>
+                                    <th class="empty">
+                                    </th>
+                                </tr>
+                                <tr style="height: 5px;">
+                                </tr>
+                                <tr class="time-periods-top">
+                                    <td class="timer">
+                                        @(Html.Kendo().TimePicker()
+                                            .Name("Begintimepicker")
+                                            .Value("00:00 AM")
+                                            .HtmlAttributes(new { style = "width:80px;"})
+                                         )
+                                    </td>
+                                    <td class="timer">
+                                         @(Html.Kendo().TimePicker()
+                                            .Name("EndTimepicker")
+                                            .Value("00:00 AM")
+                                            .HtmlAttributes(new { style = "width:80px;"})
+                                          )
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="chkM" id="chkM" />                                        
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="chkTu" id="chkTu"/>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="chkW" id="chkW"/>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="chkTh" id="chkTh"/>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="chkF" id="chkF"/>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="chkSa" id="chkSa"/>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="chkSu" id="chkSu"/>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="chkC1" id="chkC1"/>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="chkC2" id="chkC2"/>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="chkC3" id="chkC3"/>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr style="height: 10px;">
+                                </tr>
+                            </table>
+                            <table cellpadding="0" cellspacing="0" border="0" class="responsive" id="tblReaders" style="width:100%; margin-bottom:2%">
+                                <tr class="time-periods-inner-cont" id="trReadersList" style="width:100%;">                                  
+                                </tr>                               
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            
+            <div class="my-access-right-btn" style="width:137px;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Save" onclick="fnSaveAccessGroup();"/>
+                </div>
+                <div class="add-link" align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="fnCloseAccessGroup();"/>
+                </div>
+            </div>
+            </div>
+            <div class="clear">
+            </div>
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function fnShowTimePeriodsdiv() {
+        document.getElementById('dvAGTimePeriods').style.display = 'block';
+        document.getElementById('dvTImeAddbtn').style.display = 'none';
+        $("#lblAGheader").text('2: Add Time Periods');
+                
+        var parameters = { "deviceId": $("#AccessViewDeviceList").val() };
+        var url = '@Url.Action("GetReadersList", "Access")';
+        BlockElement("dvAddAGContent", 'Connecting...'); 
+        $.post(url, parameters, GetReadersListCallback_AddAccessGroup, "json");    
+    }    
+    function GetReadersListCallback_AddAccessGroup(ResultSet) {        
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                $("#trReadersList").empty();
+                for (i = 0; i < ResultSet.length; i++) {
+                    $("#trReadersList").append("<input type='checkbox' Id='" + ResultSet[i].Id + "' style='margin-left:1%;'><label id='lblReader" + i + "' style='color:Black;margin-left:1%;'></label>")
+                    $("#lblReader" + i).text(ResultSet[i].Name);
+                }
+            }
+        }        
+        UnBlockElement("dvAddAGContent");
+    }
+    function assignvaluesTocheckBox(parentId,newId,Name) {
+        var collection = document.getElementById(parentId).getElementsByTagName('INPUT');
+        for (var x = 0; x < collection.length; x++) {
+            if (collection[x].type.toUpperCase() == 'CHECKBOX') {            
+                collection[x].Id = newId;                             
+            }            
+        }
+    }    
+    function fnSaveAccessGroup() {
+        $("#dvErrAGAdd ul").empty();
+        var AGName = $('#txtAddAGName').val();
+        var deviceID = $("#AccessViewDeviceList").val();
+        var AGDescription = $('#txtAddAGDescription').val();
+        var beginTime = $('#Begintimepicker').val();
+        var endTime = $('#EndTimepicker').val();
+        var selectedDays = '';
+        var readerNameList = '';
+        var isReaderChecked = false;
+        isReaderChecked = CheckReadersItems('tblReaders');
+
+        if (AGName == '' && (!isReaderChecked)) {
+            $('#dvErrAGAdd ul').append('<li class="validation-summary-accesspopup">First Name is Required</li>');
+            $('#dvErrAGAdd ul').append('<li class="validation-summary-accesspopup">Reader information required</li>');
+        }        
+        else if (AGName == '') {
+            $('#dvErrAGAdd ul').append('<li class="validation-summary-accesspopup">First Name is Required</li>');
+        }        
+        else if (!isReaderChecked) {
+            $('#dvErrAGAdd ul').append('<li class="validation-summary-accesspopup">Reader information required</li>');
+        }
+        else {                 
+            selectedDays = GetSelectedTimePeriods('tblTimePeriods');            
+            selectedDays = selectedDays.substring(0, selectedDays.length - 1);            
+            readerNameList = GetSelectedReaders('tblReaders');            
+            readerNameList = readerNameList.substring(0, readerNameList.length - 1);
+            var dataItem = { "Name": AGName, "Description": AGDescription, "BeginTime": beginTime, "EndTime": endTime, "Day": selectedDays,
+                "Reader": readerNameList, "deviceId": deviceID
+            };
+
+            var url = '@Url.Action("AccessGroupCreate", "Access")';
+            BlockElement("dvAddAGContent", 'Connecting...');
+            $.post(url, dataItem, GetAccessGroupCreateCallback, "json");
+        }
+    }
+    function GetAccessGroupCreateCallback(ResultSet) {
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                if (ResultSet == "OK") {
+                    fnShowAlertInfo('Access group added successfully.');
+                    document.getElementById('my_overlay').style.visibility = 'hidden';
+                    document.getElementById('dvAddAccessTimePeriods').style.visibility = 'hidden';
+                }
+            }
+        }
+        UnBlockElement("dvAddAGContent");
+    }
+    function fnCloseAccessGroup() {
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        document.getElementById('dvAddAccessTimePeriods').style.visibility = 'hidden';
+    }
+
+   var isValidReader = false;
+   function CheckReadersItems(aId) {
+       var collection = document.getElementById(aId).getElementsByTagName('INPUT');
+       for (var x = 0; x < collection.length; x++) {
+           if (collection[x].type.toUpperCase() == 'CHECKBOX') {
+               if (collection[x].checked == true) {
+                   isValidReader = true;
+                   break;
+               }
+           }
+       }
+       return isValidReader;
+   }
+
+   var readersList = '';
+   function GetSelectedReaders(parentID) {
+       var collection = document.getElementById(parentID).getElementsByTagName('INPUT');
+       readersList = '';
+       for (var x = 0; x < collection.length; x++) {
+           if (collection[x].type.toUpperCase() == 'CHECKBOX') {
+               if (collection[x].checked == true) {
+                   readersList += $("#lblReader" + x).text() + "_" + $(collection[x]).attr('id') + ",";                 
+               }
+           }
+       }
+       return readersList;
+   }
+
+   var daysList = '';
+   function GetSelectedTimePeriods(parentID) {       
+       var collection = document.getElementById(parentID).getElementsByTagName('INPUT');
+       daysList = '';
+       for (var x = 0; x < collection.length; x++) {
+           if (collection[x].type.toUpperCase() == 'CHECKBOX') {              
+               if (collection[x].checked == true) {
+                   daysList += "1" + ",";                   
+               }
+               else {
+                   daysList += "0" + ",";
+               }
+           }
+       }
+       return daysList;
+   }
+</script>

@@ -1,0 +1,286 @@
+﻿@model IEnumerable<Diebold.WebApp.Models.DeviceListDashboardViewModel>
+@{
+   IList<Diebold.WebApp.Models.DeviceModel> objDeviceModel = new List<Diebold.WebApp.Models.DeviceModel>();
+}
+<script type="text/javascript">
+    var alertClosePortletUrl = '@Url.Action("ClosePortlet", "Preferences")';
+    var alertGetActiveAlertsbyDeviceIdUrl = '@Url.Action("GetActiveAlertsbyDeviceId", "Alerts")';
+    var alertGetAllDeviceSiteDetailsbyParentTypeUrl = '@Url.Action("GetAllDeviceSiteDetailsbyParentType", "Alerts")';
+    var alertUpdateAlertStatusUrl = '@Url.Action("UpdateAlertStatus", "Alerts")';
+    var alertValidatePinNumberUrl = '@Url.Action("ValidatePinNumber", "Alerts")';
+    var alertGetPreviouslyAcknoledgedAlertsUrl = '@Url.Action("GetPreviouslyAcknoledgedAlerts", "Alerts")';
+    var alertGetAllDevicebyParentTypeUrl = '@Url.Action("GetAllDevicebyParentType", "Alerts")';
+    var alertGetALLActiveAlertsUrl = '@Url.Action("GetALLActiveAlerts", "Alerts")';
+
+    $(document).ready(function () {
+        var wWidth = $(window).width();
+        var dWidth = wWidth * 0.2;
+        $("#dvSettings").dialog(
+               {
+                   draggable: false,
+                   closeOnEscape: true,
+                   resizable: false,
+                   height: 'auto',
+                   width: dWidth,
+                   autoOpen: false,
+                   show: 'blind'
+               }
+               );
+        $('#imgAlertsSettings').click(function (event) {
+            $("#dvSettings").dialog("option", "position", {
+                my: "left top",
+                at: "bottom",
+                collision: "flip",
+                of: event,
+                offset: "20 40"
+            });
+            $('#dvSettings').empty();
+            $('#dvSettings').append('<a href="javascript:void(0);" id="imgALL" class="divdynamiclink" onclick="javascript:fnParentTypeSelected(\'ALL\');">All</a>');
+            $('#dvSettings').append('<a href="javascript:void(0);" id="imgDVR" class="divdynamiclink" onclick="javascript:fnParentTypeSelected(\'DVR\');">Health</a>');
+            $('#dvSettings').append('<a href="javascript:void(0);" id="imgIntrusion" onclick="javascript:fnParentTypeSelected(\'Intrusion\');" class="divdynamiclink">Intrusion</a>');
+            $('#dvSettings').append('<a href="javascript:void(0);" onclick="javascript:fnParentTypeSelected(\'Access\');" id="imgAccess" class="divdynamiclink">Access</a>');
+            $('#dvSettings').dialog('open');
+            var tempParentType = parentType().parentType;
+            document.getElementById('img' + tempParentType).style.backgroundColor = "#ccc";
+            return false;
+        });
+
+        // Close Pop-up If the user clicks anywhere else on the page
+        jQuery('body').bind('click', function (e) {
+            if (jQuery('#dvSettings').dialog('isOpen')
+            && !jQuery(e.target).is('.ui-dialog, a')
+            && !jQuery(e.target).closest('.ui-dialog').length
+         ) {
+                jQuery('#dvSettings').dialog('close');
+            }
+        });
+
+        var AlertInterval = 120000;
+        var refreshId = setInterval(function () {
+            var url = '@Url.Action("GetActiveAlertsbyDeviceId", "Alerts")';
+            if (deviceSelectedData != undefined) {
+                jQuery.post(url, deviceSelectedData, "application/html; charset=utf-8")
+            .done(function (response) { AssignCamerastoGrid(response) })
+            .fail(function (response) { alert(response); });
+            }
+        }, AlertInterval);
+
+    });
+</script>
+<div id="AlertsInfo">
+<input type="hidden" id="htnSelectedRow" />
+ <div id="AlertsportletArea">
+    <div id="light-green">
+        <div class="cont-inner-room">
+            <div class="light-green">
+               <div class="Dashbord-header">
+                <div class="light-green-head gradient">
+                    <div class="pallet-icon">
+                        <img src="@Url.Content("~/Content/images/alerts-icon.png")" width="21" height="21" alt="" />
+                    </div>
+                    <p>
+                        <strong>Alerts</strong></p>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgMasClose" onclick="javascript:fnCloseAlerts();return false;" src="@Url.Content("~/Content/images/close-icon.png")" alt="" /></a>
+                    </div>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgMasExpColapse" onclick="javascript:fntoggleAlerts();return false;" src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+                    </div>
+                </div>
+               </div>
+                <div id="divAlertContent">
+                <div class="light-green-body gradient">
+                    <div class="alerts-body-cont">
+                        <div class="acc-list bottom">
+                            @(Html.Kendo().ComboBox()
+                                .HtmlAttributes(new { style = "width:50%" })
+                                .Name("cmbDeviceTypeList")
+                                .Placeholder("Device List")
+                                .DataTextField("Name")
+                                .DataValueField("Id")
+                                .Template("<div id='rowcell'>${ Name }</div><div id='rowcell'>${ SiteName }</div><div id='rowcell'>${ Address1 }</div><div id='rowcell'>${ Address2 }</div><div id='rowcell'>${ City }</div><div id='rowcell'>${ State }</div><div id='rowcell' style='border-right:0px'>${ Zip }</div>").HtmlAttributes(new { style = "width:210px;" })
+                                .Events(e =>
+                                {
+                                    e.Open("openAlertsDeviceList").Close("closeAlertsDeviceList").Select(" DeviceTypeChanged");
+                                })
+                                .DataSource(source =>
+                                {
+                                    source.Read(read =>
+                                    {
+                                        read.Action("GetAllDevicebyParentType", "Alerts")
+                                        .Data("parentType");
+                                    });
+                                })
+
+                            )
+                            <img id="imgsearchAlertLogo" src="@Url.Content("~/Content/images/SearchIcon.png")" style="cursor:pointer; vertical-align:bottom; padding-bottom: 5px;" alt=""  onclick="fnOpenAlertDetails();"/>
+                            <input type="checkbox" id="chkAll" name="ckeckAll" value="All" onclick="fnGetAllAlerts();" /> All
+                        </div>
+                        <script>
+                            function parentType() {
+                                if (_ParentTypeSelectedfromContextmenu == '' || _ParentTypeSelectedfromContextmenu == undefined || _ParentTypeSelectedfromContextmenu == null) {
+                                    return {
+                                        parentType: "DVR"
+                                    };
+                                }
+                                else {
+                                    return {
+                                        parentType: _ParentTypeSelectedfromContextmenu
+                                    };
+                                }
+                            }
+                        </script>
+                        <div class="alert-type bottom">
+                        @(Html.Kendo().Grid(Model)
+                        .HtmlAttributes(new { style = "width:98%" })
+                        .Name("grdAlerts")
+                        .Resizable(resize => resize.Columns(true))
+                        .Columns(columns =>
+                        {
+                            //For width alignment of data column in Kendo Grid, we need to keep one column without "Width" property
+                            columns.Bound(model => model.LastAlertS).Title("Date Time").Filterable(false).Width("20%");
+                            columns.Bound(model => model.AlertName).Title("Alert Name").Filterable(false);
+                            columns.Bound(model => model.Status).Filterable(true).Width("15%");
+                            // columns.Bound(model => model.Ack).Title("Ack").ClientTemplate("<input name=\"Ack\" onmousedown=\"fnAlertsRowMouseDown(this,'#= Id #')\" id=\"Ack\" type=\"checkbox\" value=\"#=Ack#\"  #= Ack ? (checked='checked'):'' # />").Filterable(true);
+                            columns.Bound(model => model.Ack).Title("Ack").ClientTemplate("# if (Ack == 'True') { #" + "<input name=\"Ack\" onmousedown=\"fnAlertsRowMouseDown(this,'#= Id #')\" id=\"Ack\" type=\"checkbox\" value=\"#=Ack#\"  #= IsAcknowledged ? (checked='checked'):'' #  #= IsAcknowledged ? (disabled='disabled'):'' #/>" +
+                                                                "# } else { #" + " #}# ").Width("10%");
+                                                                                            
+                            columns.Bound(model => model.DeviceId).Hidden();
+                        })
+                        .Events(e => e.Change("GridAlertTypeChanged").DataBound("LoadingDefaultFilter"))
+                        .Pageable()
+                        .Sortable()
+                        .Selectable()
+                        .Filterable()
+                        .DataSource(dataSource => dataSource
+                        .Ajax()
+                        .PageSize(5)
+                        .ServerOperation(false))
+                     )
+                        </div>
+                        <p>
+                            <strong>Site Details</strong></p>
+                        <div class="site-details">
+                            <p>
+                                @if (@Model !=null && Model.Count() > 0)
+                                {
+                                    <p>Location: <strong><label id="lblLocation">@Model.First().Location</label></strong></p>
+                                    <p>Address: <strong><label id="lblAddress">@ViewBag.AlertDetails.Address</label></strong></p>
+                                    <p>Location Contact: <strong><label id="lblLocationContact">@ViewBag.ContactPerson</label></strong></p>
+                                    <p>Contact Email: <strong><label id="lblLocationContactemail">@ViewBag.ContactEmail</label></strong></p>
+                                    <p>Contact Phone: <strong><label id="lblLocationContactphone">@ViewBag.ContactPhone</label></strong></p>
+                                     <p><a href="#" style="text-decoration:underline;" onclick="javascript:GetAcknoledgedAlerts();return false;">View Alerts History</a></p>
+                                }
+                                else
+                                {
+                                     <p>Location: <strong><label id="lblLocation"></label></strong></p>
+                                     <p>Address: <strong><label id="lblAddress"></label></strong></p>
+                                     <p>Location Contact: <strong><label id="lblLocationContact"></label></strong></p>
+                                     <p>Contact Email: <strong><label id="lblLocationContactemail"></label></strong></p>
+                                     <p>Contact Phone: <strong><label id="lblLocationContactphone"></label></strong></p>
+                                      <p><a href="#" style="text-decoration:underline;" onclick="javascript:GetAcknoledgedAlerts();return false;">View Alerts History</a></p>
+                                }
+                        </div>
+                    </div>
+                </div>
+                <div class="light-green-set">
+                    <div class="sett-icon">
+                        <a href="#">
+                            <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" onclick="javascript:ShowAlertDescription();return false;"/></a>
+                    </div>
+                    <div class="sett-icon">
+                        <a href="#">
+                            <img id="imgAlertsSettings" src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+</div>
+<!-- Div to display popup of  Previously Acknoledged Alerts -->
+ <div id="dvPreviouslyAckoledgedAlerts"></div>
+ <!-- Div to display context menu of Alerts -->
+ <div id="dvSettings" class="context-menu"></div> 
+@(Html.Kendo().Window()
+    .Name("Alertwindow")
+    .Title("Acknoledge")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+        <div>
+        <div style="padding:0 0 0 15px;">
+            Pin Number : <input type="text" id="txtPin" style="width:120px; border:1px solid #000;" />
+            </div>
+            <div style="padding:19px 0 0 74px;">
+                <div class="add-link" style="float:left; margin-right:4px;">                
+                <input type="button"  value="OK" id="btnOk" onclick="javascript:btnOkClicked();" class="editLevels"/>
+                </div>
+                
+                <div class="add-link" style="float:left;">
+                 <input type="button" value="Cancel" id="btnCancel" onclick="javascript:btnCancelClicked();" class="editLevels"/>
+                </div>
+              </div> 
+        </div>
+    </text>)
+    .Draggable(false)
+    .Width(250)
+    .Height(100)
+)
+
+@(Html.Kendo().Window()
+    .Name("AlertDescriptionwindow")
+    .Title("Alerts Portlet Description")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+        <div>
+            <p>
+                Create single or multiple instances to monitor active and unacknowledged alerts and choose which alerts are displayed by filtering by type.
+            </p>
+        </div>
+    </text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)
+<div id="dvSearchAlertDevices" class="modelDialog" style="display: none;">
+    <div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Select a Device</label></strong></div>
+        <div style="width:90%; margin:3% 2% 0 5%;">
+            <p>
+              @(Html.Kendo().Grid(objDeviceModel)
+                .Name("grdSearchAlertDeviceDetails")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Id).Visible(false);
+                    columns.Bound(p => p.Name).Width("20%").Visible(true).Title("Device").Filterable(true).Sortable(true);
+                    columns.Bound(p => p.SiteName).Width("20%").Visible(true).Title("Site").Filterable(true);
+                    columns.Bound(p => p.Address1).Width("20%").Visible(true).Title("Address1").Filterable(true);
+                    columns.Bound(p => p.Address1).Width("20%").Visible(true).Title("Address2").Filterable(true); 
+                    columns.Bound(p => p.City).Width("20%").Filterable(true).Title("City").Visible(true);
+                    columns.Bound(p => p.State).Width("20%").Visible(true).Title("State").Filterable(true);
+                    columns.Bound(p => p.Zip).Width("20%").Visible(true).Title("Zip").Filterable(true);
+                })
+                .Events(events => events.Change("grdSearchAlertChanged").DataBound("LoadingDefaultFilter"))
+                .Pageable()
+                .Filterable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .ServerOperation(false)
+                )
+            )
+            </p>
+            <div class="add-link" style="padding-top:5px; width:100px; margin-left: 43%;">
+            <input type="button" value="Close" id="btnSearchAlertCancel" onclick="javascript:btnSearchAlertCancelClicked();" />
+        </div>
+   </div>
+   <br />
+</div>

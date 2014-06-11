@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Sites";
+}
+@{
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div id="dvSiteListTitle" class="pallette-detail-header-bg">
+    <p>
+        Sites Management
+    </p>
+</div>
+<br />
+<p>
+    @(Html.Kendo().Grid<Diebold.WebApp.Models.SiteViewModel>()
+    .Name("SiteGrid")
+    .HtmlAttributes(new { style = "height: 500px" })
+    .Resizable(resize => resize.Columns(true))
+    .Columns(columns =>
+    {        
+        columns.Bound(p => p.Id);        
+        columns.Bound(p => p.Name).Title("Site Name");
+        columns.Bound(p => p.Address);
+        columns.Bound(p => p.CompanyName).Title("Company");
+        columns.Bound(p => p.ActionColumn).Title("Available Actions").ClientTemplate("<a style='cursor:pointer;margin-right:4px;' href='../Site/Edit/#=Id#'><img src='" + @Url.Content("~/Content/images/icons/edit.png") + "' alt='Edit'  title='Edit'/></a>" +
+        "# if (IsDisabled == true) { #" + "<a style='cursor:pointer;margin-right:4px;' onclick='doSiteActions(#=Id#,\"enableSite\",\"Enable Site\");'><img src='" + @Url.Content("~/Content/images/icons/enable.png") + "' style='opacity:.4' alt='#=IsDisabled#'  title='Enable'/></a>" +
+        "# } else { #" + "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/disable.png") + "' alt='Disable' title='Disable' onclick='doSiteActions(#=Id#,\"disableSite\",\" Disable Site\");' #}#</a>" +
+        "<a style='cursor:pointer;margin-right:4px;' onclick='doSiteActions(#=Id#,\"deleteSite\",\"Delete Site\");'><img src='" + @Url.Content("~/Content/images/icons/delete.png") + "' alt='delete'  title='Delete'/></a>").Filterable(false); 
+    })    
+    .ToolBar(toolbar => toolbar.Template("<a class='k-button k-button-icontext k-grid-update' onclick='fnCreateNewSite()'>Create New Site</a>"))
+    .Pageable()
+    .Sortable()
+    .Scrollable()  
+    .Filterable()
+
+    .Events(events => events.DataBound("LoadingDefaultFilter")) 
+    .DataSource(dataSource => dataSource
+        .Ajax()                
+        .Read(read => read.Action("Site_Read", "Site"))        
+        .ServerOperation(true)        
+        .Model(model => model.Id(p => p.Id))      
+     )
+)
+</p>
+@(Html.Kendo().Window().Name("Details")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(300)
+)
+<style>
+    .k-block > .k-header, .k-window-titlebar
+    {
+        height: 1.5em;
+    }
+</style>
+
+<script type="text/javascript">
+
+    var bar;
+    var ActPath;    
+    function doSiteActions(itemId, actionPath, title) {
+        if (actionPath == "deleteSite") {
+            ActPath = '@Url.Action("DeleteSite")';            
+        }
+        else if (actionPath == "disableSite") {            
+            ActPath = '@Url.Action("DisableSite")';            
+        }
+        else if (actionPath == "enableSite") {            
+            ActPath = '@Url.Action("EnableSite")';            
+        }
+
+        bar = { item: itemId, ap: ActPath };
+        var wnd = $("#Details").data("kendoWindow");
+
+        if (actionPath == "deleteSite") {
+            wnd.content("<p style='height:100px'>Are you sure you want to delete this item?</p><p style='text-align:center;'>" +
+               "<input type='button' value='Ok' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='ConfirmOk(bar)'>" +
+                 "<input type='button' value='Cancel' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='ConfirmCancel()'></p>");
+        }
+        else {
+            wnd.content("<p style='height:100px'>Do you want to continue?</p><p style='text-align:center;'>" +
+                "<input type='button' value='Ok' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='ConfirmOk(bar)'>" +
+                 "<input type='button' value='Cancel' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='ConfirmCancel()'></p>");
+        }
+        
+        wnd.title(title);
+        wnd.center().open();
+
+    }
+    function ConfirmCancel() {
+        $("#Details").data("kendoWindow").close();
+    }
+    function ConfirmOk(bar) {
+           
+        $("#Details").data("kendoWindow").close();
+        var data = { Id: bar.item };
+        $.post(bar.ap, data, "json")
+        .done(function (response) { $("#SiteGrid").data("kendoGrid").dataSource.read(); })
+            .fail(function (response) { alert('Site not deleted.'); });
+    }
+    function fngetError(data) {
+        alert(data.message());
+    }
+    function fnCreateNewSite() {
+        window.location.href = '@Url.Content("~/Site/Create")';
+    }
+
+</script>

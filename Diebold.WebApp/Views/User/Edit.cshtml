@@ -1,0 +1,232 @@
+﻿@using Diebold.Domain.Entities
+
+@model Diebold.WebApp.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnCancel").click(function () {
+            var editUri = '@Url.Action("../PortletsDefaultFns/ViewUserProfile")';
+            location.href = editUri;
+
+        });
+
+        $('.chzn-select').bind("change", function () {
+            $('form').validate().element($(this));
+        });
+
+
+        function customValidator() {
+
+            var errorList = [];
+
+            if ($(".preferredContact:checked").length == 0) {
+                errorList.push('The preferred contact field is required.');
+            }
+
+            return errorList;
+        }
+
+    }); 
+
+</script>
+
+<style>
+.chzn-select {width:260px; border:1px solid #d1d1d1;}
+
+
+.user-txtboxEdit
+    {
+        border:1px solid;
+        border-color:#C5C5C5;
+    }
+
+
+</style>
+
+@using (Html.BeginForm())
+{
+    <fieldset>        
+    <div class="user-details">
+    <div id="dvUserEditTitle" class="pallette-detail-header-bg">
+        <p>
+            Edit Personal Information</p>
+    </div>
+    
+    <div class="four columns">  
+        <div class="cont-lft">
+            <img src="@Url.Content("~/Content/images/user-profile-pic.png")" width="226" height="226" alt="" />
+        </div>
+        </div>
+
+        <div class="twelve columns">
+        <div class="user-right"> 
+          @Html.ValidationSummary(false, "There were errors while editing the user.")            
+            <div class="user-field">
+                <p class="user-field-lft">@Html.LabelFor(model => model.FirstName)</p>
+                <p class="user-field-right">                    
+                    @Html.TextBoxFor(model => model.FirstName, new { @class = "user-txtboxEdit" })                    
+                </p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field1">
+                <p class="user-field-lft">@Html.LabelFor(model => model.LastName)</p>
+                <p class="user-field-right">
+                     @Html.TextBoxFor(model => model.LastName, new { @class = "user-txtboxEdit" })                     
+                    </p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Username)</p>
+                <p class="user-field-right">
+                     @Html.TextBoxFor(model => model.Username, new { @class = "user-txtboxEdit" })                    
+                    </p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field1">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Email)</p>
+                <p class="user-field-right">
+                      @Html.TextBoxFor(model => model.Email, new { @class = "user-txtboxEdit" })                     
+                    </p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Phone)</p>
+                <p class="user-field-right">
+                  @Html.TextBoxFor(model => model.Phone, new { @class = "user-txtboxEdit" })  
+                  @Html.RadioButtonFor(model => model.PreferredContact, PreferredContact.Phone.ToString(), new { @class = "preferredContact" })
+                  @Html.LabelFor(model => model.PreferredContact)               
+                </p>                                
+               
+                <div class="clear">
+                </div>
+            </div>           
+            <div class="user-field1">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Mobile)</p>
+                <p class="user-field-right">
+                    @Html.TextBoxFor(model => model.Mobile, new { @class = "user-txtboxEdit" })    
+                    @Html.RadioButtonFor(model => model.PreferredContact, PreferredContact.Mobile.ToString(), new { @class = "preferredContact" })
+                    @Html.LabelFor(model => model.PreferredContact)                                     
+                </p>                                
+                <div class="clear">
+                </div>
+            </div>            
+            <div class="user-field">
+                <p class="user-field-lft">@Html.LabelFor(model => model.AvailableCompanies)</p>
+                <p class="user-field-right">                                  
+                @(Html.Kendo().ComboBox()
+                .Name("Company")
+                .DataTextField("Id")
+                .DataValueField("Value")
+                .HtmlAttributes(new { style = "width:235px" })
+                .DataSource(source =>
+                {
+                    source.Read(read =>
+                    {
+                        read.Action("GetAllCompanyDetails", "User");
+
+                    });
+                })
+                .Suggest(true)
+                .SelectedIndex(0)
+                )           
+                </p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field1">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Title)</p>
+                <p class="user-field-right">
+                 @Html.TextBoxFor(model => model.Title, new { @class = "user-txtboxEdit" })                 
+                </p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Text1)</p>
+                <p class="user-field-right">                    
+                    @Html.TextBoxFor(model => model.Text1, new { @class = "user-txtboxEdit" })                    
+                    </p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field1">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Text2)</p>
+                <p class="user-field-right">                    
+                    @Html.TextBoxFor(model => model.Text2, new { @class = "user-txtboxEdit" })                    
+                </p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field">
+                <p class="user-field-lft">@Html.LabelFor(model => model.AvailableRoles)</p>
+                <p class="user-field-right">                                                             
+                @(Html.Kendo().ComboBox()
+                .Name("Role")
+                .DataTextField("Id")
+                .DataValueField("Value")
+                .HtmlAttributes(new { style = "width:235px" })
+                .DataSource(source =>
+                {
+                    source.Read(read =>
+                    {
+                        read.Action("GetAllRoleDetails", "User");
+
+                    });
+                })
+                .Suggest(true)
+                .SelectedIndex(0)
+                )           
+                </p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field1">
+                <p class="user-field-lft">@Html.LabelFor(model => model.AvailableTimeZones)</p>
+                <p class="user-field-right">                    
+               @(Html.Kendo().ComboBox()
+                .Name("TimeZone")
+                .DataTextField("Id")
+                .DataValueField("Value")
+                .HtmlAttributes(new { style = "width:235px" })
+                .DataSource(source =>
+                {
+                    source.Read(read =>
+                    {
+                        read.Action("GetAllTimeZones", "User");
+
+                    });
+                })
+                .Suggest(true)
+                .SelectedIndex(0)
+                )           
+                 </p>
+                <div class="clear">
+                </div>
+            </div>
+            @Html.HiddenFor(x => x.OldCompanyId)          
+        </div>  
+        </div>
+    <div>
+    <div style="padding:19px 0 0 380px;">
+    <div class="add-link" style="float:left; margin-right:4px;">
+            <input type="submit" id="btnSubmit"  value="Save" />
+            </div>
+            <div class="add-link" style="float:left;">
+            <input type="button" id="btnCancel"  value="Cancel" />
+            </div>
+        </div> 
+        </div>
+</div>
+       
+    </fieldset>
+}
+

@@ -1,0 +1,96 @@
+﻿<link href="@Url.Content("~/Content/ie7.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/style.css")" rel="stylesheet" type="text/css" />
+<div id="dvSettings" class="context-menu">
+</div>
+ <div id="my-profile">
+ <div class="Dashbord-header">
+<div class="profile-head-lft"></div>
+<div class="profile-head-mid">
+    <p><strong>My Profile</strong></p>
+    <div class="pallet-top-icons">
+        <a href="#"><img id="imgMyProfileExpColapse" onclick="javascript:fntoggleMyProfile();return false;"  src="@Url.Content("~/Content/images/drop-down-icon.png")" alt="" height="27" width="19"/></a>
+    </div>
+</div>
+<div class="profile-head-right"></div>
+</div>
+<div class="clear"></div>
+<div id="divMyProfileContent">
+<div class="profile-mid">
+    <div class="user-info">
+        <img src="@Url.Content("~/Content/images/user-img.png")" alt="" height="74" width="74"/>
+        <p><strong><span>John Doe</span><br> Tuesday March 07, 2012 10:34am</strong></p>
+        <div class="clear"></div>
+        <div class="client-comp">
+            <p>Company: Bank of America</p>
+        </div>
+    </div>
+</div>
+<div class="profile-bot"></div>
+<div class="profile-settings">
+    <div class="profile-settings-bg">
+        <div class="pallet-bot-icons">
+            <a href="#"><img id="imgProfileSettings" src="@Url.Content("~/Content/images/featured-set-icon.png")" alt="" height="27" width="26"/></a>
+            <a href="#"><img id="imgProfileResize"  src="@Url.Content("~/Content/images/featured-set-icon1.png")" alt="" height="27" width="25"/></a>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var wWidth = $(window).width();
+        var dWidth = wWidth * 0.2;
+        $("#dvSettings").dialog(
+               {
+                   draggable: false,
+                   closeOnEscape: true,
+                   resizable: false,
+                   height: 'auto',
+                   width: dWidth,
+                   autoOpen: false,
+                   show: 'blind'
+               }
+         );
+
+        // To hide the title bar of the div
+        $(".ui-dialog-titlebar").hide();
+        $('#imgProfileSettings').click(function (event) {
+            $("#dvSettings").dialog("option", "position", {
+                my: "left top",
+                at: "bottom",
+                collision: "flip",
+                of: event,
+                offset: "20 40"
+            });
+            $('#dvSettings').empty();
+            $('#dvSettings').append('<a href="#" onclick="javascript:fnUserList();return false;" class="divdynamiclink">Users Details</a>');
+            $('#dvSettings').append('<a href="#" id="imgMoreDetails" onclick="javascript:fnProfileMoreOptions();return false;" class="divdynamiclink">Personal Information</a>');
+            $('#dvSettings').append('<a href="@Url.Content("~/Preferences/DisplayPreferences")" id="imgProfilePreferences" class="divdynamiclink">Preferences</a>');
+            $('#dvSettings').dialog('open');
+            return false;
+        });
+        // Close Pop-up If the user clicks anywhere else on the page
+        jQuery('body').bind('click', function (e) {
+            if (jQuery('#dvSettings').dialog('isOpen')
+            && !jQuery(e.target).is('.ui-dialog, a')
+            && !jQuery(e.target).closest('.ui-dialog').length
+         ) {
+                jQuery('#dvSettings').dialog('close');
+            }
+        });
+    });
+
+    function fnProfileMoreOptions() {
+        var editUri = '@Url.Action("../PortletsDefaultFns/ViewUserProfile")';
+        location.href = editUri;
+    }
+
+    function fnUserList() {
+        var editUri = '@Url.Action("../Profile/UserDetails")';
+        location.href = editUri;
+    }
+
+    function fntoggleMyProfile() {
+        $('#divMyProfileContent').toggle();
+    }
+</script>           

@@ -1,0 +1,306 @@
+﻿@model Diebold.WebApp.Models.GatewayViewModel
+
+@using (Html.BeginForm())
+{
+    <div style="padding-left:5px;">
+        @Html.ValidationSummary(false, "There were errors while Creating Gateway.")
+    </div>
+        <div id="GatewaySection">
+        <fieldset>
+            <!-- Device Page Starts Here -->
+            <div class="cont-creation">
+                <div class="one columns"></div>
+                <div class="seven columns">
+                    <div class="cont-lft">
+                        <div class="comp-lft">
+                            <p>
+                                @Html.LabelFor(model => model.EMCId)</p>
+                        </div>
+                        <div class="comp-right">
+                            @Html.TextBoxFor(model => model.EMCId, new { @class = "comp-txt"})
+                        </div>
+                        <div class="clear">
+                        </div>
+                       @* @if (!ViewBag.IsCreate)
+                        {*@
+                            <div class="comp-lft">
+                                <p>@Html.LabelFor(model => model.MacAddress)</p>
+                            </div>
+                            <div class="comp-right">
+                                @Html.TextBoxFor(model => model.MacAddressName, new { @class = "comp-txt" })
+                            </div>
+                        
+                            <div class="clear">
+                            </div>
+                         @*   <div class="comp-right">
+                                <div style="float: right;">
+                                    <div class="add-link">
+                                        <div class="link-btn-lft">
+                                        </div>
+                                        <div class="link-btn-mid">
+                                            <input type="button" id="goToMacSectionbtnOnEdit" value="Reassign" onclick="javascript:fnOpenMacSection();return false;" />
+                                        </div>
+                                        <div class="link-btn-right">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    }*@
+                        <div class="clear">
+                        </div>
+                        <div class="comp-lft">
+                            <p>@Html.LabelFor(model => model.ProtocolName)</p>
+                        </div>
+                        <div class="comp-right">
+                            @if (ViewBag.IsCreate)
+                            {
+                                @(Html.Kendo().ComboBoxFor(model => model.ProtocolId)
+                              .DataTextField("Text")
+                              .DataValueField("Value")
+                              .Placeholder("-- Select --")
+                              .SelectedIndex(1)
+                              .BindTo(Model.AvailableProtocols)
+                              .HtmlAttributes(new { style = "width:100%" })
+                            )
+                        }
+                            else
+                            { 
+                                @Html.TextBoxFor(model => model.ProtocolName, new { @class = "comp-txt", disabled = "disabled" })                                
+                            }
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="comp-lft">
+                            <p>
+                                @Html.LabelFor(model => model.Name)</p>
+                        </div>
+                        <div class="comp-right">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "comp-txt" })
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="comp-lft">
+                            <p>
+                                @Html.LabelFor(model => model.CompanyName)</p>
+                        </div>
+                        <div class="comp-right">
+                            @if (ViewBag.IsCreate)
+                            {
+                                @(Html.Kendo().ComboBoxFor(model => model.CompanyId)
+                              .DataTextField("Text")
+                              .DataValueField("Value")
+                              .Placeholder("-- Select --")
+                              .BindTo(Model.AvailableCompanies.OrderBy(x=>x.Text))
+                              .Events(events => events.Select("CompanySelectionChanged"))
+                              .HtmlAttributes(new { style = "width:100%" })
+                          )
+                        }
+                        else
+                        { 
+                            @Html.TextBoxFor(model => model.CompanyName, new { @class = "comp-txt", disabled = "disabled" })
+                            @Html.HiddenFor(model => model.CompanyId)                                      
+                        }
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="comp-lft">
+                        <p>
+                            @Html.LabelFor(model => model.Address1)
+                        </p>
+                    </div>
+                    <div class="comp-right">
+                        @Html.TextBoxFor(model => model.Address1, new { maxlength = 32, @class = "comp-txt" })
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="comp-lft">
+                        <p>
+                            @Html.LabelFor(model => model.Address2)
+                        </p>
+                    </div>
+                    <div class="comp-right">
+                        @Html.TextBoxFor(model => model.Address2, new { maxlength = 32, @class = "comp-txt" })
+                    </div>
+                    <div class="clear">
+                    </div>
+                    </div>
+                </div>
+                <div class="one columns">
+                </div>
+                <div class="six columns">
+                    <div class="cont-right">
+                    <div class="comp-lft" style="width:40%;">
+                        <p>
+                            @Html.LabelFor(model => model.City)
+                        </p>
+                    </div>
+                    <div class="comp-right" style="width:60%;">
+                        @Html.TextBoxFor(model => model.City, new { maxlength = 32, @class = "comp-txt" })
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="comp-lft" style="width:40%;">
+                        <p>
+                            @Html.LabelFor(model => model.State)
+                        </p>
+                    </div>
+                    <div class="comp-right" style="width:60%;">
+                        @Html.TextBoxFor(model => model.State, new { maxlength = 32, @class = "comp-txt" })
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="comp-lft" style="width:40%;">
+                        <p>
+                            @Html.LabelFor(model => model.Zip)
+                        </p>
+                    </div>
+                    <div class="comp-right" style="width:60%;">
+                        @Html.TextBoxFor(model => model.Zip, new { maxlength = 32, @class = "comp-txt" })
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="comp-lft" style="width:40%;">
+                        <p>
+                            @Html.LabelFor(model => model.Notes)
+                        </p>
+                    </div>
+                    <div class="comp-right" style="width:60%;">
+                        @Html.TextBoxFor(model => model.Notes, new { maxlength = 32, @class = "comp-txt" })
+                    </div>
+                    <div class="clear">
+                    </div>
+                        <div class="comp-lft" style="width:40%;">
+                            <p>@Html.LabelFor(model => model.TimeZone)</p>
+                        </div>
+                        <div class="comp-right" style="width:60%;">
+                            @Html.DropDownListFor(p => p.TimeZone, Model.AvailableTimeZones, new { @class = "chzn-select", style = "width: 100%; border:1px solid #CCC" })
+                        </div>
+                        
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <!-- Device Page Ends Here -->
+                    <div class="comp-right">
+                      @*  @if (ViewBag.IsCreate)
+                        {
+                            <div class="add-link" style="text-align:center;">
+                                <input type="button" value="Next Assignment" onclick="javascript:fnOpenMacSection();return false;" style="width:30%;margin-right:1%;"/>
+                                <input type="button" value="Cancel" onclick="javascript:fnCancel();return false;" style="width:30%"/>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="add-link" style="text-align:center;">
+                                <input id="btnSubmit" type="submit" value="Save" style="width:30%;margin-right:1%;"/>
+                                <input id="back-Step" type="button" value="Cancel" onclick="javascript:fnCancel();return false;" style="width:30%"/>
+                            </div>
+                        }*@
+                        <div class="add-link" style="text-align:center;">
+                                <input id="btnSubmit" type="submit" value="Save" style="width:30%;margin-right:1%;"/>
+                                <input type="button" value="Cancel" onclick="javascript:fnCancel();return false;" style="width:30%"/>
+                            </div>
+                    </div>
+                </div>
+                <div class="one columns"></div>
+            </div>
+        </fieldset>
+    </div>
+    <div id="macSection" class="wizard-step" style="visibility: hidden;">
+    @*
+        <div class="pallette-detail-subheader-bg">
+            <p>Unassigned MACs</p>
+        </div>
+        <div class="tSpace">
+        </div>
+        <p>
+            @(Html.Kendo().Grid<Diebold.WebApp.Models.GatewayViewModel.MacAddressViewModel>()
+            .Name("MacGrid")
+            .HtmlAttributes(new { style = "height: 400px" })
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.MacName);
+                columns.Bound(p => p.ActionColumn).Title("Available Actions");
+            })
+            .Pageable()
+            .Sortable()
+            .Scrollable()
+            .DataSource(dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("Getmac_Address", "Gateway"))
+            .ServerOperation(false)
+             )
+        )
+        </p>
+        <div class="clear"></div>*@
+        <div class="submit">
+            @if (ViewBag.IsCreate)
+            {
+                <p class="saveGateway">
+                    <div class="add-link" align="center">
+                        <input id="save" class="saveGatewayButton" type="submit" value="Save" style="width:8%; margin:1% 1% 1% 10%"/>
+                        <input id="back-Step" type="button" value="Cancel" onclick="javascript:fnCancel();return false;" style="width:8%; margin-right:2%;"/>
+                    </div>
+                </p>
+            }
+        </div>
+    </div>
+    
+    @Html.HiddenFor(model => model.MacAddressName)
+    @Html.HiddenFor(model => model.CreateIfEMCFail)
+}
+<script type="text/javascript">
+
+    var isCreate = @(ViewBag.IsCreate ? 1 : 0);
+
+    function changeViewToMacSection() {
+        $('.validation-summary-errors').hide();
+        document.getElementById('GatewaySection').style.visibility="collapse";
+         document.getElementById('macSection').style.visibility="visible";
+    }
+
+//    function changeViewToFields() {
+
+//        $("#gatewaySection").removeClass("wizard-step");
+//        $("#macSection").addClass("wizard-step");
+//        $(".nextGateway").show();
+//        
+//        $("#next-step").removeClass("wizard-step");
+//        $("#btnSubmit").removeClass("wizard-step");
+//        $("#saveGateway").removeClass("wizard-step");
+//        //$("#goToMacSectionbtnOnEdit").removeClass("wizard-step");
+
+//        $("#backToFields").addClass("wizard-step");
+//        
+//        if (isCreate) {
+//            $("#save").addClass("wizard-step");    
+//        } else {
+//            $("#save").removeClass("wizard-step");
+//        }
+//    };
+
+//    $(function () {
+//   
+//        $('#goToMacSectionbtnOnEdit').click(changeViewToMacSection);
+//        $('#next-step').click(changeViewToMacSection);
+//        
+//        $("#last-Step").click(function () {
+//            $('#MacAddress').val($('.macSelected').attr('id'));
+//            changeViewToFields();
+//        });
+//        $('#back-Step').click(changeViewToFields);
+
+//        $('form').submit(function() {
+//            if (!$('form').valid()) $('.validation-summary-errors').show();
+//        });
+//    });
+
+     function fnOpenMacSection()
+        {
+            document.getElementById('macSection').style.visibility = 'visible';
+        }
+
+        function fnCancel()
+        {
+            window.location.href = '@Url.Content("~/Gateway/Index")';
+        }
+</script>

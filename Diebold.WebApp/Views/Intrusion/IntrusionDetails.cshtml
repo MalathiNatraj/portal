@@ -1,0 +1,39 @@
+﻿@{   
+    ViewBag.Title = "IntrusionDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@*<h2>Intrusion</h2>*@
+@model IEnumerable<Diebold.WebApp.Models.AlertDetailsModel>
+<div id="dvIntrTitle" class="pallette-detail-header-bg gradient">
+    <p>
+        <strong>Intrusion Details</strong></p>
+</div>
+<div style="width: 950px; height: 600px; padding-left: 2px">
+    @(Html.Kendo().Grid(Model)
+    .Name("grdIntrusionDetails")
+    .Columns(columns =>
+    {
+        //For width alignment of data column in Kendo Grid, we need to keep one column without "Width" property
+        columns.Bound(p => p.Alert);
+        columns.Bound(p => p.SiteName).Width("119px");
+        columns.Bound(p => p.DeviceName).Width("119px");
+        columns.Bound(p => p.GatewayName).Width("119px");
+        columns.Bound(p => p.State).Width("100px");
+        columns.Bound(p => p.DeviceIpHostname).Width("135px");
+        columns.Bound(p => p.Unattended).Width("119px");
+        columns.Bound(p => p.Threshold).Width("90px");
+    })
+    .Groupable()
+    .Pageable()
+    .Sortable()
+    .Scrollable(scr => scr.Height(480))
+    .Filterable()
+    .Events(events => events.DataBound("LoadingDefaultFilter"))
+    .Resizable(resize => resize.Columns(true))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(10)
+        .ServerOperation(false)
+     )
+)
+</div>

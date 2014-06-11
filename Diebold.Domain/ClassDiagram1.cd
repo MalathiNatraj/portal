@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Diebold.Domain.Entities.Role">
+    <Position X="8.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.AlertInfo">
+    <Position X="10.75" Y="13.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAgAkAAAAAAAAIAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>Entities\AlertInfo.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Alarm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Camera">
+    <Position X="13.75" Y="19.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAQAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Company">
+    <Position X="12.75" Y="0.5" Width="2.75" />
+    <AssociationLine Name="CompanyGrouping1Levels" Type="Diebold.Domain.Entities.CompanyGrouping1Level">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.162" Y="0.06" Height="0.182" Width="1.933" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AQAAACAAgAAAAgAEIsAAAgQgQAAEAAAAAAAUAEAAgAA=</HashCode>
+      <FileName>Entities\Company.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="CompanyGrouping1Levels" />
+      <Property Name="Devices" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.CompanyGrouping1Level">
+    <Position X="17.75" Y="1" Width="4" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAgAAAAAQAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Entities\CompanyGrouping1Level.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="CompanyGrouping2Levels" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.CompanyGrouping2Level">
+    <Position X="17.75" Y="4.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAQAgAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CompanyGrouping2Level.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Sites" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Device">
+    <Position X="13.25" Y="6" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AEBAAAAAAAAAAgACAAAAAAQAAAAEAAACAAAABAAAAIA=</HashCode>
+      <FileName>Entities\Device.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Gateway">
+    <Position X="16.5" Y="14" Width="2" />
+    <AssociationLine Name="Site" Type="Diebold.Domain.Entities.Site" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="17.812" Y="14" />
+        <Point X="17.812" Y="13.625" />
+        <Point X="19.5" Y="13.625" />
+        <Point X="19.5" Y="12.761" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAIAggDEAAAAAABQAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Entities\Gateway.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Site" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Site">
+    <Position X="17.75" Y="8" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>ACAgAAAAEAAAAAAMAAIECAQAAAIIAAEAAAIABEBAAAA=</HashCode>
+      <FileName>Entities\Site.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.User">
+    <Position X="8" Y="3" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACIAAEAEFwAABAAAAAAAAQCAAAAApAAAAAg=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Role" />
+      <Property Name="Company" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.AlarmConfiguration">
+    <Position X="7.75" Y="13.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAQAACMAAgAEAAAAAAAgAAgAAAAAAAAgAAQAIAA=</HashCode>
+      <FileName>Entities\AlarmConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.UserDeviceMonitor">
+    <Position X="7.75" Y="7.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Entities\UserDeviceMonitor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.AlertStatus">
+    <Position X="7.75" Y="9.5" Width="2.5" />
+    <AssociationLine Name="Device" Type="Diebold.Domain.Entities.Device" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.25" Y="10.919" />
+        <Point X="10.625" Y="10.919" />
+        <Point X="10.625" Y="8.375" />
+        <Point X="13.25" Y="8.375" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAQgAAAAAAAQAIIAAEAAAAAABAAACAAAA=</HashCode>
+      <FileName>Entities\AlertStatus.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Device" />
+      <Property Name="Alarm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.ResolvedAlert">
+    <Position X="11" Y="10.5" Width="2.25" />
+    <AssociationLine Name="Device" Type="Diebold.Domain.Entities.Device" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.094" Y="10.5" />
+        <Point X="12.094" Y="8.812" />
+        <Point X="13.25" Y="8.812" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAgAAQAAAAAAAIAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Entities\ResolvedAlert.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Device" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Dvr">
+    <Position X="13.75" Y="14" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>oEABAAIAAAIAAgAEAAAAIQAAAMAAAAACAQAAAAAAAQA=</HashCode>
+      <FileName>Entities\Dvr.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Cameras" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

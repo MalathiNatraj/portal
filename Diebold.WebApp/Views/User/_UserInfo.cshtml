@@ -1,0 +1,201 @@
+﻿@using Diebold.Domain.Entities
+@model Diebold.WebApp.Models.UserViewModel
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnCancel").click(function () {
+            var editUri = '@Url.Action("../User/UserDetails")';
+            location.href = editUri;
+
+        });
+
+        function customValidator() {
+            var errorList = [];
+            return errorList;
+        }
+    });    
+
+</script>
+<style>
+    .chzn-select
+    {
+        width: 100%;
+        border: 1px solid #d1d1d1;
+        font-size:12px;
+    }
+</style>
+ 
+ <div style="padding-left:5%;">
+ @if (ViewBag.IsEdit == true)
+ {
+    @Html.ValidationSummary(false, "There where errors editing the User")
+ }
+ @if (ViewBag.IsEdit == false)
+ {
+    @Html.ValidationSummary(false, "There where errors creating the User")
+ }
+ </div>
+<div class="cont-creation">
+<!-- Company Page Starts Here -->
+<div class="one columns"></div>
+<div id="divCompanyContent" class="six columns"> 
+    <div class="cont-lft">
+        <div class="comp-lft" style="width:40%;">
+            <p>
+        @Html.LabelFor(model => model.FirstName)
+            </p>
+        </div>
+        <div class="comp-right" style="width:60%;">
+         @Html.TextBoxFor(model => model.FirstName, new { @class = "comp-txt" })
+        </div>
+        <div class="clear"></div>
+        <div class="comp-lft" style="width:40%;">        
+            <p>
+           @Html.LabelFor(model => model.LastName)
+            </p>
+        </div>
+        <div class="comp-right" style="width:60%;">
+         @Html.TextBoxFor(model => model.LastName, new { @class = "comp-txt" })
+        </div>
+         <div class="clear"></div>
+        <div class="comp-lft" style="width:40%;">        
+            <p>
+            @Html.LabelFor(model => model.Username)
+            </p>
+        </div>
+        <div class="comp-right" style="width:60%;">
+        @Html.TextBoxFor(model => model.Username, new { @class = "comp-txt" })
+        </div>
+         <div class="clear"></div>
+          <div class="comp-lft" style="width:40%;">        
+            <p>
+               @Html.LabelFor(model => model.Email)
+            </p>
+        </div>
+        <div class="comp-right" style="width:60%;">
+          @Html.TextBoxFor(model => model.Email, new { @class = "comp-txt" })
+        </div>
+        <div class="clear"></div>
+        <div class="comp-lft" style="width:40%;">        
+            <p>
+             @Html.LabelFor(model => model.Phone)
+            </p>
+        </div>
+        <div class="comp-right" style="width:60%;">
+            @Html.TextBoxFor(model => model.Phone, new { @class = "comp-txt" })                                 
+        </div>
+         <div class="clear"></div>
+         <div class="comp-lft" style="width:40%;">
+            <p>
+            </p>
+        </div>
+         <div class="comp-right" style="width:60%;"> 
+                @Html.RadioButtonFor(model => model.PreferredContact, PreferredContact.Phone.ToString())
+                @Html.LabelFor(model => model.PreferredContact)               
+        </div>        
+         <div class="clear"></div>
+          <div class="comp-lft" style="width:40%;">        
+            <p>
+              @Html.LabelFor(model => model.Mobile)
+            </p>
+        </div>
+        <div class="comp-right" style="width:60%;">
+           @Html.TextBoxFor(model => model.Mobile, new { @class = "comp-txt" })
+                                    
+        </div>
+        <div class="clear"></div>   
+        
+        <div class="comp-right" style="width:60%;">
+            @Html.RadioButtonFor(model => model.PreferredContact, PreferredContact.Mobile.ToString())
+              @Html.LabelFor(model => model.PreferredContact)
+                                    
+        </div>
+        <div class="clear"></div>    
+      
+    </div>
+ </div>
+
+   <div class="one columns"></div>
+   <div class="seven columns">
+    <div class="cont-right">    
+        <div class="comp-lft" style="width:30%;">        
+            <p>
+             @Html.LabelFor(model => model.AvailableCompanies)
+            </p>
+        </div>
+        <div class="comp-right" style="width:70%;">
+           @Html.DropDownListFor(model => model.CompanyId, Model.AvailableCompanies.OrderBy(x=>x.Text), new { @class = "chzn-select" })
+        </div>
+        <div class="clear"></div>
+        <div class="comp-lft" style="width:30%;">        
+            <p>
+            @Html.LabelFor(model => model.Title)
+            </p>
+        </div>
+        <div class="comp-right" style="width:70%;">
+            @Html.TextBoxFor(model => model.Title, new { @class = "comp-txt" })
+        </div>
+        <div class="clear"></div>
+        <div class="comp-lft" style="width:30%;">        
+            <p>
+           @Html.LabelFor(model => model.Text1)
+            </p>
+        </div>
+        <div class="comp-right" style="width:70%;">
+             @Html.TextBoxFor(model => model.Text1, new { @class = "comp-txt" })
+        </div>
+        <div class="clear"></div>
+        <div class="comp-lft" style="width:30%;">        
+            <p>
+              @Html.LabelFor(model => model.Text2)
+            </p>
+        </div>
+        <div class="comp-right" style="width:70%;">
+           @Html.TextBoxFor(model => model.Text2, new { @class = "comp-txt" })
+        </div>
+        <div class="clear"></div>
+        <div class="comp-lft" style="width:30%;">        
+            <p>
+             @Html.LabelFor(model => model.AvailableRoles)
+            </p>
+        </div>
+        <div class="comp-right" style="width:70%;">
+           @Html.DropDownListFor(model => model.RoleId, Model.AvailableRoles.OrderBy(x => x.Text), new { @class = "chzn-select" })
+        </div>
+        <div class="clear"></div>
+        <div class="comp-lft" style="width:30%;">        
+            <p>
+             @Html.LabelFor(model => model.AvailableTimeZones)
+            </p>
+        </div>
+        <div class="comp-right" style="width:70%;">
+            @Html.DropDownListFor(model => model.TimeZone, Model.AvailableTimeZones.OrderBy(x => x.Text), new { @class = "chzn-select" })
+            @Html.HiddenFor(x => x.OldCompanyId)
+            @Html.HiddenFor(x => x.Id)
+        </div>
+        <div class="clear"></div>
+
+        <div class="comp-lft" style="width:30%;">        
+            <p>
+              @Html.LabelFor(model => model.UserPin)
+            </p>
+        </div>
+        <div class="comp-right" style="width:70%;">
+           @Html.TextBoxFor(model => model.UserPin, new { @class = "comp-txt" })
+        </div>
+        <div class="clear"></div>
+
+      </div>
+     </div>
+     <div class="one columns"></div>
+
+ </div>
+<div class="clear"></div>
+<div align="center" style="margin-top:2%;">
+    <div class="add-link">
+        <input type="submit" id="btnUserSubmit" value="Save" style="width:10%;" />
+        <input type="button" id="btnCancel" value="Cancel" style="width:10%;" />/>
+    </div>
+</div>
+

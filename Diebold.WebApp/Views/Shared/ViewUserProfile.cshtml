@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = "My Profile";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@model Diebold.WebApp.Models.UserViewModel  
+<script type="text/javascript">
+    $(document).ready(function () {
+        //        $("#btnEdit").click(function () {
+        //            var strUserId = document.getElementById('lbluserId').innerHTML;
+        //            var editUri = '@Url.Action("Edit")' + "?id=" + strUserId;            
+        //            location.href = editUri;
+        //        });
+
+        $("#btnBack").click(function () {
+            var backUri = '@Url.Content("~/Dashboard/Home")';
+            location.href = backUri;
+        });
+
+    });  
+    
+     
+</script>
+<div class="clear">
+</div>
+
+@*<div id="user-details">*@
+<div class="user-details">
+    <div id="dvViewUserTitle" class="pallette-detail-header-bg">
+        <p>
+            Personal Information</p>
+    </div>
+    
+    <div class="four columns">       
+        <div class="cont-lft">
+        
+            <img src="@Url.Content("~/Content/images/user-profile-pic.png")"  alt="" />
+        </div>
+        </div>
+         <div class="twelve columns">
+        <div class="user-right">
+            <div class="user-field" style="display: none;">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Id)</p>
+                <p class="user-field-right">
+                    <label id="lbluserId">@Model.Id</label></p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field">
+                <p class="user-field-lft">@Html.LabelFor(model => model.FirstName)</p>
+                <p class="user-field-right">
+                    <label id="lblFirstName">@Model.FirstName</label></p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field1">
+                <p class="user-field-lft">@Html.LabelFor(model => model.LastName)</p>
+                <p class="user-field-right">
+                    <label id="lblLastName">@Model.LastName</label></p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Username)</p>
+                <p class="user-field-right">
+                    <label id="lblUserName">@Model.Username</label></p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field1">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Email)</p>
+                <p class="user-field-right">
+                    <label id="lblEmail">@Model.Email</label></p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Phone)</p>
+                <p class="user-field-right">
+                    <label id="lblPhone">@Model.Phone</label></p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field1">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Mobile)</p>
+                <p class="user-field-right">
+                    <label id="lblMobile">@Model.Mobile</label></p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field">
+                <p class="user-field-lft">@Html.LabelFor(model => model.CompanyName)</p>
+                <p class="user-field-right">
+                    <label id="lblCpnyName">@Model.CompanyName</label></p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field1">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Title)</p>
+                <p class="user-field-right">@Html.DisplayFor(model => model.Title)</p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Text1)</p>
+                <p class="user-field-right">
+                    <label id="lblText1">@Model.Text1</label></p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field1">
+                <p class="user-field-lft">@Html.LabelFor(model => model.Text2)</p>
+                <p class="user-field-right">
+                    <label id="lblText2">@Model.Text2</label></p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field">
+                <p class="user-field-lft">@Html.LabelFor(model => model.RoleName)</p>
+                <p class="user-field-right">
+                    <label id="lblRoleName">@Model.RoleName</label></p>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="user-field1">
+                <p class="user-field-lft">@Html.LabelFor(model => model.TimeZone)</p>
+                <p class="user-field-right">
+                    <label id="lblTimeZone">@Model.TimeZone</label></p>
+                <div class="clear">
+                </div>
+            </div> 
+        </div>  
+        </div>     
+    
+    @* <div class="add-link" style="float:left; margin-left:400px;">
+           <input type="button" id="btnEdit" value="Edit" />
+        </div>*@
+ <div class="add-link" style="float:left; margin-left:400px;">
+           <input type="button" id="btnBack" value="Back" />
+        </div>
+</div>

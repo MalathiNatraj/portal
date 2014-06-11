@@ -1,0 +1,6 @@
+﻿@if(Request.IsAuthenticated) {
+    <div id="logindisplay"> Welcome <span>@User.Identity.Name.Split('@')[0]</span> @Html.ActionLink("Log Out", "LogOff", "Account")</div>
+}
+else {
+    @:[ @Html.ActionLink("Log On", "LogOn", "Account") ]
+}

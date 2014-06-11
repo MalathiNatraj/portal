@@ -1,0 +1,216 @@
+﻿@section HeadContent {
+    <style>
+    #chart {
+        background: center no-repeat url('@Url.Content("~/Content/shared/world-map.png")')
+    }
+    
+    
+</style>
+
+}
+<script type="text/javascript">
+ 
+    function fnCloseHealthCheck() {
+        var mySplitResultset = {
+            'input': 'Healthcheck'
+        };
+        var url = '@Url.Action("ClosePortlet", "Preferences")';
+        $.post(url, mySplitResultset, mySplitResultset, "json");
+        $('#my-health').hide();
+        return false;
+    }
+
+    function fntoggleHealthCheck() {
+        $('#divHealthCheckContent').toggle();
+    }
+    $(document).ready(function () {
+        var wWidth = $(window).width();
+        var dWidth = wWidth * 0.2;
+        $("#dvSettings").dialog(
+               {
+                   draggable: false,
+                   closeOnEscape: true,
+                   resizable: false,
+                   height: 'auto',
+                   width: dWidth,
+                   autoOpen: false,
+                   show: 'blind'
+               }
+               );
+
+        // To hide the title bar of the div
+        $(".ui-dialog-titlebar").hide();
+        $('#imgHealthCheckSettings').click(function (event) {
+            $("#dvSettings").dialog("option", "position", {
+                my: "left top",
+                at: "bottom",
+                collision: "flip",
+                of: event,
+                offset: "20 40"
+            });
+            $('#dvSettings').empty();
+            $('#dvSettings').append('<a href="#" class="divdynamiclink">Criteria / Settings</a>');
+            $('#dvSettings').append('<a href="#" id="lnkHlthChkDtls" onclick="javascript:fnHCMoreOptionsClick();return false;" class="divdynamiclink">More Details</a>');
+            $('#dvSettings').dialog('open');
+            return false;
+        });
+        // Close Pop-up If the user clicks anywhere else on the page
+        jQuery('body').bind('click', function (e) {
+            if (jQuery('#dvSettings').dialog('isOpen')
+            && !jQuery(e.target).is('.ui-dialog, a')
+            && !jQuery(e.target).closest('.ui-dialog').length
+         ) {
+                jQuery('#dvSettings').dialog('close');
+            }
+        });
+    });
+    function fnHCMoreOptionsClick() {
+        var editUri = '@Url.Action("../Alerts/getHealthDetails")';
+        location.href = editUri;
+    }
+</script>
+<div id="my-health">
+    <div class="Dashbord-header">
+        <div class="health-head-lft">
+        </div>
+        <div class="health-head-mid">
+            <div class="health-icon">
+                <img width="19" height="21" alt="" src="@Url.Content("~/Content/images/health-icon.png")"/>
+            </div>
+            <p>
+                <strong>Health</strong></p>
+            <div class="pallet-top-icons">
+                <a href="#">
+                    <img width="19" id="imgHealthExpColapse" height="27" alt="" onclick="javascript:fntoggleHealthCheck();return false;" src="@Url.Content("~/Content/images/drop-down-icon.png")"/></a>
+                <a href="#">
+                    <img id="imgHealthClose" width="20" height="27" alt="" onclick="javascript:fnCloseHealthCheck();return false;" src="@Url.Content("~/Content/images/close-icon.png")"/></a>
+            </div>
+        </div>
+        <div class="health-head-right">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div id="divHealthCheckContent">
+    <div class="health-mid">
+        <div class="health-info">
+            <div class="chart-wrapper">
+                @(Html.Kendo().Chart()
+
+        .Name("chart")
+                .Title("Health")
+        
+         .XAxis(x=>x
+             .Date()
+             .Title("Date"))
+                 
+        .Legend(legend => legend
+            .Position(ChartLegendPosition.Bottom)
+
+        )
+        .HtmlAttributes(new { style = "height: 250px" })
+        .Series(series =>
+        {
+            series.Column(new int[] { 4, 2, 1, 3 }).Name("Severity");
+            series.Column(new int[] { 3, 2, 1, 2 }).Name("Normal");
+        })
+        .CategoryAxis(axis => axis
+                     .Categories("02-Nov", "9-Nov", "16-Nov", "23-Nov")
+        )
+        .ValueAxis(axis => axis
+            .Numeric().Labels(labels => labels.Format("{0}"))
+            .Title("NO.Of Alerts")
+            
+        )
+
+        .Tooltip(tooltip => tooltip
+            .Visible(true)
+            .Format("{0}")
+        )
+    )
+            </div>
+            <div class="monitor-overview">
+                <p>
+                    <strong>MONITORING OVERVIEW</strong></p>
+            </div>
+            <div class="health-inner-bar">
+                <div class="health-inner-lft">
+                </div>
+                <div class="health-inner-mid">
+                    <p>
+                        <strong>Sites</strong></p>
+                    <div class="health-innerdark">
+                        <div class="health-innerdark-lft">
+                        </div>
+                        <div class="health-innerdark-mid">
+                            <p>
+                                <strong>21</strong></p>
+                        </div>
+                        <div class="health-innerdark-right">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="health-inner-bar">
+                <div class="health-inner-lft">
+                </div>
+                <div class="health-inner-mid">
+                    <p>
+                        <strong>Gateways</strong></p>
+                    <div class="health-innerdark">
+                        <div class="health-innerdark-lft">
+                        </div>
+                        <div class="health-innerdark-mid">
+                            <p>
+                                <strong>3</strong></p>
+                        </div>
+                        <div class="health-innerdark-right">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="health-inner-bar">
+                <div class="health-inner-lft">
+                </div>
+                <div class="health-inner-mid">
+                    <p>
+                        <strong>Devices</strong></p>
+                    <div class="health-innerdark">
+                        <div class="health-innerdark-lft">
+                        </div>
+                        <div class="health-innerdark-mid">
+                            <p>
+                                <strong>53</strong></p>
+                        </div>
+                        <div class="health-innerdark-right">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="active-alerts">
+                <p>
+                    <strong>ACTIVE ALERTS</strong></p>
+            </div>
+            <div class="health-status">
+                <img width="211" height="56" alt="" src="@Url.Content("~/Content/images/health-status.png")">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <div class="health-bot">
+    </div>
+    <div class="health-settings">
+        <div class="health-settings-bg">
+            <div class="pallet-bot-icons">
+                <a href="#">
+                    <img id="imgHealthCheckSettings" width="26" height="27" alt="" src="@Url.Content("~/Content/images/featured-set-icon.png")"></a>
+                <a href="#">
+                    <img id="imgHealthCheckResize" width="25" height="27" alt="" src="@Url.Content("~/Content/images/featured-set-icon1.png")"></a>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<div id="dvSettings" class="context-menu">
+</div>

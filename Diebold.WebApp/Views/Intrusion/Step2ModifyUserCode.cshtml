@@ -1,0 +1,200 @@
+﻿@{
+    Layout = null;
+}
+<!-- Intrusion User Commands-User Code Modify Step2 starts here -->
+<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>User Code Modify</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="hideIntrusionModifyOverlay();return false;" /></a>
+            </div>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        
+        <div id="dvStep2ModifyUCContent">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">
+                <div class="my-access-titile bottom">
+                    <p>
+                        <strong>Step 2: Modification Fields</strong></p>
+                </div>
+                <div id="dvErrModifyStep2">
+                <ul>
+                
+                </ul>
+                </div>
+                <div class="my-access-lbl bottom" style="display:none;">
+                    <p>
+                        <strong>User Number:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom" style="display:none;">                    
+                    @Html.TextBox("txtStep2EditUserNum", null, new { @readonly = "readonly", @class = "my-access-in", maxlength = 250 })
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Name:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                    @Html.TextBox("txtStep2EditUserName",null, new { @class = "my-access-in", maxlength = 250 })
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>User Code:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                    @Html.TextBox("txtStep2EditUserCode",null, new { @class = "my-access-in"})
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Profile Number:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                     @(Html.Kendo().ComboBox()
+                        .Name("cboProfileNumberModify")
+                        .Placeholder("-- Select --")
+                        .HtmlAttributes(new { style = "width:100%" })
+                        .DataTextField("Name")
+                        .DataValueField("Id")
+                        .Suggest(true)
+                    )
+                </div>                
+                <div class="clear">
+                </div>
+            </div>
+            <div class="my-access-right-btn"  style="width:137px;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Save" onclick="javascript:fnValidateUserCodeModify();return false;"/>
+                </div>
+                <div class="add-link" align="center" style="float: right;">    
+                    <input type="button" value="Cancel" onclick="javascript:fnCloseModifyStep2();return false;"/>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function fnCloseModifyStep2() {
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        document.getElementById('dvStep2ModifyUserCode').style.visibility = 'hidden';
+    }
+    function fnValidateUserCodeModify() {
+        $("#dvErrModifyStep2 ul").empty();
+        var regModify2Code = /^[0-9]+$/;
+
+        var ModifyProfileValue = $("#cboProfileNumberModify").val();
+        var deviceID = $("#IntrusionCategories").val();
+
+        if ($('#txtStep2EditUserName').val() == '' && $('#txtStep2EditUserNum').val() == ''&& $('#txtStep2EditUserCode').val() == '' && (ModifyProfileValue == '' || ModifyProfileValue == '-- Select --')) {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Number is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Name is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Code is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Profile Number is Required</li>');
+        }
+        else if ($('#txtStep2EditUserName').val() == '' && $('#txtStep2EditUserNum').val() == '' && (ModifyProfileValue == '' || ModifyProfileValue == '-- Select --')) {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Name is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Number is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Profile Number is Required</li>');
+        }
+        else if ($('#txtStep2EditUserName').val() == '' && $('#txtStep2EditUserNum').val() == '' && $('#txtStep2EditUserCode').val() == '') {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Name is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Number is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Code is Required</li>');
+        }
+        else if ($('#txtStep2EditUserName').val() == '' && $('#txtStep2EditUserCode').val() == '' && (ModifyProfileValue == '' || ModifyProfileValue == '-- Select --')) {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Name is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Code is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Profile Number is Required</li>');
+        }
+        else if ($('#txtStep2EditUserNum').val() == '' && $('#txtStep2EditUserCode').val() == '' && (ModifyProfileValue == '' || ModifyProfileValue == '-- Select --')) {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Number is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Code is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Profile Number is Required</li>');
+        }
+        else if ($('#txtStep2EditUserName').val() == '' && $('#txtStep2EditUserCode').val() == '') {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Name is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Code is Required</li>');
+        }
+        else if ($('#txtStep2EditUserCode').val() == '' && (ModifyProfileValue == '' || ModifyProfileValue == '-- Select --')) {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Code is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Profile Number is Required</li>');
+        }
+        else if ($('#txtStep2EditUserName').val() == '' && (ModifyProfileValue == '' || ModifyProfileValue == '-- Select --')) {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Name is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Profile Number is Required</li>');
+        }
+        else if ($('#txtStep2EditUserNum').val() == '' && $('#txtStep2EditUserCode').val() == '') {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Number is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Code is Required</li>');
+        }
+        else if ($('#txtStep2EditUserNum').val() == '' && (ModifyProfileValue == '' || ModifyProfileValue == '-- Select --')) {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Number is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Profile Number is Required</li>');
+        }
+        else if ($('#txtStep2EditUserName').val() == '' && $('#txtStep2EditUserNum').val() == '') {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Name is Required</li>');
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Number is Required</li>');
+        }
+        else if ($('#txtStep2EditUserName').val() == '') {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Name is Required</li>');
+        }
+        else if ($('#txtStep2EditUserNum').val() == '') {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Number is Required</li>');
+        }
+        else if ($('#txtStep2EditUserCode').val() == '') {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">User Code is Required</li>');
+        }
+        else if (ModifyProfileValue == '' || ModifyProfileValue == '-- Select --') {
+            $('#dvErrModifyStep2 ul').append('<li class="validation-summary-intrusionpopup">Profile Number is Required</li>');
+        }        
+        else {
+            var dataItem = { "name": $('#txtStep2EditUserName').val(), "userCode": $('#txtStep2EditUserCode').val(), "userNumber": $('#txtStep2EditUserNum').val(), "profileNumber": ModifyProfileValue, "deviceId": deviceID };
+            var url = '@Url.Action("UserCodeModify", "Intrusion")';
+            BlockElement("dvStep2ModifyUCContent", 'Connecting...');
+            $.post(url, dataItem, GetUserCodeModifyCallback, "json");
+        }
+    }
+
+    function GetUserCodeModifyCallback(ResultSet) {
+        UnBlockElement("dvStep2ModifyUCContent");
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                if (ResultSet == "OK") {
+                    fnShowAlertInfo('User code modified successfully.');
+                    document.getElementById('my_overlay').style.visibility = 'hidden';
+                    document.getElementById('dvStep2ModifyUserCode').style.visibility = 'hidden';
+                }
+            }
+        }
+    }
+</script>
+

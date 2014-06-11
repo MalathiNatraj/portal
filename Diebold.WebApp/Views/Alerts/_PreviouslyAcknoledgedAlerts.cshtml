@@ -1,0 +1,26 @@
+﻿ @{
+    Layout = null;
+ }
+ @model IEnumerable<Diebold.WebApp.Models.ResolvedAlertListDashboardViewModel>
+ <div style="padding:2%">
+ @(Html.Kendo().Grid(Model)
+                        .HtmlAttributes(new { style = "width:99%" })
+                        .Name("grdResolvedAlerts")
+                        .Columns(columns =>
+                        {
+                            //For width alignment of data column in Kendo Grid, we need to keep one column without "Width" property
+                            columns.Bound(x => x.Date).Format("{0:MM/dd/yyyy HH:mm:ss}");
+                            columns.Bound(x => x.Alert);
+                            columns.Bound(x => x.User);
+                        })
+                        .Pageable()
+                        .Sortable()
+                        .Selectable()
+                        .DataSource(dataSource => dataSource
+                        .Ajax()
+                            //  .Read(read => read.Action("Alerts_Read", "Alerts"))      
+                            //       .Read(read => read.Action("GetDeviceDetailforIntrusionByDeviceId", "Dashboard"))
+                        .PageSize(10)
+                        .ServerOperation(false))
+                     )
+</div>

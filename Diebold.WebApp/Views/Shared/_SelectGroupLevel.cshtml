@@ -1,0 +1,157 @@
+﻿<div class="pallette-detail-subheader-bg" style="padding:6px 0 0 0; font-weight:bold;">
+    <p>Select Group Levels</p>
+</div>
+<div class="comp-lft">
+    <p>First Level Group: (*)</p>
+</div>
+<div class="comp-right">
+    @(Html.Kendo().ComboBox()
+                  .Name("FirstLevelGroup")
+          .Placeholder("-- Select --")
+          .DataTextField("Name")
+          .DataValueField("Id")
+           .HtmlAttributes(new { id = "FirstLevelGroup" })
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("AsyncFirstLevelGroup", "Monitor")
+                      .Data("filterOrders");
+              })
+              .ServerFiltering(true);
+          })
+
+          .Enable(false)
+          .AutoBind(false)
+          .CascadeFrom("users")
+    )
+</div>
+<script type="text/javascript">
+    function filterOrders() {       
+        return {
+            users: $("#users").val()
+        };
+    }
+</script>
+<div class="clear">
+</div>
+
+<div class="comp-lft">
+    <p>
+        Second Level Group:</p>
+</div>
+<div class="comp-right">
+    @(Html.Kendo().ComboBox()
+                          .Name("SecondLevelGroup")
+          .Placeholder("-- Select --")
+          .DataTextField("Name")
+          .DataValueField("Id")
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("AsyncSecondLevelGroup", "Monitor")
+                      .Data("filterGroup2");
+              })
+              .ServerFiltering(true);
+          })
+          .Enable(false)
+          .AutoBind(false)
+                  .CascadeFrom("FirstLevelGroup")
+    )
+    <script type="text/javascript">
+        function filterGroup2() {
+            return {
+                FirstLevelGroup: $("#FirstLevelGroup").val()
+            };
+        }
+    </script>
+</div>
+<div class="clear">
+</div>
+<div class="comp-lft">
+    <p>Site :</p>
+</div>
+<div class="comp-right">
+    @(Html.Kendo().ComboBox()
+                                  .Name("Site")
+          .Placeholder("-- Select --")
+          .DataTextField("Name")
+          .DataValueField("Id")
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("AsyncSites", "Monitor")
+                      .Data("filterSite");
+              })
+              .ServerFiltering(true);
+          })
+          .Enable(false)
+          .AutoBind(false)
+                          .CascadeFrom("SecondLevelGroup")
+    )
+    <script type="text/javascript">
+        function filterSite() {
+            return {
+                SecondLevelGroup: $("#SecondLevelGroup").val()
+            };
+        }
+    </script>
+</div>
+<div class="clear">
+</div>
+<div class="comp-lft">
+    <p>Device :</p>
+</div>
+<div class="comp-right">
+    @(Html.Kendo().ComboBox()
+            .Name("Device")
+            .Placeholder("-- Select --")
+            .DataTextField("Name")
+            .DataValueField("Id")
+            .DataSource(source =>
+            {
+                source.Read(read =>
+                    {
+                        read.Action("AsyncDevices", "Monitor")
+                        .Data("filterDevice");
+                    })
+                .ServerFiltering(true);
+            })
+            .Enable(false)
+            .AutoBind(false)
+            .CascadeFrom("Site")
+    )
+    <script type="text/javascript">
+        function filterDevice() {
+            return {
+                Site: $("#Site").val()
+            };
+        }
+    </script>
+</div>
+<div class="clear">
+</div>
+<div class="add-link" style="margin-left:10%;" align="center">
+    <input type="button" id="btnAddGroup" value="Add"  style="width: 30%;"/>
+</div>
+<div class="comp-right">
+</div>
+<div class="clear">
+</div>
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {        
+        (function () {
+            var resetForms = function () {
+                $('form').each(function () {            
+                    this.reset();
+                });
+            };
+
+            resetForms();
+
+            window.onbeforeunload = resetForms;
+        })();       
+    });
+</script>

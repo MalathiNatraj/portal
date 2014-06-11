@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Diebold.WebApp.Models.SiteInfo>
+
+@{
+    ViewBag.Title = "SiteInformationDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+ }
+
+<h2>Site Information</h2>
+    <div id="divControlHolder" style="padding-left:20px; padding-right:20px;">
+      @(Html.Kendo().Grid(Model)
+    .Name("Grid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Site);
+        columns.Bound(p => p.GatewayName);
+        columns.Bound(p => p.Address);
+        columns.Bound(p => p.City);       
+
+        columns.Bound(p => p.MonitoredDevices);
+        columns.Bound(p => p.AlaramsConfigured);
+        columns.Bound(p => p.Conf);
+    })
+                
+    .Groupable()
+    .Pageable()
+    
+
+    .Sortable()
+    .Scrollable(scr => scr.Height(400)) 
+    .Filterable()
+    .Events(events => events.DataBound("LoadingDefaultFilter"))
+    .Resizable(resize => resize.Columns(true))
+    .DataSource(dataSource => dataSource        
+        .Ajax()
+        .PageSize(15)
+        .ServerOperation(false)        
+     )
+)
+
+
+    </div>
+
+   

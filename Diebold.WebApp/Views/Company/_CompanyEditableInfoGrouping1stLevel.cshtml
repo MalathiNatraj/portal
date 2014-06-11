@@ -1,0 +1,48 @@
+﻿@model Diebold.WebApp.Models.CompanyViewModel
+<fieldset>
+    
+    <div class="cont-creation">
+        <div class="one columns"></div>
+        <div class="eight columns" style="float:left;">
+        <div style="width:100%;">
+             <p class="edit-cpny-grp-sub-title">
+                New <span class="grouping1DynamicName"></span>
+            </p>
+         </div>
+         <div class="clear"></div>
+            <br />
+            <div class="cont-lft">
+                <div class="comp-lft" style="width:35%">
+                    <p>
+                        <label class="grouping1DynamicName">
+                        </label>
+                        @Html.LabelFor(model => model.AvailableGrouping1Levels)
+                    </p>
+                </div>
+                <div class="comp-right" style="width:65%;">
+                    @Html.TextBoxFor(model => model.Grouping1LevelName, new { @class = "comp-txt", style="width:56%;"})
+                    <div class="add-link" style="float:right;padding-left:5px;">
+                        <input type="button" id="anotherGroupLevel1" value="Create Another" class="btnCreate" />
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <br />
+                 <div class="comp-lft" style="width:35%;">
+                 </div>
+                <div class="comp-right" style="width:65%;">
+                    <div class="add-link" style="float: left; padding:0 0 0 2%;">
+                        @if (!ViewBag.IsEdit)
+                        {
+                            <input type="button" id="next-step" name="next-step" value="Next Level" class="next-step" />   
+                        }
+                        else
+                        {
+                            <input type="button" id="btnFinishLevel1" name="finish" value="Finish" class="btnStep1" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>

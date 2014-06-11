@@ -1,0 +1,227 @@
+﻿@model Diebold.WebApp.Models.LogHistoryFilterViewModel
+<div class="half columns"></div>
+<div class="seven columns">
+<div class="edit-cpny-grp-sub-title" style="width:100%;">
+    <p>Audit Filter</p>
+</div>
+
+ <div class="cont-lft">
+    <div class="comp-lft" style="width:40%;">
+        @(Html.Kendo().ComboBox()
+        .Name("ActionTypes")
+        .Placeholder("-- Action Type --")
+        .DataTextField("Text")
+        .DataValueField("Value")
+        .Events(ev => ev.Change("ActionTypeChanged"))
+        .DataSource(source =>
+            {
+                source.Read(read =>
+                    {
+                        read.Action("GetActionType", "LogHistory");
+                    });
+            })
+        )
+        </div>
+        <div class="comp-right" style="width:60%;">
+        @(Html.Kendo().Grid(Model.ActionTypeView)
+        .HtmlAttributes(new { style = "width:100%" })
+        .Name("grdActionType")
+        .Selectable()
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Read(read => read.Action("GetEmptyActionType", "LogHistory"))
+        .ServerOperation(false)
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.ActionType).Width("90%");
+            columns.Command(command => command.Custom("Delete").Click("RemoveSelectedActionType")).Title("Action");
+        })
+        .Sortable()
+                //.Pageable()
+        .DataSource(dataSource => dataSource
+        .Ajax()
+                // .PageSize(4)
+        )
+        )
+    </div>
+     <div class="clear"></div>
+     <div class="comp-lft">
+         <label id="lblFromDate" style="color:Black">From Date: </label> 
+         @(Html.Kendo().DatePickerFor(x => x.DisplayDateFrom)
+              .Value(System.DateTime.Now)
+              .HtmlAttributes(new { style = "width:80%" })
+          )
+     </div>
+     <div class="clear"></div>
+      <div class="comp-lft">
+          <label id="lblToDate" style="color:Black">To Date:</label>
+          @(Html.Kendo().DatePickerFor(x => x.DisplayDateTo)
+                .Value(System.DateTime.Now)
+                .HtmlAttributes(new { style = "width:80%" })
+           )
+           </div>
+ </div>
+</div>
+<div class="one columns"></div>
+<div class="seven columns">
+     <div  class="edit-cpny-grp-sub-title" style="width:100%">
+         <p>Log Status Filter</p>
+         </div>
+           <div class="cont-right">
+           <div class="comp-lft" style="width:40%;">
+               @(Html.Kendo().ComboBox()
+                .Name("cboDeviceStatus")
+                .Placeholder("-- Select --")
+                .DataTextField("Text")
+                .DataValueField("Value")
+                //.Events(ev => ev.Change("AlertTypeChanged"))
+                .DataSource(source =>
+                    {
+                        source.Read(read =>
+                            {
+                                read.Action("GetAvailableUserStatus", "LogHistory");
+                            });
+                    })
+             )
+          </div>
+          <div class="comp-right" style="width:60%;"></div>
+          <div class="clear"></div>
+        <div class="comp-lft" style="margin-top:2%;width:40%;">
+         @(Html.Kendo().ComboBox()
+            .Name("UserInvolved")
+            .Placeholder("-- User Involved --")
+            .DataTextField("Text")
+            .DataValueField("Value")
+            .Events(ev => ev.Change("UserChanged"))
+            .DataSource(source =>
+                {
+                    source.Read(read =>
+                        {
+                            read.Action("GetUserList", "LogHistory");
+                        });
+                })
+         )
+         </div>
+         @* <div class="clear"></div>*@
+        <div class="comp-right" style="margin-top:2%;width:60%;">
+          @(Html.Kendo().Grid(Model.UserInvolvedView)
+                .HtmlAttributes(new { style = "width:100%" })
+                .Name("grdUsers")
+                .Selectable()
+                .DataSource(dataSource => dataSource        
+                .Ajax()
+                .Read(read => read.Action("", ""))
+                .ServerOperation(false)
+                )
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.UserInvolved).Width("90%");
+                    columns.Command(command => command.Custom("Delete").Click("RemoveSelectedUserInvolved")).Title("Action");
+                })                    
+                .Sortable()
+                //.Pageable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                // .PageSize(4)
+                )
+          )
+</div>
+     </div>
+</div>
+<div class="half columns"></div>
+ @(Html.Kendo().Window()
+    .Name("DuplicateLHAlertFilterWindow")
+    .Title("Error")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div style="padding: 5px">
+    <label id="lblDieboldAlertFilter"></label>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(275)
+    .Height(170)
+)
+
+<script language="javascript" type="text/javascript">
+    function ActionTypeChanged() {
+        var isDirty = true;
+        var ActionTypescombobox = $("#ActionTypes").data("kendoComboBox");
+        var grid = $("#grdActionType").data("kendoGrid");
+        var datasource = grid.dataSource;
+        var data = grid.dataSource.data();
+        var totalNumber = data.length;
+        // datasource.insert({ ActionType: ActionTypescombobox.text() });
+        if (totalNumber > 0) {
+            for (var i = 0; i < totalNumber; i++) {
+                var currentDataItem = data[i].ActionType;
+                if (currentDataItem == ActionTypescombobox.text()) {
+                    fnShowDuplicatemsg("Same action type already added.");
+                    isDirty = true;
+                    break;
+                }
+                else {
+                    isDirty = false;
+                }
+            }
+        }
+        else {
+            datasource.insert({ ActionType: ActionTypescombobox.text() });
+        }
+        if (isDirty == false) {
+            datasource.insert({ ActionType: ActionTypescombobox.text() });
+        }
+    }
+
+    function UserChanged() {
+        var isDirty = true;
+        var UserIdcombobox = $("#UserInvolved").data("kendoComboBox");
+        var grid = $("#grdUsers").data("kendoGrid");
+        var data = grid.dataSource.data();
+        var totalNumber = data.length;
+        var datasource = grid.dataSource;
+        // datasource.insert({ UserInvolved: UserIdcombobox.text(), UserId: UserIdcombobox.value() });
+        if (totalNumber > 0) {
+            for (var i = 0; i < totalNumber; i++) {
+                var currentDataItem = data[i].UserInvolved;
+                if (currentDataItem == UserIdcombobox.text()) {
+                    fnShowDuplicatemsg("Same User involved already added.");
+                    isDirty = true;
+                    break;
+                }
+                else {
+                    isDirty = false;
+                }
+            }
+        }
+        else {
+            datasource.insert({ UserInvolved: UserIdcombobox.text(), UserId: UserIdcombobox.value() });
+        }
+        if (isDirty == false) {
+            datasource.insert({ UserInvolved: UserIdcombobox.text(), UserId: UserIdcombobox.value() });
+        }
+    }
+
+    function RemoveSelectedActionType(e) {
+        e.preventDefault();
+        var grid = $("#grdActionType").data("kendoGrid");
+        var selectedRow = grid.select();
+        var index = selectedRow.index();
+        grid.removeRow(grid.tbody.find("tr")[index]);
+    }
+
+    function RemoveSelectedUserInvolved(e) {
+        e.preventDefault();
+        var grid = $("#grdUsers").data("kendoGrid");
+        var selectedRow = grid.select();
+        var index = selectedRow.index();
+        grid.removeRow(grid.tbody.find("tr")[index]);
+    }
+
+    function fnShowDuplicatemsg(errormsg) {
+        $("#lblDieboldAlertFilter").text(errormsg);
+        $("#DuplicateLHAlertFilterWindow").data("kendoWindow").center().open();
+    }
+</script>

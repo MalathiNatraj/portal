@@ -1,0 +1,117 @@
+﻿<div id="my-SysSummary">
+<div class="cont-inner-room">
+    <div class="light-blue">
+    <div class="Dashbord-header">
+        <div class="light-blue-head gradient">
+            <div class="pallet-icon">
+                <img src="@Url.Content("~/Content/images/sys-summary-icon.png")" alt="" />
+            </div>
+            <p><strong>System Summary</strong></p>
+            <div class="close-icon">
+             <a href="#">
+                <img id="imgSysSummaryClose" onclick="javascript:fnCloseSysSummary();return false;" src="@Url.Content("~/Content/images/close-icon.png")"alt="Close" /></a>
+            </div>
+            <div class="close-icon">
+             <a href="#">
+                <img id="imgSysSummaryExpColapse" onclick="javascript:fntoggleSysSummary();return false;" src="@Url.Content("~/Content/images/collapse-icon.png")" alt="Minimize" /></a>
+            </div>
+        </div>
+    </div>         
+    <div id="divSysSummaryContent">
+        <div class="light-blue-body gradient">
+            <div class="sys-summ-body-cont">
+                <div class="sys-summ-feed">
+                     <div class="sys-sum-device-list">
+                        @(Html.Kendo().ComboBox()
+                          .HtmlAttributes(new { style = "width:210px" })
+                          .Events(events => { events.Select("DeviceSelected"); })
+                          .Name("DDLSystemSummary")
+                          .Placeholder("Filter By Device Type")
+                          .DataTextField("Name")
+                          .DataValueField("Id")
+                          //.SelectedIndex(0)
+                          .Suggest(true)
+                          //.DataSource(source =>
+                          //{
+                          //    source.Read(read =>
+                          //    {
+                          //        read.Action("GetAllSystemSummaryDeviceDetails", "SystemSummary");
+
+                          //    });
+                          //})
+                         )
+                    </div>
+                    <div class="sys-sum-chart"  id="dvsystemSymmaryChart" style="display:block;">
+                      @(Html.Kendo().Chart<Diebold.WebApp.Models.SystemSummaryModel>()
+                        .Name("SystemSummarychart")
+                        .Title("")
+                        .HtmlAttributes(new { style = "width:210px; height:150px" })
+                        .Legend(legend => legend
+                        .Position(ChartLegendPosition.Bottom)
+                        )
+                        //.DataSource(dataSource => dataSource
+                        //                .Read(read => read.Action("GetSystemSummarybyDeviceType", "SystemSummary").Data("loadExtraParams"))
+                        //    )
+                        .Series(series =>
+                        {
+                            series.Pie(model => model.Value, model => model.Status);
+                        })
+                         .SeriesColors(new string[] { "#7f3979", "#28B779", "#2255a4" })
+                         .Tooltip(tooltip => tooltip
+                                .Visible(true)
+                                .Template("#= kendo.format('{0:P}', percentage)#")
+                                )
+                         
+                            )
+                    </div>
+                    <div id="dvNoReports" style="display:none;">
+                        <img src="" alt="Records not Found one" id="imgRecordsnotavailable"/>
+                        @*<img src="~/Content/images/ImgNotAvalable.jpg" alt="Records not Found one" id="imgRecordsnotavailable"/>*@
+                    </div>
+                    <div id="divNoDevice" style="display:none;width: 210px; height: 150px; position: relative;background-color: #FFFFFF;color: black;padding-top: 30px;text-align: center;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="light-blue-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="Description" onclick="javascript:ShowSummaryDesc();return false;"/></a>
+            </div>
+            <div class="sett-icon">
+                <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="Settings"/>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+@(Html.Kendo().Window()
+    .Name("SiteSummDescription")
+    .Title("System Summary Portlet Description")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+        <div>
+            <p>
+                Filter by device type and create single or multiple at-a-glance graphical snapshots to view overall compliance status.
+            </p>
+        </div>
+    </text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)
+<script type="text/javascript">
+    var systemSummaryGetSystemSummarybyDeviceTypeurl = '@Url.Action("GetSystemSummarybyDeviceType", "SystemSummary")';
+    var systemSummaryGetAccountListUrl = '@Url.Action("GetAccountList", "PortletsDefaultFns")';
+    var systemSummaryImgNotAvalablehref = '@Url.Content("~/Content/images/ImgNotAvalable.jpg")';
+    var systemSummaryClosePortletUrl = '@Url.Action("ClosePortlet", "Preferences")';
+    $(document).ready(function () {
+        // Bind Combobox Items
+        var url = '@Url.Action("GetAllSystemSummaryDeviceDetails", "SystemSummary")';
+        $.post(url, null, GetSystemSummaryListCallback, "json");
+
+    });
+</script>

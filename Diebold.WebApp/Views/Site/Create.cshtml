@@ -1,0 +1,94 @@
+﻿@model Diebold.WebApp.Models.SiteViewModel
+@{
+    ViewBag.Title = "Create Site";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    ViewBag.IsEdit = false;
+}
+@*@section Head
+{  *@
+<script src="@Url.Content("~/Scripts/app/ChosenValidation.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/app/ValidationForm.js")" type="text/javascript"></script>
+<script type="text/javascript">
+        $(document).ready(function () {
+            
+            var validatorSettings = $.data($('form')[0], 'validator').settings;
+            validatorSettings.ignore = "";
+
+            $(".chzn-select").chosen();
+            
+            $('.chzn-select').bind("change", function(){
+                $('form').validate().element($(this));
+            });
+            
+            $("form").bind("invalid-form.validate", function () {
+                /*
+                alert('invalid!');
+
+                TO DO HERE:
+                Check if one of the SELECTS with chose plugin applied.
+                If so, then apply the error style to the chosen element.
+
+                */
+            });            
+        });
+
+        function SiteCompanyChanged(e)
+          {
+              var dataItem = { "companyId": this.dataItem(e.item.index()).Value };
+             selectedCpnyId = this.dataItem(e.item.index()).Value;
+             var url = '@Url.Action("AsyncGrouping1Levels", "Site")';
+             $.post(url, dataItem, GetFirstLevelGroupbyCompanyIdCallback, "json");
+          }
+
+          function GetFirstLevelGroupbyCompanyIdCallback(ResultSet)
+          {
+              var combobox = $("#FirstLevelGroupingId").data("kendoComboBox");
+            combobox.dataSource.data(ResultSet);
+          }
+
+          function SiteFirstLevelGroupChanged(e)
+          {
+              var dataItem = { "group1LevelId": this.dataItem(e.item.index()).Value };             
+             var url = '@Url.Action("AsyncGrouping2Levels", "Site")';
+             $.post(url, dataItem, GetSecondGroupbyFirstGroupIdCallback, "json");
+             var GWcombobox = $("#SecondLevelGroupingId").data("kendoComboBox");
+             GWcombobox.value("-- Select --");
+          }
+
+          function GetSecondGroupbyFirstGroupIdCallback(GatewayResultSet) {
+              if (GatewayResultSet.length > 0) {
+                  var GWcombobox = $("#SecondLevelGroupingId").data("kendoComboBox");
+                  GWcombobox.dataSource.data(GatewayResultSet);
+              }
+              else {
+                  var GWcombobox = $("#SecondLevelGroupingId").data("kendoComboBox");
+                  var dataSource = $('#SecondLevelGroupingId').data().kendoComboBox.dataSource;
+                  var raw = dataSource.data();
+                  var length = raw.length;
+                  var item, i;
+                  for (i = length - 1; i >= 0; i--) {
+                      item = raw[i];
+                      dataSource.remove(item);
+                  }
+                  GWcombobox.dataSource.data(dataSource);
+                  GWcombobox.value("-- Select --");
+              }
+          }
+
+
+</script>
+@*}*@
+
+@using (Html.BeginForm("CreateSite", "Site"))
+{ 
+<div id="dvCreateSiteTitle" class="pallette-detail-header-bg">
+    <p>
+        Create Site</p>
+</div>
+    
+<div class="tSpace">
+</div>
+<div>@Html.Partial("_SiteEditableInfo")
+</div>
+
+}

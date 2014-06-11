@@ -1,0 +1,22 @@
+﻿
+@model Diebold.WebApp.Models.MonitorAssignmentViewModel
+
+<li>
+    @Model.GroupName
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.Selected)
+    @Html.HiddenFor(model => model.IsNew)
+    @Html.HiddenFor(model => model.FirstGroupLevelId)
+    @Html.HiddenFor(model => model.FirstGroupLevelName)
+    @Html.HiddenFor(model => model.SecondGroupLevelId)
+    @Html.HiddenFor(model => model.SecondGroupLevelName)
+    @Html.HiddenFor(model => model.SiteId)
+    @Html.HiddenFor(model => model.SiteName)
+    @Html.HiddenFor(model => model.DeviceId)
+    @Html.HiddenFor(model => model.DeviceName)
+                
+    @Html.HiddenFor(model => model.FirstLevelName)
+    @Html.HiddenFor(model => model.SecondLevelName)
+
+    <a href="#" id="removeGroup">X</a>
+</li>

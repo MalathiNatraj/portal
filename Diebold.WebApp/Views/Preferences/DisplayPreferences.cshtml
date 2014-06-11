@@ -1,0 +1,459 @@
+﻿@model Diebold.WebApp.Models.DashboardModel
+@{
+    ViewBag.Title = "DisplayPreferences";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+        $("#btnSave").click(function () {
+            var mySplitResultset = {
+                'input': Portlets
+            };
+            var url = '@Url.Action("InsertData", "Preferences")';
+            $.post(url, mySplitResultset, callBack, "json");
+        });
+
+    });
+
+    function callBack() {
+        var FormUrl = '@Url.Action("../Preferences/Returnfunc")';
+        $("form").attr("action", FormUrl);
+        $("form").submit();
+    }
+    var Portlets = '';
+    function RadioClicked(rdoButton) {
+        Portlets += rdoButton + "~";
+    }
+</script>
+<script type="text/javascript" charset="utf-8">
+    $(function () {
+        $(".just").uniform();
+    });
+</script>
+<form action ="../Preferences/Returnfunc">
+ <section>
+        <article>
+            <div>
+                <!-- CONT ONE STARTS HERE -->
+                <div class="four columns">
+                            
+                <!-- Preference Left Starts Here -->
+                <div class="pref-lft">
+                <br /><br />
+                <img src="@Url.Content("~/Content/images/DBHeadquarters.jpg")" alt="" />
+                <br /><br />
+                    <p>As the nation’s oldest and most trusted security partner, Diebold delivers the next generation of security solutions 
+                        and world-class alarm monitoring. We transform systems integration with comprehensive, 
+                        advanced security services tailored for the complex needs of today’s businesses to optimize security, 
+                        interoperability, efficiency and ROI.  </p><br />
+                    <h3>Diebold SecureStat - Changing the View of Security</h3><br />
+                    
+                    <p>With your customizable dashboard, Diebold’s SecureStat revolutionizes the way you see and interact with your security, 
+                        optimizing your time and business results. View, 
+                        measure and control your security information all within a single portal on any smart device. 
+                        Drag and drop the widgets into your personal dashboard to give you an instant online window revealing exactly the information you want. 
+                        With SecureStat’s single sign-on, you can access maintenance service and monitoring statuses as well as the devices you want to control.                        
+                    </p>
+                </div>
+                <!-- Preference Left Ends Here -->
+
+                </div>
+                <!-- CONT ONE ENDS HERE -->
+                            
+                <!-- CONT TWO STARTS HERE -->
+                <div class="eight columns">
+                    <div class="center-cont-bg gradient">
+                         <!-- Featured Pallet starts here -->
+                        <div class="cont-inner-room">
+                            <div class="featured-pallet">
+                                        
+                                <div class="featured-head gradient">
+                                    <p><strong>Featured Widgets</strong></p>
+                                    <div class="close-icon">
+                                        <a href="#"><img src="@Url.Content("~/Content/images/close-icon.png")" alt="" /></a>
+                                    </div>
+                                    <div class="close-icon">
+                                        <a href="#"><img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+                                    </div>
+                                </div>
+                                    <div class="banner-bg">
+                                        <div class="feature-wid row">
+                                            <div class="wid-lft eight columns">
+                                                <img src="@Url.Content("~/Content/images/imgVHCPref.png")" alt="" />
+                                                <br /><br />
+                                                <h4>Health Monitoring</h4>
+                                                <p>Check the current status of video recorders. Filter by device to detect camera loss, quickly access the number of days recorded for compliance and view hard drive smart information status.</p>
+                                               @* <input type="radio" /><label><strong>Select Widget</strong></label>*@
+                                            </div>
+    
+                                            <div class="wid-right eight columns">
+                                                <img src="@Url.Content("~/Content/images/imgLiveViewPref.png")" alt="" />
+                                                <br /><br />
+                                                <h4>Live Video</h4>
+                                                <p style="padding-bottom: 28px;">With Diebold’s hosted video solution, create multiple instances of live video by selecting two cameras to view.</p>
+                                                @*<input type="radio" /><label><strong>Select Widget</strong></label>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <!-- Featured Pallet ends here -->
+                        <!-- Widgets starts here -->
+                        <div class="cont-inner-room">
+
+                            <div class="widgets-bg">
+                                <div class="feature-wid">
+                              
+                                <p>WIDGETS</p>
+    
+                                  @foreach (var item in Model.preferences)
+                                  {
+                                    <div style="margin-top:10px;"></div>
+                                        <div class="wid-lft eight columns bottom">
+                                    @switch (item.PortletHeading)
+                                    {
+                                        case "ACCOUNTDETAIL":
+                                                <img src="@Url.Content("~/Content/images/imgAcctPref.png")" alt="" />
+                                                     break;
+                                        case "LINKS":
+                                                <img src="@Url.Content("~/Content/images/imgLnksPref.png")" alt="" />
+                                                     break;
+                                        case "SITEMAP":
+                                                 <img src="@Url.Content("~/Content/images/imgSiteMapPref.png")" alt="" />
+                                                      break;
+                                        case "VIDEOHEALTHCHECK":
+                                                <img src="@Url.Content("~/Content/images/imgVHCPref.png")" alt="" />
+                                                     break;
+                                        case "RSS":
+                                                <img src="@Url.Content("~/Content/images/imgRssPref.png")" alt="" />
+                                                     break;
+                                        case "FEATUREDNEWS":
+                                                 <img src="@Url.Content("~/Content/images/imgFNPref.png")" alt="" />
+                                                      break;
+                                        case "SITEINFORMATION":
+                                                <img src="@Url.Content("~/Content/images/imgSiteInfoPref.png")" alt="" />
+                                                     break;
+                                        case "LIVEVIEW":
+                                                <img src="@Url.Content("~/Content/images/imgLiveViewPref.png")" alt="" />
+                                                     break;
+                                        case "SYSTEMSUMMARY":
+                                                <img src="@Url.Content("~/Content/images/imgSysSummPref.png")" alt="" />
+                                                     break;
+                                        case "INTRUSION":
+                                                 <img src="@Url.Content("~/Content/images/imgIntrsnPref.png")" alt="" />
+                                                      break;
+                                        case "MAS":
+                                                <img src="@Url.Content("~/Content/images/imgMasPref1.PNG")" alt="" />
+                                                     break;
+                                        case "ALERTS":
+                                                <img src="@Url.Content("~/Content/images/imgAlertPref.png")" alt="" />
+                                                     break;
+                                        case "ACCESSCONTROL":
+                                                <img src="@Url.Content("~/Content/images/imgAccessPref.png")" alt="" />
+                                                     break;
+                                        case "FIREALARM":
+                                                <img src="@Url.Content("~/Content/images/imgFirePref.png")" alt="" />
+                                                     break;
+                                    }
+                                    </div>  
+                                        <div class="wid-right eight columns">
+                                             @switch (item.PortletHeading)
+                                             {
+                                                 case "ACCOUNTDETAIL":
+                                                     <h4>@item.PortletDisplayHeader</h4>
+                                                            <p>View overall account details including the user account currently logged on, plus number of sites and devices defined in your environment.</p>
+                                                    //Just for the sake of break statement
+                                                    if (item.PortletHeading == "ACCOUNTDETAIL")
+                                                    {
+                                                        if (item.PortletStatus == "Y")
+                                                        {
+                                                            <label><strong>Already Added</strong></label>
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" name="rdAccountDetail" onclick="javascript:RadioClicked('@(item.Id)');"/>
+                                                            <label><strong>Select Widget</strong></label>
+                                                            break;
+                                                        }
+                                                    }
+                                                    break;
+                                                 case "LINKS":
+                                                 <h4>@item.PortletDisplayHeader</h4>
+                                                            <p>Readily view and manage essential URLs for quick access to information.</p>
+                                                if (item.PortletHeading == "LINKS")
+                                                {
+                                                    if (item.PortletStatus == "Y")
+                                                    {
+                                                        <label><strong>Already Added</strong></label>
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="rdLinks" onclick="javascript:RadioClicked('@(item.Id)');"/>
+                                                        <label><strong>Select Widget</strong></label>
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                                 case "SITEMAP":
+                                                 <h4>@item.PortletDisplayHeader</h4>
+                                                            <p>Quickly access and view all defined locations, devices and addresses on an interactive map.</p>
+                                                if (item.PortletHeading == "SITEMAP")
+                                                {
+                                                    if (item.PortletStatus == "Y")
+                                                    {
+                                                        <label><strong>Already Added</strong></label>
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="rdSiteMap" onclick="javascript:RadioClicked('@(item.Id)');"/>
+                                                        <label><strong>Select Widget</strong></label>
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                                 case "VIDEOHEALTHCHECK":
+                                                 <h4>@item.PortletDisplayHeader</h4>
+                                                           <p>Check the current status of video recorders. Filter by device to detect camera loss, quickly access the number of days recorded for compliance and view hard drive smart information status. </p>
+                                                if (item.PortletHeading == "VIDEOHEALTHCHECK")
+                                                {
+                                                    if (item.PortletStatus == "Y")
+                                                    {
+                                                        <label><strong>Already Added</strong></label>
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="rdVideoHealthCheck" onclick="javascript:RadioClicked('@(item.Id)');"/>
+                                                        <label><strong>Select Widget</strong></label>
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                                 case "RSS":
+                                                 <h4>@item.PortletDisplayHeader</h4>
+                                                    <p>Easily access RSS feeds on security management, national news events and weather conditions. Add and remove subscriptions for a customized experience.</p>
+                                                if (item.PortletHeading == "RSS")
+                                                {
+                                                    if (item.PortletStatus == "Y")
+                                                    {
+                                                        <label><strong>Already Added</strong></label>
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" onclick="javascript:RadioClicked('@(item.Id)');" name="rdRSS"/>
+                                                        <label><strong>Select Widget</strong></label>
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                                 case "FEATUREDNEWS":
+                                                 <h4>@item.PortletDisplayHeader</h4>
+                                                            <p>Keep up on the latest Diebold innovations and technologies to broaden and enhance your security world.</p>
+                                                if (item.PortletHeading == "FEATUREDNEWS")
+                                                {
+                                                    if (item.PortletStatus == "Y")
+                                                    {
+                                                        <label><strong>Already Added</strong></label>
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" onclick="javascript:RadioClicked('@(item.Id)');"/>
+                                                        <label><strong>Select Widget</strong></label>
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                                 case "SITEINFORMATION":
+                                                 <h4>@item.PortletDisplayHeader</h4>
+                                                           <p>Choose a site and immediately view its floor plan. See number of devices and local contact and address information.  Add or review any pertinent site notes.</p>
+                                                if (item.PortletHeading == "SITEINFORMATION")
+                                                {
+                                                    if (item.PortletStatus == "Y")
+                                                    {
+                                                        <label><strong>Already Added</strong></label>
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="rdoSiteInformation" onclick="javascript:RadioClicked('@(item.Id)');"/>
+                                                        <label><strong>Select Widget</strong></label>
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                                 case "LIVEVIEW":
+                                                 <h4>@item.PortletDisplayHeader</h4>
+                                                          <p>With Diebold’s hosted video solution, create multiple instances of live video by selecting two cameras to view.</p>
+                                                if (item.PortletHeading == "LIVEVIEW")
+                                                {
+                                                    if (item.PortletStatus == "Y")
+                                                    {
+                                                        <label><strong>Already Added</strong></label>
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="rdLiveView" onclick="javascript:RadioClicked('@(item.Id)');"/>
+                                                        <label><strong>Select Widget</strong></label>
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                                 case "SYSTEMSUMMARY":
+                                                 <h4>@item.PortletDisplayHeader</h4>
+                                                           <p>Filter by device type and create single or multiple at-a-glance graphical snapshots to view overall compliance status.</p>
+                                                if (item.PortletHeading == "SYSTEMSUMMARY")
+                                                {
+                                                    if (item.PortletStatus == "Y")
+                                                    {
+                                                        <label><strong>Already Added</strong></label>
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="rdSystemSummary" onclick="javascript:RadioClicked('@(item.Id)');"/>
+                                                        <label><strong>Select Widget</strong></label>
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                                 case "INTRUSION":
+                                                 <h4>@item.PortletDisplayHeader</h4>
+                                                           <p>Remotely arm and disarm panels, check current status and alerts, bypass or shunt areas, change, modify or remove user codes and generate panel diagnostic reports.</p>
+                                                if (item.PortletHeading == "INTRUSION")
+                                                {
+                                                    if (item.PortletStatus == "Y")
+                                                    {
+                                                        <label><strong>Already Added</strong></label>
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="rdIntrusion" onclick="javascript:RadioClicked('@(item.Id)');"/>
+                                                        <label><strong>Select Widget</strong></label>
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                                 case "FIREALARM":
+                                                 <h4>@item.PortletDisplayHeader</h4>
+                                                           <p>Select and see fire alarm monitoring events within a site. Trouble and alarm events are shown in the last 24 hour period.</p>
+                                                if (item.PortletHeading == "FIREALARM")
+                                                {
+                                                    if (item.PortletStatus == "Y")
+                                                    {
+                                                        <label><strong>Already Added</strong></label>
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="rdFireAlarm" onclick="javascript:RadioClicked('@(item.Id)');"/>
+                                                        <label><strong>Select Widget</strong></label>
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                                 case "MAS":
+                                                 <h4>@item.PortletDisplayHeader</h4>
+                                                           <p>See alarm monitoring events within a selected time range by panel or site. Generate open/close reports, display site lists, place an account on test and view a list of alarm points per site.</p>
+                                                if (item.PortletHeading.Equals("MAS", StringComparison.InvariantCultureIgnoreCase))
+                                                {
+                                                    if (item.PortletStatus == "Y")
+                                                    {
+                                                        <label><strong>Already Added</strong></label>
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="rdMAS" onclick="javascript:RadioClicked('@(item.Id)');"/>
+                                                        <label><strong>Select Widget</strong></label>
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                                 case "ALERTS":
+                                                 <h4>@item.PortletDisplayHeader</h4>
+                                                            <p>Create single or multiple instances to monitor active and unacknowledged alerts and choose which alerts are displayed by filtering by type.</p>
+                                                if (item.PortletHeading == "ALERTS")
+                                                {
+                                                    if (item.PortletStatus == "Y")
+                                                    {
+                                                        <label><strong>Already Added</strong></label>
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="rdAlerts" onclick="javascript:RadioClicked('@(item.Id)');"/>
+                                                        <label><strong>Select Widget</strong></label>
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                                 case "ACCESSCONTROL":
+                                                 <h4>@item.PortletDisplayHeader</h4>
+                                                           <p>Easily add or remove cardholders, momentarily unlock doors, check current status of door alerts and generate card usage reports.</p>
+                                                if (item.PortletHeading == "ACCESSCONTROL")
+                                                {
+                                                    if (item.PortletStatus == "Y")
+                                                    {
+                                                        <label><strong>Already Added</strong></label>
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" onclick="javascript:RadioClicked('@(item.Id)');" name="rdAccess"/>
+                                                        <label><strong>Select Widget</strong></label>
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                             }
+                                    </div> 
+                                    
+                                    <div class="clear"></div>
+                                  }
+
+                              </div>
+                            </div>
+                        </div>
+                        <!-- Widgets ends here -->
+                        <div align="center">
+                            <input class="pref-submit-btn" type="button" value="SAVE" id="btnSave" />
+                        </div>
+                    </div>
+				    <div class="overflow-bg" style="width:97.1%;"></div>
+                </div>
+                <!-- CONT TWO ENDS HERE -->
+                <!-- CONT THREE STARTS HERE -->
+                <div class="four columns">
+                <div class="pref-right">
+                    <div class="coming-soon">
+                        <h5 style="color:#1C7FBE;">SecureStat</h5><br />
+                        <p>From the simplest to the most advanced commands, SecureStat can put you in control of security tasks. Want to arm and disarm your system in different locations on different platforms? With SecureStat it’s simple and easy.</p>
+                        <br />
+                        <h5 style="color:#1C7FBE;">Monitoring</h5><br />
+                        <p>Instant access to all monitoring account information is critical to making quick, effective and compliant decisions about your security operations. SecureStat gives you 24/7 access with your customized dashboard. Everything is at your fingertips, alarm activity, non-standard activity, testing, custom and specialized reporting as well as key account information.</p>
+                        <br />
+                        <h5 style="color:#1C7FBE;">Access</h5>
+                        <br />
+                        <p>Control how and when people access your facility with full administrative rights. With SecureStat’s dashboard you can add, modify or delete cardholders, manage your access schedules and holidays, and generate or schedule reports with ease. Be empowered to remote lock or unlock doors in normal or emergency situations and verify the status of doors or other points of access.</p>
+                        <br />
+                        <h5 style="color:#1C7FBE;">Video</h5>
+                        <br />
+                        <p>With SecureStat you can ensure the image quality and performance status of your video system with monthly, weekly or daily video system health checks. Use SecureStat to detect video loss, learn RAID statuses, or identify hard drives at risk for failure with details including drive temperature or other critical metrics. In addition, view cameras live and retrieve video from any source in your system. Store your video locally or in the cloud.</p>
+                        
+				    </div>
+                </div>
+                </div>
+                <!-- CONT THREE ENDS HERE -->
+            </div>
+        </article>
+    </section>
+</form>
+
+

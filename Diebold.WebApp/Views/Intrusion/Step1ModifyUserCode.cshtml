@@ -1,0 +1,117 @@
+﻿@{
+    Layout = null;
+}
+<!-- Intrusion User Commands-User Code Modify Step1 starts here -->
+<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>User Code Modify</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="hideStep1ModifyPopup();" /></a>
+            </div>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        <div id="dvStep1ModifyUCContent">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">            
+                <div class="my-access-titile bottom">
+                    <p>
+                        <strong>Step 1: Lookup Fields</strong></p>
+                </div>  
+                <div id="dvErrUserCodeEdit">
+                <ul>
+                
+                </ul>
+                </div>              
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Name:</strong>
+                        </p>
+                </div>
+                <div class="my-access-field bottom">                    
+                    @Html.TextBox("txtEditUserName",null, new { @class = "my-access-in", maxlength = 250 })
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>                        
+                        <strong>User Code:</strong>
+                        </p>
+                </div>
+                <div class="my-access-field bottom">
+                    @Html.TextBox("txtEditUserCode",null, new { @class = "my-access-in"})
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="my-access-right-btn"  style="width:137px;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Next"  onclick="javascript:fnCloseModifyStep1OpenModifyStep2();return false;"/>
+                </div>
+                <div class="add-link" align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="javascript:fnCloseModifyStep1();return false;"/>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function fnCloseModifyStep1() {
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        document.getElementById('dvStep1ModifyUserCode').style.visibility = 'hidden';
+    }
+    function fnCloseModifyStep1OpenModifyStep2() {
+
+        $("#dvErrUserCodeEdit ul").empty();
+        var regModify1Code = /^[0-9]+$/;
+        var deviceID = $("#IntrusionCategories").val();
+        var isErrModifyUC = "false";
+
+        if ($('#txtEditUserName').val() == '' && $('#txtEditUserCode').val() == '') {
+            $('#dvErrUserCodeEdit ul').append('<li class="validation-summary-intrusionpopup">Either Name or User Code is Required</li>');
+            isErrModifyUC = "true";
+        }
+        if (isErrModifyUC == "false") {
+            var dataItem = { "name": $('#txtEditUserName').val(), "userCode": $('#txtEditUserCode').val(), "deviceId": deviceID };
+
+            BlockElement("dvStep1ModifyUCContent", 'Connecting...');
+            var url = '@Url.Action("GetUserCodesInformation", "Intrusion")';
+            $.post(url, dataItem, GetUserCodeEditFirstStepCallback, "json");
+        }
+    }
+    function GetUserCodeEditFirstStepCallback(ResultSet) {
+        UnBlockElement("dvStep1ModifyUCContent");        
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                document.getElementById('dvStep1ModifyUserCode').style.visibility = 'hidden';
+                var grid = $("#grdUserCodeList").data("kendoGrid");
+                grid.dataSource.data(ResultSet);
+                centerViewPortDialog("#dvModifyUserCodeList");
+            }
+        }               
+    }            
+</script>
+

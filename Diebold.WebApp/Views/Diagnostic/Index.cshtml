@@ -1,0 +1,154 @@
+﻿@model Diebold.WebApp.Models.DiagnosticViewModel
+@{
+    ViewBag.Title = "Diagnostic";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div id="dvDiagTitle" class="pallette-detail-header-bg">
+    <p>Diagnostics</p>
+</div>
+<div style="padding:10px;">
+    @(Html.Kendo().ComboBoxFor(p=>p.Option)              
+                .DataTextField("Name")
+                .DataValueField("Id")
+                .SelectedIndex(0)
+                .DataSource(source =>
+                {
+                    source.Read(read =>
+                    {
+                        read.Action("GetAllDevice", "Diagnostic");
+                    });
+                })
+            )
+</div>
+<div id="diagnosticList"></div>
+@(Html.Kendo().Window()
+    .Name("DieboldAlertWindow")
+    .Title("Information")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div style="padding: 5px">
+    <label id="lblDieboldAlert"></label>
+    <div style="margin: 20% 0 0 0;">
+    <div class="add-link" align="center">
+        <input type="button" value="OK" id="btnOkInfoWindow" style="width: 20%;" onclick="ClosewndAlertInformation();" />
+    </div>
+    </div>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(275)
+    .Height(170)
+)
+<script type="text/javascript">
+    function ClosewndAlertInformation() {
+        $("#DieboldAlertWindow").data("kendoWindow").close();
+    }
+    $(document).ready(function () {
+        $('#Option').change(function() {
+            loadList(this.value);
+        });
+        loadList();
+    });
+    function loadList(value) {
+        if(value == undefined || value == 'Device') {
+            $("#diagnosticList").load('@Url.Action("DeviceList", "Diagnostic")');
+        } else {
+            $("#diagnosticList").load('@Url.Action("GatewayList", "Diagnostic")');
+        }
+    }
+   
+     function filtercompany() {
+        return {
+                Company: $("#Company").val()
+            };
+        }
+
+     function filtersite() {
+        return {
+                Site: $("#Site").val()
+            };
+        }
+        
+     function loadExtraParams() {
+        return {
+            Gateway:   $("#Gateway").val(),
+            Site:  $("#Site").val(),
+            Company: $("#Company").val()
+        };
+}
+
+   function loadExtraGWParams() {
+        return {
+          Status:  $("#Status").val()
+        };
+        }
+
+ function StatusChanged(e) {
+    $("#GatewayGrid").data("kendoGrid").dataSource.read(); 
+    }
+
+    function GetGatewayByStatusCallback(ResultSet) {
+        var grid = $("#GatewayGrid").data("kendoGrid");
+        grid.dataSource.data(ResultSet);
+    }
+
+
+function showDialog(content, title, onCloseExternal, optionsExternal) {
+    var dialogContent = $('<div>' + content + '</div>').not('script');
+    var scriptContent = $(content).filter('script');
+
+    var onClose = function() {
+        $(this).dialog('destroy');
+        $(this).remove();
+        scriptContent.remove();
+
+        if (onCloseExternal) onCloseExternal();
+    };
+
+    var options = {
+        title: title,
+        resizable: false,
+        autoOpen: false,
+        draggable: false,
+        modal: true,
+        close: onClose,
+        buttons: {
+            Close: onClose
+        }
+    };
+
+    if (optionsExternal && optionsExternal.height) options.height = optionsExternal.height;
+    if (optionsExternal && optionsExternal.width) options.width = optionsExternal.width;
+    if (optionsExternal && optionsExternal.buttons) options.buttons = optionsExternal.buttons;
+
+    dialogContent.dialog(options);
+    scriptContent.appendTo('body');
+    dialogContent.dialog('open');
+}
+  function fnSubmitClick()
+        {
+            $("#DiagnosticGrid").data("kendoGrid").dataSource.read(); 
+        }
+
+          function onSuccessReceived(result, pk) {
+            alert(result);
+          
+        RemoveblockUI();
+       if (result != undefined)
+           result = "<div id='statusList'>" + result + "</div>";
+
+            var wnd = $("#Details").data("kendoWindow");
+            wnd.content(result);
+            wnd.title(title);
+            wnd.center().open();
+        }
+</script>
+
+<style>
+     #Details .k-block > .k-header, .k-window-titlebar
+    {
+        height: 1.6em;
+    }
+</style>
+

@@ -1,0 +1,227 @@
+﻿<style scoped>
+    .k-edit-label
+    {
+        padding-right: 3%;
+        text-align: left;
+        vertical-align: top;
+        width: 31%;
+    }
+    .ui-helper-clearfix
+    {
+        display: inline-block;
+        width: 350px;
+    }
+    #Addlinkswindow .k-block > .k-header, .k-window-titlebar
+    {
+        height: 1.8em;
+    }
+</style>
+
+<div id="my-Links">
+    <div class="cont-inner-room">
+        <div class="dark-blue">
+            <div class="Dashbord-header">
+                <div class="dark-blue-head gradient">
+                    <div class="pallet-icon">
+                        <img src="@Url.Content("~/Content/images/links-icon.png")" alt="" />
+                    </div>
+                    <p>
+                        <strong>Links</strong></p>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img onclick="javascript:fnCloseLinksInfo();return false;" src="@Url.Content("~/Content/images/close-icon.png")" alt="" /></a>
+                    </div>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img onclick="javascript:fntoggleLinks();return false;" src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+                    </div>
+                </div>
+                </div>
+                <div id="divLinksContent">
+                    <div class="dark-blue-body gradient">
+                        <div class="link-body-cont">
+                            <div class="link-news-item">
+                                <div id="dvLinksBody">
+                                    @(Html.Kendo().Grid<Diebold.WebApp.Models.LinkViewModel>()
+                                    .Name("grdlnkDetails")
+                                    .DataSource(dataSource => dataSource
+                                    .Ajax()
+                                    .Read(read => read.Action("Editing_Read", "Links"))
+                                    .ServerOperation(false)
+                                    )
+                                    .Columns(columns =>
+                                    {
+                                        //For width alignment of data column in Kendo Grid, we need to keep one column without "Width" property 
+                                        columns.Bound(p => p.LinkName).ClientTemplate("<a style='cursor:pointer;color:black;font-family:Helvetica;font-size:11px;'target='_blank' onclick='DisplayLinksURL(\"#=LinkURL#\");'><strong>#=LinkName#</strong> </a> ");                        
+                                    })
+                                    .Sortable()                                    
+                                    .Sortable()
+                                    .DataSource(dataSource => dataSource
+                                    .Ajax()                                                                                                                                                                                                                                                            
+                                    )                                                                 
+                                    )
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dark-blue-set">
+                        <div class="sett-icon">
+                            <a href="#">
+                                <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" onclick="javascript:ShowlnkPortletDescription();return false;"/></a>
+                        </div>
+                        <div class="sett-icon">
+                        <a href="#">
+                            <img id="imgLinksSettings" src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+</div>
+<div id="dvSettings" class="context-menu"></div>
+@*Kendo window to add the links*@
+@(Html.Kendo().Window()
+    .Name("Addlinkswindow")
+    .Title("Add Link")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div class="link-pop-cont">
+    <div class="site-notes bottom">
+        <div class="k-edit-label">
+            <label for="LinkName">
+                Link Name: (*)</label>
+        </div>
+        @Html.TextBox("txtlnkName", null, new { @class = "usertxtboxEdit", maxlength = 250 })
+        <div class="k-edit-label">
+            <label for="NavigateUrl">
+                URL: (*)</label>
+        </div>
+        @Html.TextBox("txtlnkURL", null, new { @class = "usertxtboxEdit", maxlength = 350 })
+    </div>
+    <div class="clear">
+    </div>
+    <div style="margin: 4% 0 0 11%;">
+        <div class="add-link" align="center">
+            <input type="button" value="Save" id="btnlinkSave" onclick="javascript:fnLinksPopupSave();"
+                style="width: 26%;" />
+            <input type="button" value="Cancel" id="btnlinkCancel" onclick="javascript:btnlnkCancelClicked();"
+                style="width: 26%;" />
+        </div>
+    </div>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(350)
+    .Height(250)
+)
+@*Kendo window to remove the links*@
+@(Html.Kendo().Window()
+    .Name("wndRemovelnk")
+    .Title("Remove Links")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div style="margin:2%;">
+   
+    @(Html.Kendo().Grid<Diebold.WebApp.Models.LinkViewModel>()
+    .Name("grdlinkDet_Popup")
+    .Columns(columns =>
+    {
+            columns.Bound(p => p.Id).ClientTemplate("<input type=\'checkbox\' />").Visible(true).Width("10%");
+            columns.Bound(p => p.LinkName).ClientTemplate("<a style='cursor:pointer;color:black;font-family:Helvetica;font-size:11px;'target='_blank' onclick='DisplayLinksURL(\"#=LinkURL#\");'><strong>#=LinkName#</strong> </a> ");                        
+    })
+    )
+    <br />
+  
+            <div style="width:150px; margin-left:32%;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Delete" id="btnPoplinkRemove" onclick="javascript:deleteLinksConfirmation();" />   
+                </div>
+                <div class="add-link" align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="javascript:fnwndRemovelnkpopup();" />
+                </div>
+            </div>
+    
+</div>
+</text>)
+    .Draggable(false)
+    .Width(450)
+    .Height(390)
+)
+@* Window to display the Links Description*@
+@(Html.Kendo().Window()
+    .Name("LinksDescriptionwindow")
+    .Title("Links Portlet Description")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div>
+    <p>
+        Readily view and manage essential URLs for quick access to information.
+    </p>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)
+@(Html.Kendo().Window().Name("wndlinks")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(300)
+    .Title("Remove Links")
+)
+<script language="javascript" type="text/javascript">
+    var linkDeleteUrl = '@Url.Content("~/Links/DeleteLinks")';
+    var linkClosePortletUrl = '@Url.Action("ClosePortlet", "Preferences")';
+    var linkPopulateLinksUrl = '@Url.Action("PopulateLinks", "Links")';
+    var linkAddNewLinkUrl = '@Url.Action("AddNewLink", "Links")';
+    var linkGetActiveLinksByUserUrl = '@Url.Action("GetActiveLinksByUser", "Links")';
+    var lnkPortletMaxCount = '@System.Web.Configuration.WebConfigurationManager.AppSettings["MaxLinksCount"]';
+
+    $(document).ready(function () {
+        var wWidth = $(window).width();
+        var dWidth = wWidth * 0.2;
+
+        $("#dvSettings").dialog(
+               {
+                   draggable: false,
+                   closeOnEscape: true,
+                   resizable: false,
+                   height: 'auto',
+                   width: dWidth,
+                   autoOpen: false,
+                   show: 'blind'
+               }
+               );
+        $('#imgLinksSettings').click(function (event) {
+            $("#dvSettings").dialog("option", "position", {
+                my: "left top",
+                at: "bottom",
+                collision: "flip",
+                of: event,
+                offset: "20 40"
+            });
+            $('#dvSettings').empty();
+            $('#dvSettings').append('<a href="#" id="imgAddNewLinks" class="divdynamiclink" onclick="javascript:fnAddLinkItems();return false;">Add</a>');
+            $('#dvSettings').append('<a href="#" id="imgDeleteLinks" onclick="javascript:fnOpenLinkDeletePopup();return false;" class="divdynamiclink">Remove</a>');
+            $('#dvSettings').dialog('open');
+            return false;
+        });
+        // Close Pop-up If the user clicks anywhere else on the page
+        jQuery('body').bind('click', function (e) {
+            if (jQuery('#dvSettings').dialog('isOpen')
+            && !jQuery(e.target).is('.ui-dialog, a')
+            && !jQuery(e.target).closest('.ui-dialog').length
+         ) {
+                jQuery('#dvSettings').dialog('close');
+            }
+        });
+    });
+</script>

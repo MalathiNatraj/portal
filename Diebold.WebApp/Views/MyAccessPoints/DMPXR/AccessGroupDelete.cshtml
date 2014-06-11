@@ -1,0 +1,128 @@
+﻿@model Diebold.WebApp.Models.AccessCardholderViewModel
+<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>Delete Access Group</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="fnDMPXRCloseAccessGroupDelete();"/></a>
+            </div>
+            <div class="close-icon">
+                <a>
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        <div id="dvDeleteAGContent">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">                
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Access Group:</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                     @(Html.Kendo().ComboBox()
+                        .Name("cboCHDeleteAccessGroup")
+                        .Placeholder("-- Select --")
+                        .HtmlAttributes(new { style = "width:100%" })
+                        .DataTextField("Name")
+                        .DataValueField("Id")
+                        .BindTo(Model.AccessGroupList)
+                        .Suggest(true)
+                        )
+                </div>
+                <div class="clear">
+                </div>
+                <div id="DeleteGroupListValidations">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            <div class="my-access-right-btn" style="width: 143px;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Delete" onclick="fnDMPXRDeleteAccessGroup();" />
+                </div>
+                <div class="add-link" align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="fnDMPXRCloseAccessGroupDelete();" />
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a>
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a>
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+@(Html.Kendo().Window().Name("wndDeleteDMPXRAccessGroup")
+    .Visible(false)
+    .Modal(true)
+    .Title("Access Group Delete")
+    .Draggable(true)
+    .Width(300)    
+)
+
+<script type="text/javascript">
+    function fnDMPXRDeleteAccessGroup() {             
+        $("#DeleteGroupListValidations ul").empty();
+        if ($('#cboCHDeleteAccessGroup').val() == null || $('#cboCHDeleteAccessGroup').val() == '' || $('#cboCHDeleteAccessGroup').val() == "-- Select --") {
+            $('#DeleteGroupListValidations ul').append('<li class="validation-summary-accesspopup">Please select a Access Group</li>');
+        }
+        else {            
+            var wnd = $("#wndDeleteDMPXRAccessGroup").data("kendoWindow");
+            wnd.content("<p style='height:100px'>Are you sure you want to delete this item?</p><p>" +
+                        "<input type='button' value='Ok' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='javascript:fnValidateAccessGroupDelete();'>" +
+                         "<input type='button' value='Cancel' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='DMPXRAGConfirmCancel()'></p>");
+            wnd.center().open();
+        }
+    }
+    function DMPXRAGConfirmCancel() {
+        $("#wndDeleteDMPXRAccessGroup").data("kendoWindow").close();
+    }
+    function fnValidateAccessGroupDelete() {        
+        var deviceID = $("#AccessViewDeviceList").val();
+        $("#wndDeleteDMPXRAccessGroup").data("kendoWindow").close();
+        var dataItem = { "accessgroupId": $('#cboCHDeleteAccessGroup').val(), "deviceId": deviceID };
+        var url = '@Url.Action("AccessGroupDelete", "Access")';
+        BlockElement("dvDeleteAGContent", 'Connecting...');
+        $.post(url, dataItem, GetDMPXRAccessGroupDeleteCallback, "json");            
+    }
+    function GetDMPXRAccessGroupDeleteCallback(ResultSet) {        
+        UnBlockElement("dvDeleteAGContent");        
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                if (ResultSet == "OK") {
+                    fnShowAlertInfo('Access group deleted successfully.');
+                    document.getElementById('my_overlay').style.visibility = 'hidden';
+                    document.getElementById('dvDeleteAccessGroups').style.visibility = 'hidden';
+                    $('#cboCHDeleteAccessGroup').val('');
+                }
+            }
+        }
+    }
+    function fnDMPXRCloseAccessGroupDelete() {
+        $("#DeleteGroupListValidations ul").empty();
+        document.getElementById('dvDeleteAccessGroups').style.visibility = 'hidden';
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        $('#cboCHDeleteAccessGroup').val('');
+    }
+</script>
+<style>    
+    #wndDeleteDMPXRAccessGroup
+    {
+        visibility:visible !important;
+    }
+</style>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <!-- Import Community Tasks -->
+    <Import Project="Lib\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+    
+    <PropertyGroup>              
+        <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+        <ProjectName>Diebold.WebApp</ProjectName>
+        <ProjectSchemaExporterName>SchemaExporter</ProjectSchemaExporterName>
+        <ProjectMigrationName>Diebold.Migrations</ProjectMigrationName>
+
+        <ProjectFile>$(ProjectName)\$(ProjectName).csproj</ProjectFile>		
+		
+		<ConfigurationSchema Condition=" '$(Configuration)' == '' ">Release</ConfigurationSchema>
+		    
+        <ProjectSchemaExporterFile>$(ProjectSchemaExporterName)\$(ProjectSchemaExporterName).csproj</ProjectSchemaExporterFile>
+        <ProjectMigrationFile>$(ProjectMigrationName)\$(ProjectMigrationName).csproj</ProjectMigrationFile>
+        
+        <OutputPathMain>C:\Deploy</OutputPathMain>
+		<OutputPathWebApp>$(OutputPathMain)\WebApp</OutputPathWebApp>        
+		<OutputPathSchemaExporter>$(OutputPathMain)\SchemaExporter</OutputPathSchemaExporter> 
+		<OutputPathMigration>$(OutputPathMain)\Migrations</OutputPathMigration>
+      
+    </PropertyGroup>
+    
+    <Target Name="Build" DependsOnTargets="cleanOutputPath;BuildApp" />
+ 
+    <Target Name="BuildPackage">
+        <MSBuild Projects="$(ProjectFile)" ContinueOnError="false" Targets="Package" Properties="Configuration=$(Configuration);" />		
+    </Target>
+
+    <Target Name="BuildApp" DependsOnTargets="BuildPackage;BeforeBuild;SetConfig">
+        <MSBuild Projects="$(ProjectSchemaExporterFile)" ContinueOnError="false" Targets="Rebuild" Properties="Configuration=$(ConfigurationSchema); OutputPath=$(OutputPathSchemaExporter)" />
+        <MSBuild Projects="$(ProjectMigrationFile)" ContinueOnError="false" Targets="Rebuild" Properties="Configuration=$(ConfigurationSchema); OutputPath=$(OutputPathMigration)" />        
+    </Target>
+        
+    <Target Name="cleanOutputPath">
+        <RemoveDir Directories="$(OutputPathSchemaExporter);$(OutputPathMigration);$(OutputPathWebApp)"></RemoveDir>
+    </Target>
+    
+    <Target Name="BeforeBuild">
+        <ItemGroup>
+            <PackagedFiles
+                Include="$(ProjectName)\obj\$(Configuration)\Package\PackageTmp\**\*.*"
+                Exclude ="$(ProjectName)\obj\$(Configuration)\Package\PackageTmp\**\*.pdb" >
+            </PackagedFiles>
+            <ProjectMigrationFiles Include="$(ProjectMigrationName)\bin\x86\$(ConfigurationSchema)\**\*.*"></ProjectMigrationFiles>            
+        
+        </ItemGroup>
+        
+        <Copy SourceFiles="@(PackagedFiles)" DestinationFiles="@(PackagedFiles->'$(OutputPathWebApp)\%(RecursiveDir)%(Filename)%(Extension)')" />        
+    </Target>
+    
+    <Target Name="SetConfig" DependsOnTargets="GetConfig">
+        <XmlUpdate XPath="configuration/connectionStrings/add[@name='DieboldDB']/@connectionString"
+                   XmlFileName="$(ProjectSchemaExporterName)\app.config"
+                   Value="$(connString)" />
+    </Target>
+
+    <Target Name="GetConfig">
+        <XmlRead XPath="configuration/connectionStrings/add[@name='DieboldDB']/@connectionString" XmlFileName="$(OutputPathWebApp)\web.config">
+            <Output TaskParameter="Value" PropertyName="connString" />
+        </XmlRead>
+    </Target>
+    
+    <!--<Target Name="GetConfig">
+        <XmlRead XPath="//configuration/appSettings/add[@key='DieboldDB']/@value" XmlFileName="$(OutputPathWebApp)\web.config">
+            <Output TaskParameter="Value" PropertyName="connString" />
+        </XmlRead>
+    </Target>-->
+    
+</Project>

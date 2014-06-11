@@ -1,0 +1,112 @@
+﻿<div id="grey">
+    <div class="grey-head-lft">
+    </div>
+    <div class="grey-head-mid-big">
+       <div class="grey-pallet-icon"></div>
+        <p>
+            <strong>Intrusion - Users Pin</strong></p>
+        <div class="close-icon">
+            <a href="#">
+                <img src="@Url.Content("~/Content/images/close-icon.png")" width="21" height="27" alt=""  onclick="CloseIntrusionPopup();"/></a>
+        </div>
+        <div class="close-icon">
+            <a href="#">
+                <img src="@Url.Content("~/Content/images/collapse-icon.png")" width="20" height="27" alt="" /></a>
+        </div>
+    </div>
+    <div class="grey-head-right">
+    </div>
+    <div class="clear">
+    </div>
+    <div class="grey-body-big">
+        <div class="access-wid-body-cont">
+            <div class="access-wid-title">
+                
+            </div>
+            <div class="access-wid-cont">
+                <div class="access-wid-lft">
+                    <p>
+                        <strong>Users Pin:</strong></p>
+                </div>
+                <div class="access-wid-right">
+                    <input type="text" id="txtDoor" class="k-widget k-autocomplete k-header k-state-default k-input" style="border-color:#000; width:191px; height:25px;" />
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="add-link">
+                <div class="link-btn-lft">                 
+                </div>
+                <div class="link-btn-mid">                   
+                    <input type="button" value="Ok" onclick="OkClick();"/>
+                </div>
+                <div class="link-btn-right">
+                </div>
+            </div>
+
+            <div class="add-link">
+                <div class="link-btn-lft">                 
+                </div>
+                <div class="link-btn-mid">                   
+                    <input type="button" value="Cancel"  onclick="CancelClick();"/>
+                </div>
+                <div class="link-btn-right">
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+    <div class="grey-bot-big">
+    </div>
+    <div class="grey-set">
+        <div class="sett-icon">
+            <a href="#">
+                <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+        </div>
+        <div class="sett-icon">
+            <a href="#">
+                <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function CloseIntrusionPopup() {        
+       document.getElementById('dvIntrusionPopup').style.visibility = 'hidden';
+       document.getElementById('Intrusion_overlay').style.visibility = 'hidden';
+   }
+   function CancelClick() {       
+       // To check / uncheck the checkbox in parent window (IntrusionDetailPortlet)
+       //document.getElementById('lblparent_txt').innerHTML = 'cancel';
+       document.getElementById('dvIntrusionPopup').style.visibility = 'hidden';
+       document.getElementById('Intrusion_overlay').style.visibility = 'hidden';
+   }
+
+   function OkClick() {
+       // To check / uncheck the checkbox in parent window (IntrusionDetailPortlet)
+      // document.getElementById('lblparent_txt').innerHTML = 'ok';
+
+       //var chkStatus = confirm("Are you sure?");
+       ////    // On click of ok button in confirmation 
+       ////    if (chkStatus=='ok') {        
+       ////        if (chk.checked == true) {
+       ////        alert('checked true');
+       ////            chk.checked = false;
+       ////        }
+       ////        else {
+       ////            alert('checked false');
+       ////            chk.checked = true;
+       ////        }
+       ////    }
+
+       
+
+       document.getElementById('dvIntrusionPopup').style.visibility = 'hidden';
+       document.getElementById('Intrusion_overlay').style.visibility = 'hidden';
+       //return false;
+   }
+   function testFunction(chk) {
+       //return document.getElementById('lblparent_txt').innerHTML;
+
+   }
+</script>

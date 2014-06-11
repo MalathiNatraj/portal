@@ -1,0 +1,374 @@
+﻿@model Diebold.WebApp.Models.CompanyViewModel
+@{
+    IList<Diebold.WebApp.Models.CompanyInventoryViewModel> objCompanyInventoryViewModel = new List<Diebold.WebApp.Models.CompanyInventoryViewModel>();
+ }
+<div class="cont-creation">
+    <!-- Company Page Starts Here -->
+    <div class="one columns">
+    </div>
+    <div id="divCompanyContent" class="seven columns">
+        <div class="cont-lft">
+            <div class="comp-lft">
+                <p>
+                    @Html.Label("Company ID: (*)")
+                </p>
+            </div>
+            <div class="comp-right">
+                @(!ViewBag.IsEdit ? Html.TextBoxFor(model => model.ExternalCompanyId, new { @class = "comp-txt" }) : Html.TextBoxFor(model => model.ExternalCompanyId, new { @readonly = "readonly", @class = "comp-txt" }))
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>@Html.LabelFor(model => model.Name)
+                </p>
+            </div>
+            <div class="comp-right">
+                @Html.TextBoxFor(model => model.Name, new { id = "txtCpnyName", @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.FirstLevelGrouping)
+                </p>
+            </div>
+            <div class="comp-right">
+                @Html.TextBoxFor(model => model.FirstLevelGrouping, new { @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.SecondLevelGrouping)
+                </p>
+            </div>
+            <div class="comp-right">
+                @Html.TextBoxFor(model => model.SecondLevelGrouping, new { @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.ThirdLevelGrouping)
+                </p>
+            </div>
+            <div class="comp-right">
+                @Html.TextBoxFor(model => model.ThirdLevelGrouping, new { disabled = "disabled", @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.FourthLevelGrouping)
+                </p>
+            </div>
+            <div class="comp-right">
+                @Html.TextBoxFor(model => model.FourthLevelGrouping, new { disabled = "disabled", @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.PrimaryContactName)
+                </p>
+            </div>
+            <div class="comp-right">
+                @Html.TextBoxFor(model => model.PrimaryContactName, new { @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.PrimaryContactOffice)
+                </p>
+            </div>
+            <div class="comp-right">
+                @Html.TextBoxFor(model => model.PrimaryContactOffice, new { @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                </p>
+            </div>
+            <div class="comp-pref-con" style="margin-top:-3%;">
+                @Html.CheckBoxFor(model => model.PrimaryContactOfficePreferred, new { @class = "pref-chkbx", @GroupName = "Phone" })
+                @Html.LabelFor(model => model.PrimaryContactOfficePreferred)
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.PrimaryContactExtension)
+                </p>
+            </div>
+            <div class="comp-right">
+                @Html.TextBoxFor(model => model.PrimaryContactExtension, new { @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.PrimaryContactMobile)
+                </p>
+            </div>
+            <div class="comp-right">
+                @Html.TextBoxFor(model => model.PrimaryContactMobile, new { @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                </p>
+            </div>
+            <div class="comp-pref-con" style="margin-top:-3%;">
+                @Html.CheckBoxFor(model => model.PrimaryContactMobilePreferred, new { @class = "pref-chkbx", @GroupName = "Phone" })
+                @Html.LabelFor(model => model.PrimaryContactMobilePreferred)
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <div class="one columns">
+    </div>
+    <div class="six columns">
+        <div class="cont-lft">
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.PrimaryContactEmail)</p>
+            </div>
+            <div class="comp-right">
+                @Html.TextBoxFor(model => model.PrimaryContactEmail, new { @class = "comp-txt" })
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft">
+                <p>
+                    @Html.LabelFor(model => model.AvailableReportingFrequencies)
+                </p>
+            </div>
+            <div class="comp-right">
+                @(Html.Kendo().ComboBoxFor(p => p.ReportingFrequency)
+                    .Placeholder("-- Select --")
+                    .DataTextField("Text")
+                    .DataValueField("Value")
+                    .BindTo(Model.AvailableReportingFrequencies)
+                    .HtmlAttributes(new { style = "width:100%" })
+                          )
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="display:none">
+                <p>
+                    Default Subscriptions: (*)
+                </p>
+            </div>
+            <div class="clear">
+            </div>
+            <div style="padding-bottom: 5%;display:none;">
+                @(Html.Kendo().Grid(Model.CompanyDefaultSubscription)
+             .Name("grdAlarmconfiguration")
+             .Editable(editable => editable.Mode(GridEditMode.InLine))
+            .Columns(columns =>
+            {
+                columns.Bound(model => model.isSelected).Title("Select").ClientTemplate("<input name=\"Subscription\" onclick=\"SelectSubscription(this,'#=Name#')\" id=\"Subscription\" type=\"checkbox\" value=\"#=isSelected#\"  #= isSelected ? checked='checked':'' # />");
+                columns.Bound(model => model.Name).Title("Subscriptions");
+            })
+            .Selectable()
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .ServerOperation(false)
+               .Model(model =>
+                        {
+                            model.Id(p => p.Id);
+                            model.Field(p => p.Name).Editable(false);
+                        })
+            ))
+            </div>
+            <div class="clear">
+            </div>
+            <div class="comp-lft" style="width:38%;">
+                <p>
+                    Upload Company Logo:</p>
+            </div>
+            <div class="comp-right" style="width:62%;">
+                @if (ViewBag.IsEdit && Model.FileName != null)
+                {
+                    @Html.Label("lblFileNameHeader", Model.FileName) <br />
+                }
+                @(Html.Kendo().Upload().Name("files")
+                          .Multiple(false))
+            </div>
+            <div class="clear">
+            </div>
+
+             <div class="comp-lft">
+               <div class="Companyhlk">
+                     <a href="#" onclick="fnUDFManagementClick();">UDF Management</a>
+               </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <div class="one columns">
+    </div>
+    <!-- Company Page Ends Here -->
+</div>
+<div class="clear">
+</div>
+<div style="width: 50%; margin: 4% 0 0 45%; padding-bottom: 4%;">
+    <div class="add-link" style="float: left;">
+        @if (ViewBag.IsEdit)
+        {
+            <input type="button" id="btnSubmitCompany" value="Save" />
+        }
+        else
+        {
+            <input type="button" id="next-step" name="next-step" value="NEXT Grouping >" style="clear: both" />
+        }
+    </div>
+    @if (ViewBag.IsEdit)
+    {
+        <div class="add-link" style="float: left; padding-left: 14px;">
+            <input type="button" id="btnCancel" value="Cancel" onclick="javascript:cancelOperation();" />
+        </div>
+    }
+</div>
+
+
+
+
+
+ @(Html.Kendo().Window()
+    .Name("Inventorywindow")
+    .Title("Inventory")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+    <div>
+        @* UDF Management popup window starts *@
+        <div style="width:90%; margin:3% 2% 0 5%;">
+        <p>
+         @(Html.Kendo().Grid(objCompanyInventoryViewModel)
+                .Name("grdUDFManagement")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(model => model.InventoryKey).Title("Field").Width("15%");
+                    //columns.Bound(model => model.InventoryValue).Title("Value").Width("15%");
+                    //columns.Command(command =>
+                    //{
+                    //    command.Custom("Edit").Click("EditUDFDetails");
+                    //    command.Custom("Delete").Click("DeleteUDFDetails");
+                    //});
+                    columns.Bound(model => model.Id).Filterable(false).Visible(true).Width("15%").Title("Actions").ClientTemplate("<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/edit.png") + "' alt='Edit' title='Edit'  onclick='EditUDFDetails();'/></a>" +
+                                                                    "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/Delete.png") + "' alt='Delete' title='Delete'  onclick='DeleteUDFDetails(this);'/></a>");
+                })
+                        .ToolBar(toolbar => toolbar.Template("<a class='k-button k-button-icontext k-grid-update' href='#' onclick='UDFManagementCreate()'>Create new UDF</a>"))
+                .Pageable()
+                .Events(events => events.DataBound("LoadingDefaultFilter"))
+                .Filterable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .ServerOperation(false)
+                
+                )
+            )
+        </p>
+    <div>
+        <div class="add-link" style="margin-top: 5px; width:25%; margin-left:40%;" align="center">
+            <input type="button" value="OK" id="btnInventoryPopupSave" onclick="javascript:btnInventoryClicked();" />
+        </div>
+    </div>
+    </div>
+        @* UDF management popup window ends *@
+    </div>
+    </text>)
+    .Draggable(false)
+    .Width(400)
+)
+
+@(Html.Kendo().Window().Name("UDFDetails")
+    .Title("UDF Details")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Content(@<text>
+        <table>
+            <tr>
+                <td style="width:25%;">
+                    Field
+                </td>
+                <td>
+                    <input type="text" id="txtKey" style="border-width:3px;	border-style:groove;"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="add-link" style="margin-top: 5px; width:25%; margin-left:35%;" align="center">
+                        <input type="button" value="Add" id="btnAddUDF" onclick="fnAddUDFtoGrid();"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </text>)
+    .Width(250)       
+)
+
+@(Html.Kendo().Window().Name("UDFDetailsEdit")
+    .Title("UDF Details")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Content(@<text>
+        <table>
+            <tr>
+                <td style="width:25%;">
+                    Field
+                </td>
+                <td>
+                    <input type="text" id="txtEditKey" style="border-width:3px;	border-style:groove;"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="add-link" style="margin-top: 5px; width:25%; margin-left:35%;" align="center">
+                        <input type="button" value="Save" id="btnEditUDF" onclick="fnEditUDFtoGrid();"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </text>)
+    .Width(250)       
+)
+
+@(Html.Kendo().Window().Name("wndDeleteInventory")
+    .Visible(false)
+    .Modal(true)
+    .Title("Delete UDF")
+    .Draggable(true)
+    .Width(300)    
+)
+<script language="javascript" type="text/javascript">
+    var siteInventoryDisplayURL = '@Url.Action("GetUDFManagementDetails","Company")';
+    var siteInventoryCreateURL = '@Url.Action("UDFMangementSave","Company")';
+    var siteInventoryDeleteURL = '@Url.Action("UDFManagementDelete","Company")';
+    var siteInventoryEditURL = '@Url.Action("UDFManagementEdit","Company")';
+    $(document).ready(function () {
+        $("#files").closest(".k-upload-button").find("span").text("Browse Logo").width("100px");
+    });
+
+    function cancelOperation() {
+        window.location.href = '@Url.Content("~/Company/Index")';
+    }
+</script>
+<style>
+    .k-upload-button
+    {
+        width: 50%;
+    }
+</style>

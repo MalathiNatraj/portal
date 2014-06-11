@@ -1,0 +1,390 @@
+﻿@model IEnumerable<Diebold.WebApp.Models.ReportingViewModel>
+@{
+    ViewBag.Title = "Reporting";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml"; 
+}
+<style>
+.k-grid-header .k-header .k-link {
+line-height:9px;
+}
+</style>
+<div id="dvReportTitle" class="pallette-detail-header-bg">     
+    <p>Reporting</p>     
+</div>
+
+@using (Html.BeginForm("Index", "Reporting", FormMethod.Post, new { @class="filters"}))
+{
+    <div class="clearfix">
+        @*@Html.Partial("_SelectedGroupLevelForReporting")*@
+        @Html.Partial("_StandardAlertFilter", (Diebold.WebApp.Models.AlertFilterViewModel)@ViewBag.AlertFilterViewModel)
+        <div class="clear">
+        </div>
+        <div class="add-link" style="margin-top: 6%;" align="center">
+            <input type="button" id="btnGenerateAlertReport" value="Apply"  style="width: 12%;" onclick="GenerateReport();"/>
+        </div>
+    </div>
+}
+
+<div class="reportActions">
+	<a id="exportToPDF" href="#">&#91;Export to PDF&#93;</a>
+	<a id="exportToXLS" href="#">&#91;Export to XLS&#93;</a>
+	<a id="print" href="#" style="pointer-events: none; cursor: default; color:black;">&#91;Print&#93;</a>
+     @(Html.Kendo().Grid(Model)
+        .HtmlAttributes(new { style = "width:100%" })
+        .Name("grdReport")
+        .Pageable()
+        .Resizable(resize => resize.Columns(true))
+        .DataSource(dataSource => dataSource        
+        .Ajax()
+        .PageSize(10)
+        .Read(read => read.Action("BindReport", "StandardAlertReport")
+        .Data("additionalData"))
+        .ServerOperation(false)
+        )
+        .Columns(columns =>
+        {
+            //For width alignment of data column in Kendo Grid, we need to keep one column without "Width" property
+            columns.Bound(c => c.Date).Width("12%");
+            columns.Bound(c => c.Area).Width("12%");
+            columns.Bound(c => c.Site).Width("15%");
+            columns.Bound(c => c.DeviceName);
+            columns.Bound(c => c.AlertDescription);
+            columns.Bound(c => c.ResolvedBy);
+            columns.Bound(c => c.CurrentStatus).Width("12%");
+            columns.Bound(c => c.LastNoteBy);
+            columns.Bound(c => c.DVRType).Title("Device Type");
+        })                    
+        .Sortable()
+        )        
+        
+<script>
+    function additionalData() {
+        var jsObj = null;
+        var strDeviceStatus = "";
+        var strdeviceFilters = $("#ReportDevices").val();
+        var stralertFilters = $("#AlertTypes").val();
+        if (strdeviceFilters == '' || strdeviceFilters == '-- Device --' || stralertFilters == '' || stralertFilters == '-- Alert Type --') {
+            strDeviceStatus = "";
+        }
+        else {
+            strDeviceStatus = "Active Devices";
+        }
+
+        var paramsDetails = 'alertTypes:' + getSelectedAlerts() + ";";
+        //paramsDetails += 'deviceStatus:' + $('#cboDeviceStatus').val() + ";";
+        paramsDetails += 'deviceStatus:' + strDeviceStatus + ";";        
+        paramsDetails += 'userIds:' + getSelectedUsers() + ";";
+        paramsDetails += 'selectedDeviceIds:' + getSelectedDevices() + ";";
+        paramsDetails += 'selectedSiteIds:' + getSelectedSites() + ";";
+        paramsDetails += 'selectedGroup2Ids:' + getSelectedGroup2() + ";";
+        paramsDetails += 'selectedGroup1Ids:' + getSelectedGroup1() + ";";
+        paramsDetails += 'dateType:' + '' + ";";
+        paramsDetails += 'dateFrom:' + $('#DisplayDateFrom').val() + ";";
+        paramsDetails += 'dateTo:' + $('#DisplayDateTo').val() + ";";
+
+        return { param: paramsDetails };
+    }
+
+    function GenerateReport() {
+        //            var TotalGroupLevelRows = $("#grdGroupLevel").find('tr'); // Find number of rows in table, if no rows are present then alert for Select Group Levels -- Device Grid
+        //            var TotalgrdFirstLevelRows = $("#grdFirstLevel").find('tr');
+        //            var TotalgrdSecondLevelRows = $("#grdSecondLevel").find('tr');
+        //            var TotalgrdSiteLevelRows = $("#grdSiteLevel").find('tr');
+        //            if (TotalgrdFirstLevelRows.length < 2 && TotalgrdSecondLevelRows.length < 2 && TotalgrdSiteLevelRows.length < 2 && TotalGroupLevelRows.length < 2) {
+        //                alert("You have to select at least one grouping level.");
+        //                return false;
+        //            }       
+
+        //        var alertFilterOptions = $("#AlertFilterOptions").val();
+        //        if (alertFilterOptions == '' || alertFilterOptions == '--Select--') {
+        //            $('#dvErrAlertReport ul').append('<li class="validation-summary-reports">Please select an Option</li>');
+        //        }
+
+        var deviceFilters = $("#ReportDevices").val();
+        var alertFilters = $("#AlertTypes").val();
+
+        $("#dvErrAlertReport ul").empty();
+
+        if ((deviceFilters == '' || deviceFilters == '-- Device --') && (alertFilters == '' || alertFilters == '-- Alert Type --')) {
+            $('#dvErrAlertReport ul').append('<li class="validation-summary-reports">Please select Device</li>');
+            $('#dvErrAlertReport ul').append('<li class="validation-summary-reports">Please select Alert</li>');
+        }
+        else if (deviceFilters == '' || deviceFilters == '-- Device --') {
+            $('#dvErrAlertReport ul').append('<li class="validation-summary-reports">Please select Device</li>');
+        }
+        else if (alertFilters == '' || alertFilters == '-- Alert Type --') {
+            $('#dvErrAlertReport ul').append('<li class="validation-summary-reports">Please select Alert</li>');
+        }
+        else {
+            var grid = $("#grdReport").data("kendoGrid");
+            grid.dataSource.read();
+        }
+    }
+
+</script>
+</div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#exportToXLS').attr("href", '@Url.Action("ExportToExcel")' + "?" + getFiltersQueryString());
+            $('#exportToPDF').attr("href", '@Url.Action("ExportToPdf")' + "?" + getFiltersQueryString());
+            $('#btnGenerateAlertReport').click(function () {
+                // $('#report').trigger("reloadGrid");
+                $('#exportToXLS').attr("href", '@Url.Action("ExportToExcel")' + "?" + getFiltersQueryString());
+                $('#exportToPDF').attr("href", '@Url.Action("ExportToPdf")' + "?" + getFiltersQueryString());
+            });
+
+            $('#bsmListbsmContainer0 li a').hide();
+
+            $("#UserIds").trigger("change");
+            $("#UserIds").bsmSelect();
+            $('#bsmListbsmContainer1 li a').hide();
+
+            $("#UserIds").change(function (sender, e) {
+                if (e != undefined) {
+                    if (e.type == 'add') {
+                        if (e.value == 'all') {
+
+                            $('#bsmListbsmContainer1 li').each(function () {
+                                if ($(this).children().text() != 'All')
+                                    $(this).children().next().trigger('click');
+                            });
+
+                            $('#UserIds').trigger('change');
+
+                            //fix for IE!
+                            if ($('#bsmListbsmContainer1 li').size() == 0)
+                                $('#bsmListbsmContainer1').append('<li class="bsmListItem" style="display: block;"><span class="bsmListItemLabel">All</span></li>');
+                        }
+                        else {
+                            $('#bsmListbsmContainer1 li').each(function () {
+                                if ($(this).children().text() == 'Allremove')
+                                    $(this).children().next().trigger('click');
+
+                                //fix for IE!
+                                if ($(this).children().text() == 'All')
+                                    $(this).children().remove();
+                            });
+                        }
+                    }
+                }
+                else {
+                    $('#bsmListbsmContainer1 li a').hide();
+                }
+            });
+        });
+
+        function getSelectedGroup1() {
+            //            //              var SelectedGroup1 = $('#FirstLevelGroup').val();
+            //            //              return SelectedGroup1;
+            //            var grdSelectedGroup1 = $("#grdFirstLevel").data("kendoGrid");
+            //            var dataGroup1 = grdSelectedGroup1.dataSource.data();
+            //            var totalNumberGroup1 = dataGroup1.length;
+            //            var SelectedGroup1Array = new Array();
+            //            for (var i = 0; i < totalNumberGroup1; i++) {
+            //                var currentDataItemGroupOne = dataGroup1[i];
+            //                SelectedGroup1Array[i] = currentDataItemGroupOne.Id;
+            //            }
+            //            return SelectedGroup1Array;
+
+
+
+
+            //var grdSelectedGroup1 = $("#grdFirstLevel").data("kendoGrid");
+            //var dataGroup1 = grdSelectedGroup1.dataSource.data();
+            //var totalNumberGroup1 = dataGroup1.length;
+            var SelectedGroup1Array = new Array();
+            //            for (var i = 0; i < totalNumberGroup1; i++) {
+            //                var currentDataItemGroupOne = dataGroup1[i];
+            //                SelectedGroup1Array[i] = currentDataItemGroupOne.Id;
+            //            }
+            return SelectedGroup1Array;
+        }
+
+        function getSelectedGroup2() {
+//            //              var SelectedGroup2 = $('#SecondLevelGroup').val();
+//            //              return SelectedGroup2;
+//            var grdSelectedGroup2 = $("#grdSecondLevel").data("kendoGrid");
+//            var dataGroup2 = grdSelectedGroup2.dataSource.data();
+//            var totalNumberGroup2 = dataGroup2.length;
+//            var SelectedGroup2Array = new Array();
+//            for (var i = 0; i < totalNumberGroup2; i++) {
+//                var currentDataItemGroupTwo = dataGroup2[i];
+//                SelectedGroup2Array[i] = currentDataItemGroupTwo.Id;
+//            }
+//            return SelectedGroup2Array;
+
+
+
+            //var grdSelectedGroup2 = $("#grdSecondLevel").data("kendoGrid");
+            //var dataGroup2 = grdSelectedGroup2.dataSource.data();
+            //var totalNumberGroup2 = dataGroup2.length;
+            var SelectedGroup2Array = new Array();
+//            for (var i = 0; i < totalNumberGroup2; i++) {
+//                var currentDataItemGroupTwo = dataGroup2[i];
+//                SelectedGroup2Array[i] = currentDataItemGroupTwo.Id;
+//            }
+            return SelectedGroup2Array;
+        }
+
+        function getSelectedSites() {
+//            //              var SelectedSite = $('#Site').val();
+//            //              return SelectedSite;
+//            var grdSelectedSite = $("#grdSiteLevel").data("kendoGrid");
+//            var datasite = grdSelectedSite.dataSource.data();
+//            var totalNumbersite = datasite.length;
+//            var SelectedsiteArray = new Array();
+//            for (var i = 0; i < totalNumbersite; i++) {
+//                var currentDataItemsite = datasite[i];
+//                SelectedsiteArray[i] = currentDataItemsite.Name;
+//            }
+//            return SelectedsiteArray;
+
+
+            //var grdSelectedSite = $("#grdSiteLevel").data("kendoGrid");
+            //var datasite = grdSelectedSite.dataSource.data();
+            //var totalNumbersite = datasite.length;
+            var SelectedsiteArray = new Array();
+//            for (var i = 0; i < totalNumbersite; i++) {
+//                var currentDataItemsite = datasite[i];
+//                SelectedsiteArray[i] = currentDataItemsite.Name;
+//            }
+            return SelectedsiteArray;
+        }
+
+        //        function getSelectedDevices() {
+        //              var DeviceStatus = $('#cboDeviceStatus').val();
+        //              return DeviceStatus;
+        //        }
+
+        function getFiltersQueryString() {
+            var qs = "";
+            var strDeviceStatus = "";
+            var strdeviceFilters = $("#ReportDevices").val();
+            var stralertFilters = $("#AlertTypes").val();
+            if (strdeviceFilters == '' || strdeviceFilters == '-- Device --' || stralertFilters == '' || stralertFilters == '-- Alert Type --') {
+                strDeviceStatus = "";
+            }
+            else {
+                strDeviceStatus = "Active Devices";
+            }
+
+            qs += 'alertTypes=' + getSelectedAlerts();
+            //qs += '&deviceStatus=' + $('#cboDeviceStatus').val();
+            qs += '&deviceStatus=' + strDeviceStatus;
+            qs += '&userIds=' + getSelectedUsers();
+            qs += '&selectedDeviceIds=' + getSelectedDevices();
+            qs += '&selectedSiteIds=' + getSelectedSites();
+            qs += '&selectedGroup2Ids=' + getSelectedGroup2();
+            qs += '&selectedGroup1Ids=' + getSelectedGroup1();
+            qs += '&dateType=' + $('#DateType').val();
+            qs += '&dateFrom=' + $('#DisplayDateFrom').val();
+            qs += '&dateTo=' + $('#DisplayDateTo').val();
+            return qs;
+        }
+
+        function loadExtraParams() {
+            var jsObj = null;
+            var params = [];
+            params.push({ name: 'alertTypes', value: getSelectedAlerts() });
+            params.push({ name: 'deviceStatus', value: $('#DeviceStatus').val() });
+            params.push({ name: 'userIds', value: getSelectedUsers() });
+            params.push({ name: 'selectedDeviceIds', value: getSelectedDevices() });
+            params.push({ name: 'selectedSiteIds', value: getSelectedSites() });
+            params.push({ name: 'selectedGroup2Ids', value: getSelectedGroup2() });
+            params.push({ name: 'selectedGroup1Ids', value: getSelectedGroup1() });
+            params.push({ name: 'dateType', value: $('#DateType').val() });
+            params.push({ name: 'dateFrom', value: $('#DateFrom').val() });
+            params.push({ name: 'dateTo', value: $('#DateTo').val() });
+            jsObj = { Params: params };
+            return JSON.stringify(params);
+        };
+
+        function loadParams() {
+            var jsObj = null;
+            var params = [];
+            params.push({ name: 'alertTypes', value: getSelectedAlerts() });
+            params.push({ name: 'deviceStatus', value: $('#DeviceStatus').val() });
+            params.push({ name: 'userIds', value: getSelectedUsers() });
+            params.push({ name: 'selectedDeviceIds', value: getSelectedDevices() });
+            params.push({ name: 'selectedSiteIds', value: getSelectedSites() });
+            params.push({ name: 'selectedGroup2Ids', value: getSelectedGroup2() });
+            params.push({ name: 'selectedGroup1Ids', value: getSelectedGroup1() });
+            params.push({ name: 'dateType', value: $('#DateType').val() });
+            params.push({ name: 'dateFrom', value: $('#DateFrom').val() });
+            params.push({ name: 'dateTo', value: $('#DateTo').val() });
+            jsObj = { Params: params };
+            return JSON.stringify(params);
+        };
+
+        function getSelectedAlerts() {
+            var AlertsIdArray = new Array();
+            var AlertTypescombobox = $("#AlertTypes").data("kendoComboBox");
+
+            //var AlertFilterscombobox = $("#AlertFilterOptions").data("kendoComboBox");
+            //var AlertfilterText = AlertFilterscombobox.text();
+            //if (AlertfilterText == 'All' || AlertfilterText == 'Device Specific') {
+            //  AlertsIdArray[0] = 'All';
+            //}
+            //else {
+            //AlertsIdArray[0] = AlertTypescombobox.text();
+            //}
+            //return AlertsIdArray;
+            //var entityGrid = $("#grdAlertType").data("kendoGrid");
+            //var data = entityGrid.dataSource.data();
+            //var totalNumber = data.length;
+            //var AlertsIdArray = new Array();
+            //            for (var i = 0; i < totalNumber; i++) {
+            //                var currentDataItem = data[i];
+            //                AlertsIdArray[i] = currentDataItem.AlertType;
+            //            }                      
+            AlertsIdArray[0] = AlertTypescombobox.text();
+            return AlertsIdArray;
+        }
+
+        function getSelectedUsers() {
+//            var grdUsers = $("#grdUsers").data("kendoGrid");
+//            var data = grdUsers.dataSource.data();
+//            var totalNumber = data.length;
+//            var UserIdArray = new Array();
+//            for (var i = 0; i < totalNumber; i++) {
+//                var currentDataItem = data[i];
+//                UserIdArray[i] = currentDataItem.UserId;
+//            }
+            //            return UserIdArray;
+
+            //var grdUsers = $("#grdUsers").data("kendoGrid");
+            //var data = grdUsers.dataSource.data();
+            //var totalNumber = data.length;
+            var UserIdArray = new Array();
+           // var UserIdcombobox = $("#UserId").data("kendoComboBox");
+            //UserIdArray[0] = UserIdcombobox.text();
+            return UserIdArray;
+        }
+
+        function getSelectedDevices() {
+//            var grdSelectedGroup = $("#grdGroupLevel").data("kendoGrid");
+//            var data = grdSelectedGroup.dataSource.data();
+//            var totalNumber = data.length;
+//            var SelectedDeviceArray = new Array();
+//            for (var i = 0; i < totalNumber; i++) {
+//                var currentDataItem = data[i];
+//                SelectedDeviceArray[i] = currentDataItem.GroupId;
+//            }
+//            return SelectedDeviceArray;
+
+
+           // var grdSelectedGroup = $("#grdGroupLevel").data("kendoGrid");
+           // var data = grdSelectedGroup.dataSource.data();
+           // var totalNumber = data.length;
+
+            var SelectedDeviceArray = new Array();
+            var Reportdevicecombobox = $("#ReportDevices").data("kendoComboBox");
+            
+            SelectedDeviceArray[0] = Reportdevicecombobox.value();
+            return SelectedDeviceArray;                        
+        }
+    </script>
+    

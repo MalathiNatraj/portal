@@ -1,0 +1,66 @@
+﻿@model Diebold.WebApp.Models.UserViewModel
+@{
+    ViewBag.Title = "Create User";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    ViewBag.IsEdit = false;
+}
+@using Diebold.Domain.Entities
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#btnCancel").click(function () {
+            var editUri = '@Url.Action("../User/UserDetails")';
+            location.href = editUri;
+
+        });
+
+        function customValidator() {
+            var errorList = [];
+            return errorList;
+        }
+
+
+        $('form').submit(function (event) {
+            event.preventDefault();
+            if ($(this).valid()) {
+                $(".validation-summary-errors").attr("style", "display:none");
+
+                var url = '@Url.Action("CreateUser", "User")';
+                var data = $(this).serialize();
+
+                $.post(url, data, "application/html; charset=utf-8")
+                            .done(function (response) {
+                                if (response.success == true) {
+                                var editUri = '@Url.Action("../User/UserDetails")';
+                                location.href = editUri;
+                                }
+                                else{
+                                    $("#divErrorInfo").attr("style", "");
+                                    $("#lblErrorInfo").text(response.ErrorMsg);
+                                    alert(response.ErrorMsg);
+                                    errorList.push(response.ErrorMsg);
+                                }
+                            })
+                            .fail(function (response) {                                
+                                $("#divErrorInfo").attr("style", "");
+                                $("#lblErrorInfo").text(response.ErrorMsg);
+                                errorList.push(response.ErrorMsg);
+                            });
+            }
+
+        });
+    });      
+         
+    </script>   
+
+@using (Html.BeginForm())
+{
+<div id="dvCreateUserTitle" class="pallette-detail-header-bg">
+    <p>Create User</p>
+</div>
+@Html.Partial("_UserInfo")
+
+}
+
+

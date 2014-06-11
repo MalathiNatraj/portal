@@ -1,0 +1,27 @@
+﻿@model Diebold.WebApp.Models.GatewayViewModel
+
+@{
+    ViewBag.Title = "Create Gateway";
+    ViewBag.IsCreate = true;
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<script src="@Url.Content("~/Scripts/app/ChosenValidation.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/app/ValidationForm.js")" type="text/javascript"></script>
+
+<div class="pallette-detail-header-bg">
+    <p>Create Gateway</p>
+</div>
+@Html.Partial("_GatewayEditableInfo")
+<script language="javascript" type="text/javascript">    
+    function CompanySelectionChanged(e) {
+        var dataItem = { "id": this.dataItem(e.item.index()).Value };
+        var url = '@Url.Action("AsyncSites", "Device")';
+        $.post(url, dataItem, GetSiteByCompanyIdCallback, "json");
+    }
+
+    function GetSiteByCompanyIdCallback(SiteResultSet) {
+        var sitecombobox = $("#SiteId").data("kendoComboBox");
+        if(sitecombobox != undefined && sitecombobox !=null) 
+            sitecombobox.dataSource.data(SiteResultSet);
+    }
+</script>

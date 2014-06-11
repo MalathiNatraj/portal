@@ -1,0 +1,300 @@
+﻿<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>My Access Points - Cardholder Modify</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="CloseModificationFields();"/></a>
+            </div>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        <div id="dvCardholderModify2Content">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">
+                <div class="my-access-titile bottom">
+                    <p>
+                        <strong>Step 2: Modification Fields</strong></p>
+                </div>
+                <div id="dvErrCHModifyflds">
+                <ul>
+                
+                </ul>
+                </div>
+                <div class="my-access-lbl bottom" style="display:none;">
+                    <p>
+                        <strong>Cardholder ID:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom" style="display:none;">                    
+                    @Html.TextBox("txtStep2CHID", null, new { @readonly = "readonly", @class = "my-access-in", maxlength = 250 })
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>First Name:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                    @Html.TextBox("txtStep2CHfirstName",null, new { @class = "my-access-in", maxlength = 250 })
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Last Name:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                    @Html.TextBox("txtStep2CHlastName",null, new { @class = "my-access-in", maxlength = 250 })
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Card Number:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                    @Html.TextBox("txtStep2CHcardNumber",null, new { @class = "my-access-in"})
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Pin:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @Html.TextBox("txtStep2CHPin",null, new { @class = "my-access-in" })
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Access Group:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                       @(Html.Kendo().ComboBox()
+                        .Name("cboCHModifyAccessGroup")
+                        .Placeholder("-- Select --")
+                        .HtmlAttributes(new { style = "width:100%" })
+                        .DataTextField("Name")
+                        .DataValueField("Id")
+                        .Suggest(true)
+                        )
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Activation Date:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                     @(Html.Kendo().DateTimePicker()
+                        .Name("CHModifyActivationdatetimepicker")
+                        .Value(DateTime.Now)
+                        .HtmlAttributes(new { style = "width:100%" })
+                     )
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Expiration Date:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                     @(Html.Kendo().DateTimePicker()
+                        .Name("CHModifyExpirationdatetimepicker")
+                        .Value(DateTime.Now)
+                        .HtmlAttributes(new { style = "width:100%" })
+                     )
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                <p>
+                        <strong>Active:</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                    <input type="checkbox" id="chkCHActiveModify" name="chkCHActiveModify" />                 
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="my-access-right-btn" style="width:137px;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Save" onclick="javascript:fnValidateCardholderModify();return false;"/>
+                </div>
+                <div class="add-link"  align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="CloseModificationFields();"/>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function CloseModificationFields() {
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        document.getElementById('dvMdfyCrdHldrMdFlds').style.visibility = 'hidden';
+    }
+
+    function CloseModifyConfirmationPortlet() {
+        document.getElementById('dvMdfyCrdHldrMdFlds').style.visibility = 'hidden';
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+    }
+    function fnValidateCardholderModify() {
+        $("#dvErrCHModifyflds ul").empty();
+
+        var deviceID = $("#AccessViewDeviceList").val();
+        var cardHolderID = $("#txtStep2CHID").val();
+        var cardHolderFName = $("#txtStep2CHfirstName").val();
+        var cardHolderLName = $("#txtStep2CHlastName").val();
+        var cardHolderNumber = $("#txtStep2CHcardNumber").val();
+        var CHpin = $("#txtStep2CHPin").val();
+        var AccessGrp = $("#cboCHModifyAccessGroup").val();
+        var CHActivationDate = $('#CHModifyActivationdatetimepicker').val();
+        var CHExpirationDate = $('#CHModifyExpirationdatetimepicker').val();
+        var ModifyIsActive = $('#chkCHActiveModify').is(':checked');
+        var regModifyStep2 = /^[0-9]+$/;
+        var pinFlag_Modify = true;
+
+        if (CHpin != '' && (!regModifyStep2.test(CHpin))) {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Pin must consist of numeric values</li>');
+            pinFlag_Modify = false;
+        }
+
+        if ((AccessGrp == '' || AccessGrp == '-- Select --') && cardHolderFName == '' && cardHolderLName == '' && cardHolderNumber == '') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">First Name is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Last Name is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Cardholder Number is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Access Group is Required</li>');
+            if (!regModifyStep2.test(cardHolderNumber)) {
+                $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Card Number must consist of numeric values</li>');
+            }
+        }
+        else if ((AccessGrp == '' || AccessGrp == '-- Select --') && cardHolderFName == '' && cardHolderLName == '') {            
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">First Name is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Last Name is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Access Group is Required</li>');
+            if (!regModifyStep2.test(cardHolderNumber)) {
+                $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Card Number must consist of numeric values</li>');
+            }
+        }
+        else if ((AccessGrp == '' || AccessGrp == '-- Select --') && cardHolderFName == '' && cardHolderNumber == '') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">First Name is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Cardholder Number is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Access Group is Required</li>');
+        }
+        else if ((AccessGrp == '' || AccessGrp == '-- Select --') && cardHolderLName == '' && cardHolderNumber == '') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Last Name is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Cardholder Number is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Access Group is Required</li>');
+        }
+        else if (cardHolderLName == '' && cardHolderFName == '' && cardHolderNumber == '') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">First Name is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Last Name is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Cardholder Number is Required</li>');
+        }
+        else if (cardHolderLName == '' && cardHolderNumber == '') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Last Name is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Cardholder Number is Required</li>');
+        }
+        else if (cardHolderLName == '' && cardHolderFName == '') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">First Name is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Last Name is Required</li>');
+            if (!regModifyStep2.test(cardHolderNumber)) {
+                $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Card Number must consist of numeric values</li>');
+            }
+        }
+        else if (cardHolderFName == '' && cardHolderNumber == '') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">First Name is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Cardholder Number is Required</li>');
+        }
+        else if ((AccessGrp == '' || AccessGrp == '-- Select --') && cardHolderFName == '') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">First Name is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Access Group is Required</li>');
+            if (!regModifyStep2.test(cardHolderNumber)) {
+                $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Card Number must consist of numeric values</li>');
+            }
+        }
+        else if ((AccessGrp == '' || AccessGrp == '-- Select --') && cardHolderLName == '') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Last Name is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Access Group is Required</li>');
+            if (!regModifyStep2.test(cardHolderNumber)) {
+                $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Card Number must consist of numeric values</li>');
+            }
+        }
+        else if ((AccessGrp == '' || AccessGrp == '-- Select --') && cardHolderNumber == '') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Cardholder Number is Required</li>');
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Access Group is Required</li>');
+        }
+
+
+        else if (cardHolderFName == '') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">First Name is Required</li>');
+            if (!regModifyStep2.test(cardHolderNumber)) {
+                $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Card Number must consist of numeric values</li>');
+            }
+        }
+        else if (cardHolderLName == '') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Last Name is Required</li>');
+            if (!regModifyStep2.test(cardHolderNumber)) {
+                $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Card Number must consist of numeric values</li>');
+            }
+        }
+        else if (cardHolderNumber == '') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Cardholder Number is Required</li>');
+        }
+        else if (AccessGrp == '' || AccessGrp == '-- Select --') {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Access Group is Required</li>');
+            if (!regModifyStep2.test(cardHolderNumber)) {
+                $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Card Number must consist of numeric values</li>');
+            }
+        }
+        else if (!regModifyStep2.test(cardHolderNumber)) {
+            $('#dvErrCHModifyflds ul').append('<li class="validation-summary-accesspopup">Card Number must consist of numeric values</li>');
+        }
+        else {
+            if (pinFlag_Modify == true) {
+                var dataItem = { "cardHolderId": cardHolderID, "lastName": cardHolderLName, "firstName": cardHolderFName, "cardNumber": cardHolderNumber, "pin": CHpin,
+                    "accessGroupId": AccessGrp, "cardActivationDate": CHActivationDate, "cardExpirationDate": CHExpirationDate, "isActive": ModifyIsActive, "deviceId": deviceID
+                };
+                var url = '@Url.Action("CardHolderModify", "Access")';
+                BlockElement("dvCardholderModify2Content", 'Connecting...');
+                $.post(url, dataItem, GetCardHolderModifyCallback, "json");
+            }
+        }
+    }
+
+    function GetCardHolderModifyCallback(ResultSet) {
+        UnBlockElement("dvCardholderModify2Content");
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                if (ResultSet == "OK") {
+                    fnShowAlertInfo('Cardholder modified successfully.');
+                    document.getElementById('my_overlay').style.visibility = 'hidden';
+                    document.getElementById('dvMdfyCrdHldrMdFlds').style.visibility = 'hidden';
+                }
+            }
+        }
+    }
+</script>

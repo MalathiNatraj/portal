@@ -1,0 +1,286 @@
+﻿@using System.Collections;
+@model Diebold.WebApp.Models.RoleViewModel
+@{
+    TempData.Keep("EditRole_AvailableActionsList");
+}
+<script type="text/javascript">
+
+    function btnCancelClick() {
+        var editUri = '@Url.Action("../Role/List")';
+        location.href = editUri;
+    }
+
+    function SubmitForm(button) {
+        selectListboxItems();
+        var curList = document.getElementById("SelectedActionsList");
+        if ($('form').valid() && curList.length == 0) {
+            alert("At least an action should be selected for the role.");
+            return false;
+        }
+
+        var curPortlet = document.getElementById("SelectedPortlets");
+        if ($('form').valid() && curPortlet.length < 2) {
+            alert("Please select default portlets(Account, Featured News) for the role");
+            return false;
+        }
+        else if ($('form').valid() && curPortlet.length >= 3) {
+            var blnAccPrlts = false;
+            var blnFetNewsPrlts = false;
+            var blnSteMapPrlts = false;
+
+            for (var i = 0; i < curPortlet.length; i++) {
+                if (curPortlet.options[i].value == "ACCOUNTDETAIL") {
+                    blnAccPrlts = true;
+                }
+                if (curPortlet.options[i].value == "SITEMAP") {
+                    blnSteMapPrlts = true;
+                }
+                if (curPortlet.options[i].value == "FEATUREDNEWS") {
+                    blnFetNewsPrlts = true;
+                }
+            }
+
+            if (blnAccPrlts == false || blnFetNewsPrlts == false) {
+                alert("Default portlets(Account, Featured News) should be selected for the role.");
+                return false;
+            }
+        }
+        $(button.form).submit();
+    }
+
+    function selectListboxItems() {
+        var curList = document.getElementById("SelectedActionsList");
+        for (var i = 0; i < curList.length; i++) {
+            curList.options[i].selected = true;
+        }
+
+        /*Portlet Selection*/
+        var curPortlet = document.getElementById("SelectedPortlets");
+        for (var i = 0; i < curPortlet.length; i++) {
+            curPortlet.options[i].selected = true;
+        }
+
+        /*Page Actions Selection*/
+        var curPageAction = document.getElementById("SelectedActionDetails");
+        for (var i = 0; i < curPageAction.length; i++) {
+            curPageAction.options[i].selected = true;
+        }
+    }
+
+    function move(listBoxTo, optionValue, optionDisplayText) {
+        var newOption = document.createElement("option");
+        newOption.value = optionValue;
+        newOption.text = optionDisplayText;
+        var optionval = '<option value=' + optionValue + '>' + optionDisplayText + '</option>';
+        $(optionval).appendTo(listBoxTo);
+        var Actions = $('#Actions');
+        return true;
+    }
+
+    function moveToRightOrLeft(side, from, to) {
+        var listLeft = document.getElementById(from);
+        var listRight = document.getElementById(to);
+
+        if (side == 1 && listLeft.value != "") {
+            if (listLeft.options.length == 0) {
+                listLeft.disabled = true;
+                alert('You have already moved all clusters.');
+                return false;
+            }
+            else {
+                var selectedAction = listLeft.options.selectedIndex;
+
+                move(listRight, listLeft.options[selectedAction].value, listLeft.options[selectedAction].text);
+                listLeft.remove(selectedAction);
+
+                if (listLeft.options.length > 0) {
+                    listLeft.options[0].selected = true;
+                }
+            }
+        } else if (side == 2 && listRight.value != "") {
+            if (listRight.options.length == 0) {
+                alert('You have already moved all clusters.');
+                return false;
+            } else {
+                var selectedAction = listRight.options.selectedIndex;
+
+                move(listLeft, listRight.options[selectedAction].value, listRight.options[selectedAction].text);
+                listRight.remove(selectedAction);
+
+                if (listRight.options.length > 0) {
+                    listRight.options[0].selected = true;
+                }
+            }
+        }
+    }
+
+    $(document).ready(function () {
+        $("#selectLeft").attr("size", "12");
+        $("#SelectedActionsList").attr("size", "12");
+        $("#roleName").css("margin-left", "12%");
+        $("#roleName").css("width", "202px");
+
+        $("#portlets").attr("size", "12");
+        $("#SelectedPortlets").attr("size", "12");
+    });   
+
+</script>
+<section>
+    <article>
+    @using (Html.BeginForm("RoleEditItem", "Role"))
+    { 
+    <div id="dvCreateTitle" class="pallette-detail-header-bg">
+        <p>Role Management - Edit Role</p>
+    </div>
+    <div class="sixteen columns">
+	            <div class="cont-inner-room">
+                <!-- CONT CREATION PAGE STARTS HERE -->
+                <div class="create-role">
+                    <div>
+                        @Html.ValidationSummary(false, "There were errors while updating Role.", new { id = "valSummary" })
+                    </div>
+                    <div class="row">
+                        <div class="seven columns">
+						    <div class="cont-lft">
+                                <div class="comp-lft">
+                                    <p>@Html.LabelFor(model => model.Name)</p>
+                                </div>
+                                <div class="comp-right">
+                                    @Html.TextBoxFor(model => model.Name, new { id = "roleName", maxlength = 32, @class = "comp-txt", size = 32 })
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+				    </div>
+                    <!--Action Selection Starts-->
+                    <div class="seven columns">
+                        <div class="cont-lft">
+                            <div class="avail-actions">
+                                <p>Available Actions:</p>
+                                <div class="actions-bg">
+                                    @Html.ListBox("selectLeft", new SelectList(Model.OverallActionList, "Value", "Text"), new { @class = "Listbox-style" })
+                                    @Html.HiddenFor(model => model.Id)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="two columns">
+                        <div class="th-btn">
+                            <div class="btn1">
+                                <input name="btnRight" type="button" id="btnRight" value=">>" onclick="javascript:moveToRightOrLeft(1,'selectLeft','SelectedActionsList');" />
+                            </div>
+                            <div class="btn1">
+                                <input name="btnLeft" type="button" id="btnLeft" value="<<" onclick="javascript:moveToRightOrLeft(2,'selectLeft','SelectedActionsList');" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="seven columns">
+                        <div class="cont-right">
+                            <div class="sel-actions">
+                                <p>Selected Actions:</p>
+                                <div class="actions-bg">
+                                    @Html.ListBox("SelectedActionsList", new SelectList(Model.SelectedActionsList, "Value", "Text"), new { @class = "Listbox-style" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Action Selection Ends-->
+
+                    <!--Portlet Selection Starts-->
+                    <div class="seven columns">
+                        <div class="cont-lft">
+                            <div class="avail-actions">
+                                <p>Available Portlets:</p>
+                               <div class="actions-bg">
+                                    @Html.ListBox("portlets", new SelectList(Model.AvailablePortlets, "InternalName", "Name"), new { @class = "Listbox-style" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="two columns">
+                        <div class="th-btn">
+                            <div class="btn1">
+                                <input name="btnPrtRight" type="button" id="btnPrtRight" value=">>" onclick="javascript:moveToRightOrLeft(1,'portlets','SelectedPortlets');" />
+                            </div>
+                            <div class="btn1">
+                                <input name="btnPrtLeft" type="button" id="btnPrtLeft" value="<<" onclick="javascript:moveToRightOrLeft(2,'portlets','SelectedPortlets');" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="seven columns">
+                        <div class="cont-right">
+                            <div class="sel-actions">
+                                <p>Selected Portlets:</p>
+                                <div class="actions-bg">
+                                    @Html.ListBox("SelectedPortlets", new SelectList(Model.SelectedPortlets, "InternalName", "Name"), new { @class = "Listbox-style" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Portlet Selection Ends-->  
+
+                    
+                    <!--Page Action Selection Starts-->
+                    <div class="seven columns">
+                        <div class="cont-lft">
+                            <div class="avail-actions">
+                                <p>Available Actions:</p>
+                               <div class="actions-bg">
+                                    @Html.ListBox("AvailableActionDetails", new SelectList(Model.AvailableActionDetails, "ActionKey", "ActionValue"), new { @class = "Listbox-style" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="two columns">
+                        <div class="th-btn">
+                            <div class="btn1">
+                                <input name="btnPrtRight" type="button" id="btnPrtactRight" value=">>" onclick="javascript:moveToRightOrLeft(1,'AvailableActionDetails','SelectedActionDetails');" />
+                            </div>
+                            <div class="btn1">
+                                <input name="btnPrtLeft" type="button" id="btnPrtactLeft" value="<<" onclick="javascript:moveToRightOrLeft(2,'AvailableActionDetails','SelectedActionDetails');" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="seven columns">
+                        <div class="cont-right">
+                            <div class="sel-actions">
+                                <p>Selected Actions:</p>
+                                <div class="actions-bg">
+                                    @Html.ListBox("SelectedActionDetails", new SelectList(Model.SelectedActionDetails, "ActionKey", "ActionValue"), new { @class = "Listbox-style" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Page Action Selection Ends-->  
+
+                    <!--Action Selection Ends-->   
+                     <div class="row">
+                        <div class="sixteen columns" align="center" style="padding-top:3%;">
+                            <div class="add-link" style="width:95px; display:inline-block;">
+                                <input type="submit" id="btnSave" value="Save" onclick="javascript:SubmitForm(this);return false;" />
+                            </div>
+                            <div class="add-link" style="width:95px; display:inline-block;">
+                                <input type="button" id="btnCancel" value="Cancel" onclick="javascript:btnCancelClick();return false;" />
+                            </div>
+                        </div>
+                    </div>
+                   @* <div class="row">
+                        <div class="sixteen columns" align="center" style="padding-top:3%;">
+                            <div class="add-link" style="width:95px; display:inline-block;">
+                                <input type="submit" id="btnSave" value="Save" onclick="javascript:SubmitForm(this);return false;" />
+                            </div>
+                            <div class="add-link" style="width:95px; display:inline-block;">
+                                <input type="button" id="btnCancel" value="Cancel" onclick="javascript:btnCancelClick();return false;" />
+                            </div>
+                        </div>
+                    </div>*@
+                                    
+			    </div>
+                <!-- CONT CREATION PAGE ENDS HERE -->
+                </div>
+		    </div>
+
+    }
+    </article>
+</section>
+

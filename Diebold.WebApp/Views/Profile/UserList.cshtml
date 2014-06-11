@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "UsersDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div id="dvUsrlstTitle" class="pallette-detail-header-bg">
+    <p>
+        Users Details</p>
+</div>
+<br />
+
+@(Html.Kendo().Grid<Diebold.WebApp.Models.UserViewModel>()
+    .Name("grdUsers")
+    
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.FirstName).Title("First Name");
+        columns.Bound(p => p.LastName).Title("Last Name");
+        columns.Bound(p => p.Title).Title("Title");
+        columns.Bound(p => p.Username).Title("Username");
+        columns.Bound(p => p.Phone).Title("Phone");
+        columns.Bound(p => p.Email).Title("Email");
+        columns.ForeignKey(p => p.RoleId, (System.Collections.IEnumerable)ViewData["roles"], "Id", "Name").EditorTemplateName("RoleViewModel");
+        columns.ForeignKey(p => p.CompanyId, (System.Collections.IEnumerable)ViewData["companies"], "Id", "Name").EditorTemplateName("CompanyViewModel");
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(200);
+        
+    })
+    .Selectable()
+    .ToolBar(toolbar => toolbar.Create())
+    .Editable(editable => editable.Mode(GridEditMode.InLine))
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Groupable()
+    .Filterable()
+    .Events(events => events.DataBound("LoadingDefaultFilter"))
+    .DataSource(dataSource => dataSource
+    .Ajax()
+    .PageSize(10)
+    .Events(events => events.Error("error_handler")
+    .Change("change_handler"))
+    .Model(model => model.Id(p => p.Id))
+    .Read(read => read.Action("Users_Read", "Profile"))
+    .Create(create => create.Action("Users_Create", "Profile"))
+    .Update(update => update.Action("Users_Update", "Profile"))
+    .Destroy(destroy => destroy.Action("Users_Destroy", "Profile"))
+    )
+)
+
+<script type="text/kendo-template" id="message">
+<div class="k-widget k-tooltip k-tooltip-validation k-invalid-msg field-validation-error" style="margin: 0.5em; display: block; " data-for="#=field#" data-valmsg-for="#=field#" id="#=field#_validationMessage">
+            <span class="k-icon k-warning"> </span>#=message#<div class="k-callout k-callout-n"></div></div>
+</script>
+<script type="text/javascript">
+//    function error_handler(e) {
+//        if (e.errors) {
+//            var message = "Errors:\n";
+//            $.each(e.errors, function (key, value) {
+//                if ('errors' in value) {
+//                    $.each(value.errors, function () {
+//                        message += this + "\n";
+//                    });
+//                }
+//            });
+//            alert(message);
+//        }
+//    }
+
+    var validationMessageTmpl = kendo.template($("#message").html());
+
+    function error_handler(args) {
+        if (args.errors) {
+            var grid = $("#grdUsers").data("kendoGrid");
+            grid.one("dataBinding", function (e) {
+                e.preventDefault();   // cancel grid rebind if error occurs                             
+
+                for (var error in args.errors) {
+                    showMessage(grid.editable.element, error, args.errors[error].errors);
+                }
+            });
+        }
+    }
+
+    function showMessage(container, name, errors) {
+        //add the validation message to the form
+        container.find("[data-valmsg-for=" + name + "]")
+            .replaceWith($(validationMessageTmpl({ field: name, message: errors[0] })))
+    }
+
+    function change_handler(e) {
+        if (e.items.length > 0) {
+            if (e.items[0].companies != null && e.items[0].companies != 'undefined')
+                e.items[0].CompanyId = e.items[0].companies.Id;
+            else if (e.items[0].Roles != null && e.items[0].Roles != 'undefined')
+                e.items[0].RoleId = e.items[0].Roles.Id;
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    var validationMessageTmpl = kendo.template($("#message").html());
+
+    function error(args) {
+        if (args.errors) {
+            var grid = $("#Grid").data("kendoGrid");
+            grid.one("dataBinding", function (e) {
+                e.preventDefault();   // cancel grid rebind if error occurs                             
+
+                for (var error in args.errors) {
+                    showMessage(grid.editable.element, error, args.errors[error].errors);
+                }
+            });
+        }
+    }
+
+    function showMessage(container, name, errors) {
+        //add the validation message to the form
+        container.find("[data-valmsg-for=" + name + "]")
+            .replaceWith($(validationMessageTmpl({ field: name, message: errors[0] })))
+    }
+</script>
+
+

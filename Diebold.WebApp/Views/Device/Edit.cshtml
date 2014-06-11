@@ -1,0 +1,221 @@
+﻿@model Diebold.WebApp.Models.DeviceViewModelForEdit
+@{
+    ViewBag.Title = "Edit Device";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    ViewBag.IsEdit = true;
+    TempData.Keep("cameramodel");
+}
+<link href="@Url.Content("~/Content/themes/base/jquery.ui.theme.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/themes/base/jquery.ui.core.css")" rel="stylesheet" type="text/css" />
+
+@using (Html.BeginForm("Edit", "Device", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    <div class="wizard-step step1">
+        <div id="dvDevice" class="pallette-detail-header-bg">
+            <p>Edit Device</p>
+        </div>
+        @Html.ValidationSummary(false, "There were errors while editing device.")
+        <div id="dvDeviceInfo">
+            @Html.Partial("_DeviceEditableInfoReadOnly", Model)
+        </div>
+    </div>
+    <div class="clear">
+    </div> 
+    if(Model.DeviceType != null && (Model.DeviceType.ToString().ToUpper() == "COSTAR111" || Model.DeviceType.ToString().ToUpper() == "IPCONFIGURE530" || Model.DeviceType.ToString().ToUpper() == "VERINTEDGEVR200"))
+    {
+        <div id="dvCamaraDisplay" class="wizard-step step2" style="overflow: auto; display: none;">
+            @Html.Partial("_ViewEditDeviceCamera", (IEnumerable<Diebold.WebApp.Models.CameraViewModel>)@ViewBag.CameraModel)
+        </div>
+    }
+}
+@(Html.Kendo().Window().Name("DetailsConfirmation")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(300)
+)
+@(Html.Kendo().Window()
+    .Name("DieboldAlertWindow")
+    .Title("Information")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div style="padding: 5px">
+    <label id="lblDieboldAlert"></label>
+    <div style="margin: 20% 0 0 0;">
+    <div class="add-link" align="center">
+        <input type="button" value="OK" id="btnOkInfoWindow" style="width: 20%;" onclick="ClosewndAlertInformation();" />
+    </div>
+    </div>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(275)
+    .Height(170)
+)
+<script type="text/javascript">
+    function ClosewndAlertInformation() {
+        $("#DieboldAlertWindow").data("kendoWindow").close();
+    }
+    function fnAddCamerasEditModeClick() {
+        var DeviceKey = document.getElementById('DeviceKey').value;
+        var dataItem = { "id": DeviceKey };
+        var url = '@Url.Action("GetTotalCamerasAvailable", "Device")';
+
+        $.post(url, dataItem, "json")
+        .done(function (ResultSet) {
+            if (ResultSet != null && ResultSet != undefined) {
+                if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                    fnShowAlertInfo(ResultSet.Message);
+                }
+                else {
+                    AddorRemoveCamerastoList(ResultSet);
+                }
+            }
+        })
+        .fail(function (response) { alert(response); });
+        document.getElementById('dvDeviceInfo').style.display = "none";
+        document.getElementById('dvCamaraDisplay').style.display = "block";
+    }
+
+    var isActiveCamerasPresent;
+    var toremove;
+    function AddorRemoveCamerastoList(availableCameras) {
+        var TotalCameras = document.getElementById('NumberOfCameras').value;
+        if (TotalCameras > availableCameras) {
+            // Add Cameras to the List and Display in Grid
+            var dataItem = { "increaseCameraby": TotalCameras };
+            var url = '@Url.Action("AddCameraDetails", "Device")';
+            $.post(url, dataItem, "json")
+            .done(function (ResultSet) {
+                if (ResultSet != null && ResultSet != undefined) {
+                    if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                        fnShowAlertInfo(ResultSet.Message);
+                    }
+                    else {
+                        AssignCamerastoGrid(ResultSet)
+                    }
+                }
+            })
+            .fail(function (response) { alert(response); });
+        }
+        else if (TotalCameras < availableCameras) {
+            // Need to remove cameras from the List
+            var objects = [];
+            var grid = $("#grdDeviceCamera").data("kendoGrid");
+            var CurrentTotalcameras = grid._data.length;
+            var ChangedTotalcameras = availableCameras - TotalCameras;
+            toremove = TotalCameras;
+            for (var count = CurrentTotalcameras; count > TotalCameras; count--) {
+                if (count > 0) {
+                    if (grid._data[count - 1].Active == true) {
+                        isActiveCamerasPresent = true;
+                    }
+                }
+                else {
+                    isActiveCamerasPresent = false;
+                }
+            }
+
+            if (isActiveCamerasPresent == true) {
+                var wnd = $("#DetailsConfirmation").data("kendoWindow");
+                wnd.content("<p style='height:100px'>Some camera have active alert.Do you want remove?</p><p>" +
+                "<input type='button' value='Ok' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='ConfirmRemoveCameraOK(toremove)'>" +
+                "<input type='button' value='Cancel' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='ConfirmRemoveCameraCancel()'></p>");
+                wnd.title("confirm For Remove Active Camera");
+                wnd.center().open();
+            }
+        }
+    }
+
+    function ConfirmRemoveCameraOK(TotalCameras) {
+        var dataItem = { "decreaseCameraby": TotalCameras };
+        var url = '@Url.Action("RemoveCameraDetails", "Device")';
+        $.post(url, dataItem, "json")
+        .done(function (ResultSet) {
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                RemoveCamerasfromGrid(ResultSet);
+            }
+        }
+    })
+    .fail(function (response) { alert(response); });
+    }
+    function AssignCamerastoGrid(ResultSet) {
+        var grid = $("#grdDeviceCamera").data("kendoGrid");
+        grid.dataSource.data(ResultSet);
+    }
+
+    function RemoveCamerasfromGrid(ResultSet) {
+        var grid = $("#grdDeviceCamera").data("kendoGrid");
+        grid.dataSource.data(ResultSet);
+        $("#DetailsConfirmation").data("kendoWindow").close();
+    }
+    function customCancelCommand() {
+        var grid = $("#grdDeviceCamera").data("kendoGrid");
+        grid.cancelChanges();
+
+        document.getElementById('dvDeviceInfo').style.display = "block";
+        document.getElementById('dvCamaraDisplay').style.display = "none";
+    }
+
+    function customSaveCommand() {
+        $("#dvViewDeviceCamera").hide();
+        $('.ui-widget-overlay').hide();
+        $('.ui-draggable').hide();
+        var grid = $("#grdDeviceCamera").data("kendoGrid");
+        var url = '@Url.Action("SelectedCameras_Update", "Device")';
+        var inputData = "";
+        var objects = [];
+        for (var count = 0; count < grid._data.length; count++) {
+            if (count > 0) {
+                inputData += "|" + grid._data[count].CameraName + "," + grid._data[count].Channel + "," + grid._data[count].Active;
+            }
+            else {
+                inputData = grid._data[count].CameraName + "," + grid._data[count].Channel + "," + grid._data[count].Active;
+            }
+        }
+        var data = { cameraView: inputData };
+        $.post(url, data, "json");
+
+        document.getElementById('dvDeviceInfo').style.display = "block";
+        document.getElementById('dvCamaraDisplay').style.display = "none";
+    }
+
+    function fnSaveDeviceClick() {
+        $('#CameraName').val('-');
+        $('#Channel').val('-');
+        if (!ValidNumberOfCameras()) {
+
+            alert('The number of cameras should be between 1 and 32');
+            return false;
+        }
+        else {
+            if ($.contains($("form").attr("action"), "/device/Edit") == true || $.contains($("form").attr("action"), "/Device/Edit") == true) {
+                BlockElement('mainContainer', 'Connecting...');
+                $("form").submit();
+                UnBlockElement('mainContainer');
+            }
+        }
+    }
+
+    function ValidNumberOfCameras() {
+        var deviceModelUpperCaseName = $('#DeviceType').val().toUpperCase();
+        if (deviceModelUpperCaseName != null && deviceModelUpperCaseName != undefined
+                    && deviceModelUpperCaseName != "" && deviceModelUpperCaseName != "COSTAR111"
+                        && deviceModelUpperCaseName != "IPCONFIGURE530" && deviceModelUpperCaseName != "VERINTEDGEVR200") {
+            return true;
+        }
+        else if ($("#NumberOfCameras").val() > 0 && $("#NumberOfCameras").val() < 33) {
+            return true;
+        }
+        return false;
+    }
+    function fnCancel() {
+        window.location.href = '@Url.Content("~/Device/Index")';
+    }
+</script>

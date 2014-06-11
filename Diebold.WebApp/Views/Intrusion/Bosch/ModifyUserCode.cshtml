@@ -1,0 +1,225 @@
+﻿@model Diebold.WebApp.Models.IntrusionUserCodeViewModel
+@{
+    Layout = null;
+}
+<!-- Intrusion User Commands-User Code Modify Step1 starts here -->
+<div class="UserCodeModifyStep1">
+    <div class="cont-inner-room">
+        <div class="grey">
+            <div class="grey-head gradient">
+                <div class="grey-pallet-icon">
+                </div>
+                <p>
+                    <strong>Pass Code Modify</strong></p>
+                <div class="close-icon">
+                    <a href="#">
+                        <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="javascript:fnCloseModifyStep1();return false;" /></a>
+                </div>
+                <div class="close-icon">
+                    <a href="#">
+                        <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+                </div>
+            </div>
+            <div id="dvStep1ModifyUCContent">
+                <div class="grey-body gradient">
+                    <div class="my-access-body-cont">            
+                        <div class="my-access-titile bottom">
+                            <p>
+                                <strong>Step 1: Lookup Fields</strong></p>
+                        </div>  
+                        <div id="dvErrUserCodeEdit">
+                        <ul>
+                        
+                        </ul>
+                        </div>              
+                        <div class="my-access-lbl bottom">
+                            <p>
+                                <strong>Name:</strong>
+                                </p>
+                        </div>
+                        <div class="my-access-field bottom">                    
+                            @Html.TextBox("txtEditUserName",null, new { @class = "my-access-in", maxlength = 250 })
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="my-access-lbl bottom">
+                            <p>                        
+                                <strong>Pass Code:</strong>
+                                </p>
+                        </div>
+                        <div class="my-access-field bottom">
+                            @Html.TextBox("txtEditUserCode",null, new { @class = "my-access-in"})
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="my-access-right-btn"  style="width:137px;">
+                        <div class="add-link" align="center" style="float: left;">
+                            <input type="button" value="Next"  onclick="javascript:modify2();return false;"/>
+                        </div>
+                        <div class="add-link" align="center" style="float: right;">
+                            <input type="button" value="Cancel" onclick="javascript:fnCloseModifyStep1();return false;"/>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="grey-set">
+                    <div class="sett-icon">
+                        <a href="#">
+                            <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+                    </div>
+                    <div class="sett-icon">
+                        <a href="#">
+                            <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="UserCodeModifyStep2" style="display:none;">    
+    <div id="modify2">
+    <div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>Pass Code Modify</strong></p>
+               
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" onclick="javascript:fnCloseModifyStep1();return false;" alt="" /></a>
+            </div>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        <div id="dvAddUserCodeContent">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">
+             <div id="dvErrUserCodeAdd">
+                <ul>
+                
+                </ul>
+                </div>
+                <input type="hidden" id="userNumber" name="userNumber" />
+                <div class="my-access-titile bottom">
+                    <p>
+                        <strong></strong>
+                    </p>
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                       <strong>Name:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @Html.TextBox("name",null, new { @class = "my-access-in", maxlength = 250 })
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                       <strong>Pass Code:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @Html.TextBox("passcode",null, new { @class = "my-access-in", maxlength = 250 })
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>User Group:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                  @(Html.Kendo().ComboBox()
+                  .HtmlAttributes(new { style = "width:100%;", id = "cboProfileNumberModify" })
+                  .Name("cboProfileNumberModify")                   
+                  .Placeholder("-- Select --")
+                  .DataTextField("ProfileNumber")
+                  .DataValueField("ProfileNumberID")
+                  .BindTo(Model.ProfileNumbers)
+                  .AutoBind(true)
+                  .Suggest(true)
+                )
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-full-lbl bottom">
+                    <p>
+                        <strong>Authority Levels:(*)</strong></p>
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-full-field bottom">
+                    <table>
+                       @for (var i = 0; i < 32; i++) {
+                           if (i % 4 == 0) { 
+                               @:<tr>
+                           }
+                           <td>
+                               <span><strong>@(i+1):</strong></span>
+                               <select id="cbAccess_@(i+1)" name="cbAccess_@(i+1)">
+                                   @for (var j = 0; j <= 15; j++) { 
+                                        <option value="@(j)">@(j)</option>
+                                   }
+                               </select>
+                           </td>
+                            if (i % 4 == 3) { 
+                                @:</tr>
+                            }
+
+                       }
+                    </table>
+
+                </div>    
+                <div class="clear">
+                </div>
+            </div>
+            <div class="my-access-right-btn"  style="width:137px;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Save" onclick="javascript:Diebold.Intrusion.submitModifyUserCode(); return false;"/>
+                </div>
+                <div class="add-link" align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="javascript:fnCloseModifyStep1();return false;"/>
+                </div>
+
+                    
+
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+    </div>    
+</div>
+<script type="text/javascript">
+    function fnCloseModifyStep1() {
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        document.getElementById('dvStep1ModifyUserCode').style.visibility = 'hidden';
+    }
+    function modify2() {
+
+        var url = '@Url.Action("GetUserCodesInformation", "Intrusion")';
+        // console.log(url);
+        Diebold.Intrusion.fnCloseModifyStep1OpenModifyStep2(url);
+            //$.post(url, dataItem, GetUserCodeEditFirstStepCallback, "json");
+        
+    }
+          
+</script>
+

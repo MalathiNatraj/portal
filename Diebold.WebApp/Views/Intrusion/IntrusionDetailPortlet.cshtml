@@ -1,0 +1,479 @@
+﻿@using Diebold.WebApp.Models;
+
+@{
+    IList<Diebold.WebApp.Models.AreaModel> objMasterRoomModels = new List<Diebold.WebApp.Models.AreaModel>();
+    IList<Diebold.WebApp.Models.ZoneModel> objDetailRowModels = new List<Diebold.WebApp.Models.ZoneModel>();
+    IList<Diebold.WebApp.Models.IntrusionReportModel> objReportModels = new List<Diebold.WebApp.Models.IntrusionReportModel>();
+    IList<Diebold.WebApp.Models.DeviceModel> objDeviceModel = new List<Diebold.WebApp.Models.DeviceModel>();
+}
+<!-- Intrusion Pallet starts here -->
+
+<div class="cont-inner-room">
+    <div id="IntrusionportletArea">
+        <div class="purple">
+            <div class="Dashbord-header">
+                <div class="purple-head gradient">
+                    <div class="pallet-icon">
+                        <img src="@Url.Content("~/Content/images/intru-icon.png")" width="21" height="21" alt="" />
+                    </div>
+                    <p>
+                        <strong>Intrusion</strong></p>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgMasClose" onclick="javascript:fnCloseIntrusiondet();return false;" src="@Url.Content("~/Content/images/close-icon.png")" alt="" />
+                        </a>
+                    </div>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgMasExpColapse" onclick="javascript:fntoggleIntrusiondet();return false;" src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="Intrusion-content">
+                <div class="purple-body">
+                    <div class="intru-body-cont">
+                        <div class="intru-device-list">
+                            @(Html.Kendo().ComboBox()
+                                .HtmlAttributes(new { style = "width:46%" })
+                                .Name("IntrusionCategories")
+                                .Placeholder("Device List")
+                                .DataTextField("Name")
+                                .DataValueField("Id")
+                                .Suggest(true)
+                                .Template("<div id='rowcell'>${ Name }</div><div id='rowcell'>${ SiteName }</div><div id='rowcell'>${ Address1 }</div><div id='rowcell'>${ Address2 }</div><div id='rowcell'>${ City }</div><div id='rowcell'>${ State }</div><div id='rowcell' style='border-right:0px'>${ Zip }</div>")
+                                .Events(e =>
+                                {
+                                    e.Open("openDDIntrusionheader").Close("closeDDIntrusionheader").Change("selectIntrusionDevice");
+                                })
+                            )
+                            <img id="imgsearchIntrusionLogo" src="@Url.Content("~/Content/images/SearchIcon.png")" style="vertical-align:bottom;cursor:pointer;padding-bottom: 5px;" alt=""  onclick="fnOpenIntrusionDetails();"/>
+                        </div>
+                        <script>
+                            function parentTypeIntrusion() {
+                                // Get all Device Types for Intrusion Type
+                                return {
+                                    parentType: "Intrusion"
+                                };
+                            }
+                        </script>
+                        <div class="intru-polling-status" style="padding-left: 3px;">
+                            <p>
+                                Polling Status:<strong>
+                                    <label id="lblIntruPollingStatus">
+                                    </label>
+                                </strong>
+                            </p>
+                            <p>
+                                Status:<strong>
+                                    <label id="lblIntruStatus">
+                                    </label>
+                                </strong>
+                            </p>
+                        </div>
+                        <div class="intru-grid-poll-status">
+                            <p>
+                                Areas:</p>
+                            <div class="intru-grid">
+                                @(Html.Kendo().Grid(@objMasterRoomModels)
+                                .HtmlAttributes(new { style = "width:99.7%" })
+                                .Name("grdMasterRoom")
+                                .Resizable(resize => resize.Columns(true))
+                                .Columns(columns =>
+                                {
+                                    //For width alignment of data column in Kendo Grid, we need to keep one column without "Width" property
+                                    columns.Bound(model => model.AreaName);
+                                    columns.Bound(model => model.Status);
+                                    columns.Bound(model => model.Online);
+                                    columns.Bound(model => model.Armed).ClientTemplate("<input class=\"cbArmed\" name=\"Armed\" id=\"Armed\" type=\"checkbox\" value=\"#=Armed#\"  #= Armed ? checked='checked':''# onclick='javascript:fnUpinWindow(#=AreaNumber#,#=Armed#);return false;'>");
+                                })
+                                        .Selectable(selectable => selectable.Mode(GridSelectionMode.Single))
+                                        .Events(events => events.Change("GrdMasterSelectionChange"))
+                                        .Pageable()
+                                        .Sortable()
+                                        .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(3)
+                                        .ServerOperation(false))
+                                    )
+                            </div>
+                        </div>
+                        <div class="intru-grid-poll-status">
+                            <p>
+                                Zones:</p>
+                            <div class="intru-grid">
+                                @(Html.Kendo().Grid(@objDetailRowModels)
+                                .HtmlAttributes(new { style = "width:99.7%" })
+                                .Name("grdDetailRow")
+                                .Resizable(resize => resize.Columns(true))
+                                .Columns(columns =>
+                                {
+                                    //For width alignment of data column in Kendo Grid, we need to keep one column without "Width" property
+                                    columns.Bound(model => model.Name);
+                                    columns.Bound(model => model.ByPass).ClientTemplate("<input name=\"ByPass\" id=\"ByPass\" type=\"checkbox\" value=\"#=ByPass#\" #= ByPass ? checked='checked':'' # onclick='javascript:fnByPassReset(#=ZoneNumber#,#=ByPass#);return false;' />").Title("Bypass");
+                                    columns.Bound(model => model.Status);
+                                    columns.Bound(model => model.HasImage).ClientTemplate(                                                                              
+                                           " # if(HasImage) { #" +
+                                             "<div class='add-link'>" +
+                                               "<input type='button' value='Image' class='gradient' onclick='Diebold.Intrusion.getMedia(\"Image\", Diebold.Intrusion.getSelectedDevice(), #=ZoneNumber#)'/>" + 
+                                             "</div>" +
+                                           "# } #" + 
+                                           "# if(HasVideo) { #" +
+                                             "<div class='add-link'>" +
+                                               " <input type='button' value='Video' class='gradient' onclick='Diebold.Intrusion.getMedia(\"Video\", Diebold.Intrusion.getSelectedDevice(), #=ZoneNumber#)'/>" +
+                                             "</div>" +
+                                           "# } #"                                     
+                                         ).HeaderTemplate("Commands");                         
+                                    // .HtmlAttributes(new { Display = "none" })   
+                                })
+
+                                .Pageable()
+                                .Sortable()
+                                        .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .PageSize(2)
+                                .ServerOperation(false)
+                                    )
+                                )
+                            </div>
+                        </div>
+                        <p>
+                            Panel User Code(s):</p>
+                        <div class="intru-buttons-bg">
+                            <div class="intru-buttons">
+                                <div class="add-link">
+                                    <input type="button" value="Add" class="gradient" onclick="Diebold.Intrusion.addUserCode();" />
+                                </div>
+                                <div class="add-link">
+                                    <input type="button" value="Edit" class="gradient" onclick="Diebold.Intrusion.modifyUserCode();" />
+                                </div>
+                                <div class="add-link">
+                                    <input type="button" value="Delete" class="gradient" onclick="Diebold.Intrusion.deleteUserCode();" />
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <br />
+                        <p>
+                            Panel Reports:</p>
+                        <div class="intru-buttons-bg">
+                            <div class="panel-reports">
+                                <div id="dvcboReportType" style="padding-top: 8px; padding-left: 15px;">
+                                    @(Html.Kendo().ComboBox()
+                                    .HtmlAttributes(new { style = "width:43%" })
+                                    .Name("ReportType")
+                                    .Placeholder("Report Type")
+                                    .DataTextField("Text")
+                                    .DataValueField("Value")
+                                    .BindTo(new List<SelectListItem>() {
+                                        new SelectListItem() {
+                                        Text = "System Report",
+                                        Value = "1"
+                                    }
+                                    })
+                                )
+                                </div>
+                                <div id="dvStartTime" style="padding-left: 15px; padding-top: 8px">
+                                    <label id="lblStartDate" style="color: White; float: left; margin-top: 9px;">
+                                        Start Date:&nbsp;</label>
+                                    <div style="width: 150px; float: left;">
+                                        @(Html.Kendo().DatePicker()
+                                                    .Name("Startdatetimepicker")
+                                                    .Value(DateTime.Now)
+                                                    .HtmlAttributes(new { style = "width:80%" })
+                                                  )
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="add-link" style="float: right; padding-right: 25px;">
+                                    <input type="button" value="Run Report" class="gradient" onclick="javascript:fnGetIntrusionReport();return false;" />
+                                </div>
+                                <div id="dvEndTime" style="padding-left: 15px; padding-top: 8px">
+                                    <label id="lblEndDate" style="color: White; float: left; margin-top: 9px;">
+                                        End Date:&nbsp;&nbsp;</label>
+                                    <div style="width: 150px; float: left;">
+                                        @(Html.Kendo().DatePicker()
+                                                    .Name("Enddatetimepicker")
+                                                    .Value(DateTime.Now)
+                                                    .HtmlAttributes(new { style = "width:80%" })
+                                                  )
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="purple-set">
+                    <div class="sett-icon">
+                        <a href="#">
+                            <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" onclick="javascript:ShowIntrusionDescription();return false;"/>
+                        </a>
+                    </div>
+                    <div class="sett-icon">
+                        <a href="#">
+                            <img id="imgIntrusionSettings" src="@Url.Content("~/Content/images/settings-icon.png")" alt="" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input id="hdnzoneNumber" type="hidden" />
+    <input id="hdnByPass" type="hidden" />
+</div>
+<!-- Intrusion Pallet ends here -->
+<div class="overlay_msg" id="dvIntrusionPopup" style="width: 450px; left: 25%; visibility: hidden;
+    padding: 15px; display: none;">
+    @Html.Partial("../Intrusion/IntrusionPopup");
+</div>
+<div class="my_overlay" id="Intrusion_overlay" style="background-color: #000000;
+    opacity: .7; position: absolute; z-index: 200; width: 100%; height: 100%; margin: 0px;
+    padding: 0px; visibility: hidden; top: 0; left: 0; display: none;">
+</div>
+<!--Add User Code -->
+<div class="overlay_msg" id="dvAddUserCode" style="width: 448px; left: 25%; visibility: hidden;
+    padding: 15px; display: none;">
+    @Html.Partial("../Intrusion/AddUserCode", new IntrusionUserCodeViewModel());
+</div>
+<!--Add Step1 Modify Code -->
+<div class="overlay_msg" id="dvStep1ModifyUserCode" style="width: 448px; left: 25%;
+    visibility: hidden; padding: 15px; display: none;">
+    @Html.Partial("../Intrusion/Step1ModifyUserCode");
+</div>
+<!--Add Step2 Modify User Code List -->
+<div class="overlay_msg" id="dvModifyUserCodeList" style="width: 448px; left: 25%;
+    visibility: hidden; padding: 15px; display: none;">
+    @Html.Partial("../Intrusion/UserCodeModifyList");
+</div>
+<!--Add Step3 Modify Code -->
+<div class="overlay_msg" id="dvStep2ModifyUserCode" style="width: 448px; left: 25%;
+    visibility: hidden; padding: 15px; display: none;">
+    @Html.Partial("../Intrusion/Step2ModifyUserCode");
+</div>
+<!--Add Step1 Delete Code -->
+<div class="overlay_msg" id="dvStep1DeleteUserCode" style="width: 448px; left: 25%;
+    visibility: hidden; padding: 15px; display: none;">
+    @Html.Partial("../Intrusion/Step1DeleteUserCode");
+</div>
+<!--Add Step2 Delete Code -->
+<div class="overlay_msg" id="dvStep2DeleteUserCode" style="width: 448px; left: 25%;
+    visibility: hidden; padding: 15px; display: none;">
+    @Html.Partial("../Intrusion/Step2DeleteUserCode");
+</div>
+<div class="overlay_msg" id="dvDeleteUserCodeList" style="width: 448px; left: 25%;
+    visibility: hidden; padding: 15px; display: none;">
+    @Html.Partial("../Intrusion/UserCodeDeleteList");
+</div>
+<div id="dvIntrusionUserPin" class="overlay_msg" style="width: 448px; left: 25%;
+    visibility: hidden; padding: 15px; display: none;">
+    <div class="cont-inner-room">
+        <div class="grey">
+            <div class="grey-head gradient">
+                <div class="grey-pallet-icon">
+                </div>
+                <p>
+                    <strong>User Pin</strong></p>
+                <div class="close-icon">
+                    <a href="#">
+                        <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="hideIntrusionUserPinOverlay();" /></a>
+                </div>
+                <div class="close-icon">
+                    <a href="#">
+                        <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+                </div>
+            </div>
+            <div id="IntrusionUserPinContent">
+            <div class="grey-body gradient">
+                <div class="my-access-body-cont" style="padding-top:4%">
+                    <div class="my-access-lbl bottom">
+                        <p>
+                            <strong>User Pin:(*)</strong></p>
+                    </div>
+                    <div class="my-access-field bottom">
+                        @* @Html.TextBox("txtUserpin", null, new { @class = "my-access-in", maxlength = 4 })*@
+                        <input type="password" id="txtUserpin" class="my-access-in" maxlength="6"/>
+                        <input id="hdnareaNumber" type="hidden" />
+                        <input id="hdnareaArm" type="hidden" />
+                        <input id="hdnsubmitClick" type="hidden" />
+                    </div>                    
+                    <div class="clear">
+                    </div>
+                     
+                </div>
+                 <div class="my-access-right-btn" style="width: 147px;">
+                        <div class="add-link" align="center" style="float: left;">
+                            <input type="button" value="Submit" id="btnSubmit" onclick="javascript:fnUserpinValidation();" />
+                        </div>
+                        <div class="add-link" align="center" style="float: right;">
+                            <input type="button" value="Cancel" onclick="javascript:hideIntrusionUserPinOverlay();" />
+                        </div>
+                    </div>
+                    <div class="clear">
+                </div>
+            </div>
+            <div class="grey-set">
+            <div class="sett-icon">
+                <a>
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a>
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+           </div>
+        </div>
+    </div>
+</div>
+@(Html.Kendo().Window()
+    .Name("IntrusionDescriptionwindow")
+    .Title("Intrusion Portlet Description")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div>
+    <p>
+        Remotely arm and disarm panels, check current status and alerts, bypass or shunt
+        areas, change, modify or remove user codes and generate panel diagnostic reports.
+    </p>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)
+ <div id="dvSearchIntrusionDevices" class="modelDialog" style="display: none;">
+    <div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Select a Device</label></strong></div>
+        <div style="width:90%; margin:3% 2% 0 5%;">
+            <p>
+              @(Html.Kendo().Grid(objDeviceModel)
+                .Name("grdSearchIntrusionDeviceDetails")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Id).Visible(false);
+                    columns.Bound(p => p.Name).Width("20%").Visible(true).Title("Device").Filterable(true).Sortable(true);
+                    columns.Bound(p => p.SiteName).Width("20%").Visible(true).Title("Site").Filterable(true);
+                    columns.Bound(p => p.Address1).Width("20%").Visible(true).Title("Address1").Filterable(true);
+                    columns.Bound(p => p.Address2).Width("20%").Visible(true).Title("Address2").Filterable(true);
+                    columns.Bound(p => p.City).Width("20%").Filterable(true).Title("City").Visible(true);
+                    columns.Bound(p => p.State).Width("20%").Visible(true).Title("State").Filterable(true);
+                    columns.Bound(p => p.Zip).Width("20%").Visible(true).Title("Zip").Filterable(true);
+                })
+                .Events(events => events.Change("grdSearchIntrusionChanged").DataBound("LoadingDefaultFilter"))
+                .Pageable()
+                .Filterable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .ServerOperation(false)
+                )
+            )
+            </p>
+            <div class="add-link" style="padding-top:5px; width:100px; margin-left: 43%;">
+            <input type="button" value="Close" id="btnSearchIntrusionCancel" onclick="javascript:btnSearchIntrusionCancelClicked();" />
+        </div>
+        </div>
+        <br />
+        </div>
+
+<div id="dvPnlReport" class="modelDialog" style="display: none;">
+    <div style="background-color: #C5C5C5; width: 100%; color: #666666">
+        <strong>
+            <label style="margin: 8% 0 0 1%;">
+                Intrusion Report</label></strong></div>
+    <div style="width: 90%; margin: 3% 2% 0 5%;">
+        @(Html.Kendo().Grid(objReportModels)
+         .HtmlAttributes(new { style = "width:99.7%" })
+         .Name("grdIntruReports")
+         .Resizable(resize => resize.Columns(true))
+         .Columns(columns =>
+         {
+             columns.Bound(model => model.type).Title("Title");
+             columns.Bound(model => model.datetime).Title("DateTime");
+             columns.Bound(model => model.user).Title("User");
+             columns.Bound(model => model.message).Title("Message");
+         })
+         .Pageable()
+         .Sortable()
+         .DataSource(dataSource => dataSource
+         .Ajax()
+         .PageSize(5)
+         .ServerOperation(false)
+         )
+         )
+        <br />
+        <div style="width: 150px; margin-left: 32%; margin-bottom: 2%;">
+            <div class="add-link" align="center" style="float: right;">
+                <input type="button" value="Close" onclick="javascript:fnCloseIntrusionreport();" />
+            </div>
+        </div>
+        <br />
+    </div>
+</div>
+<script type="text/javascript">
+    var intrusionClosePortletUrl = '@Url.Action("ClosePortlet", "Preferences")';
+    var intrusionGetZonesByAreaUrl = '@Url.Action("GetZonesByArea", "Intrusion")';
+    var intrusionGetProfileNumberListUrl = '@Url.Action("GetProfileNumberList", "Intrusion")';
+    var intrusionGetDeviceListforIntrusionUrl = '@Url.Action("GetDeviceListforIntrusion", "Intrusion")';
+    var intrusionGetPlatformIntrusionDetailsUrl = '@Url.Action("GetPlatformIntrusionDetails", "Intrusion")';
+    var intrusionGetIntrusionDetailsUrl = '@Url.Action("GetIntrusionDetails", "Intrusion")';
+    var intrusionAddDefaultValuesUrl = '@Url.Action("AddDefaultValues", "Intrusion")';
+    var intrusionSaveIntrusionDefaultValueUrl = '@Url.Action("SaveIntrusionDefaultValue", "Intrusion")';
+    var intrusionClearIntrusionDefaultValueUrl = '@Url.Action("ClearIntrusionDefaultValue", "Intrusion")';
+    var intrusionZoneByPassUrl = '@Url.Action("ZoneByPass", "Intrusion")';
+    var intrusionPollingUrl = '@Url.Action("GetPollingStatus", "Intrusion")';
+    var intrusionValidateUserPinUrl = '@Url.Action("ValidateUserPin", "Intrusion")';
+    var intrusionEditUri = '@Url.Content("~/Account/LogOff")';
+    var intrusionGetIntrusionReportUrl = '@Url.Action("GetIntrusionReport", "Intrusion")';
+    var intrusionGetIntrusionDeviceListforSearchUrl = '@Url.Action("GetIntrusionDeviceListforSearch", "Intrusion")';
+
+    $(document).ready(function () {
+        GetIntrusionDeviceTypes();
+        $('#imgIntrusionSettings').click(function (event) {
+            $("#dvSettings").dialog("option", "position", {
+                my: "left top",
+                at: "bottom",
+                collision: "flip",
+                of: event,
+                offset: "20 40"
+            });
+            $('#dvSettings').empty();
+            $('#dvSettings').append('<a href="#" id="imgIntruDefaultValuesDetails" onclick="javascript:fnAddIntrusionDefaultValuesClick();return false;" class="divdynamiclink">Save Defaults</a>');
+            $('#dvSettings').append('<a href="#" id="imgIntruClearDefaultValues" onclick="javascript:fnClearIntrusionDefaultValuesClick();return false;" class="divdynamiclink">Clear Defaults</a>');
+            $('#dvSettings').append('<a href="#" id="imgIntrusionRefreshValues" onclick="javascript:fnIntrusionRefreshClick();return false" class="divdynamiclink">Refresh</a>');
+            $('#dvSettings').dialog('open');
+            return false;
+        });
+        // Close Pop-up If the user clicks anywhere else on the page
+        jQuery('body').bind('click', function (e) {
+            if (jQuery('#dvSettings').dialog('isOpen')
+            && !jQuery(e.target).is('.ui-dialog, a')
+            && !jQuery(e.target).closest('.ui-dialog').length
+         ) {
+                jQuery('#dvSettings').dialog('close');
+            }
+        });
+
+        var IntrusionInterval = '@System.Web.Configuration.WebConfigurationManager.AppSettings["IntrusionFeedInterval"]';
+        var refreshId = setInterval(function () {
+            if (intrusionDataItem != undefined) {
+                var areaUrl = '@Url.Action("GetPlatformIntrusionDetails", "Intrusion")';
+                $.post(areaUrl, intrusionDataItem, GetPollingDetailbyDeviceIdCallback, "json");
+            }
+        }, IntrusionInterval);
+    });
+
+    $(function () {
+        var deviceData = '@Html.Raw(Json.Encode(objDeviceModel))';
+        // console.log(deviceData);
+    });
+</script>

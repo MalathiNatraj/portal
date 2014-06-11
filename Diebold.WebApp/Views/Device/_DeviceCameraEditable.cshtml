@@ -1,0 +1,27 @@
+﻿@model Diebold.WebApp.Models.CameraViewModel
+<div class="pallette-detail-subheader-bg">
+    <p>
+        Camera Information</p>
+</div>
+<div class="editableInfo">
+    <fieldset>
+        <div class="leftPanel">
+            <div class="editor-field wizard-step-edit">
+                @Html.LabelFor(model => model.CameraName)
+                @Html.EditorFor(model => model.CameraName)
+            </div>
+            <div class="editor-field  wizard-step-edit">
+                @Html.HiddenFor(model => model.Channel)
+            </div>
+            <div class="editor-field  wizard-step-edit activeOption clearfix">
+                @Html.LabelFor(model => model.Active)
+                @Html.CheckBoxFor(model => model.Active)
+            </div>
+            @Html.Hidden("RowId")
+        </div>
+    </fieldset>
+</div>
+<div class="footer">
+    <input type="button" id="btnAddCamera" class="btnAddCameras" value="Finish" />
+    <input type="button" id="btnCancelAddCamera" class="btnAddCameras" value="Cancel" />
+</div>

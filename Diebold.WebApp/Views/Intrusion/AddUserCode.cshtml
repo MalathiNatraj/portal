@@ -1,0 +1,163 @@
+﻿
+<!-- Intrusion User Commands-User Code Add starts here -->
+@model Diebold.WebApp.Models.IntrusionUserCodeViewModel
+<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>User Code Add</strong></p>
+               
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" onclick="javascript:fnCloseAddUserCode();return false;" alt="" /></a>
+            </div>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        <div id="dvAddUserCodeContent">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">
+             <div id="dvErrUserCodeAdd">
+                <ul>
+                
+                </ul>
+                </div>
+                <div class="my-access-titile bottom">
+                    <p>
+                        <strong></strong>
+                    </p>
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                       <strong>Name:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @Html.TextBox("name",null, new { @class = "my-access-in", maxlength = 250 })
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>User Code:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @Html.TextBox("passcode",null, new { @class = "my-access-in"})
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Profile Number:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+
+
+                 @(Html.Kendo().ComboBox()
+                  .HtmlAttributes(new { style = "width:100%;" })
+                  .Name("cboProfileNumberAdd")                   
+                  .Placeholder("-- Select --")
+                  .DataTextField("ProfileNumber")
+                  .DataValueField("ProfileNumberID")
+                  .BindTo(Model.ProfileNumbers)
+                  .AutoBind(true)
+                  .Suggest(true)
+                  )
+                </div>                
+                <div class="clear">
+                </div>
+            </div>
+            <div class="my-access-right-btn"  style="width:137px;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Save" onclick="javscript:fnValidateUserCode();return false;"/>
+                </div>
+                <div class="add-link" align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="javascript:fnCloseAddUserCode();return false;"/>
+                </div>
+
+                    
+
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function fnCloseAddUserCode() {
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        document.getElementById('dvAddUserCode').style.visibility = 'hidden';
+    }
+    function fnValidateUserCode() {        
+        $("#dvErrUserCodeAdd ul").empty();
+        var ProfileValue = $("#cboProfileNumberAdd").val();
+        var deviceID = $("#IntrusionCategories").val();
+        var regUserCode = /^[0-9]+$/;
+
+        
+
+        if ($('#name').val() == '' && $('#passcode').val() == '' && (ProfileValue == '' || ProfileValue == '-- Select --')) {
+            $('#dvErrUserCodeAdd ul').append('<li class="validation-summary-intrusionpopup">Name is Required</li>');
+            $('#dvErrUserCodeAdd ul').append('<li class="validation-summary-intrusionpopup">User Code is Required</li>');
+            $('#dvErrUserCodeAdd ul').append('<li class="validation-summary-intrusionpopup">Profile Number is Required</li>');
+        }
+        else if ($('#name').val() == '' && $('#passcode').val() == '') {
+            $('#dvErrUserCodeAdd ul').append('<li class="validation-summary-intrusionpopup">Name is Required</li>');            
+            $('#dvErrUserCodeAdd ul').append('<li class="validation-summary-intrusionpopup">User Code is Required</li>');
+        }
+        else if ($('#name').val() == '' && (ProfileValue == '' || ProfileValue == '-- Select --')) {
+            $('#dvErrUserCodeAdd ul').append('<li class="validation-summary-intrusionpopup">Name is Required</li>');
+            $('#dvErrUserCodeAdd ul').append('<li class="validation-summary-intrusionpopup">Profile Number is Required</li>');
+        }
+        else if ($('#passcode').val() == '' && (ProfileValue == '' || ProfileValue == '-- Select --')) {
+            $('#dvErrUserCodeAdd ul').append('<li class="validation-summary-intrusionpopup">User Code is Required</li>');
+            $('#dvErrUserCodeAdd ul').append('<li class="validation-summary-intrusionpopup">Profile Number is Required</li>');
+        }
+        else if ($('#name').val() == '') {
+            $('#dvErrUserCodeAdd ul').append('<li class="validation-summary-intrusionpopup">Name is Required</li>');
+        }
+        else if ($('#passcode').val() == '') {
+            $('#dvErrUserCodeAdd ul').append('<li class="validation-summary-intrusionpopup">User Code is Required</li>');
+        }
+        else if (ProfileValue == '' || ProfileValue == '-- Select --') {
+            $('#dvErrUserCodeAdd ul').append('<li class="validation-summary-intrusionpopup">Profile Number is Required</li>');         
+        }
+        else {
+            var dataItem = { "Name": $('#name').val(), "UserCode": $('#passcode').val(), "ProfileNumber": ProfileValue, "deviceId": deviceID };
+            var url = '@Url.Action("UserCodeAdd", "Intrusion")';
+            BlockElement("dvAddUserCodeContent", 'Connecting...');
+            $.post(url, dataItem, GetUserCodeAddCallback, "json");
+        }
+    }
+
+    function GetUserCodeAddCallback(ResultSet) {
+        UnBlockElement("dvAddUserCodeContent");
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                if (ResultSet == "OK") {
+                    fnShowAlertInfo('User code added successfully.');
+                    document.getElementById('my_overlay').style.visibility = 'hidden';
+                    document.getElementById('dvAddUserCode').style.visibility = 'hidden';
+                }
+            }
+        }
+    }
+</script>
+

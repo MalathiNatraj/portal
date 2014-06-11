@@ -1,0 +1,331 @@
+﻿@model IEnumerable<DieboldMobile.Models.DeviceListDashboardViewModel>
+@{
+    ViewBag.Title = "Alert";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+
+	<!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=320,user-scalable=false" />
+
+	<link rel="stylesheet" type="text/css" href="../../Content/style.css">
+    <!--[if gte IE 9]>
+        <link rel="stylesheet" type="text/css" href="css/gradient-ie6-and-up.css" />
+	<![endif]-->
+
+	<title>Diebold</title>
+	<script type="text/javascript">
+<!--
+	    function MM_swapImgRestore() { //v3.0
+	        var i, x, a = document.MM_sr; for (i = 0; a && i < a.length && (x = a[i]) && x.oSrc; i++) x.src = x.oSrc;
+	    }
+	    function MM_preloadImages() { //v3.0
+	        var d = document; if (d.images) {
+	            if (!d.MM_p) d.MM_p = new Array();
+	            var i, j = d.MM_p.length, a = MM_preloadImages.arguments; for (i = 0; i < a.length; i++)
+	                if (a[i].indexOf("#") != 0) { d.MM_p[j] = new Image; d.MM_p[j++].src = a[i]; }
+	        }
+	    }
+
+	    function MM_findObj(n, d) { //v4.01
+	        var p, i, x; if (!d) d = document; if ((p = n.indexOf("?")) > 0 && parent.frames.length) {
+	            d = parent.frames[n.substring(p + 1)].document; n = n.substring(0, p);
+	        }
+	        if (!(x = d[n]) && d.all) x = d.all[n]; for (i = 0; !x && i < d.forms.length; i++) x = d.forms[i][n];
+	        for (i = 0; !x && d.layers && i < d.layers.length; i++) x = MM_findObj(n, d.layers[i].document);
+	        if (!x && d.getElementById) x = d.getElementById(n); return x;
+	    }
+
+	    function MM_swapImage() { //v3.0
+	        var i, j = 0, x, a = MM_swapImage.arguments; document.MM_sr = new Array; for (i = 0; i < (a.length - 2); i += 3)
+	            if ((x = MM_findObj(a[i])) != null) { document.MM_sr[j++] = x; if (!x.oSrc) x.oSrc = x.src; x.src = a[i + 2]; }
+	    }
+
+	    $(document).ready(function () {
+
+	        loaddevice('DVR');
+
+//	        $('#cmbDeviceTypeList').change(function () {
+//	            //var values = ""; $("select option:selected").each(function () { values += $(this).val() + " "; });
+//	            var values = $("#select-id").prop("selectedIndex");
+//	            loaddevicechange(values);
+//	        });
+
+
+
+	    });
+
+	    function loaddevice(value) {
+	        $.ajax({
+	            url: '@Url.Action("GetAllDevicebyParentType", "Alerts")',
+	            type: 'POST',
+	            //data: { parentType: 'DVR' },
+	            data: { parentType: value },
+	            success: function (data) {
+	                $('#cmbDeviceTypeList').val('');
+	                $('#cmbDeviceTypeList').val('Select Device Type');
+	                $.each(data, function (index, itemData) {
+	                    var addr = itemData.SiteName + '<br> ' + itemData.Address1 + '<br> ' + itemData.Address2 + '<br> ' + itemData.City;
+	                    //	                    cleardevice();
+	                    if (index == 0) {
+	                        $('#onelft').append('<p>' + itemData.Name + '</P>');
+	                        $('#onerit').append('<p>' + addr + '</P>');
+	                    }
+	                    if (index == 1) {
+	                        $('#twolft').append('<p>' + itemData.Name + '</P>');
+	                        $('#tworit').append('<p>' + addr + '</P>');
+	                        selectedState = itemData.Value;
+	                    }
+	                    if (index == 2) {
+	                        $('#thrlft').append('<p>' + itemData.Name + '</P>');
+	                        $('#thrrit').append('<p>' + addr + '</P>');
+	                    }
+
+	                    $('#cmbDeviceTypeList').append($('<option/>', {
+	                        value: itemData.Id,
+	                        text: itemData.Name
+	                    })
+
+                        );
+	                });
+	            },
+	            error: function (errordata) {
+	                alert('Failure')
+	            }
+	        });
+	    }
+
+	    function loaddevicechange(value) {
+	        $.ajax({
+	            url: '@Url.Action("GetActiveAlertsbyDeviceId", "Alerts")',
+	            type: 'POST',
+	            //data: { parentType: 'DVR' },
+	            data: { deviceId: value },
+	            success: function (data) {
+
+	                $.each(data, function (index, itemData) {
+//	                    cleardevice();
+	                    if (index == 0) {
+	                        $('#onelft').append(itemData.Name);
+	                        $('#onerit').append(itemData.SiteName);
+	                    }
+	                    if (index == 1) {
+	                        $('#twolft').append(itemData.Name);
+	                        $('#tworit').append(itemData.SiteName);
+	                        selectedState = itemData.Value;
+	                    }
+	                    if (index == 2) {
+	                        $('#thrlft').append(itemData.Name);
+	                        $('#thrrit').append(itemData.SiteName);
+	                    }
+
+	                    $('#cmbDeviceTypeList').append($('<option/>', {
+	                        value: itemData.Id,
+	                        text: itemData.Name
+	                    })
+
+                        );
+	                });
+	            },
+	            error: function (errordata) {
+	                alert('Failure')
+	            }
+	        });
+	    }
+
+        function cleardevice() {
+          $('#onelft').empty();
+          $('#onerit').empty();
+          $('#twolft').empty();
+          $('#tworit').empty();
+          $('#thrlft').empty();
+          $('#thrrit').empty();
+        }
+//-->
+    </script>
+</head>
+
+<body onLoad="MM_preloadImages('../../Content/images/back-btn-hovr.png')">
+        <!-- Main Row Starts here -->
+      <div class="row">
+        	<div class="sixteen columns">
+            	<header>
+                    <div class="sixteen columns logo-small" align="center">
+                    
+                    	<div class="back">
+                       	  <a href="../Dashboard/Home" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('back btn','','../../Content/images/back-btn-hovr.png',1)"><img src="../../Content/images/back-btn.png" name="back btn" border="0"></a>
+<!--                        	<a href="index.html"><strong>Back</strong></a>-->
+                      </div>
+                        
+                    	<a href="#"><img src="../../Content/images/logo-small.png" alt="" /></a>
+	                    
+                        <div class="log-out">
+                        	<a href="../Account/LogOn"><img src="../../Content/images/logout-icon.png" alt="" /></a>
+                        </div>
+                    </div>
+				</header>
+                
+                <div class="clear"></div>	
+                
+                <!-- MAIN CONTAINER STARTS HERE -->
+                <section>
+                	<article>
+                                    
+                        <div class="drop-down-sel" align="center" style="margin:2% 0;">
+                            <select id="cmbDeviceTypeList" name="cmbDeviceTypeList">
+                                <option>Select Device Type</option>
+                            </select>
+                        </div>
+
+                        <div class="body-bg">
+                            <div class="inner-cont">
+                                
+                                <!-- Alerts Page Starts Here -->
+                                <div class="alerts">
+                                    <div class="main-hdr" align="center">
+                                        <h1>Alerts</h1>
+                                    </div>
+                                    
+                                    <div class="box-cont-bg">
+                                        <table cellpadding="0" cellspacing="0" border="0">
+                                    	    <tr>
+                                        	    <td width="50%" style="vertical-align:top; padding:2%;">
+                                                    <div class="lft-cont">
+                                                      <div id="onelft"></div>
+                                                    </div>
+                                                </td>
+                                                <td width="50%">
+                                                    <div class="right-cont">
+                                                      <div id="onerit" >
+                                                      </div>
+                                                    </div>
+                                                    
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="box-cont-bg">
+                                        <table cellpadding="0" cellspacing="0" border="0">
+                                    	    <tr>
+                                        	    <td width="50%" style="vertical-align:top; padding:2%;">
+                                                    <div class="lft-cont">
+                                                      <div id="twolft">
+                                                      </div>
+                                                    </div>
+                                                </td>
+                                                <td width="50%">
+                                                    <div class="right-cont">
+                                                      <div id="tworit" >
+                                                      </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="box-cont-bg">
+                                        <table cellpadding="0" cellspacing="0" border="0">
+                                    	    <tr>
+                                        	    <td width="25%" style="vertical-align:top; padding:2%;">
+                                                    <div class="lft-cont">
+                                                      <div id="thrlft"></div>
+                                                    </div>
+                                                </td>
+                                                <td width="75%">
+                                                    <div class="right-cont">
+                                                     <div id="thrrit"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                                <!-- Alerts Page Ends Here -->
+                            
+                                <!-- Alerts Page Starts Here -->
+                                @*<div class="alerts">
+                                    <div class="main-hdr" align="center">
+                                        <h1>Alerts</h1>
+                                    </div>
+                                    
+                                    <div class="box-cont-bg">
+                                                <div class="lft-cont">
+                                                    <p>Alert 2 -</p>
+                                                </div>
+                                            
+                                                <div class="right-cont">
+                                                    <p>One camera is offline at Zone 3 Bank ATM</p>
+                                                    <p>Diebold EMC  PMC</p>
+                                                    <p>123 Southwest 2nd St.</p>
+                                                    <p>Dallas, TX 75056</p>
+                                                    <p>03/21/13 10:34 am CST</p>
+                                                </div>
+                                                
+                                                <div class="clear"></div>
+
+                                    </div>
+                                    
+                                    <div class="box-cont-bg">
+                                        <div class="lft-cont">
+                                            <p>Alert 3 -</p>
+                                        </div>
+                                        
+                                        <div class="right-cont">
+                                        	<p>One camera is offline at Zone 3 Bank ATM</p>
+                                        	<p>Diebold EMC  PMC</p>
+                                        	<p>123 Southwest 2nd St.</p>
+                                        	<p>Dallas, TX 75056</p>
+                                        	<p>03/21/13 10:34 am CST</p>
+                                        </div>
+                                        
+                                        <div class="clear"></div>
+                                    </div>
+                                    
+                                    <div class="box-cont-bg">
+                                        <div class="lft-cont">
+                                            <p>Alert 4 -</p>
+                                        </div>
+                                        
+                                        <div class="right-cont">
+                                        	<p>One camera is offline at Zone 3 Bank ATM</p>
+                                        	<p>Diebold EMC  PMC</p>
+                                        	<p>123 Southwest 2nd St.</p>
+                                        	<p>Dallas, TX 75056</p>
+                                        	<p>03/21/13 10:34 am CST</p>
+                                        </div>
+                                        
+                                        <div class="clear"></div>
+                                    </div>
+                                    
+                                </div>*@
+                                <!-- Alerts Page Ends Here -->
+                            </div>
+                        </div>
+
+                    </article>
+                </section>
+
+				<section>
+                	<article>
+                	</article>
+				</section>
+                <!-- MAIN CONTAINER ENDS HERE -->
+                        
+                <!-- FOOTER STARTS HERE -->
+                <footer>
+				</footer>
+                <!-- FOOTER ENDS HERE -->
+                
+            </div>
+        </div>
+        <!-- Main Row Ends here -->
+	
+</body>
+</html>

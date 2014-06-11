@@ -1,0 +1,210 @@
+﻿@using Diebold.WebApp.Models
+@model MonitorViewModel
+@{
+    ViewBag.Title = "Monitor Assignments";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    TempData.Keep("UserMonitorGroupLevel"); // retains only "UserMonitorGroupLevel" string values 
+}
+<div id="dvgrpTitle" class="pallette-detail-header-bg">
+    <p>User Monitor Assignments</p>
+</div>
+<div class="cont-creation">
+@using (Html.BeginForm("Index", "Monitor", FormMethod.Post, new { Id = "monitorAssignmentForm" }))
+{
+    <div class="one columns"></div>
+        <div id="monitor" class="monitor">
+        <div class="six columns">
+            <div class="cont-lft">
+                <div class="comp-lft">
+                    <p>Select Company: (*)</p>
+                </div>
+                <div class="comp-right">
+                    @(Html.Kendo().ComboBox()
+                  .Name("companies")
+                  .Placeholder("-- Select --")
+                  .DataTextField("Name")
+                  .DataValueField("Id")
+                  .DataSource(source =>
+                  {
+                      source.Read(read =>
+                      {
+                          read.Action("AsyncCompany", "Monitor");
+                      });
+                  })
+                )
+                </div>
+                <div class="clear">
+                </div>
+                <div class="comp-lft">
+                    <p>Select User: (*)</p>
+                </div>
+                <div class="comp-right">
+                    @(Html.Kendo().ComboBox()
+                  .Name("users")
+                  .Placeholder("-- Select --")
+                  .DataTextField("Name")
+                  .DataValueField("Id")
+                  .Events(x => x.Select("GetUserDetails"))
+                  .DataSource(source =>
+                  {
+                      source.Read(read =>
+                      {
+                          read.Action("AsyncUsers", "Monitor")
+                          .Data("filterUsers");
+                      })
+                      .ServerFiltering(true);
+                  })
+
+                 .Enable(false)
+                 .AutoBind(false)
+                 .CascadeFrom("companies")
+                )
+                </div>
+                <script type="text/javascript">
+                    function filterUsers() {
+                        return {
+                            companies: $("#companies").val()
+
+                        };
+                    }
+                </script>
+                <div class="clear">
+                </div>
+                @Html.Partial("_SelectGroupLevel")
+            </div>
+        </div>
+        <div class="one columns">
+        </div>
+        <div class="mon-users">
+            <div class="seven columns">
+                <div class="cont-right">
+                    <div id="assigments">
+                        @Html.Partial("_SelectedGroupLevelForReport", (IEnumerable<MonitorAssignmentViewModel>)@ViewBag.MonitorAssignmentViewModel)
+                        @Html.HiddenFor(Models => Model.UserId)
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="add-link" align="center">
+                        <input type="button" value="Save" id="btnSaveGroups" style="width:30%;" />
+                        <input type="button" value="Cancel" id="btnCancelGroups" style="width:30%;" />
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="one columns"></div>
+        <div class="clear">
+        </div>
+    </div>
+}
+</div>
+<script type="text/javascript">
+
+    function fnBindGridCallback(dataSource) {
+        var grdGroupLevels = $("#grdGroupLevels").data("kendoGrid");
+        grdGroupLevels.dataSource.read();
+    }
+
+    function GetUserDetails(e) {
+        var dataItem = { "User": this.dataItem(e.item.index()).Id };
+        var url = '@Url.Action("GetGroupLevelByUser", "Monitor")';
+        $.post(url, dataItem, GetUserDetailsCallback, "json");
+    }
+
+    function GetUserDetailsCallback(ResultSet) {
+        var grid = $("#grdGroupLevels").data("kendoGrid");
+        grid.dataSource.data(ResultSet);
+       
+    }
+
+    function loadExtraParams() {
+        return {
+            Gateway: "2",
+            Site: "3",
+            Company: "4"
+        };
+    }
+    $(document).ready(function () {
+        $("#btnAddGroup").click(function () {
+            if (validateGroup()) {
+
+                if ($('#Device').val() != "") {
+                    var dataItem = { "GroupName": "Device", "Id": $('#Device').val(), "UserId": $('#users').val(), "Text": $("#Device").data("kendoComboBox").text(), "LevelName": "", "Selected": "True", "IsNew": "True" };
+                    var url = '@Url.Action("AddGroupLevel", "Monitor")';
+                    $.post(url, dataItem, fnBindGridCallback, "json");
+                }
+                else if ($('#Site').val() != "") {
+                    var dataItem = { "GroupName": "Site", "Id": $('#Site').val(), "UserId": $('#users').val(), "Text": $("#Site").data("kendoComboBox").text(), "LevelName": "", "Selected": "True", "IsNew": "True" };
+                    var url = '@Url.Action("AddGroupLevel", "Monitor")';
+                    $.post(url, dataItem, fnBindGridCallback, "json");
+                }
+                else if ($('#SecondLevelGroup').val() != "") {
+                    var dataItem = { "GroupName": "SecondLevelGrouping", "Id": $('#SecondLevelGroup').val(), "UserId": $('#users').val(), "Text": $("#SecondLevelGroup").data("kendoComboBox").text(), "LevelName": "Area ", "Selected": "True", "IsNew": "True" };
+                    var url = '@Url.Action("AddGroupLevel", "Monitor")';
+                    $.post(url, dataItem, fnBindGridCallback, "json");
+                }
+                else if ($('#FirstLevelGroup').val() != "") {
+                    var dataItem = { "GroupName": "FirstLevelGrouping", "Id": $('#FirstLevelGroup').val(), "UserId": $('#users').val(), "Text": $("#FirstLevelGroup").data("kendoComboBox").text(), "LevelName": "District ", "Selected": "True", "IsNew": "True" };
+                    var url = '@Url.Action("AddGroupLevel", "Monitor")';
+                    $.post(url, dataItem, fnBindGridCallback, "json");
+                }
+
+                var testgroup = getGroupName();
+            }
+        });
+
+        $("#btnSaveGroups").click(function () {
+            var oRows = document.getElementById('grdGroupLevels').getElementsByTagName('tr');
+            var iRowCount = oRows.length;
+            $('#monitorAssignmentForm').submit();            
+
+        });
+
+        $("#btnCancelGroups").click(function () {
+            var editUri = '@Url.Action("../User/UserDetails")';
+            location.href = editUri;
+        });
+
+        function validateGroup() {
+            if ($('#FirstLevelGroup').val() == "") {
+                if ($('#companies').val() == "") {
+                    displayGroupErrorMessage("You have to select company.");
+                }
+                else if ($('#users').val() == "") {
+                    displayGroupErrorMessage("You have to select user.");
+                }
+                else if ($('#FirstLevelGroup').val() == "") {
+                    displayGroupErrorMessage("You have to select at least one grouping level.");
+                }
+                return false;
+            }
+            return true;
+        }
+
+        function displayGroupErrorMessage(msg) {
+            alert(msg);
+        }
+
+        function getGroupName() {
+
+            if ($('#Device').val() != "") {
+                return 'Device: ' + $("#Device :selected").text();
+            }
+            else if ($('#Site').val() != "") {
+                return 'Site: ' + $("#Site :selected").text();
+
+            }
+            else if ($('#SecondLevelGroup').val() != "") {
+                return "@ViewBag.SecondLevelName" + ": " + $("#SecondLevelGroup :selected").text();
+
+            }
+            else if ($('#FirstLevelGroup').val() != "") {
+                return "@ViewBag.FirstLevelName" + ": " + $("#FirstLevelGroup :selected").text();
+
+            }
+            return '';
+        }
+    });
+</script>
+

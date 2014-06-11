@@ -1,0 +1,121 @@
+﻿<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>My Access Points - Momentary Open Door</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="CloseMomentaryOpenDoor();"/></a>
+            </div>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        <div id="dvMomentaryOpenDoorContent">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">
+                <div class="my-access-titile bottom">
+                    <p>
+                        <strong>Step 1: Select Door</strong></p>
+                </div>
+                <div id="dvErrMomentaryOpenDoor">
+                    <ul>
+                    </ul>
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Door:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                     @(Html.Kendo().ComboBox()
+                        .Name("cboMonumentaryOpenDoor")
+                        .Placeholder("-- Select --")
+                        .HtmlAttributes(new { style = "width:100%" })
+                        .DataTextField("Name")
+                        .DataValueField("Id")
+                        .Suggest(true)
+                        .Enable(false)
+                        )
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="my-access-right-btn"  style="width:150px;">
+                <div class="add-link" align="center"  style="float: left;">
+                    <input type="button" value="Confirm" onclick="fnMomentaryOpenDoorConfirm();" />
+                </div>
+                <div class="add-link" align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="CloseMomentaryOpenDoor();"/>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function CloseMomentaryOpenDoor() {
+        document.getElementById('dvmomentaryUnlock').style.visibility = 'hidden';
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+    }
+    function fnMomentaryOpenDoorConfirm() {
+        $("#dvErrMomentaryOpenDoor ul").empty();
+        var deviceID = $("#AccessViewDeviceList").val();
+        var cboMomentaryReaderId = $("#cboMonumentaryOpenDoor").val();
+
+        if (cboMomentaryReaderId == '' || cboMomentaryReaderId == '-- Select --') {
+            $('#dvErrMomentaryOpenDoor ul').append('<li class="validation-summary-accesspopup">Door is Required</li>');
+        }
+        else {
+            var dataItem = { "readerId": cboMomentaryReaderId, "deviceId": deviceID };
+            var url = '@Url.Action("AccessMomentaryOpenDoor", "Access")';
+            BlockElement("dvMomentaryOpenDoorContent", 'Connecting...');
+            $.post(url, dataItem, GetMomentaryUnlockCallback, "json");
+        }
+    }
+    function GetMomentaryUnlockCallback(ResultSet) {
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                if (ResultSet == "OK") {
+                    fnShowAlertInfo('Door unlocked successfully.');
+                    var deviceID = $("#AccessViewDeviceList").val();
+                    var dataItem = { "deviceId": deviceID };
+                    var doorUrl = '@Url.Action("GetAccessDetails", "Access")';
+                    $.post(doorUrl, dataItem, GetAccDetailsMomentaryCallback, "json")
+
+                    document.getElementById('my_overlay').style.visibility = 'hidden';
+                    document.getElementById('dvmomentaryUnlock').style.visibility = 'hidden';
+                }
+            }
+        }
+    }
+    function GetAccDetailsMomentaryCallback(ResultSet) {
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                var grid = $("#grdAccess").data("kendoGrid");
+                grid.dataSource.data(ResultSet);
+            }
+        }
+        UnBlockElement("dvMomentaryOpenDoorContent");
+    }
+</script>

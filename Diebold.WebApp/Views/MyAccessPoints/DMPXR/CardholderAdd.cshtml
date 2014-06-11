@@ -1,0 +1,231 @@
+﻿@model Diebold.WebApp.Models.AccessCardholderViewModel
+
+<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>Cardholder Add</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="DMPXRfnCloseAddCardholder();"/></a>
+            </div>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        <div id="dvCardholderAddContent">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">
+                @*<div class="my-access-titile bottom">
+                    <p>
+                        <strong>Add Cardholder</strong></p>
+                </div>*@
+                <div id="dvErrCardholderAdd">
+                    <ul>
+                    </ul>
+                </div>
+                @*<div class="my-access-lbl bottom">
+                    <p>
+                        <strong>First Name:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @Html.TextBox("txtCardholderFirstName", null, new { @class = "my-access-in", maxlength = 150 })
+                </div>*@
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Name:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @Html.TextBox("txtCardholderLastName", null, new { @class = "my-access-in", maxlength = 150 })
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Card Number:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @Html.TextBox("txtCardholderNumber", null, new { @class = "my-access-in"})
+                </div>
+                @*<div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Pin:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @Html.TextBox("txtCardholderPin", null, new { @class = "my-access-in"})
+                </div>*@
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Profile Number:(*)</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @(Html.Kendo().ComboBox()
+                        .Name("cboCHAddAccessGroup")
+                        .Placeholder("-- Select --")
+                        .HtmlAttributes(new { style = "width:100%" })
+                        .DataTextField("Name")
+                        .DataValueField("Id")
+                        .BindTo(Model.AccessGroupList)
+                        .Suggest(true)
+                        )
+                </div>
+               @* <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Activation Date:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @(Html.Kendo().DateTimePicker()
+                        .Name("Activationdatetimepicker")
+                        .Value(DateTime.Now)
+                        .HtmlAttributes(new { style = "width:100%" })
+                     )
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Expiration Date:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @(Html.Kendo().DateTimePicker()
+                        .Name("Expirationdatetimepicker")
+                        .Value(DateTime.Now.AddYears(5))
+                        .HtmlAttributes(new { style = "width:100%" })
+                      )
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Active:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    <input type="checkbox" id="chkCardholderActive" name="chkCardholderActive"  checked="checked"/>
+                </div>*@
+                <div class="clear">
+                </div>
+            </div>
+            <div class="my-access-right-btn" style="width: 137px;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Save" onclick="javascript:DMPXRfnValidateCardholderAdd();return false;" />
+                </div>
+                <div class="add-link" align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="javascript:DMPXRfnCloseAddCardholder();return false;" />
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function DMPXRfnCloseAddCardholder() {
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        document.getElementById('dvAddCardHolder').style.visibility = 'hidden';
+    }
+
+    function DMPXRfnValidateCardholderAdd() {
+        $("#dvErrCardholderAdd ul").empty();                
+        var CHAddLastName = $('#txtCardholderLastName').val();
+        var CHAddNumber = $('#txtCardholderNumber').val();        
+        var AcGroupValue = $("#cboCHAddAccessGroup").val();        
+        var deviceID = $("#AccessViewDeviceList").val();
+        var reg1 = /^[0-9]+$/;
+       // var pinValidationFlag = true;
+
+        //        if (CHAddPin!='' && (!reg1.test(CHAddPin))) {
+        //            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Pin must consist of numeric values</li>');
+        //            pinValidationFlag = false;
+        //        }
+
+        if (CHAddLastName == '' && CHAddNumber == '' && (AcGroupValue == '' || AcGroupValue == '-- Select --')) {            
+            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Name is Required</li>');
+            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Card Number is Required</li>');
+            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Profile Number is Required</li>');
+        }        
+        else if (CHAddLastName == '' && CHAddNumber == '') {         
+            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Name is Required</li>');
+            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Card Number is Required</li>');
+        }        
+        else if (CHAddNumber == '' && (AcGroupValue == '' || AcGroupValue == '-- Select --')) {         
+            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Card Number is Required</li>');
+            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Profile Number is Required</li>');
+        }        
+        else if (CHAddLastName == '' && (AcGroupValue == '' || AcGroupValue == '-- Select --')) {         
+            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Name is Required</li>');
+            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Profile Number is Required</li>');
+            if (!reg1.test(CHAddNumber)) {
+                $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Card Number must consist of numeric values</li>');
+            }
+        }                
+        else if (CHAddLastName == '') {            
+            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Name is Required</li>');
+            if (!reg1.test(CHAddNumber)) {
+                $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Card Number must consist of numeric values</li>');
+            }
+        }        
+        else if (CHAddNumber == '') {         
+            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Card Number is Required</li>');
+        }                
+        else if ((AcGroupValue == '' || AcGroupValue == '-- Select --')) {
+            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Profile Number is Required</li>');
+            if (!reg1.test(CHAddNumber)) {
+                $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Card Number must consist of numeric values</li>');
+            }
+        }                                
+        else if (!reg1.test(CHAddNumber)) {
+            $('#dvErrCardholderAdd ul').append('<li class="validation-summary-accesspopup">Card Number must consist of numeric values</li>');
+        }
+        else {
+           // if (pinValidationFlag == true) {
+                //var dataItem = { "firstName": CHAddFirstName, "lastName": CHAddLastName, "cardNumber": CHAddNumber, "pin": CHAddPin, "accessGroupId": AcGroupValue,
+                //"isActive": AddIsActive, "activationDate": ActivationDate, "expirationDate": ExpirationDate, "deviceId": deviceID
+            var dataItem = { "firstName": "", "lastName": CHAddLastName, "cardNumber": CHAddNumber, "pin": "", "accessGroupId": AcGroupValue,
+                    "isActive": true, "activationDate": "", "expirationDate": "", "deviceId": deviceID
+                };
+                var url = '@Url.Action("CardHolderAdd", "Access")';
+                BlockElement("dvCardholderAddContent", 'Connecting...');
+                $.post(url, dataItem, DMPXRGetCardholderAddCallback, "json");
+           // }
+        }
+    }
+
+    function DMPXRGetCardholderAddCallback(ResultSet) {
+        UnBlockElement("dvCardholderAddContent");
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                if (ResultSet == "OK") {
+                    fnShowAlertInfo("Cardholder added successfully.");
+                    document.getElementById('my_overlay').style.visibility = 'hidden';
+                    document.getElementById('dvAddCardHolder').style.visibility = 'hidden';
+                }
+            }
+        }
+    }
+   
+</script>

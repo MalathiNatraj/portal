@@ -1,0 +1,703 @@
+﻿@using Diebold.WebApp.Models
+@model CompanyViewModel
+@{
+    ViewBag.Title = "Edit Company Grouping";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    ViewBag.IsEdit = true;
+}
+<script type="text/javascript">
+   
+    /******************************************************************************************************************************************/
+    /* Events */
+    /******************************************************************************************************************************************/
+
+    $(document).ready(function () {
+        $('.grouping1DynamicName').text($('#FirstLevelGrouping').val());
+        $('.grouping2DynamicName').text($('#SecondLevelGrouping').val());
+
+        $('#anotherGroupLevel1').val('Add');
+        $('#anotherGroupLevel2').val('Add');
+
+        $('.step1').show();
+
+        $('#btnFinishLevel1').live('click', function () {
+            showMain();
+        });
+
+        $('#btnFinishLevel2').live('click', function () {
+            showMain();
+        });
+
+        $('.btnStep2').live('click', function () {
+            showDistrictModule();
+        });
+
+        $('.btnStep3').live('click', function () {
+            showAreaModule();
+        });
+
+        $(".editableInfo").hide();
+        $("#groupingLevel2ItemsToValidate").hide();
+
+        $('#anotherGroupLevel1').live('click', function () {
+            addLevel1();
+        });
+
+        $('#anotherGroupLevel2').live('click', function () {
+            addLevel2();
+        });
+
+        $('#btnEditDistrict').live('click', function () {          
+            $('#GroupingLevel1Name').val($("#Grouping1Selected").data("kendoComboBox").text());
+            $('#groupingLevel1EditName').show();
+            $('#groupingLevel2EditName').hide();
+            $('#GroupingLevel1Name').show();
+            showEditDialog($('#groupingLevel1EditName'), $('#FirstLevelGrouping').val() + " name edition", "District", $('#groupingLevel1EditName'));
+        });
+
+        $('#btnEditArea').live('click', function () {          
+            $('#GroupingLevel2Name').val($("#Grouping2Selected").data("kendoComboBox").text());
+            $('#groupingLevel2EditName').show();
+            $('#groupingLevel1EditName').hide();
+            showEditDialog($('#groupingLevel2EditName'), $('#SecondLevelGrouping').val() + " name edition", "Area", $('#groupingLevel2EditName'));
+        });
+
+        EnableDisableSiteDDL();
+    });
+
+    /******************************************************************************************************************************************/
+    /* Add Elements */
+    /******************************************************************************************************************************************/
+
+    function addLevel1(onComplete) {
+        if (!ExistsDistrictInCompany($('#Grouping1LevelName').val())) {
+            var url = '@Url.Action("AsyncCreateGroupingLevel1", "Company")';
+            postPartial(url, loadLevelParams(), true, "#editcomgrouping", onSuccessAddsLevel1, onComplete);
+        }
+        else {
+            alreadyExistsDialog('district');
+        }
+    }
+
+    function addLevel2(onComplete) {
+        var url = '@Url.Action("AsyncCreateGroupingLevel2", "Company")';
+        postPartial(url, loadLevelParams(), true, ".rightPanel", onSuccessAddsLevel2, onComplete);
+
+    }
+
+    /******************************************************************************************************************************************/
+    /* Event Handlers */
+    /******************************************************************************************************************************************/
+
+    function LoadLevel1() {
+        var companyId = $('#Id').val();
+        var data = { CompanyId: companyId };
+        var url = '@Url.Action("AsyncGetGroupingLevel1", "Company")';
+        postPartial(url, data, true, ".rightPanel", refreshGroupingLevel1Items, onComplete);
+    }
+
+    function refreshGroupingLevel1Items(result) {
+        var cmbGrouping1Selected = $('#Grouping1Selected').data().kendoComboBox;
+        var selectedItem = cmbGrouping1Selected.value();
+        cmbGrouping1Selected.dataSource.data(result);
+        cmbGrouping1Selected.value(selectedItem);
+    }
+
+    function onSuccessAddsLevel1(result) {
+        if (result != null && result != undefined && result != "" && result.levelId != null && result.levelName != null 
+                        && result.levelName != undefined && result.levelId != undefined && result.levelName != undefined) {
+            var dsGrouping1 = $('#Grouping1Selected').data().kendoComboBox.dataSource;
+            $('#Grouping1LevelName').val('');
+            $("#Grouping1SelectedStep").trigger("change");
+            LoadLevel1();
+        }
+    }
+
+    function onSuccessAddsLevel2(result) {
+        var dsGrouping2 = $('#Grouping2Selected').data().kendoComboBox.dataSource;
+        if (result.levelId != undefined && result.levelName != undefined) {
+            dsGrouping2.add({ Text: result.levelName, Value: result.levelId });            
+
+            $('#Grouping2LevelName').val('');
+            RefreshGrouping2SelectedItems();
+            refreshGroupingLevel2Items();
+        }
+    }
+
+    function onSuccessChangeLevel1Name(result) {
+        $('#GroupingLevel1Name').val('');
+        LoadLevel1();
+    }
+
+    function onSuccessChangeLevel2Name(result) {
+        $('#GroupingLevel2Name').val('');
+        RefreshGrouping2SelectedItems()
+    }
+
+    function onSuccessReasignArea(result) {
+        if (result != null && result != undefined) {
+            $("#Grouping2SelectedItems option[value='" + result.levelId + "']").text(result.levelNameComplete);
+            var dsGrouping2 = $('#Grouping2Selected').data().kendoComboBox.dataSource;
+            dsGrouping2.add({ Text: result.levelName, Value: result.levelId });
+            refreshGroupingLevel2Items();
+        }
+    }
+
+    function onComplete() {
+        showMain();
+    }
+
+    function onCompleteChangeLevel1Name() {
+        $('#groupingLevel1EditName').hide();
+    }
+
+    function onCompleteChangeLevel2Name() {
+        $('#groupingLevel2EditName').hide();
+    }
+
+    function onSuccessRemoveDistrict(result) {
+        if (result != null && result != undefined && result != "" && result.Status != null
+                && result.Status != undefined && result.Status != "") {
+            if (result.Status == "Error") {
+                $("#Grouping1SelectedItems option[value='" + result.levelId + "']").attr("selected", "selected").change();
+            }
+            else {
+                $("#Grouping1Selected option[value='" + result.levelId + "']").remove();
+                $("#Grouping1SelectedStep option[value='" + result.levelId + "']").remove();
+                $('#Grouping1Selected').trigger("liszt:updated");
+            }
+        }
+    }
+
+    /******************************************************************************************************************************************/
+    /* Load Parameters */
+    /******************************************************************************************************************************************/
+
+    function loadLevelParams() {
+        var companyId = $('#Id').val();
+        var groupingLevel1Id = $('#Grouping1SelectedStep option:selected').val();
+        var groupingLevel1Name = $('#Grouping1LevelName').val();
+        var groupingLevel2Id = $("#Grouping2Selected").data("kendoComboBox").value();
+        var groupingLevel2Name = $('#Grouping2LevelName').val();
+
+        return { companyId: companyId, GroupingLevel2Name: groupingLevel2Name, GroupingLevel1Id: groupingLevel1Id,
+            GroupingLevel2Id: groupingLevel2Id, GroupingLevel1Name: groupingLevel1Name
+        };
+    }
+
+    function loadReasignSiteParams(sender, e) {
+        var companyId = $('#Id').val();
+        var groupingLevel2Id = $("#Grouping2Selected").data("kendoComboBox").value()
+        var siteId = e.value;
+
+        return { CompanyId: companyId, GroupingLevel2Id: groupingLevel2Id, SiteId: siteId };
+    }
+
+    function loadReasignAreaParams(sender, e) {
+        var companyId = $('#Id').val();
+        var groupingLevel1Id = $("#Grouping1Selected").data("kendoComboBox").value();
+        var groupingLevel2Id = e.value;
+
+        return { CompanyId: companyId, GroupingLevel1Id: groupingLevel1Id, GroupingLevel2Id: groupingLevel2Id };
+    }
+
+    function loadReasignDistrictParams(sender, e) {
+        var companyId = $('#Id').val();
+        var groupingLevel1Id = e.value;
+
+        return { CompanyId: companyId, GroupingLevel1Id: groupingLevel1Id };
+    }
+
+    function loadRenameParams() {
+        var companyId = $('#Id').val();
+        var groupingLevel1Id = $("#Grouping1Selected").data("kendoComboBox").value();
+        var groupingLevel1Name = $('#GroupingLevel1Name').val();
+        var groupingLevel2Id = $("#Grouping2Selected").data("kendoComboBox").value()
+        var groupingLevel2Name = $('#GroupingLevel2Name').val();
+
+        return { companyId: companyId, GroupingLevel1Id: groupingLevel1Id, GroupingLevel2Id: groupingLevel2Id, GroupingLevel1Name: groupingLevel1Name,
+            GroupingLevel2Name: groupingLevel2Name
+        };
+
+    }
+
+    /******************************************************************************************************************************************/
+    /* Generic Functions */
+    /******************************************************************************************************************************************/
+
+    function postAreaName(params) {
+        var url = '@Url.Action("AsyncChangeLevel2Name", "Company")';
+        postPartial(url, params, true, "#groupingNameEdition", onSuccessChangeLevel2Name, onCompleteChangeLevel2Name);
+    }
+
+    function postDistrictName(params) {
+        var url = '@Url.Action("AsyncChangeLevel1Name", "Company")';
+        postPartial(url, params, true, "#groupingNameEdition", onSuccessChangeLevel1Name, onCompleteChangeLevel1Name);
+    }
+
+    function refreshGroupingLevel2Items() {
+    }
+
+    function hideStep() {
+        $(".wizard-step:visible").hide();
+    }
+
+    function showMain() {
+        hideStep();
+        $('.step1').show();
+    }
+
+    function showDistrictModule() {
+        hideStep();
+        $('.step2').show();
+    }
+
+    function showAreaModule() {
+        hideStep();
+        $('.step3').show();
+    }
+
+    function EnableDisableSiteDDL() {      
+        //    if ($("#Grouping2Selected").data("kendoComboBox").length > 0)
+        //        $("#bsmSelectbsmContainer2").removeAttr("disabled");
+        //    else
+        //        $("#bsmSelectbsmContainer2").attr("disabled", "disabled");
+    }
+
+    function refreshAreas() {
+        $('#Grouping2SelectedItems option:selected').each(function () {
+            $(this).removeAttr('selected');
+        });
+    }
+
+    function ExistsDistrictInCompany(itemValue) {
+        var exists = false;
+
+        $('#Grouping1Selected option').each(function () {
+            if ($(this).text().toLowerCase() == itemValue.toLowerCase()) {
+                exists = true;
+            }
+        });
+
+        return exists;
+    }
+
+    function showDialog(content, title, onCloseExternal, optionsExternal) {
+
+        var dialogContent = $('<div>' + content + '</div>').not('script');
+        var scriptContent = $(content).filter('script');
+
+        var onClose = function () {
+            $(this).dialog('destroy');
+            $(this).remove();
+            scriptContent.remove();
+
+            if (onCloseExternal) onCloseExternal();
+        };
+
+        var options = {
+            title: title,
+            resizable: false,
+            autoOpen: false,
+            draggable: false,
+            modal: true,
+            close: onClose,
+            buttons: {
+                Close: onClose
+            }
+        };
+
+        if (optionsExternal && optionsExternal.height) options.height = optionsExternal.height;
+        if (optionsExternal && optionsExternal.width) options.width = optionsExternal.width;
+        if (optionsExternal && optionsExternal.buttons) options.buttons = optionsExternal.buttons;
+
+        dialogContent.dialog(options);
+        scriptContent.appendTo('body');
+        dialogContent.dialog('open');
+    }
+
+    function btnOkClickedAccess(GroupLevel) {
+
+        if (GroupLevel == "Area") {
+            if ($('#GroupingLevel2Name').val().trim().length > 32) {
+                alert("The name must be a string with a maximum length of 32", "Validation Error");
+                return false;
+            }
+        }
+        else if (GroupLevel == "District") {
+            if ($('#GroupingLevel1Name').val().trim().length > 32) {
+                alert("The name must be a string with a maximum length of 32", "Validation Error");
+                return false;
+            }
+        }
+
+        if (GroupLevel != undefined) {
+            if (GroupLevel == "Area") {
+                $('#GroupingLevel2Name').val().trim();
+                postAreaName(loadRenameParams());
+            }
+            else if (GroupLevel == "District")
+                $('#GroupingLevel1Name').val().trim();
+            postDistrictName(loadRenameParams());
+        }        
+        $("#GroupingLevel1Name").hide();
+        $("#Alertwindow").data("kendoWindow").close();
+    }
+
+
+    function btnCancelClickedAccess() {
+        $("#Alertwindow").data("kendoWindow").close();
+    }
+
+    function showEditDialog(dialogContent, title, functionToRun, panelToHide) {        
+        $("#Alertwindow").data("kendoWindow").center().open();       
+    }
+
+
+    function postPartial(url, data, async, blockArea, onSuccess, onComplete, toBlockUI) {
+
+        $.post(url, data, "json")
+                .done(function (result) {
+                    if (result!=null && result !=undefined && result!="" && result.Status != undefined && result.Status == "Error") {
+                        showDialog(result.Message, "Action Response");
+                    }
+
+                    if (onSuccess) onSuccess(result);
+                })
+                .fail(function (response) {
+                    showDialog("An error occurred while processing this action.", "Error");
+                });
+    }
+
+    function Grouping1Selected_SelectionChanged(e) {
+        RefreshGrouping2SelectedItems();
+    }
+
+    function AvailableGrouping2_SelectionChanged(e) {
+        if (e != undefined) {
+            var companyId = $('#Id').val();
+            var groupingLevel1Id = $("#Grouping1Selected").data("kendoComboBox").value();
+            var groupingLevel2Id = $("#AvailableGrouping2AllItems").data("kendoComboBox").value();
+            var data = { CompanyId: companyId, GroupingLevel1Id: groupingLevel1Id, GroupingLevel2Id: groupingLevel2Id };
+            var url = '@Url.Action("AsyncReasignArea", "Company")';
+            postPartial(url, data, true, ".rightPanel", onSuccessReasignArea);
+        }
+    }
+    function RefreshGrouping2SelectedItems() {
+        var data = { CompanyId: $("#Id").val(), FirstLevelGroupId: $("#Grouping1Selected").data("kendoComboBox").value() };
+        var url = '@Url.Action("GetSelectedGroupLevel2Items", "Company")';
+        postPartial(url, data, true, "#divGrouping1Selected", onSuccessBindGrouping2SelectedItems, onComplete);
+    }
+    function onSuccessBindGrouping2SelectedItems(result) {
+        var grid = $("#Grouping2SelectedItems").data("kendoGrid");
+        grid.dataSource.data(result);
+        var cmbGrouping2Selected = $('#Grouping2Selected').data().kendoComboBox;
+        cmbGrouping2Selected.dataSource.data(result);
+        cmbGrouping2Selected.value('');
+        cmbGrouping2Selected.text('');
+        RefreshGrouping2AllItems();
+        cmbGrouping2Selected.select(0);
+
+        var companyId = $('#Id').val();
+        var groupingLevel1Id = $("#Grouping1Selected").data("kendoComboBox").value();
+        var groupingLevel2Id = $("#Grouping2Selected").data("kendoComboBox").value()
+        var data = { companyId: companyId, GroupingLevel1Id: groupingLevel1Id, GroupingLevel2Id: groupingLevel2Id };
+        var url = '@Url.Action("AsyncSites", "Company")';
+        postPartial(url, data, true, null, onSuccessRefreshSites);
+    }
+
+    function RefreshGrouping2AllItems() {
+        var data = { CompanyId: $("#Id").val(), FirstLevelGroupId: $("#Grouping1Selected").data("kendoComboBox").value() };
+        var url = '@Url.Action("GetAreaFromAssignedGroup", "Company")';
+        postPartial(url, data, true, "#divGrouping1Selected", onSuccessBindGrouping2AllItems, onComplete);
+    }
+    function onSuccessBindGrouping2AllItems(result) {
+        var dsAvailableGrouping2AllItems = $('#AvailableGrouping2AllItems').data().kendoComboBox;
+        dsAvailableGrouping2AllItems.dataSource.data(result);
+    }
+
+    function onSuccessReasignArea(result) {
+        RefreshGrouping2SelectedItems();
+    }
+
+    function onSuccessRemoveArea(result) {
+        if (result != null && result != undefined && result != "" && result.Status != null
+                && result.Status != undefined && result.Status != "" && result.Status != "Error") {
+            RefreshGrouping2SelectedItems();
+        }
+    }
+
+    function onComplete() {
+        //showMain();
+    }
+
+    function RemoveArea(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var companyId = $('#Id').val();
+        var groupingLevel1Id = $("#Grouping1Selected").data("kendoComboBox").value();
+        var groupingLevel2Id = dataItem.id;
+
+        var data = { CompanyId: companyId, GroupingLevel1Id: groupingLevel1Id, GroupingLevel2Id: groupingLevel2Id };
+        var url = '@Url.Action("AsyncRemoveGrouping2Level", "Company")';
+        postPartial(url, data, true, ".rightPanel", onSuccessRemoveArea);
+    }
+
+    function Area_SelectionChanged(e) {
+        if (e != undefined) {
+            var companyId = $('#Id').val();
+            var groupingLevel1Id = $("#Grouping1Selected").data("kendoComboBox").value();
+            var groupingLevel2Id = $("#Grouping2Selected").data("kendoComboBox").value()
+
+            var data = { companyId: companyId, GroupingLevel1Id: groupingLevel1Id, GroupingLevel2Id: groupingLevel2Id };
+            var url = '@Url.Action("AsyncSites", "Company")';
+            postPartial(url, data, true, null, onSuccessRefreshSites);
+        }
+    }
+
+    function Site_SelectionChanged(e) {
+        if (e != undefined) {
+            var companyId = $('#Id').val();
+            var groupingLevel2Id = $("#Grouping2Selected").data("kendoComboBox").value();
+            var siteId = $("#AvailableSites").data("kendoComboBox").value();
+
+            var data = { CompanyId: companyId, GroupingLevel2Id: groupingLevel2Id, SiteId: siteId };
+            var url = '@Url.Action("AsyncReasignSite", "Company")';
+            postPartial(url, data, true, ".rightPanel", RefreshSelectedSitesAndAvailableSites);
+        }
+    }
+
+    function RefreshSelectedSitesAndAvailableSites(result) {
+        var companyId = $('#Id').val();
+        var groupingLevel1Id = $("#Grouping1Selected").data("kendoComboBox").value();
+        var groupingLevel2Id = $("#Grouping2Selected").data("kendoComboBox").value()
+        var data = { companyId: companyId, GroupingLevel1Id: groupingLevel1Id, GroupingLevel2Id: groupingLevel2Id };
+        var url = '@Url.Action("AsyncSites", "Company")';
+        postPartial(url, data, true, null, onSuccessRefreshSites);
+    }
+
+    function onSuccessRefreshSites(result) {
+        var grdSelectedSites = $("#SelectedSites").data("kendoGrid");
+        grdSelectedSites.dataSource.data(result);
+        var companyId = $('#Id').val();
+        var groupingLevel2Id = $("#Grouping2Selected").data("kendoComboBox").value();
+        var data = { CompanyId: companyId, GroupingLevel2Id: groupingLevel2Id };
+        var url = '@Url.Action("GetUnAssignedSites", "Company")';
+        postPartial(url, data, true, ".rightPanel", LoadAvailableSites);
+    }
+
+    function LoadAvailableSites(result) {
+        var dsAvailableGrouping2AllItems = $('#AvailableSites').data().kendoComboBox;
+        dsAvailableGrouping2AllItems.dataSource.data(result);
+    }
+
+    function SubmitPage() {
+        var strUrl = "../Index";
+        location.href = strUrl;      
+    }
+      
+</script>
+<div id="dvUsrTitle" class="pallette-detail-header-bg">
+    <p>Edit Company Grouping</p>
+</div>
+<br />
+@using (Html.BeginForm("UpdateCompanyGrouping", "Company"))
+{   
+    <div id="editgrouping" class="wizard-step step1">
+        <div style="padding-left:5%;">
+            @Html.ValidationSummary(false, "There where errors editing the Company Grouping")
+        </div>
+        <div class="cont-creation">
+            <div class="one columns"></div>
+            <div class="seven columns">
+                <div class="cont-lft" style="float:none;">
+                    <div class="clear">
+                    </div>
+                    <div style="width:100%;">
+                         <p class="edit-cpny-grp-sub-title">
+                            @Html.Label(@Model.FirstLevelGrouping + " List")
+                        </p>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="comp-lft" style="width:30%;">
+                        <p>@Html.Label("Select " + @Model.FirstLevelGrouping + ":")
+                        </p>
+                    </div>
+                    <div class="comp-right" style="width:70%;">
+                        @(Html.Kendo().ComboBoxFor(p => p.Grouping1Selected)
+                              .DataTextField("Text")
+                              .DataValueField("Value")
+                              .BindTo(Model.AvailableGrouping1LevelItems)
+                              .SelectedIndex(0)
+                              .Events(events => events.Change("Grouping1Selected_SelectionChanged"))
+                  )
+                        <div class="add-link" style="float: right; margin: 0 20px 0 0;">
+                            <input id="btnEditDistrict" type="button" value="Rename" class="editLevels" />
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="comp-lft" style="width:30%;">
+                        <p>
+                            @Html.Label(@Model.SecondLevelGrouping + "s assigned to this group:")
+                        </p>
+                    </div>
+                    <div id="divGrouping1Selected" class="comp-right"  style="width:70%;">
+                        @(Html.Kendo().ComboBoxFor(p => p.AvailableGrouping2AllItems)
+                              .DataTextField("Text")
+                              .DataValueField("Value")
+                              .BindTo(Model.AvailableGrouping2AllItems)
+                              .Events(events => events.Change("AvailableGrouping2_SelectionChanged"))
+                  )
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="comp-lft">
+                    </div>
+                    <div>
+                        @(Html.Kendo().Grid(Model.AvailableGrouping2LevelItems)
+                        .Name("Grouping2SelectedItems")
+                        .Columns(columns =>
+                        {
+                            columns.Bound(p => p.Text).Title("Area Name");
+                            columns.Command(c => { c.Custom("Remove").Click("RemoveArea"); }).Width("170px").Title("Actions");
+                        })
+                        .Selectable()
+                        .Pageable()
+                        .Sortable()
+                        .Filterable()
+                        .Events(events => events.DataBound("LoadingDefaultFilter"))
+                        .DataSource(dataSource => dataSource
+                        .Ajax()
+                        .PageSize(10)
+                        .ServerOperation(false)
+                        .Model(model => model.Id(p => p.Value))
+                        )
+                    )
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+            <div class="one columns">
+            </div>
+            <div class="six columns">
+                <div class="cont-right">
+                    <div class="clear">
+                    </div>
+                    <div style="width:100%;">
+                        <p class="edit-cpny-grp-sub-title">
+                            @Html.Label(@Model.SecondLevelGrouping + " List")
+                        </p>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="comp-lft" style="width:30%;">
+                        <p>
+                            @Html.Label("Select " + @Model.SecondLevelGrouping + ":")</p>
+                    </div>
+                    <div class="comp-right" style="width:70%;">
+                        @(Html.Kendo().ComboBoxFor(p => p.Grouping2Selected)
+                              .DataTextField("Text")
+                              .DataValueField("Value")
+                              .BindTo(Model.AvailableGrouping2LevelItems)
+                              .Events(events => events.Change("Area_SelectionChanged"))
+                              .SelectedIndex(0)
+                  )
+                        <div class="add-link" style="float: right;">
+                            <input id="btnEditArea" type="button" value="Rename" class="editLevels" />
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="comp-lft" style="width:30%;">
+                        <p>@Html.Label("Sites assigned to this " + @Model.SecondLevelGrouping.ToLower() + ":")</p>
+                    </div>
+                    <div class="comp-right" style="width:70%;">
+                        @(Html.Kendo().ComboBoxFor(p => p.AvailableSites)     
+                              .DataTextField("Text")
+                              .DataValueField("Value")
+                              .BindTo(Model.AvailableSites)
+                              .Events(events => events.Change("Site_SelectionChanged"))
+                        )                        
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="comp-lft">
+                    </div>
+                    <div>
+                        @(Html.Kendo().Grid(Model.SelectedSites)
+                        .Name("SelectedSites")
+                        .Columns(columns =>
+                        {
+                            columns.Bound(p => p.Text).Title("Area Name");
+                        })
+                        .Selectable()
+                        .Pageable()
+                        .Sortable()                           
+                        .Filterable()
+                        .Events(events => events.DataBound("LoadingDefaultFilter"))
+                        .DataSource(dataSource => dataSource
+                        .Ajax()
+                        .PageSize(10)
+                        .ServerOperation(false)
+                        .Read("ComapnySelectedGroupLevel2Items_Read", "Company")                            
+                        .Model(model => model.Id(p => p.Value))        
+                        )
+                    )
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="row">
+                <div class="add-link" style="text-align:center;margin-top:5%">
+                    <input type="button" value="Create New @Model.FirstLevelGrouping" class="createNewFirstLevelGroup basicButton btnStep2"  style="width: 140px;" />
+                    <input type="button" value="Finish" class="btnSubmit" id="last-Step" onclick="javascript:SubmitPage();" style="width: 140px; margin:0 20px 0 20px;" />
+                    <input type="button" value="Create New @Model.SecondLevelGrouping" class="createNewSecondLevelGroup basicButton btnStep3"  style="width: 140px;" />
+                </div>
+            </div>
+        </div>
+    </div>   
+        
+    @Html.HiddenFor(model => model.Id);
+                                                                            
+    @(Html.Kendo().Window()
+    .Name("Alertwindow")
+    .Title("Rename")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+    <div>
+        @Html.Partial("_EditCompanyGroupingItem", new CompanyGroupingLevelViewModel())
+    </div>
+    </text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(200)
+)
+    
+    <br />   
+    <div id="editcomgrouping" class="editcomgrouping">
+        <div class="wizard-step step2" style="display: none">
+            @Html.Partial("_CompanyEditableInfoGrouping1stLevel")
+        </div>
+        <div class="wizard-step step3" style="display: none">
+            @Html.Partial("_CompanyEditableInfoGrouping2ndLevel")
+        </div>
+        <div class="editableInfo">
+            @Html.Partial("_CompanyEditableInfo")
+        </div>
+    </div>                                
+    
+    <div id="groupingRelationContainer" class="groupingRelationContainer">
+        @Html.Partial("_CompanyGrouping", (IEnumerable<CompanyGroupingViewModel>)@ViewBag.CompanyGroupingModel)
+    </div>
+    
+}
+<style>
+    .k-header
+    {
+        height: 30px;
+    }
+</style>

@@ -1,0 +1,115 @@
+﻿@{
+    Layout = null;
+}
+<!-- Intrusion User Commands-User Code Delete Step1 starts here -->
+<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>User Code Delete</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="hideDeleteOverlay();" /></a>
+            </div>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        
+        <div id ="dvStep1DeleteUCContent">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">
+                <div class="my-access-titile bottom">
+                    <p>
+                        <strong>Step 1: Lookup Fields</strong></p>
+                </div>
+                <div id="dvErrUserCodeDelete">
+                <ul>
+                
+                </ul>
+                </div> 
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Name:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @Html.TextBox("txtDeleteUserName", null, new { @class = "my-access-in", maxlength = 250 })
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>User Code:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    @Html.TextBox("txtDeleteUserCode", null, new { @class = "my-access-in"})
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="my-access-right-btn" style="width: 137px;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Next" onclick="javascript:fnCloseDeleteStep1OpenDeleteStep2();return false;" />
+                </div>
+                <div class="add-link" align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="fnCloseDeleteStep1();" />
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function fnCloseDeleteStep1() 
+    {
+        document.getElementById('dvStep1DeleteUserCode').style.visibility = 'hidden';
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+    }
+    function fnCloseDeleteStep1OpenDeleteStep2() {
+        $("#dvErrUserCodeDelete ul").empty();
+        var regDeleteUserCode = /^[0-9]+$/;
+        var deviceID = $("#IntrusionCategories").val();
+        var isErr = "false";
+
+        if ($('#txtDeleteUserName').val() == '' && $('#txtDeleteUserCode').val() == '') {
+            $('#dvErrUserCodeDelete ul').append('<li class="validation-summary-intrusionpopup">Either Name or User Code is Required</li>');
+            isErr = "true";
+        }        
+        if (isErr == "false") {
+            var dataItem = { "name": $('#txtDeleteUserName').val(), "userCode": $('#txtDeleteUserCode').val(), "deviceId": deviceID };
+            var url = '@Url.Action("GetUserCodesInformation", "Intrusion")';
+            BlockElement("dvStep1DeleteUCContent", 'Connecting...');
+            $.post(url, dataItem, GetUserCodeDeleteFirstStepCallback, "json");
+        }
+    }
+    function GetUserCodeDeleteFirstStepCallback(ResultSet) {
+        UnBlockElement("dvStep1DeleteUCContent");
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                document.getElementById('dvStep1DeleteUserCode').style.visibility = 'hidden';
+                var grid = $("#grdUserCodeDeleteList").data("kendoGrid");
+                grid.dataSource.data(ResultSet);
+                centerViewPortDialog("#dvDeleteUserCodeList");                
+            }
+        }
+        
+    }
+</script>

@@ -1,0 +1,167 @@
+﻿<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>Cardholder Delete Confirmation</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="DMPXRCloseCardHolderDeleteConfirmation();"/></a>
+            </div>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        <div id="dvDMPXRCardholderDeleteContent">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">
+                <div class="my-access-titile bottom">
+                    <p>
+                        <strong>Step 2: Confirm Delete User</strong></p>
+                </div>
+               @* <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>First Name:</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                     @Html.TextBox("txtDeleteFNameStep2", null, new { @readonly = "readonly", @class = "my-access-in"})
+                </div>                
+                <div class="clear">
+                </div>*@
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Name:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                     @Html.TextBox("txtDMPXRDeleteLNameStep2", null, new { @readonly = "readonly", @class = "my-access-in"})
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Card Number:</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                    @Html.TextBox("txtDMPXRDeleteCardNumStep2", null, new { @readonly = "readonly", @class = "my-access-in" })
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom" style="display:none;">
+                    <p>
+                        <strong>Cardholder ID:</strong></p>
+                </div>
+                <div class="my-access-field bottom" style="display:none;">
+                     @Html.TextBox("txtDMPXRDeleteCardholderID2", null, new { @readonly = "readonly", @class = "my-access-in" })
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="my-access-right-btn" style="width:143px;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Delete" onclick="DMPXRdeleteCardHolder();"/>
+                </div>
+                <div class="add-link"  align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="DMPXRCloseCardHolderDeleteConfirmation();"/>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+@(Html.Kendo().Window().Name("wndDeleteCardHolder")
+    .Visible(false)
+    .Modal(true)
+    .Title("CardHolder Delete")
+    .Draggable(true)
+    .Width(300)    
+)
+<script type="text/javascript">
+
+    function DMPXRdeleteCardHolder() {
+//        var wnd = $("#wndDeleteCardHolder").data("kendoWindow");
+//        wnd.content("<p style='height:100px'>Are you sure you want to delete this item?</p><p>" +
+//                "<input type='button' value='Ok' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='javascript:fnValidateCardHolderDelete();'>" +
+//                 "<input type='button' value='Cancel' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='DeleteStep2ConfirmCancel()'></p>");
+        //        wnd.center().open();
+
+        var deviceID = $("#AccessViewDeviceList").val();
+        //var CHFNameStep2Delete = $("#txtDeleteFNameStep2").val();
+        var CHLNameStep2Delete = $("#txtDMPXRDeleteLNameStep2").val();
+        var CHCardNumStep2Delete = $("#txtDMPXRDeleteCardNumStep2").val();
+        var CHIdStep2Delete = $("#txtDMPXRDeleteCardholderID2").val();
+
+        //var dataItem = { "firstName": CHFNameStep2Delete, "lastName": CHLNameStep2Delete, "cardNumber": CHCardNumStep2Delete, "cardHolderId": CHIdStep2Delete, "deviceId": deviceID };
+        var dataItem = { "firstName": '', "lastName": CHLNameStep2Delete, "cardNumber": CHCardNumStep2Delete, "cardHolderId": CHIdStep2Delete, "deviceId": deviceID };
+        var url = '@Url.Action("CardHolderDelete", "Access")';
+        BlockElement("dvDMPXRCardholderDeleteContent", 'Connecting...');
+        $.post(url, dataItem, DMPXRGetCHDeleteStep2Callback, "json");
+    }
+
+//    function fnValidateCardHolderDelete() {
+
+//        $("#wndDeleteCardHolder").data("kendoWindow").close();
+//        var deviceID = $("#AccessViewDeviceList").val();
+//        var CHFNameStep2Delete = $("#txtDeleteFNameStep2").val();
+    //        var CHLNameStep2Delete = $("#txtDMPXRDeleteLNameStep2").val();
+//        var CHCardNumStep2Delete = $("#txtDMPXRDeleteCardNumStep2").val();
+    //        var CHIdStep2Delete = $("#txtDMPXRDeleteCardholderID2").val();
+
+//        var dataItem = { "firstName": CHFNameStep2Delete, "lastName": CHLNameStep2Delete, "cardNumber": CHCardNumStep2Delete, "cardHolderId": CHIdStep2Delete, "deviceId": deviceID };
+//        var url = '@Url.Action("CardHolderDelete", "Access")';
+    //        BlockElement("dvDMPXRCardholderDeleteContent", 'Connecting...');
+    //        $.post(url, dataItem, DMPXRGetCHDeleteStep2Callback, "json");
+//    }
+
+    function DMPXRGetCHDeleteStep2Callback(ResultSet) {
+        UnBlockElement("dvDMPXRCardholderDeleteContent");
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                if (ResultSet == "OK") {
+                    fnShowAlertInfo('CardHolder deleted successfully.');
+                    //document.getElementById('dvDeleteCrdHldrConfirmation').style.visibility = 'hidden';
+                    document.getElementById('dvDMPXRDeleteCrdHldrConfirmation').style.visibility = 'hidden';                    
+                    document.getElementById('my_overlay').style.visibility = 'hidden';
+                }
+            }
+        }
+    }
+    function DeleteStep2ConfirmCancel() {
+        $("#wndDeleteCardHolder").data("kendoWindow").close();
+    }
+
+    function CloseDeleteConfirmation() {
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        //document.getElementById('dvDeleteCrdHldrConfirmation').style.visibility = 'hidden';
+        document.getElementById('dvDMPXRDeleteCrdHldrConfirmation').style.visibility = 'hidden';        
+    }
+
+    function DMPXRCloseCardHolderDeleteConfirmation() {
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        //document.getElementById('dvDeleteCrdHldrConfirmation').style.visibility = 'hidden';
+        document.getElementById('dvDMPXRDeleteCrdHldrConfirmation').style.visibility = 'hidden';        
+    }
+    
+</script>
+<style>    
+    #wndDeleteCardHolder
+    {
+        visibility:visible !important;
+    }
+</style>

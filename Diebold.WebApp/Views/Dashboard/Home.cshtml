@@ -1,0 +1,286 @@
+﻿@model IEnumerable<Diebold.Domain.Entities.UserPortletsPreferences>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@functions{
+    public HtmlString ShowView(Diebold.Domain.Entities.UserPortletsPreferences objModel)
+    {
+        HtmlString Partialcontent = null;
+        switch (objModel.Portlets.InternalName)
+        {
+            case "INTRUSION":
+                Partialcontent = @Html.Partial("../Intrusion/IntrusionDetailPortlet");
+                break;
+            case "Healthcheck":
+                Partialcontent = @Html.Partial("../Alerts/_HealthPortlet");
+                break;
+            case "FEATUREDNEWS":
+                Partialcontent = @Html.Partial("FeaturedNewsPortlet");
+                break;
+            case "SITEINFORMATION":
+                Partialcontent = @Html.Partial("SiteInformation");
+                break;
+            case "RSS":
+                Partialcontent = @Html.Partial("../Rss/RssPortlet", new Diebold.WebApp.Models.RSSFeedViewModel());
+                break;
+            case "LINKS":
+                Partialcontent = @Html.Partial("../Links/LinksPortlet");
+                break;
+            case "VIDEOHEALTHCHECK":
+                Partialcontent = @Html.Partial("../VideoHealthCheck/VideoHealthCheckPortlet", new List<Diebold.WebApp.Models.DeviceListDashboardViewModel>());
+                break;
+            case "SITEMAP":
+                Partialcontent = @Html.Partial("../Site/SiteMapPortlet");
+                break;
+            case "ACCOUNTDETAIL":
+                Partialcontent = @Html.Partial("../Account/AccountPortlet");
+                break;
+            case "SYSTEMSUMMARY":
+                Partialcontent = @Html.Partial("../SystemSummary/SystemSummary");
+                break;
+            case "MAS":
+                Partialcontent = @Html.Partial("../Monitor/MAS");
+                break;
+            case "ALERTS":
+                Partialcontent = @Html.Partial("../Alerts/Alert", new List<Diebold.WebApp.Models.DeviceListDashboardViewModel>());
+                break;
+            case "LIVEVIEW":
+                Partialcontent = @Html.Partial("../Video/LiveView", new Diebold.WebApp.Models.LiveViewModel());
+                break;
+            case "LIVEVIEW_TWO":
+                Partialcontent = @Html.Partial("../Video/LiveView_Two", new Diebold.WebApp.Models.LiveViewModel());
+                break;
+            case "ACCESSCONTROL":
+                Partialcontent = @Html.Partial("../Access/AccessView");
+                break;
+            case "FIREALARM":
+                Partialcontent = @Html.Partial("../FireAlarmBadge/FireAlarmPortlet");
+                break;
+        }
+        return Partialcontent;
+    }
+}
+
+<link href="@Url.Content("~/Content/themes/base/jquery.ui.core.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/themes/base/jquery.ui.resizable.css")" rel="stylesheet" type="text/css" />
+<style>
+    .portlet { margin: 0 1em 1em 0; }
+    .portlet-content { padding: 0.4em; }
+    .ui-sortable-placeholder  
+    {
+        border: 1px dotted black; 
+        visibility: visible !important; 
+        height: 175px !important;
+        background:#f0f0f0;
+    }
+    .ui-sortable-placeholder * { visibility: hidden; }
+    
+    </style>
+
+<script type="text/javascript">
+    $(function () {
+
+        $(".column").sortable({
+            connectWith: ".column",
+            handle: ".Dashbord-header",
+            cursor: 'move',
+            forcePlaceholderSize: true,
+            opacity: 0.4,
+            placeholder: 'placeholder',
+            receive: function (event, ui) {
+                getWidthofColumn();
+            },
+            start: function (event, ui) {
+                if (jQuery('#dvSettings').dialog('isOpen')) {
+                    jQuery('#dvSettings').dialog('close');
+                }
+            },
+            stop: function (event, ui) {
+                $(ui.item).find('Dashbord-header').click();
+                var sortorder = '';
+                $('.column').each(function () {
+                    var itemorder = $(this).sortable('toArray');
+                    var columnId = $(this).attr('id');
+                    var colId = null;
+                    if (columnId == "Column1") {
+                        colId = "C1";
+                    }
+                    else if (columnId == "Column2") {
+                        colId = "C2";
+                    }
+                    else if (columnId == "Column3") {
+                        colId = "C3";
+                    }
+                    sortorder += colId + '~' + itemorder.toString() + '&';
+                });
+                var mySplitResult = sortorder.split("&");
+                var mySplitResultset = {
+                    'input': sortorder
+                };
+
+                var url = '@Url.Action("InsertData", "Dashboard")';
+                $.post(url, mySplitResultset, callBack, "json");
+                //fnSetCenterContentHeight();
+            }
+        });
+
+        $(".center-column").sortable({
+            connectWith: ".center-column",
+            handle: ".Dashbord-header",
+            cursor: 'move',
+            forcePlaceholderSize: true,
+            opacity: 0.4,
+            stop: function (event, ui) {
+                $(ui.item).find('Dashbord-header').click();
+                var sortorder = '';
+                $('.center-column').each(function () {
+                    var itemorder = $(this).sortable('toArray');
+
+                    var columnId = $(this).attr('id');
+                    var colId = null;
+                    if (columnId == "Column1") {
+                        colId = "C1";
+                    }
+                    else if (columnId == "Column2") {
+                        colId = "C2";
+                    }
+                    else if (columnId == "Column3") {
+                        colId = "C3";
+                    }
+                    sortorder += colId + '~' + itemorder.toString() + '&';
+                });
+                var mySplitResult = sortorder.split("&");
+                var mySplitResultset = {
+                    'input': sortorder
+                };
+
+                var url = '@Url.Action("InsertData", "Dashboard")';
+                $.post(url, mySplitResultset, callBack, "json");
+                //fnSetCenterContentHeight();
+            }
+        });
+
+
+        function callBack() {
+            var FormUrl = '@Url.Action("../Dashboard/Returnfunc")';
+            $("form").attr("action", FormUrl);
+        }
+
+        $(".column").disableSelection();
+
+    });
+
+</script>
+<style>
+    .k-content
+    {
+        overflow: auto;
+    }
+    
+     .placeholder {
+        padding-top: 150px;
+        background-color: transparent;
+        text-align:center;
+        width: 225px;
+    }
+
+</style>
+<form action="../Dashboard/Returnfunc">
+   <!--my_overlay-->
+<div class="my_overlay" id="my_overlay" style="background-color: #000000; opacity: .7;
+    position: absolute; z-index: 200; width: 100%; height: 100%; margin: 0px; padding: 0px;
+    visibility: hidden; top:0; left:0;">
+</div>
+
+@(Html.Kendo().Window()
+    .Name("DieboldAlertWindow")
+    .Title("Information")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div style="padding: 5px">
+    <label id="lblDieboldAlert"></label>
+    <div style="margin: 20% 0 0 0;">
+    <div class="add-link" align="center">
+        <input type="button" value="OK" id="btnOkInfoWindow" style="width: 20%;" onclick="ClosewndAlertInformation();" />
+    </div>
+    </div>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(275)
+    .Height(170)
+)
+
+<div id="cont-block-one">
+<div class="four columns" >
+<div class="column" id="Column1" >
+
+    @foreach (var objWebportal in Model.ToList().Where(x => x.ColumnNo.Equals(1)).OrderBy(x => x.SeqNo).ToList())
+    {
+        <div id=@objWebportal.Portlets.InternalName>
+            @ShowView(objWebportal)
+        </div>
+    }
+    <div id="emptyPlaceHolderLeft" class="placeholder"></div>
+</div>
+</div>
+</div>
+<div id="cont-block-two">
+
+  <div id="dvCenterColumn" class="eight columns" style="padding:0px;">
+   <div class="center-cont-bg gradient">   
+    <h1>@DateTime.Now.ToString("D").ToUpper()</h1>
+    <div class="center-column" id="Column2" >
+    @foreach (var objWebportal in Model.ToList().Where(x => x.ColumnNo.Equals(2)).OrderBy(x => x.SeqNo).ToList())
+    {
+        <div id=@objWebportal.Portlets.InternalName>
+                @ShowView(objWebportal)
+        </div>
+    }
+</div>
+</div>
+ <div class="overflow-bg"></div>
+</div>
+
+</div>
+<div id="cont-block-three">
+<div class="four columns"> 
+<div class="column" id="Column3">
+
+    @foreach (var objWebportal in Model.ToList().Where(x => x.ColumnNo.Equals(3)).OrderBy(x => x.SeqNo).ToList())
+    {
+        <div id=@objWebportal.Portlets.InternalName>
+            @ShowView(objWebportal)
+        </div>
+    }
+    <div id="emptyPlaceHolderRight" class="placeholder"></div>
+</div>
+</div>
+ </div>
+</form>
+<script type="text/javascript">
+    function ClosewndAlertInformation() {
+        $("#DieboldAlertWindow").data("kendoWindow").close();
+    }
+    $(document).ready(function () {
+        //fnSetCenterContentHeight();
+    });
+
+    function fnSetCenterContentHeight() {
+        var column1Height = $("#Column1").height();
+        var column2Height = $("#Column2").height();
+        var column3Height = $("#Column3").height();
+        /*TODO: This will go wrong incase of side column height is high than setting it to ceter content and realiging the portlets.*/
+        if (column2Height < column1Height || column2Height < column3Height) {
+            if (column1Height > column3Height) {
+                $("#Column2").css('minHeight', column1Height);
+            }
+            else {
+                $("#Column2").css('minHeight', column2Height);
+            }
+        }
+    }
+    //getWidthofColumn();
+</script>

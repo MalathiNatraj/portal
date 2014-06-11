@@ -1,0 +1,68 @@
+﻿@model Diebold.WebApp.Models.CompanyViewModel
+    <fieldset>
+    <div class="cont-creation">
+    <div class="one columns"></div>
+        <div class="eight columns" style="float:left;">
+        <div style="width:100%;">
+             <p class="edit-cpny-grp-sub-title">
+                New <span class="grouping2DynamicName"></span>
+            </p>
+         </div>
+         <div class="cont-lft">
+            <div class="comp-lft" style="width:35%">
+                <p><label class="grouping2DynamicName"></label> @Html.LabelFor(model => model.AvailableGrouping2Levels) </p>
+            </div>
+            <div class="comp-right" style="width:65%;">
+                @Html.TextBoxFor(model => model.Grouping2LevelName, new { @class = "comp-txt", style = "width:56%;" })                
+            
+                <div class="add-link" style="float:right;padding-left:5px;">
+                  <input type="button" id="anotherGroupLevel2" value="Create Another" class="btnCreate" />     
+               </div>
+           </div>
+            <div class="clear"></div>
+            <div class="comp-lft" style="width:35%">
+                <p><label class="grouping1DynamicName"></label> @Html.LabelFor(model => model.AvailableGrouping1Levels) </p>
+            </div>
+            <div class="comp-right" style="width:65%;">
+                @if (!ViewBag.IsEdit)
+                {
+                    @(Html.Kendo().ComboBoxFor(p => p.Grouping1Selected)
+                              .Name("Grouping1Selected")
+                              .DataTextField("Text")
+                              .DataValueField("Value")                              
+                              .BindTo(Model.AvailableGrouping1Levels)
+                              .SelectedIndex(0)
+                              .HtmlAttributes(new { style = "width:56%" })                         
+                     )    
+                }
+                else
+                {
+                    @Html.DropDownListFor(p => p.Grouping1Selected, Model.AvailableGrouping1LevelItems, new { @class = "Grouping1ItemSelected", @id = "Grouping1SelectedStep" , style = "width:56%; border: 1px solid #CCCCCC;font-size: 12px;min-height: 20px;" })
+                }
+            </div>
+         </div>
+        <div class="clear"></div>
+        <div class="comp-lft">
+        </div>
+        <div class="comp-right">
+            @if (!ViewBag.IsEdit)
+            {
+                <div class="add-link" style="float: left; padding:3% 0 0 36%;">
+                <input type="button" id="back-Step" value="Back" class="btnBack" />
+                </div>
+            }              
+           
+             <div class="add-link" style="float: left; padding:3% 0 0 2%;">
+              @if (!ViewBag.IsEdit)
+              {
+                  <input type="button" id="last-Step" value="Finish" class="btnFinish" />
+              }
+              else
+              {
+                  <input type="button" id="btnFinishLevel2" name="finish" value="Finish" class="btnStep1"/>
+              }
+             </div>
+        </div>
+        </div>
+    </div>     
+    </fieldset>

@@ -1,0 +1,190 @@
+﻿@{
+    IList<Diebold.Platform.Proxies.DTO.ReportsDTO> objFireWidgetEventsModel = new List<Diebold.Platform.Proxies.DTO.ReportsDTO>();
+}
+<!-- Fire Pallet starts here -->
+<div class="cont-inner-room">
+    <div id="FireAlarmportletArea">
+        <div class="wine-red">
+            <div class="Dashbord-header">
+                <div class="wine-red-head gradient">
+                    <div class="pallet-icon">
+                        <img src="@Url.Content("~/Content/images/fire-icon.png")" alt="" />
+                    </div>
+                    <p>
+                        <strong>Fire</strong></p>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgFAClose" onclick="javascript:fnCloseFireAlarm();return false;" src="@Url.Content("~/Content/images/close-icon.png")" alt="" /></a>
+                    </div>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgFAExpCollapse" onclick="javascript:fntoggleFireAlarm();return false;" src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+                    </div>
+                </div>
+            </div>
+            <div id="FireAlarm-content">
+                <div class="wine-red-body gradient">
+                    <div class="fire-body-cont">
+                        <div class="fire-list bottom">
+                            @(Html.Kendo().ComboBox()
+                                    .HtmlAttributes(new { style = "width:85%" })
+                                    //.Events(ev => { ev.Select("AccessselectReport"); })
+                                    .Name("cboFireAlarmSite")
+                                    .Placeholder("Select Site")
+                                    .DataTextField("Name")
+                                    .DataValueField("AccNumber")
+                                    .Template("<div><div id='rowcell'>${ Name }</div><div id='rowcell' style='width:130px!important'>${ AccNumber }</div></div>")
+                                    .Events(e =>
+                                    {
+                                       e.Open("openDDFireAlarmheader").Close("closeDDFireAlarmheader").Change("selectFireAlarmDevice");
+                                    })
+                            )
+                        </div>
+                        <div class="fire-count">
+                            <div class="fire-alarm-cont">
+                                <label id="lblAlarmCount">&nbsp;&nbsp;</label>
+                            </div>
+                            <div class="fire-trouble-cont">
+                            <label id="lblTroubleCount">&nbsp;&nbsp;</label>
+                            </div>
+                            <div class="fire-cont-left">
+                                <a href='#' onclick="fnshowFireEvents();return false;">Details</a></div>
+                            <div class="fire-cont-right" style="color:#FFCD61;top:103px; left:3px;">
+                                Event data recorded in last 24 hours</div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+                <div class="wine-red-set">
+                    <div class="sett-icon">
+                        <a href="#">
+                            <img src="@Url.Content("~/Content/images/move-icon.png")" alt=""  onclick="javascript:ShowFirePortletDescription();return false;"/></a>
+                    </div>
+                    <div class="sett-icon">
+                        <a href="#">
+                            <img id="imgFireAlarm" src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dvFireEvents" class="modelDialog" style="display: none;">
+<div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Fire Events</label></strong></div>
+<div style="width:90%; margin:3% 2% 0 5%;">
+        <p>
+            @(Html.Kendo().Grid(objFireWidgetEventsModel)
+                .Name("grdFireWidgetEvents")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.sig_code).Width("30%").Title("Sig Code");
+                    columns.Bound(p => p.events).Width("30%").Title("Event");
+                    columns.Bound(p => p.eventhistcomment).Width("30%").HtmlAttributes(new { style = "word-wrap: break-word;" }).Title("Event History Comments");
+                    columns.Bound(p => p.zone_comment).Width("30%").Title("Zone Comments");
+                    columns.Bound(p => p.additional_info).Title("Additional Info");
+                })
+                .Pageable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .ServerOperation(false)
+                )
+            )
+        </p>
+        <div class="add-link" style="padding-top:5px; width:100px; margin-left: 43%;">
+            <input type="button" value="Cancel" id="btnInfoPopupCancel" onclick="javascript:btnCancelFireEventClicked();" />
+        </div>
+    </div>
+     <br />
+</div>
+@(Html.Kendo().Window()
+    .Name("NoEvents")
+    .Title("No Events")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+        <div>
+            <p>
+               
+            </p>
+        </div>
+    </text>)
+    .Draggable(false)
+    .Width(300)
+    .Height(100)
+)
+
+@(Html.Kendo().Window()
+    .Name("FireWidgetDescriptionwindow")
+    .Title("Fire Widget Portlet Description")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+        <div>
+            <p>
+                Select and see fire alarm monitoring events within a site. Trouble and alarm events are shown in the last 24 hour period. 
+            </p>
+        </div>
+    </text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)
+
+<script type="text/javascript">
+    var fireAlarmClosePortletUrl = '@Url.Action("ClosePortlet", "Preferences")';
+    var GetSitesforFireWidgetUrl = '@Url.Action("GetSitesWithFireMonitoringAccNumber", "FireAlarm")';
+    var GetPlatformFireAlarmUrl = '@Url.Action("GetFireAlarmDetails", "FireAlarm")';
+    var FireAlarmSaveDefaultValueUrl = '@Url.Action("SaveFireAlarmDefaultValue", "FireAlarm")';
+    var FireAlarmClearDefaultValueUrl = '@Url.Action("ClearFireAlarmDefaultValue", "FireAlarm")';
+    var GetPlatformFireAlarmEventUrl = '@Url.Action("GetFireAlarmEventDetails", "FireAlarm")';
+     $(document).ready(function () {
+         GetSiteDetailsforFireAlarm();
+         var wWidth = $(window).width();
+         var dWidth = wWidth * 0.2;
+         $("#dvSettings").dialog(
+               {
+                   draggable: false,
+                   closeOnEscape: true,
+                   resizable: false,
+                   height: 'auto',
+                   width: dWidth,
+                   autoOpen: false,
+                   show: 'blind'
+
+               }
+               );
+
+         // To hide the title bar of the div
+         $(".ui-dialog-titlebar").hide();
+         $('#imgFireAlarm').click(function (event) {
+             $("#dvSettings").dialog("option", "position", {
+                 my: "left top",
+                 at: "bottom",
+                 collision: "flip",
+                 of: event,
+                 offset: "20 40"
+             });
+             $('#dvSettings').empty();
+             $('#dvSettings').append('<a href="#" id="imgFADefaultValues" onclick="javascript:fnAddFADefaultValuesClick();return false;" class="divdynamiclink">Save Defaults</a>');
+             $('#dvSettings').append('<a href="#" id="imgFAClearDefault" onclick="javascript:fnClearFADefaultValuesClick();return false;" class="divdynamiclink">Clear Defaults</a>');
+             $('#dvSettings').dialog('open');
+             return false;
+         });
+         // Close Pop-up If the user clicks anywhere else on the page
+         jQuery('body').bind('click', function (e) {
+             if (jQuery('#dvSettings').dialog('isOpen')
+            && !jQuery(e.target).is('.ui-dialog, a')
+            && !jQuery(e.target).closest('.ui-dialog').length
+         ) {
+                 jQuery('#dvSettings').dialog('close');
+             }
+         });
+     });
+</script>
+<!-- Fire Pallet ends here -->
+

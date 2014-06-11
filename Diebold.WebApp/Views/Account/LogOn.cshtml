@@ -1,0 +1,136 @@
+﻿@model Diebold.WebApp.Models.LogOnModel
+@{
+    Layout = null;
+     
+}
+<!DOCTYPE html>
+<html>
+<head>
+    @*<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />*@
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/login-style.css")" />
+    <title>Diebold SecureStat</title>
+    <script src="@Url.Content("~/Scripts/jquery.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#UserName").val('User Id');
+            $("#Password").val('txtPassword');
+           
+            $("#Password").addClass('input');
+            $("#UserName").addClass('input');
+           
+            $("#UserName").focus(function () {
+                var strCtlVal = $('#UserName').val();
+                if (strCtlVal != null && strCtlVal != '') {
+                    if ($('#UserName').val() == 'User Id') {
+                        $('#UserName').val('');
+                    }
+                }
+            });
+
+            $("#Password").focus(function () {
+                var strPassword = $('#Password').val();
+                if (strPassword != null && strPassword != '') {
+                    if ($('#Password').val() == 'txtPassword') {
+                        $('#Password').val('');
+                    }
+                }
+            });
+
+            $("#UserName").blur(function () {
+                var strUserName = $('#UserName').val();
+                if (strUserName == null || strUserName == '') {
+                    $('#UserName').val('User Id');
+                }
+            });
+
+            $("#Password").blur(function () {
+                var strPassword = $('#Password').val();
+                if (strPassword == null || strPassword == '') {
+                    $('#Password').val('txtPassword');
+                }
+            });
+
+            $("#btnSubmit").click(function () {
+                var url = '@Url.Action("LogOn")';
+                $("form").attr("action", url);
+                $("form").submit();
+            });
+
+        });
+        function fnShowForgotpwd() {
+            var editUri = '@Url.Action("ForgotPassword")';
+            location.href = editUri;
+        }
+
+        $(document).ready(function () {
+            $("a.jQueryBookmark").click(function (e) {
+                e.preventDefault(); // this will prevent the anchor tag from going the user off to the link
+                var bookmarkUrl = this.href;
+                var bookmarkTitle = this.title;
+
+                if (window.sidebar) { // For Mozilla Firefox Bookmark
+                    window.sidebar.addPanel(bookmarkTitle, bookmarkUrl, "");
+                } else if (window.external || document.all) { // For IE Favorite
+                    window.external.AddFavorite(bookmarkUrl, bookmarkTitle);
+                } else if (window.opera && window.print) { // For Opera Browsers
+                    var elem = document.createElement('a');
+                    elem.setAttribute('href', url);
+                    elem.setAttribute('title', title);
+                    elem.setAttribute('rel', 'sidebar');
+                    elem.click();
+
+                } else { // for other browsers which does not support
+                    alert('Your browser does not support this bookmark action');
+                    return false;
+                }
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+    <div id="mainContainer">
+        <header>
+        	<div class="row">
+            	<div class="five columns logo">
+                	<a href="#">DIEBOLD</a>
+                </div>
+            </div>
+        </header>
+        <div class="row">
+        	<div class="sixteen columns">
+            	<div class="row login-bg gradient">
+                	<div class="six columns login-lft-cont">
+                		<p>Welcome associates. From here you can connect with Diebold corporate and its employees on all topics and issues. <br /><br />Thanks and enjoy.
+                        </p>
+					</div>
+                    <div class="ten columns login-right-cont" align="center">
+                             @using (Html.BeginForm())
+                            {
+                                <fieldset>
+                                    <div id="dvMsg" class="login-msg"> @Html.DisplayFor(model => model.Message)</div>
+                                    @Html.EditorFor(model => model.UserName)
+                                    <br /><br />
+                                        @Html.EditorFor(model => model.Password)
+                                    <br /><br />
+                                    <input id="btnSubmit" type="submit" class="submit-btn" value="ENTER"/>
+                                </fieldset>
+                            }
+                        <ul>
+                            <li> @Html.ActionLink("Forgot User ID?", "ForgotUserId", new { /* id=item.PrimaryKey */ })</li>
+                            <li>|</li>
+                            <li><a href="#" id="lnkFogotpwd" onclick="javascript:fnShowForgotpwd();return false;">Forgot Password?</a></li>
+                            <li>|</li>
+                            <li><a href="#" id="lnkAddFavorites" title="Diebold.com" class="jQueryBookmark">Add to Favorites</a></li> 
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Diebold.WebApp.Models.DeviceListDashboardViewModel>
+<link href="@Url.Content("~/Content/Site.css") rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/app/AlertListConfig.js")" type="text/javascript"></script>
+@(Html.Kendo().Grid(Model)
+    .Name("Grid")
+    .HtmlAttributes(new { style = "width:99.9%; height:95%" })
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Ack).Width(50).ClientTemplate("# if (Ack == 'True') { #" + "<img class='icon bulletGreen bold' alt='Connected' />" +
+                "# } else { #" + "<img class='icon bulletRed bold' alt='not Connected'  #}#");
+       
+        columns.Bound(p => p.AlertName).Width(250);
+        columns.Bound(p => p.IsDeviceOk).Width(75).Title("Status").ClientTemplate("# if (IsDeviceOk == true) { #" + "<img class='icon bulletGreen bold' alt='Connected' />" +
+                "# } else { #" + "<img class='icon bulletRed bold' alt='not Connected'  #}#");
+        // Removed as per gregs mail on 21 Feb
+        //columns.Bound(p => p.ActionColumn).Width(100).Title("Action").ClientTemplate("<img class='icon mail bold' alt='mail'  title='Mail Alert' onclick='doNotificationAction(" + 1 + ", \"Resend Mail Alert\")'/><img class='icon emc bold' alt='emc'  title='EMC Alert' onclick='doNotificationAction(" + 1 + ", \"Resend EMC Alert\")'/>");
+    })
+    .Pageable()
+    .Scrollable()    
+    .DataSource(dataSource => dataSource
+        .Ajax())
+     )
+
+
+<style>
+.ui-helper-clearfix
+{
+	width:99.9%;
+}
+</style>
+
+

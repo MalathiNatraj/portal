@@ -1,0 +1,55 @@
+﻿@model Diebold.WebApp.Models.CompanyGroupingLevelViewModel
+<div id="nameEdition">
+    <div class="cont-creation">
+        <div id="groupingLevel1EditName">
+            <div style="margin-left: 5px;">
+                @Html.ValidationMessageFor(x => x.GroupingLevel1Name)
+            </div>
+            <div class="cont-lft">
+                <div class="comp-lft" style="width: 30%; padding: 0 0 0 50px;">
+                    @Html.Label("Name: ")
+                </div>
+                <div class="comp-lft txt-border" style="width: 37%;">
+                    @Html.TextBoxFor(x => x.GroupingLevel1Name, new {style="width:100%"})
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div>
+                <div class="add-link" style="text-align: center; margin-top: 20px;">
+                    <input id="btnGroupLeavel1Save" type="button" value="Save" onclick="javascript:btnOkClickedAccess('District');"
+                        class="editLevels" style="width: 18%;" />
+                    <input id="btnGroupLeavel1Cancel" type="button" value="Cancel" onclick="javascript:btnCancelClickedAccess();"
+                        class="editLevels" style="width: 18%;" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="cont-creation">
+        <div id="groupingLevel2EditName">
+            <div style="margin-left: 5px;">
+                @Html.ValidationMessageFor(x => x.GroupingLevel2Name)
+            </div>
+            <div class="cont-lft">
+                <div class="comp-lft" style="width: 30%; padding: 0 0 0 50px;">
+                    @Html.Label("Name: ")
+                </div>
+                <div class="comp-lft txt-border" style="width: 38%;">
+                    @Html.TextBoxFor(x => x.GroupingLevel2Name, new {style="width:100%",  @class = "groupingLevel2Name" })
+                </div>
+                <div class="clear">
+                </div>
+                <div>
+                    <div class="add-link" style="text-align: center; margin-top: 20px;">
+                        <input id="btnGroupLeavel2Save" type="button" value="Save" onclick="javascript:btnOkClickedAccess('Area');"
+                            class="editLevels" style="width: 18%;" />
+                        <input id="btnGroupLeavel2Cancel" type="button" value="Cancel" onclick="javascript:btnCancelClickedAccess();"
+                            class="editLevels" style="width: 18%;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

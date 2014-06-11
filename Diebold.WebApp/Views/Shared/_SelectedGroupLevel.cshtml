@@ -1,0 +1,16 @@
+﻿
+@model IEnumerable<Diebold.WebApp.Models.MonitorAssignmentViewModel>
+
+@{
+    string postURL = "SaveMonitorAssignment/" + ViewBag.UserId;
+}
+<div class="pallette-detail-subheader-bg">
+    <p>Selected Group Levels</p>
+</div>
+@using (Html.BeginForm(@postURL , "User", FormMethod.Post, new { Id = "monitorAssignmentForm" }))
+{
+    <div id="selectedGroups">
+        <ul>@Html.EditorForModel()</ul>
+    </div>
+}
+

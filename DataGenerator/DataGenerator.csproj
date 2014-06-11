@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4DD9B7DA-5865-462D-A1C3-6D50EF4424C9}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataGenerator</RootNamespace>
+    <AssemblyName>DataGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.2.0.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GlobalUnitOfWork.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Diebold.DAO.NH\Diebold.DAO.NH.csproj">
+      <Project>{F620AB7E-FBB8-4F80-86D8-2AF599398847}</Project>
+      <Name>Diebold.DAO.NH</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Diebold.Domain\Diebold.Domain.csproj">
+      <Project>{E2272842-62E2-4E98-9002-BC852F5EB68F}</Project>
+      <Name>Diebold.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Diebold.Platform.Proxies\Diebold.Platform.Proxies.csproj">
+      <Project>{92277C40-A406-45BA-8A34-2C626082678F}</Project>
+      <Name>Diebold.Platform.Proxies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Diebold.Services\Diebold.Services.csproj">
+      <Project>{31183438-F429-4B45-A3F0-3F3C3E1FDA17}</Project>
+      <Name>Diebold.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

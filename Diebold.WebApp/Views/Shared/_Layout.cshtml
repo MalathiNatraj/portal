@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    
+    <link href="@Url.Content("~/Content/themes/diebold-theme/jquery-ui-1.8.17.custom.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />      
+        
+    <script src="@Url.Content("~/Scripts/jquery-1.7.js")" type="text/javascript"></script>    
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.16.js")" type="text/javascript"></script>
+    
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajaxSetup({
+                cache: false
+            });
+        });
+    </script>
+
+    <script src="@Url.Content("~/Scripts/app/Common.js")" type="text/javascript"></script>
+
+    @RenderSection("Head", required: false)  
+</head>
+<body>
+    <div class="page">
+        <div id="header">
+            <div class="clearfix">
+                <div class="logo"><img src="../../Content/images/dieboldLogo.png" alt="DIEBOLD" /></div>                        
+                @Html.Partial("_LogOnPartial")
+            </div>
+            @if (ViewBag.UserNameExists == null || ViewBag.UserNameExists)
+            {
+                <div id="menucontainer" class="menu">
+                    @Html.Partial("_ActionsMenu")
+                </div>   
+            }
+        </div>
+        <div id="main">
+            @RenderBody()
+        </div>
+        <div id="footer">
+        </div>
+    </div>
+</body>
+</html>

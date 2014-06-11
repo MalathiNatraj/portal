@@ -1,0 +1,161 @@
+﻿@model Diebold.WebApp.Models.LiveViewModel
+@section metas
+{
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+}
+<script type="text/javascript" src="@Url.Content("~/Scripts/IPConfigure/Player.min.js")" ></script>
+<div id="dvLiveViewPortlet">
+    <div class="cont-inner-room">
+        <div class="dark-blue">
+            <div class="Dashbord-header">
+                <div class="dark-blue-head gradient">
+                    <div class="pallet-icon">
+                        <img src="@Url.Content("~/Content/images/live-view-icon.png")" alt="" />
+                    </div>
+                    <p>
+                        <strong>Live View</strong></p>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgLiveViewClose" src="@Url.Content("~/Content/images/close-icon.png")" onclick="javascript:fnCloseLiveView();return false;" alt="Close" /></a>
+                    </div>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgLiveViewExpColapse" onclick="javascript:fntoggleLiveView();return false;" src="@Url.Content("~/Content/images/collapse-icon.png")" alt="Expand/Collapse" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="dvLiveViewContent">
+                <div class="dark-blue-body gradient">
+                    <div class="live-view-body-cont">                        
+                    <div>                            
+                        <div id ="ipConfigure-player" style="background-color: black; width: 100%; height: 210px;"> </div>                   
+                        <div style="margin-left:40%; margin-top:3%;">       
+                            <img id="btnPlayback" src="@Url.Content("~/Content/images/Play.png")" height="25px" width="25px" alt="Play" onclick="javascript:Playback();" />
+                            <img id="btnStop" src="@Url.Content("~/Content/images/Stop.png")" height="25px" width="25px" alt="Stop" onclick="javascript:StopPlayer();" />                                                           
+                        </div>
+                        <div class="live-view-feed">
+                            <div style="padding-top: 3%;">
+                                @(Html.Kendo().ComboBox()
+                                .HtmlAttributes(new { style = "width:210px" })
+                                .Name("ServerList")
+                                .Placeholder("My Server List")
+                                .DataTextField("LocationName")
+                                .DataValueField("ServerID")
+                                .BindTo(Model.ServerList)
+                                .Events(events => events.Change("Server_SelectionChanged"))
+                            )                          
+                            </div>
+                            <div style="padding-top: 5%;">
+                            @(Html.Kendo().ComboBox()
+                            .HtmlAttributes(new { style = "width:210px" })
+                            .Name("CameraList")
+                            .Placeholder("My Camera List")
+                            .DataTextField("Name")
+                            .DataValueField("CameraID")
+                            .BindTo(Model.CameraList)
+                            .Events(events => events.Change("Camera_SelectionChanged"))
+                        )
+                        <div>
+                        </div>                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            <div class="dark-blue-set">
+                <div class="sett-icon">
+                    <a href="#">
+                        <img src="@Url.Content("~/Content/images/move-icon.png")" alt="Description" onclick="javascript:ShowLiveViewDesc();return false;"/>
+                    </a>
+                </div>
+                <div class="sett-icon">
+                    <a href="#">
+                        <img id="imgLiveViewOneSettings" src="@Url.Content("~/Content/images/settings-icon.png")" alt="Settings" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="defaultServer" />
+    <input type="hidden" id="defaultCamera" />
+   <div id="dvSettings" class="context-menu"></div>
+    @(Html.Kendo().Window()
+    .Name("LiveViewDescription")
+    .Title("Live View Portlet Description")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+    <div>
+        <p>
+            With Diebold’s hosted video solution, create multiple instances of live video by
+            selecting two cameras to view.
+        </p>
+    </div>
+    </text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)
+</div>
+</div>
+
+<script type="text/javascript">
+    var ManagementUri = "";
+    var playerdiv = $("#ipConfigure-player");
+    var player = new ipConfigure.Player(playerdiv);
+    var CurrentCamera = "";
+    var serverDataSource;
+    var liveViewGetLIVEVIEWValueUrl = '@Url.Action("GetLIVEVIEWValue", "Video")';
+    var liveViewAddNextCameraUrl = '@Url.Action("AddNextCamera", "Preferences")';
+    var liveViewSaveLiveViewDefaultsUrl = '@Url.Action("SaveLiveViewDefaults", "Video")';
+    var liveViewClearLiveViewDefaultsUrl = '@Url.Action("ClearLiveViewDefaults", "Video")';
+    var liveViewClosePortletUrl = '@Url.Action("ClosePortlet", "Preferences")';
+
+    $(document).ready(function () {
+        ManagementUri = '@System.Web.Configuration.WebConfigurationManager.AppSettings["IpConfigureURL"]';
+        GetServerDetails();
+        var wWidth = $(window).width();
+        var dWidth = wWidth * 0.2;
+        $("#dvSettings").dialog(
+               {
+                   draggable: false,
+                   closeOnEscape: true,
+                   resizable: false,
+                   height: 'auto',
+                   width: dWidth,
+                   autoOpen: false,
+                   show: 'blind'
+
+               }
+               );
+
+        // To hide the title bar of the div
+        $(".ui-dialog-titlebar").hide();
+        $('#imgLiveViewOneSettings').click(function (event) {
+            $("#dvSettings").dialog("option", "position", {
+                my: "left top",
+                at: "bottom",
+                collision: "flip",
+                of: event,
+                offset: "20 40"
+            });
+            $('#dvSettings').empty();
+            $('#dvSettings').append('<a href="#" id="imgLiveViewSaveDefaults" onclick="javascript:fnLiveViewSaveDefaults();return false;" class="divdynamiclink">Save Defaults</a>');
+            $('#dvSettings').append('<a href="#" id="imgLiveviewClearDefaults" onclick="javascript:fnLiveViewClearDefaults();return false;" class="divdynamiclink">Clear Defaults</a>');
+            $('#dvSettings').dialog('open');
+            return false;
+        });
+        // Close Pop-up If the user clicks anywhere else on the page
+        jQuery('body').bind('click', function (e) {
+            if (jQuery('#dvSettings').dialog('isOpen')
+            && !jQuery(e.target).is('.ui-dialog, a')
+            && !jQuery(e.target).closest('.ui-dialog').length
+         ) {
+                jQuery('#dvSettings').dialog('close');
+            }
+        });
+    });
+
+     
+</script>

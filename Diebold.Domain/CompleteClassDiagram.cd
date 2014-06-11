@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Diebold.Domain.Entities.AlarmConfiguration" Collapsed="true">
+    <Position X="40" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAQAACMAAgAEAAAAAAAgAAgAAAAAAAAgAAQAIAA=</HashCode>
+      <FileName>Entities\AlarmConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.AlertInfo" Collapsed="true">
+    <Position X="24.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAgAkAAAAAAAAIAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>Entities\AlertInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.AlertStatus" Collapsed="true">
+    <Position X="31" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAQgAAAAAAAQAIIAAEAAAAAABAAACAAAA=</HashCode>
+      <FileName>Entities\AlertStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Camera" Collapsed="true">
+    <Position X="13" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAQAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Company" Collapsed="true">
+    <Position X="17.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAACAAgAAEAgAEIsAAAgQgQAAEAAAAAAAUAEAAgAA=</HashCode>
+      <FileName>Entities\Company.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.CompanyGrouping1Level" Collapsed="true">
+    <Position X="42.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAgAAAAAQAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Entities\CompanyGrouping1Level.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.CompanyGrouping2Level" Collapsed="true">
+    <Position X="44.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAQAgAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CompanyGrouping2Level.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.CompanySubscription" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="47" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CompanySubscription.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Device" Collapsed="true">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEBAAAAAAAAAAgACAAAAAAQAAAAEAAACAAAABAAAAIA=</HashCode>
+      <FileName>Entities\Device.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.DeviceStatus" Collapsed="true">
+    <Position X="10.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAQAAAAIAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Entities\DeviceStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Dvr" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oEABAAIAAAIAAgAEAAAAIQAAAMAAAAACAQAAAAAAAQA=</HashCode>
+      <FileName>Entities\Dvr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Gateway" Collapsed="true">
+    <Position X="6.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAIAggDEAAAAAABQAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Entities\Gateway.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.HealthCheckDeviceTypeRelation" Collapsed="true">
+    <Position X="48.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAEAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\HealthCheckDeviceTypeRelation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.HistoryLog" Collapsed="true">
+    <Position X="26.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAABAAAAAAAgggAAAAAAAAAAAAAIAAABAAAAAAAAAAQ=</HashCode>
+      <FileName>Entities\HistoryLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.IntKeyedEntity" Collapsed="true">
+    <Position X="23.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAEgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\IntKeyedEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Note" Collapsed="true">
+    <Position X="19.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAgAEAAAAAAAAAAAAAAABAAAACAAAAAA=</HashCode>
+      <FileName>Entities\Note.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Notification" Collapsed="true">
+    <Position X="50.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAIQCAAAAAIBAAAgAAAAAAAIAAAAAAAAEgAIEAAAAAA=</HashCode>
+      <FileName>Entities\Notification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Protocol" Collapsed="true">
+    <Position X="1.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Protocol.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.ResolvedAlert" Collapsed="true">
+    <Position X="28.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAgAAQAAAAAAAIAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Entities\ResolvedAlert.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.ResultsReport" Collapsed="true">
+    <Position X="33.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAglAAEAAAAACAAEAAAABABAAAIwQAAEAA=</HashCode>
+      <FileName>Entities\ResultsReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Role" Collapsed="true">
+    <Position X="15.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.RoleAction" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="47" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Entities\RoleAction.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Diebold.Domain.Entities.Site" Collapsed="true">
+    <Position X="22" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAgAAAAEAAAAAAMAAIECAQAAAIIAAEAAAIABEBAAAA=</HashCode>
+      <FileName>Entities\Site.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.TrackeableEntity" Collapsed="true">
+    <Position X="13" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAACAAAAAAAIAEAAAAgAAAAAAA=</HashCode>
+      <FileName>Entities\TrackeableEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.User" Collapsed="true">
+    <Position X="8.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACIAAEAEFwAABAAAAAAAAQCAAAAApAAAAAg=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.UserDeviceMonitor" Collapsed="true">
+    <Position X="35.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Entities\UserDeviceMonitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Entities.UserMonitorGroup" Collapsed="true">
+    <Position X="37.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAQAggAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Entities\UserMonitorGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Exceptions.RepositoryException" Collapsed="true">
+    <Position X="52.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\RepositoryException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diebold.Domain.Helpers.SizeConverterHelper" Collapsed="true">
+    <Position X="48.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Helpers\SizeConverterHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Diebold.Domain.Contracts.IAlertInfoRepository" Collapsed="true">
+    <Position X="2.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IAlertInfoRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Diebold.Domain.Contracts.IAlertStatusRepository" Collapsed="true">
+    <Position X="7.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IAlertStatusRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Diebold.Domain.Contracts.ICompanyGrouping1LevelRepository" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\ICompanyGrouping1LevelRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Diebold.Domain.Contracts.IIntKeyedRepository&lt;TEntity&gt;" Collapsed="true">
+    <Position X="9.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAABAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IIntKeyedRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Diebold.Domain.Contracts.IReadOnlyRepository&lt;TEntity&gt;" Collapsed="true">
+    <Position X="8.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAgAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IReadOnlyRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Diebold.Domain.Contracts.IRepository&lt;TEntity&gt;" Collapsed="true">
+    <Position X="9.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Diebold.Domain.Contracts.IRoleRepository" Collapsed="true">
+    <Position X="14" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IRoleRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Diebold.Domain.Contracts.ISiteRepository" Collapsed="true">
+    <Position X="16.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\ISiteRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Diebold.Domain.Contracts.IUserDeviceMonitorRepository" Collapsed="true">
+    <Position X="5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgABAAAAAAACAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IUserDeviceMonitorRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Diebold.Domain.Contracts.IUserMonitorGroupRepository" Collapsed="true">
+    <Position X="9.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAEAAAAAAAAAAAAAAAAAAAACAAAACA=</HashCode>
+      <FileName>Contracts\IUserMonitorGroupRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Diebold.Domain.Contracts.IUserRepository" Collapsed="true">
+    <Position X="11.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Diebold.Domain.Contracts.Infrastructure.ICurrentUserProvider" Collapsed="true">
+    <Position X="47" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\Infrastructure\ICurrentUserProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Diebold.Domain.Contracts.Infrastructure.IUnitOfWork" Collapsed="true">
+    <Position X="48.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\Infrastructure\IUnitOfWork.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Diebold.Domain.Entities.Action" Collapsed="true">
+    <Position X="48.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgACAAAQAAAAAAAAAAEIAAAAgAAAAgAAABiAQAIAA=</HashCode>
+      <FileName>Entities\ActionEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Entities.AlarmOperator" Collapsed="true">
+    <Position X="50.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAACAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAQIACA=</HashCode>
+      <FileName>Entities\AlarmOperator.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Entities.AlarmSeverity" Collapsed="true">
+    <Position X="52.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\AlarmSeverityEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Entities.AlarmType" Collapsed="true">
+    <Position X="47" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABQAAAAIAAAgAAAAAAAAAAAQAAAAAAAAAAABAAAAI=</HashCode>
+      <FileName>Entities\AlarmType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Entities.CompanyLevelGrouping" Collapsed="true">
+    <Position X="48.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAggAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CompanyLevelGroupingEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Entities.DataType" Collapsed="true">
+    <Position X="52.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAQAAAAAgQAAAAAAAAAAABgABAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\DeviceStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Entities.DeviceType" Collapsed="true">
+    <Position X="47" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIABAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Entities\DeviceTypeEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Entities.HealthCheckVersion" Collapsed="true">
+    <Position X="48.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\HealthCheckVersionEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Entities.LogAction" Collapsed="true">
+    <Position X="50.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>xjgBCDrAAgQIhRShgAAEQZRICAAwABIgwQBAMAAFAQA=</HashCode>
+      <FileName>Entities\HistoryLog.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Entities.PollingFrequency" Collapsed="true">
+    <Position X="52.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAARAACACQAQACgAACAAAAAAAAIQAAADAAAgA=</HashCode>
+      <FileName>Entities\PollingFrequencyEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Entities.ReportingFrequency" Collapsed="true">
+    <Position X="48.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAgAAAAAAgA=</HashCode>
+      <FileName>Entities\ReportingFrequencyEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Entities.Subscription" Collapsed="true">
+    <Position X="50.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABQAAAAIAAAgAAAAAAAAAAAQAAAAAAAAAAABAAAAI=</HashCode>
+      <FileName>Entities\SubscriptionEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Entities.PreferredContact" Collapsed="true">
+    <Position X="47" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAACAAAAAIAAAAAA=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Enums.Acknowledge" Collapsed="true">
+    <Position X="47" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAADAAAAA=</HashCode>
+      <FileName>Enums\Acknowledge.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Diebold.Domain.Enums.DashboardFilter" Collapsed="true">
+    <Position X="50.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Enums\DashboardFilter.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

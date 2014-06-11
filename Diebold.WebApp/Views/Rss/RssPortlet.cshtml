@@ -1,0 +1,342 @@
+﻿<div id="my-RSSFeed">
+        <div class="cont-inner-room">
+            <div class="dark-blue">
+            <div class="Dashbord-header">
+                <div class="dark-blue-head gradient">
+                    <div class="pallet-icon">
+                        <img src="@Url.Content("~/Content/images/rss-icon.png")" alt="" />
+                    </div>
+                    <p>
+                        <strong>RSS Feed</strong></p>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img onclick="javascript:fnCloseRSSFeed();return false;" src="@Url.Content("~/Content/images/close-icon.png")" alt="" /></a>
+                    </div>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img onclick="javascript:fntoggleRSS();return false;" src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+                    </div>
+                </div>
+                </div>
+                <div id="divRSSContent">
+                    <div class="dark-blue-body gradient">
+                        <div class="rss-body-cont">
+                            <div class="rss-feed">
+                                <div class="rss-feed" id="dvRssBodyContent">
+                                    @(Html.Kendo().Grid<Diebold.WebApp.Models.RSSFeedViewModel>()
+                                        .Name("grdRssFeed")
+                                        .Pageable()
+                                        .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(5)
+                                            .Read(read => read.Action("RSSEditing_Read", "Rss"))
+                                            .ServerOperation(false)
+                                        )
+                                        .Columns(columns =>
+                                        {
+                                            columns.Bound(p => p.URL).ClientTemplate("<p style='margin-right:4px;'>#=Description#</p>");
+                                        })
+                                    )
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dark-blue-set">
+                        <div class="sett-icon">
+                            <a href="#">
+                                <img src="@Url.Content("~/Content/images/move-icon.png")" onclick="javascript:ShowRSSPortletDescription();return false;" alt="" /></a>
+                        </div>
+                        <div class="sett-icon">
+                            <a href="#">
+                                <img id="imgRSSPortletSettings" src="@Url.Content("~/Content/images/settings-icon.png")" alt="" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</div>
+@model Diebold.WebApp.Models.RSSFeedViewModel
+@Html.HiddenFor(Model => Model.RSSFeedCount)
+<div id="dvSettings" class="context-menu">
+</div>
+@(Html.Kendo().Window()
+    .Name("AddRSSFeedwindow")
+    .Title("Add RSS Feed")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div class="rss-pop-cont">
+    <div class="site-notes bottom">
+        <div class="k-edit-label">
+            <label for="ssFeedName">
+                Name: (*)</label>
+        </div>
+        @Html.TextBox("txtrssFeedName", null, new { @class = "userRSStxtboxEdit", maxlength = 250 })
+        <div class="k-edit-label">
+            <label for="NavigateUrl">
+                URL: (*)</label>
+        </div>
+        @Html.TextBox("txtrssFeedURL", null, new { @class = "userRSStxtboxEdit", maxlength = 350 })
+    </div>
+    <div class="clear">
+    </div>
+    <div style="margin: 4% 0 0 32%;">
+        <div class="add-link" style="float: left; margin-right: 3px; margin-top: 7px;">
+            <input type="button" value="Save" id="btnlinkSave" onclick="javascript:fnRssFeedPopupSave();" />
+        </div>
+        <div class="add-link" style="float: left; margin-top: 7px;">
+            <input type="button" value="Cancel" id="btnRssFeedCancel" onclick="javascript:fnCancelRSSItems();" />
+        </div>
+    </div>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(375)
+    .Height(250)
+)
+@(Html.Kendo().Window().Name("wndRSSFeed")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(300)
+    .Title("Remove RSS Feed")
+)
+@*Kendo window to remove the RSS Feed*@
+@(Html.Kendo().Window()
+    .Name("wndRemoveRssFeed")
+    .Title("Remove RSS Feed")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div style="margin: 2%;">
+    @(Html.Kendo().Grid<Diebold.WebApp.Models.RSSFeedViewModel>()
+        .Name("grdRSSFeed_Popup")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.Id).ClientTemplate("<input type=\'checkbox\' />").Visible(true).Width("10%");
+            columns.Bound(p => p.Name).ClientTemplate("<a style='cursor:pointer;color:black;font-family:Helvetica;font-size:11px;'><strong>#=Name#</strong> </a> ");
+
+        })
+       )
+    <br />
+    <div class="add-link" align="center">
+        <input type="button" value="Delete" id="btnPopRSSFeedRemove" onclick="javascript:deleteRSSFeedConfirmation();"
+            style="width: 20%;" />
+        <input type="button" value="Cancel" onclick="fnwndRemoveRssFeedpopclose();" style="width: 20%;"/>
+    </div>
+
+</div>
+</text>)
+    .Draggable(false)
+    .Width(450)
+    .Height(390)
+)
+@(Html.Kendo().Window()
+    .Name("wndRSSFeedDes")
+    .Title("RSS Feed Portlet Description")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div>
+    <p>
+        Easily access RSS feeds on security management, national news events and weather
+        conditions. Add and remove subscriptions for a customized experience.
+    </p>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)
+<script>
+    $(function () {
+        var listView = $("#listViewRSS").data("kendoListView");
+
+        $(".k-add-button").click(function (e) {
+            listView.add();
+            e.preventDefault();
+        });
+    });
+</script>
+<style scoped>
+
+.k-edit-label {padding-right: 3%; text-align: left; vertical-align: top; width: 30%;}
+
+    .product-view
+    {
+        float: left;
+        width: 210px;
+        margin: 5px;
+        padding: 3px;
+        -moz-box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
+        -webkit-box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
+        box-shadow: inner 0 0 50px rgba(0,0,0,0.1);
+        border-top: 1px solid rgba(0,0,0,0.1);
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        min-height: 100px;
+    }
+    
+    .product-view dl
+    {
+        margin: 10px 0;
+        padding: 0;
+        min-width: 0;
+    }
+    .product-view dt, dd
+    {
+        float: left;
+        margin: 0;
+        padding: 0;
+        height: 30px; /* line-height: 30px;*/
+    }
+    .product-view dt
+    {
+        clear: left;
+        padding: 0 5px 0 5px;
+        text-align: right;
+        opacity: 0.6;
+        width: 180px;
+    }
+    .k-listview
+    {
+        border: 0;
+        padding: 0;
+        min-width: 0;
+    }
+    .k-listview:after, .product-view dl:after
+    {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+    .edit-buttons
+    {
+        text-align: right;
+        padding: 5px;
+        min-width: 100px;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+    }
+    
+    .k-toolbar, #listViewRSS
+    {
+        width: 210px;
+        margin: 0 auto;
+        -webkit-border-radius: 11px;
+        -moz-border-radius: 11px;
+        border-radius: 11px;
+    }
+    
+    #listViewRSS
+    {
+        width: 210px;
+    }
+    
+    span.k-invalid-msg
+    {
+        position: absolute;
+        margin-left: 160px;
+        margin-top: -26px;
+    }
+   
+    #grdRssFeed .k-alt {
+         background:#ced1d8;
+    }
+    
+    #grdRssFeed tbody tr {
+    background: #E4E4E4;
+    color: white;
+    }
+
+    #grdRssFeed tbody tr:hover {
+    background: #B5B2BE;
+    }
+
+    #grdRssFeed .k-grid-header .k-header {
+       display: none !important;
+    }
+    #grdRSSFeed_Popup .k-grid-header .k-header {
+       display: none !important;
+    }
+    
+    #AddRSSFeedwindow .k-block > .k-header, .k-window-titlebar
+    {
+        height: 1.8em;
+    }
+
+</style>
+<script language="javascript" type="text/javascript">
+    var rssDeleteFeedUrl = '@Url.Content("~/Rss/DeleteRssFeed")';
+    var rssGetFeedCountUrl = '@Url.Action("GetRSSFeedCount", "Rss")';
+    var rssGetFeedUrl = '@Url.Action("GetRSSFeed", "Rss")';
+    var rssFeedCreateUrl = '@Url.Action("RssFeedCreate", "Rss")';
+    var rssGetFeedDetailsUrl = '@Url.Action("GetRSSFeedDetails", "Rss")';
+    var rssClosePortletUrl = '@Url.Action("ClosePortlet", "Preferences")';
+    var rssFeedPopupUrl = '@Url.Action("RSSFeedRead_Popup", "Rss")';
+    var lnkMaxCount = '@System.Web.Configuration.WebConfigurationManager.AppSettings["MaxRSSFeedLinks"]';
+
+    $(document).ready(function () {
+        var lnkExist = $("#RSSFeedCount").val();
+        if (lnkExist == 0) {
+            var url = '@Url.Action("GetRSSFeedCount", "Rss")';
+            $.post(url, null, GetRssCountPopupCallback, "json");
+        }
+        var wWidth = $(window).width();
+        var dWidth = wWidth * 0.2;
+        $("#dvSettings").dialog(
+               {
+                   draggable: false,
+                   closeOnEscape: true,
+                   resizable: false,
+                   height: 'auto',
+                   width: dWidth,
+                   autoOpen: false,
+                   show: 'blind'
+               }
+               );
+        $('#imgRSSPortletSettings').click(function (event) {
+            $("#dvSettings").dialog("option", "position", {
+                my: "left top",
+                at: "bottom",
+                collision: "flip",
+                of: event,
+                offset: "20 40"
+            });
+            $('#dvSettings').empty();
+
+            $('#dvSettings').append('<a href="#" id="imgAddNewRssPortlet" class="divdynamiclink" onclick="javascript:fnAddRssItems();return false;">Add</a>');
+            $('#dvSettings').append('<a href="#" id="imgDeleteRSSPortlet" onclick="javascript:fnOpenRSSDeletePopup();return false;" class="divdynamiclink">Remove</a>');
+            $('#dvSettings').dialog('open');
+            return false;
+        });
+        // Close Pop-up If the user clicks anywhere else on the page
+        jQuery('body').bind('click', function (e) {
+            if (jQuery('#dvSettings').dialog('isOpen')
+            && !jQuery(e.target).is('.ui-dialog, a')
+            && !jQuery(e.target).closest('.ui-dialog').length
+         ) {
+                jQuery('#dvSettings').dialog('close');
+            }
+        });
+
+        // To refresh the RSS Feed grid data every 5 min
+        var RSSInterval = '@System.Web.Configuration.WebConfigurationManager.AppSettings["RssFeedInterval"]';
+
+        var refreshId = setInterval(function () {
+            //GET YOUR GRID REFERENCE        
+            var grid = $("#grdRssFeed").data("kendoGrid");
+            //ANOTHER WAY IS TO JUST REFRESH GRID
+            grid.dataSource.read();
+        }, RSSInterval);
+    });
+</script>

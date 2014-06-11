@@ -1,0 +1,93 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/login-style.css")" />    
+<script src="@Url.Content("~/Scripts/jquery.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#txtEmailId").val('E-Mail Id');
+        //$("#Password").val('txtPassword');
+        $("#txtEmailId").focus(function () {
+            var strCtlVal = $('#txtEmailId').val();
+            if (strCtlVal != null && strCtlVal != '') {
+                if ($('#txtEmailId').val() == 'E-Mail Id') {
+                    $('#txtEmailId').val('');
+                }
+            }
+        });
+
+        $("#txtEmailId").blur(function () {
+            var strUserName = $('#txtEmailId').val();
+            if (strUserName == null || strUserName == '') {
+                $('#txtEmailId').val('E-Mail Id');
+            }
+        });
+
+        $("#btnSubmit").click(function () {
+            var url = '@Url.Action("forgotUsername")';
+            $("form").attr("action", url);
+            $("form").submit();
+
+        });
+
+        $("#btnCancel").click(function () {
+            var url = '@Url.Action("Index")';
+            $("form").attr("action", url);
+            $("form").submit();
+        });
+
+    });
+
+    </script>
+<title>Diebold</title>
+</head>
+
+<body>
+<form name="input" action="" method="post">
+ <div id="mainContainer">
+    <div id="main-container">
+            <div id="logo">
+                <a href="#"><img src="@Url.Content("~/Content/images/login-logo.png")" width="188" height="31" alt="" /></a>
+            </div>
+            
+            <div id="login-cont">
+            	<div class="login-lft"></div>
+            	<div class="login-mid">
+                	<div class="lft-cont">
+                    	<p><strong><span>Forgot UserId</span><br /><br />
+						Please Enter the following required fields to send the user id details.</strong></p>
+                    </div>
+                    <div class="right-cont">
+                    	<div class="input-field">                     
+                        	<div class="input-lft"></div>
+                        	<div class="input-mid">
+                            	<input id="txtEmailId" type="text" name="" value="E-Mail Id" />
+                            </div>
+                        	<div class="input-right"></div>
+							<div class="clear"></div>
+							
+                            <div class="forgot-button">
+                            	<input id="btnSubmit" type="button" class="in-btn" value="SUBMIT"  />
+                            	<input id="btnCancel" type="button" class="in-btn" value="CANCEL"  />
+							</div>                                						
+						<div class="clear"></div>
+                        <br /><div class="forgot-info"><label id="lblMsg" ></label></div>
+                        </div>
+                    </div>
+                </div>
+            	<div class="login-right"></div>
+            </div>
+            <div class="clear"></div>
+            <div id="bot-shadow"></div>
+    </div>
+</div>
+</form>
+</body>
+</html>
+

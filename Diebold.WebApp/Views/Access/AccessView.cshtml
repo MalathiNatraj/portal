@@ -1,0 +1,502 @@
+﻿@using Diebold.WebApp.Models;
+
+@{
+    IList<Diebold.WebApp.Models.DoorModel> objDoorModel = new List<Diebold.WebApp.Models.DoorModel>();
+    IList<Diebold.WebApp.Models.AccessReportModel> objAccReportModels = new List<Diebold.WebApp.Models.AccessReportModel>();
+    IList<Diebold.WebApp.Models.DeviceModel> objDeviceModel = new List<Diebold.WebApp.Models.DeviceModel>();    
+}
+
+
+
+<div id="dvAccessViewPortlet">
+    <div class="cont-inner-room">
+        <div id="dvAccessContentArea">
+        <div class="violet">
+            <div class="Dashbord-header">
+                <div class="violet-head gradient">
+                    <div class="pallet-icon">
+                        <img src="@Url.Content("~/Content/images/access-icon.png")" alt="" />
+                    </div>
+                    <p>
+                        <strong>Access</strong></p>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" id="imgAccessViewClose" onclick="javascript:fnCloseAccessView();return false;"/></a>
+                    </div>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" id="imgAccessViewExpColapse" onclick="javascript:fntoggleAccessView();return false;" /></a>
+                    </div>
+                </div>
+            </div>
+            <div id="dvAccessViewContent">
+                <div class="violet-body gradient">
+                    <div class="access-body-cont">
+                        <div class="acc-dev-list bottom">
+                            @(Html.Kendo().ComboBox()
+                            .HtmlAttributes(new { style = "width:210px" })
+                            .Name("AccessViewDeviceList")
+                            .Placeholder("Site")
+                            .DataTextField("Name")
+                            .DataValueField("Id")
+                            .Placeholder("Device List")
+                            .Suggest(true)
+                            .Template("<div id='rowcell'>${ Name }</div><div id='rowcell'>${ SiteName }</div><div id='rowcell'>${ Address1 }</div><div id='rowcell'>${ Address2 }</div><div id='rowcell'>${ City }</div><div id='rowcell'>${ State }</div><div id='rowcell' style='border-right:0px'>${ Zip }</div>").HtmlAttributes(new { style = "width:210px;" })
+                            .Events(e =>
+                            {
+                                e.Open("openAcessDeviceList").Close("closeAcessDeviceList").Change("selectAccessDevice");
+                            })
+                        )
+                        <img id="imgsearchAccessLogo" src="@Url.Content("~/Content/images/SearchIcon.png")" style="cursor:pointer;vertical-align:bottom; padding-bottom: 5px;" alt=""  onclick="fnOpenAccessDetails();"/>                        
+                        </div>
+                        <div class="acc-card-actions bottom" style="padding-left:8px;">
+                            <p style="color: Black;">
+                                Polling Status:<strong>
+                                    <label id="lblAccessPollingStatus">
+                                    </label>
+                                </strong>
+                            </p>
+                            <p style="color: Black;">
+                                Status:<strong>
+                                    <label id="lblAccStatus">
+                                    </label>
+                                </strong>
+                            </p>
+                            <p style="color: Black; display:none;">
+                                DeviceType:<strong>
+                                    <label id="lbldvType">
+                                    </label>
+                                </strong>
+                            </p>
+                        </div>
+                        <div class="acc-mome-unlock bottom">
+                            @(Html.Kendo().Grid(@objDoorModel)
+                            .HtmlAttributes(new { style = "width:99.5%" })
+                            .Name("grdAccess")
+                            .Resizable(resize => resize.Columns(true))
+                            .Columns(columns =>
+                            {
+                                //For width alignment of data column in Kendo Grid, we need to keep one column without "Width" property
+                                columns.Bound(model => model.DoorName);
+                                columns.Bound(model => model.Status).Title("Online");
+                                columns.Bound(model => model.DoorStatus);
+                                columns.Bound(p => p.MomentaryUnlock).ClientTemplate("<a style='cursor:pointer;color:blue;text-decoration:underline;' id='#=DoorName#' onclick='javascript:fnAccessOpenUserPin(this);'>#=MomentaryUnlock#</a>");
+                            })
+                            .Pageable()
+                            .Sortable()
+                                    .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .PageSize(2)
+                            .ServerOperation(false)
+                                )
+                            )
+                        </div>                                               
+                        <p>
+                            <strong>Card Holder Actions</strong></p>
+                        <div class="acc-card-actions bottom">
+                            <div class="access-btns">
+                                <div class="add-link">                                   
+                                    <input type="button" value="Add" class="gradient" onclick="Diebold.Access.addAccessCardholder();" />                                   
+                                </div>
+                                <div class="add-link">                                    
+                                    <input type="button" value="Edit" class="gradient" onclick="Diebold.Access.modifyCardholder();" />
+                                </div>
+                                <div class="add-link">                                    
+                                    <input type="button" value="Delete" class="gradient" onclick="Diebold.Access.deleteCardHolder();" />
+                                    
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                        </div>
+                        <p>
+                            <strong>Access Group Actions</strong></p>
+                        <div class="acc-card-actions bottom">
+                            <div class="access-btns">
+                                <div class="add-link">                                    
+                                    <input type="button" value="Add" class="gradient" onclick="Diebold.Access.addAccessGroup();" />                                    
+                                </div>
+                                <div class="add-link">
+                                    <input type="button" value="Edit" class="gradient" onclick="Diebold.Access.updateAccessGroup();" />                                    
+                                </div>
+                                <div class="add-link">
+                                    <input type="button" value="Delete" class="gradient" onclick="Diebold.Access.deleteAccessGroup();" />
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <br />
+                        <p>
+                            Panel Reports:</p>
+                        <div class="acc-card-actions">
+                            <div class="panel-reports">
+                                <div id="dvcboReportType" style="padding-top: 8px; padding-left: 15px;">
+                                    @(Html.Kendo().ComboBox()
+                                        .HtmlAttributes(new { style = "width:43%" })
+                                        .Events(ev => { ev.Select("AccessselectReport"); })
+                                        .Name("AccessReportType")
+                                        .Placeholder("Report Type")
+                                        .DataTextField("Text")
+                                        .DataValueField("Value")
+                                                .BindTo(new List<SelectListItem>() {
+                                                new SelectListItem() {
+                                                    Text = "Card Activity Report",
+                                                    Value = "1"
+                                                }
+                                            })
+                                    )
+                                </div>
+                                <div id="dvStartTime" style="padding-left: 15px; padding-top: 8px">
+                                    <label id="lblStartDate" style="color: #000; float: left; margin-top: 9px;">
+                                        Start Date:&nbsp;</label>
+                                    <div style="width: 150px; float: left;">
+                                        @(Html.Kendo().DatePicker()
+                                                    .Name("AccessStartdatetimepicker")
+                                                    .Value(DateTime.Now)
+                                                    .HtmlAttributes(new { style = "width:80%" })
+                                                  )
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="add-link" style="float: right; padding-right: 25px;">
+                                    <input type="button" value="Run Report" class="gradient" onclick="javascript:fnGetAccessPortletReport();return false;" />
+                                </div>
+                                <div id="dvEndTime" style="padding-left: 15px; padding-top: 8px">
+                                    <label id="lblEndDate" style="color: #000; float: left; margin-top: 9px;">
+                                        End Date:&nbsp;&nbsp;</label>
+                                    <div style="width: 150px; float: left;">
+                                        @(Html.Kendo().DatePicker()
+                                                    .Name("AccessEnddatetimepicker")
+                                                    .Value(DateTime.Now)
+                                                    .HtmlAttributes(new { style = "width:80%" })
+                                                  )
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="violet-set">
+                    <div class="sett-icon">
+                        <a href="#">
+                            <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" onclick="javascript:ShowAccessDescription();return false;"/></a>
+                    </div>
+                    <div class="sett-icon">
+                        <a href="#">
+                            <img id="imgAccessSettings" src="@Url.Content("~/Content/images/settings-icon.png")" alt="" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<!--Add Card holder-->
+<div class="overlay_msg" id="dvAddCardHolder" style="width: 448px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/CardholderAdd", new AccessCardholderViewModel())
+</div>
+<!--Modify Card Holder-->
+<div class="overlay_msg" id="dvModifyCardHolder" style="width: 448px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/CardholderModify")
+</div>
+<!--Modify Card Holder-->
+<div class="overlay_msg" id="dvDMPXRModifyCardHolder" style="width: 448px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/DMPXR/CardholderModify")
+</div>
+<!--Modify Card Holder Modification Fields-->
+<div class="overlay_msg" id="dvMdfyCrdHldrMdFlds" style="width: 448px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/CardHolderModifyFields")
+</div>
+<!--Modify Card Holder for new access devices-->
+<div class="overlay_msg" id="dvDMPXRMdfyCrdHldrMdFlds" style="width: 448px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/DMPXR/CardHolderModifyFields")
+</div>
+<!--Card Holder List in grid-->
+<div class="overlay_msg" id="dvMdfyCrdHldrList" style="width: 448px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/CardHolderModifyList")
+</div>
+<!--Card Holder List in grid for new access devices-->
+<div class="overlay_msg" id="dvDMPXRMdfyCrdHldrList" style="width: 448px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/DMPXR/CardHolderModifyList")
+</div>
+<!--Delete Card Holder-->
+<div class="overlay_msg" id="dvDeleteCrdHldr" style="width: 448px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/Delete")
+</div>
+<!--Delete Card Holder Confirmation-->
+<div class="overlay_msg" id="dvDeleteCrdHldrConfirmation" style="width: 448px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/CardHolderDeleteConfirmation")
+</div>
+<!--Delete Card Holder Confirmation-->
+<div class="overlay_msg" id="dvDMPXRDeleteCrdHldrConfirmation" style="width: 448px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/DMPXR/CardHolderDeleteConfirmation")
+</div>
+<!--Card Holder List in grid for Delete Cardholder-->
+<div class="overlay_msg" id="dvDeleteCrdHldrList" style="width: 448px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/CardHolderDeleteList")
+</div>
+<!--Card Holder List in grid for Delete Cardholder-->
+<div class="overlay_msg" id="dvDMPXRDeleteCrdHldrList" style="width: 448px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/DMPXR/CardHolderDeleteList")
+</div>
+
+<!--Add Access Group Time Periods-->
+<div class="overlay_msg" id="dvAddAccessTimePeriods" style="width: 478px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/AddAccessGroupTimePeriods")
+</div>
+<!--Modify Access Group-->
+<div class="overlay_msg" id="dvModifyAccessGroups" style="width: 478px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/AccessGroupModify", new AccessCardholderViewModel())
+</div>
+<!--DMPXR Modify Access Group-->
+<div class="overlay_msg" id="dvDMPXRModifyAccessGroups" style="width: 478px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/DMPXR/AccessGroupModify", new AccessCardholderViewModel())
+</div>
+<!--Delete Access Group-->
+<div class="overlay_msg" id="dvDeleteAccessGroups" style="width: 450px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/AccessGroupDelete", new AccessCardholderViewModel())
+</div>
+<!--Momentary Unlock-->
+<div class="overlay_msg" id="dvmomentaryUnlock" style="width: 450px;
+    left: 25%; visibility: hidden; padding: 15px; display:none;">
+    @Html.Partial("../MyAccessPoints/MomentaryOpenDoor")
+</div>
+
+@(Html.Kendo().Window()
+    .Name("AccessDescriptionwindow")
+    .Title("Access Portlet Description")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div>
+    <p>
+        Easily add or remove cardholders, momentarily unlock doors, check current status
+        of door alerts and generate card usage reports.
+    </p>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)
+
+<div id="dvAccessUserPinWindow" class="overlay_msg" style="width: 448px; left: 25%;
+    visibility: hidden; padding: 15px; display: none;">
+    <div class="cont-inner-room">
+        <div class="grey">
+            <div class="grey-head gradient">
+                <div class="grey-pallet-icon">
+                </div>
+                <p>
+                    <strong>User Pin</strong></p>
+                <div class="close-icon">
+                    <a href="#">
+                        <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="javascript:hideAccessUserPinOverlay();" /></a>
+                </div>
+                <div class="close-icon">
+                    <a href="#">
+                        <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+                </div>
+            </div>
+            <div id="dvAccessUserPinWindowContent">
+            <div class="grey-body gradient">
+                <div class="my-access-body-cont" style="padding-top:4%">
+                    <div class="my-access-lbl bottom">
+                        <p>
+                            <strong>User Pin:(*)</strong></p>
+                    </div>
+                    <div class="my-access-field bottom">
+                        @* @Html.TextBox("txtAccessUserpin", null, new { @class = "my-access-in", maxlength = 4 })*@
+                        <input type="password" id="txtAccessUserpin" class="my-access-in" maxlength="6"/>
+                        <input id="hdnAccessSubmitClick" type="hidden" />  
+                        <input id="hdnAccessDoorName" type="hidden" />  
+                    </div>                    
+                    <div class="clear">
+                    </div>
+                   
+                     
+                </div>
+                 <div class="my-access-right-btn" style="width: 147px;">
+                        <div class="add-link" align="center" style="float: left;">
+                            <input type="button" value="Submit" id="btnUserPinSubmit" onclick="javascript:fnAccessUserpinValidation();" />
+                        </div>
+                        <div class="add-link" align="center" style="float: right;">
+                            <input type="button" value="Cancel" onclick="javascript:hideAccessUserPinOverlay();" />
+                        </div>
+                    </div>
+                    <div class="clear">
+                </div>
+            </div>
+            <div class="grey-set">
+            <div class="sett-icon">
+                <a>
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a>
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay_msg" id="dvAccRpt" style="width: 448px; left: 25%; padding: 15px; display:none;">
+@(Html.Kendo().Window()
+    .Name("wndAccessreport")
+    .Title("Access Report")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div>
+    @(Html.Kendo().Grid(objAccReportModels)
+     .HtmlAttributes(new { style = "width:99.7%" })
+     .Name("grdAccdetReports")
+     .Resizable(resize => resize.Columns(true))
+     .Columns(columns =>
+     {
+         columns.Bound(model => model.Acctype).Title("Title");
+         columns.Bound(model => model.Accdatetime).Title("DateTime");
+         columns.Bound(model => model.Accuser).Title("User"); ;
+         columns.Bound(model => model.Accmessage).Title("Message");
+     })
+     .Pageable()
+     .Sortable()
+     .DataSource(dataSource => dataSource
+     .Ajax()
+     .PageSize(5)
+     .ServerOperation(false)
+     )
+     )
+     <br />  
+    <div style="width:150px; margin-left:32%;">                
+        <div class="add-link" align="center" style="float: right;">
+            <input type="button" value="Close" onclick="javascript:fnCloseAccessreport();" />
+        </div>
+    </div>
+</div>
+   
+
+</text>)
+    .Draggable(false)
+    .Events(events => events
+    .Close("onCloseAccess"))
+    .Width(600)
+    .Height(300)
+)
+</div>
+
+<div id="dvSearchAccessDevices" class="modelDialog" style="display: none;">
+    <div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Select a Device</label></strong></div>
+        <div style="width:90%; margin:3% 2% 0 5%;">
+            <p>
+              @(Html.Kendo().Grid(objDeviceModel)
+                .Name("grdSearchAccessDeviceDetails")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Id).Visible(false);
+                    columns.Bound(p => p.Name).Width("20%").Visible(true).Title("Device").Filterable(true).Sortable(true);                    
+                    columns.Bound(p => p.SiteName).Width("20%").Visible(true).Title("Site").Filterable(true);
+                    columns.Bound(p => p.Address1).Width("20%").Visible(true).Title("Address1").Filterable(true);
+                    columns.Bound(p => p.Address1).Width("20%").Visible(true).Title("Address2").Filterable(true);
+                    columns.Bound(p => p.City).Width("20%").Filterable(true).Title("City").Visible(true);
+                    columns.Bound(p => p.State).Width("20%").Visible(true).Title("State").Filterable(true);
+                    columns.Bound(p => p.Zip).Width("20%").Visible(true).Title("Zip").Filterable(true);
+                    columns.Bound(p => p.DeviceType).Width("20%").Visible(false).Title("DeviceType");
+                })
+                .Events(events => events.Change("grdSearchAccessChanged").DataBound("LoadingDefaultFilter"))
+                .Pageable()
+                .Filterable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .ServerOperation(false)
+                )
+            )
+            </p>
+            <div class="add-link" style="padding-top:5px; width:100px; margin-left: 43%;">
+            <input type="button" value="Close" id="btnSearchAccessCancel" onclick="javascript:btnSearchAccessCancelClicked();" />
+        </div>
+        </div>
+        <br />
+        </div>
+
+<script type="text/javascript">
+    var accessDoorUrl = '@Url.Action("GetPlatformAccessDetails", "Access")';
+    var accessGetAccessDetailsUrl = '@Url.Action("GetAccessDetails", "Access")';
+    var accessPollingUrl = '@Url.Action("GetPollingStatus", "Access")';
+    var accessGetAccessControlReportUrl = '@Url.Action("GetAccessControlReport", "Access")';
+    var accessValidateUserPinUrl = '@Url.Action("ValidateUserPin", "Access")';
+    var accessGetAccessDevicesforSearchUrl = '@Url.Action("GetAccessDevicesforSearch", "Access")';
+    var accessClosePortletUrl = '@Url.Action("ClosePortlet", "Preferences")';
+    var accessGetGroupListUrl = '@Url.Action("AccessGetGroupList", "Access")';
+    var accessGetReadersListUrl = '@Url.Action("GetReadersList", "Access")';
+    var accessAccessMomentaryOpenDoorUrl = '@Url.Action("AccessMomentaryOpenDoor", "Access")';
+    var accessSaveDefaultValueUrl = '@Url.Action("SaveAccessDefaultValue", "Access")';
+    var accessGetDevicesUrl = '@Url.Action("GetAccessDevices", "Access")';
+    var accessClearSaveDefaultValueUrl = '@Url.Action("ClearAccessDefaultValue", "Access")';
+    var accessLogoffUri = '@Url.Content("~/Account/LogOff")';
+
+    var accessCardholderUrl = '@Url.Action("GetCardholderView", "Access")';
+
+
+    $(document).ready(function () {
+        GetAccessDeviceTypes();
+        $('#imgAccessSettings').click(function (event) {
+            $("#dvSettings").dialog("option", "position", {
+                my: "left top",
+                at: "bottom",
+                collision: "flip",
+                of: event,
+                offset: "20 40"
+            });
+            $('#dvSettings').empty();
+            $('#dvSettings').append('<a href="#" id="imgAccessDefaultValuesDetails" onclick="javascript:fnAddAccessDefaultValuesClick();return false;" class="divdynamiclink">Save Defaults</a>');
+            $('#dvSettings').append('<a href="#" id="imgAccessClearDefaultValues" onclick="javascript:fnClearAccessDefaultValuesClick();return false;" class="divdynamiclink">Clear Defaults</a>');
+            $('#dvSettings').append('<a href="#" id="imgAccessRefreshValues" onclick="javascript:fnAccessRefreshClick();return false;" class="divdynamiclink">Refresh</a>');
+            $('#dvSettings').dialog('open');
+            return false;
+        });
+        // Close Pop-up If the user clicks anywhere else on the page
+        jQuery('body').bind('click', function (e) {
+            if (jQuery('#dvSettings').dialog('isOpen')
+            && !jQuery(e.target).is('.ui-dialog, a')
+            && !jQuery(e.target).closest('.ui-dialog').length
+         ) {
+                jQuery('#dvSettings').dialog('close');
+            }
+        });
+
+        var AccessInterval = '@System.Web.Configuration.WebConfigurationManager.AppSettings["AccessFeedInterval"]';
+        var refreshId = setInterval(function () {
+            selectAccessDevice(null);
+        }, AccessInterval);
+    });
+</script>

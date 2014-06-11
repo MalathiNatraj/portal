@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F620AB7E-FBB8-4F80-86D8-2AF599398847}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Diebold.DAO.NH</RootNamespace>
+    <AssemblyName>Diebold.DAO.NH</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'TC-Demo|AnyCPU'">
+    <OutputPath>bin\TC-Demo\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'TC-QA|AnyCPU'">
+    <OutputPath>bin\TC-QA\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Prod|AnyCPU'">
+    <OutputPath>bin\Prod\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <OutputPath>bin\Dev\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.2.0.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\RepositoryModule.cs" />
+    <Compile Include="Helpers\ActionStringType.cs" />
+    <Compile Include="Helpers\CryptoUtility.cs" />
+    <Compile Include="Infrastructure\MSSQLExceptionConverter.cs" />
+    <Compile Include="Infrastructure\NHibernateHelper.cs" />
+    <Compile Include="Config\NHModule.cs" />
+    <Compile Include="Infrastructure\NHLINQExtension.cs" />
+    <Compile Include="Infrastructure\NHSessionProvider.cs" />
+    <Compile Include="Infrastructure\NHUnitOfWork.cs" />
+    <Compile Include="Maps\ActionDetailsMap.cs" />
+    <Compile Include="Maps\AlarmConfigurationMap.cs" />
+    <Compile Include="Maps\AlertInfoMap.cs" />
+    <Compile Include="Maps\AlertStatusMap.cs" />
+    <Compile Include="Maps\CameraMap.cs" />
+    <Compile Include="Maps\CompanyGrouping1LevelMap.cs" />
+    <Compile Include="Maps\CompanyGrouping2LevelMap.cs" />
+    <Compile Include="Maps\CompanyInventoryMap.cs" />
+    <Compile Include="Maps\CompanyMap.cs" />
+    <Compile Include="Maps\CompanySusbscriptionMap.cs" />
+    <Compile Include="Maps\SiteLogoDetailsMap.cs" />
+    <Compile Include="Maps\DeviceMap.cs" />
+    <Compile Include="Maps\DeviceMediaMap.cs" />
+    <Compile Include="Maps\DeviceStatusMap.cs" />
+    <Compile Include="Maps\EventDescriptionFiltersMap.cs" />
+    <Compile Include="Maps\HistoryLogMap.cs" />
+    <Compile Include="Maps\LinkMap.cs" />
+    <Compile Include="Maps\NoteMap.cs" />
+    <Compile Include="Maps\DvrMap.cs" />
+    <Compile Include="Maps\EntityMapping.cs" />
+    <Compile Include="Maps\GatewayMap.cs" />
+    <Compile Include="Maps\IntKeyedEntityMapping.cs" />
+    <Compile Include="Maps\PortletMap.cs" />
+    <Compile Include="Maps\ResolvedAlertMap.cs" />
+    <Compile Include="Maps\RoleActionMap.cs" />
+    <Compile Include="Maps\RolePageActionMap.cs" />
+    <Compile Include="Maps\RoleMap.cs" />
+    <Compile Include="Maps\RolePortletMap.cs" />
+    <Compile Include="Maps\RSSFeedMap.cs" />
+    <Compile Include="Maps\SiteAccountNumberMap.cs" />
+    <Compile Include="Maps\SiteDocumentMap.cs" />
+    <Compile Include="Maps\SiteInventoryMap.cs" />
+    <Compile Include="Maps\SiteMap.cs" />
+    <Compile Include="Maps\SiteNoteMap.cs" />
+    <Compile Include="Maps\TrackeableEntityMapping.cs" />
+    <Compile Include="Maps\UserDefaultsMap.cs" />
+    <Compile Include="Maps\UserDeviceMonitorMap.cs" />
+    <Compile Include="Maps\UserMap.cs" />
+    <Compile Include="Maps\UserMonitorGroupMap.cs" />
+    <Compile Include="Maps\UserPortletsPreferencesMap.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ActionDetailsRepository.cs" />
+    <Compile Include="Repositories\AlertInfoRepository.cs" />
+    <Compile Include="Repositories\AlertStatusRepository.cs" />
+    <Compile Include="Repositories\BaseIntKeyedRepository.cs" />
+    <Compile Include="Repositories\BaseReadOnlyRepository.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
+    <Compile Include="Repositories\SiteInventoryRepository.cs" />
+    <Compile Include="Repositories\SiteRepository.cs" />
+    <Compile Include="Repositories\UserDeviceMonitorRepository.cs" />
+    <Compile Include="Repositories\UserMonitorGroupRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Diebold.Domain\Diebold.Domain.csproj">
+      <Project>{E2272842-62E2-4E98-9002-BC852F5EB68F}</Project>
+      <Name>Diebold.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

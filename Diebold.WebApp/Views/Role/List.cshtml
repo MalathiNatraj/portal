@@ -1,0 +1,185 @@
+﻿@model IEnumerable<Diebold.WebApp.Models.RoleViewModel>
+@{
+    ViewBag.Title = "Roles Management";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<script>
+//    function error_handler(e) {
+//        if (e.errors) {
+//            var message = "Errors:\n";
+//            $.each(e.errors, function (key, value) {
+//                if ('errors' in value) {
+//                    $.each(value.errors, function () {
+//                        message += this + "\n";
+//                    });
+//                }
+//            });
+//            alert(message);
+//        }
+//    }
+
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+            var grid = $("#grdRoleDetails").data("kendoGrid");
+            grid.dataSource.read();
+            grid.refresh();
+        }
+    }  
+     
+   $(function () {
+          $("#btnEdit").click(function (e) {
+              document.getElementById('dialog').style.display = 'block';
+            $(function () {
+                $("#dialog").dialog({
+                    height: 200,
+                    width: 350,
+                    modal: true,
+                    resizable: false
+                });
+            });
+        });
+
+    });
+
+
+    function showDetails(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var RoleId=dataItem.id;
+        var strUrl = "RoleEdit/" + RoleId;
+        location.href = strUrl;
+    }
+
+    function callBack() {
+        var FormUrl = '@Url.Action("../Role/List")';
+        $("form").attr("action", FormUrl);
+    }
+
+    function customCommand() {        
+        var strUrl = "../Role/CreateRole/";
+        location.href = strUrl;
+    }
+
+    function deleteUser(userID) {
+        var url = '@Url.Content("~/Role/EditingInline_Destroy")';
+        var wnd = $("#Details").data("kendoWindow");
+        wnd.content("<p style='height:100px'>Are you sure you want to delete this item?</p><p>" +
+                "<input type='button' value='Ok' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='javascript:ConfirmOk(" + userID + ");'>" +
+                 "<input type='button' value='Cancel' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='ConfirmCancel()'></p>");
+        wnd.center().open();
+    }
+
+    function ConfirmCancel() {
+        $("#Details").data("kendoWindow").close();
+    }
+    function ConfirmOk(userID) {       
+        var data = { RoleId: userID };
+        $("#Details").data("kendoWindow").close();
+        var url = '@Url.Content("~/Role/EditingInline_Destroy")';
+        $.post(url, data, "json")
+        .done(function (response) {
+            //debugger;
+            if (response.Status == "OK") {
+                var strUrl = "../Role/List";
+                location.href = strUrl;
+            }
+            else {
+                alert("Unable to deleted the role. " + response);
+            }
+            //$("#grdRoleDetails").data("kendoGrid").dataSource.read(); 
+        })
+            .fail(function (response) { alert('Unable to deleted the role.' + response); });
+    }
+
+</script>
+<style type="text/css">
+        /* input.k-textbox  */
+         .text-box{
+            height: 2.12em;
+            line-height: 1.6em;
+            padding: 2px 0.3em;
+            border-radius: 4px 4px 4px 4px;
+            border: 1px solid #C5C5C5;
+            -moz-box-sizing: border-box;
+            background-color: #FFFFFF;
+            color: #2E2E2E;
+            outline: 0 none;
+            width: 8em;
+        }
+      #Details .k-block > .k-header, .k-window-titlebar
+      {
+        height: 1.5em;
+      }
+    </style>
+
+<div id="dvRoleTitle" class="pallette-detail-header-bg">
+        <p>Roles Management</p>
+</div><br />
+<div id="dialog" title="Role" >
+    
+</div>
+<script type="text/kendo-template" id="message">
+<div class="k-widget k-tooltip k-tooltip-validation k-invalid-msg field-validation-error" style="margin: 0.5em; display: block; " data-for="#=field#" data-valmsg-for="#=field#" id="#=field#_validationMessage">
+            <span class="k-icon k-warning"> </span>#=message#<div class="k-callout k-callout-n"></div></div>
+</script>
+@*<div id="dialog-modal" title="Add RSS Feeds" style="display:none;">*@
+<div style="width: 950px; height: 520px; padding-left: 2px">
+    @(Html.Kendo().Grid(Model)
+    .Name("grdRoleDetails")
+    .Resizable(resize => resize.Columns(true))
+    .Columns(columns =>
+    {
+        //For width alignment of data column in Kendo Grid, we need to keep one column without "Width" property
+        columns.Bound(p => p.Name).Title("Role Name").Width("700px");
+        //columns.Command(c => { c.Custom("Edit").Click("showDetails"); c.Destroy(); }).Width("200px").Title("Actions");
+        columns.Bound(p => p.ActionColumn).Title("Available Actions").ClientTemplate("<a style='cursor:pointer;margin-right:4px;' href='" + @Url.Content("~/Role/RoleEdit/") + "#=Id#' ><img src='" + @Url.Content("~/Content/images/icons/edit.png") + "' alt='Edit'  title='Edit' /></a>" +
+        "<a style='cursor:pointer;margin-right:4px;' onclick='deleteUser(#=Id#)'><img src='" + @Url.Content("~/Content/images/icons/delete.png") + "' alt='delete'  title='Delete'/></a>").Filterable(false);       
+    })
+    .ToolBar(toolbar => toolbar.Template("<a class='k-button k-button-icontext k-grid-update' href='#' onclick='customCommand()'>Add new Role</a>"))
+    .Editable(editable => editable.Mode(GridEditMode.InLine))
+    .Pageable()
+    .Sortable()
+    .Scrollable(scr => scr.Height(380))
+    .Filterable()
+    .Events(events => events.DataBound("LoadingDefaultFilter"))
+    .Resizable(resize => resize.Columns(true))
+    .DataSource(dataSource => dataSource
+    .Ajax()
+    .PageSize(10)
+    .ServerOperation(false)
+    .Events(events => events.Error("error_handler"))
+    .Model(model => model.Id(p => p.Id))
+    .Destroy(update => update.Action("EditingInline_Destroy", "Role"))
+     )
+)
+
+@(Html.Kendo().Window().Name("Details")
+    .Title("Delete Role")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(300)       
+)
+
+ <script type="text/x-kendo-template" id="template">
+    <div id="details-container">
+        <h2>FirstName LastName </h2>
+        <em>Title </em>
+        <dl>
+            <dt>City:  City </dt>
+            <dt>Address: Address </dt>
+        </dl>
+    </div>
+</script>
+</div>
+
+

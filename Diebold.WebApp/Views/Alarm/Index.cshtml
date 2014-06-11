@@ -1,0 +1,347 @@
+﻿@model Diebold.WebApp.Models.AlarmViewModel
+@{
+    ViewBag.Title = "Alarm configuration";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div id="dvAlarmTitle" class="pallette-detail-header-bg">
+    <p>Alarm Configuration</p>
+</div>
+<div id="alarmConfiguration" class="saveMargin" style="padding-top: 1%;">
+    @using (Html.BeginForm("SaveAlarmConfiguration", "Alarm", FormMethod.Post))
+    {
+        <div style="margin-left:5px;">
+            <p>
+                @Html.ValidationSummary(false, "There were errors while modifying alarm configuration.")
+            </p>
+        </div>
+        
+        <div id="divCompanyContent" class="seven columns">
+            <div class="cont-lft">
+                <div class="comp-lft">
+                    <p>
+                        <label id="lblCompany" style="clear: left; float: left; width: 150px; line-height: 28px;">
+                            Company: (*)</label>
+                    </p>
+                </div>
+                <div class="comp-right">
+                    @(Html.Kendo().ComboBox()
+                            .Name("CompanyName")
+                            .Placeholder("-- Select --")
+                            .DataTextField("Name")
+                            .DataValueField("Id")
+                            .Events(events => events.Change("CompanyChanged"))
+                            .DataSource(source =>
+                            {
+                                source.Read(read =>
+                                {
+                                    read.Action("GetAllCompanies", "Alarm");
+                                });
+                            })
+                        )
+                    @Html.ValidationMessageFor(m => m.CompanyName)
+                </div>
+                <div class="clear">
+                </div>
+                <div class="comp-lft">
+                    <p>
+                        <label id="lblAlarmType" style="clear: left; float: left; width: 150px; line-height: 28px;">
+                            Device Type: (*)</label>
+                    </p>
+                </div>
+                <div class="comp-right">
+                    @(Html.Kendo().ComboBox()
+                .Name("AlarmType")
+                .Placeholder("-- Select --")
+                .DataTextField("Name")
+                .DataValueField("Id")
+                .Events(events => events.Change("AlarmTypeChanged"))
+                .DataSource(source =>
+                {
+                    source.Read(read =>
+                    {
+                        read.Action("GetAlarmParentType", "Alarm")
+                        .Data("filterAlarms");
+                    })
+                    .ServerFiltering(true);
+                })
+                .Enable(false)
+                .AutoBind(false)
+                .CascadeFrom("CompanyName")
+            )
+                    @Html.ValidationMessageFor(m => m.AlarmType)
+                </div>
+                <div class="clear">
+                </div>
+                <div class="comp-lft">
+                @*label text changed to Gateway Version - Brian Observations on 3/5/2013*@
+                    <p>                    
+                        <label id="lblHealthCheckVersion" style="clear: left; float: left; width: 150px;
+                            line-height: 28px;">                            
+                            Gateway Version: (*)</label>
+                    </p>
+                </div>
+                <div class="comp-right">
+                    @(Html.Kendo().ComboBox()
+                    .Name("HealthCheckVersion")
+                    .Placeholder("-- Select --")
+                    .DataTextField("Name")
+                    .DataValueField("Name")
+                    .DataSource(source =>
+                    {
+                        source.Read(read =>
+                        {
+                            read.Action("GetAllHealthCheckVersion", "Alarm");
+                        });
+                    })
+                )
+                    @Html.ValidationMessageFor(m => m.HealthCheckVersion)
+                </div>
+                <div class="clear">
+                </div>
+                <div class="comp-lft">
+                    <p>
+                        <label id="lblDeviceType" style="clear: left; float: left; width: 150px; line-height: 28px;">
+                            Device Model: (*)</label>
+                    </p>
+                </div>
+                <div class="comp-right">
+                    @(Html.Kendo().ComboBox()
+                  .Name("DeviceType")
+                  .HtmlAttributes(new { id = "DeviceType" })
+                  .Placeholder("-- Select --")
+                  .Events(ev => { ev.Select("selectDeviceType"); })
+                  .DataTextField("Name")
+                  .DataValueField("Name")
+                  .DataSource(source =>
+                  {
+                      source.Read(read =>
+                      {
+                          read.Action("GetAllDeviceType", "Alarm")
+                              .Data("filterProducts");
+                      })
+                      .ServerFiltering(true);
+                  })
+                  .Enable(false)
+                  .AutoBind(false)
+                  .CascadeFrom("AlarmType")
+                )
+                    @Html.ValidationMessageFor(m => m.DeviceType)
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            @Html.HiddenFor(Model => Model.CompanyId)
+            
+            <script>
+                function filterProducts() {
+                    return {
+                        AlarmType: $("#AlarmType").val()
+                    };
+                }
+                function filterAlarms() {
+                    return {
+                        CompanyName: $("#CompanyName").val()
+                    };
+                } 
+            </script>
+        </div>
+        <div class="sixteen columns">
+        <div class="saveMargin">
+            <div id="alarmConfigurationContainer">
+                @Html.Partial("_AlarmConfiguration", (IEnumerable<Diebold.WebApp.Models.AlarmConfigurationViewModel>)@ViewBag.AlarmConfigurationModel)
+                <img id="waitAlarmMessage" src="@Url.Content("~/Content/Default/loading.png")" style="display: none" alt=""/>
+            </div>
+        </div>
+        </div>
+       
+         <div class="clear"></div>
+        <div class="add-link" style="text-align:center;margin-top:3%">
+            <input id="btnSubmit" class="btnSubmit" type="button" value="Save" style="width:10%;"/>
+            <input id="btnCancel" class="btnSubmit1" type="button" value="Cancel" onclick="javascript:fnCancel();" style="width:10%;" />
+        </div>
+    }
+</div>
+<script type="text/javascript" language="javascript">
+    function selectDeviceType(e) {
+        var url = '@Url.Action("AsyncAlarmConfigurations", "Alarm")';
+        var data = { deviceType: this.dataItem(e.item.index()).Name, companyId: $("#CompanyName").data("kendoComboBox").value(), AlarmType: $("#AlarmType").data("kendoComboBox").text() };
+        BlockElement('alarmConfiguration', 'Connecting...');
+        $.post(url, data, "application/html; charset=utf-8")
+        .done(function (response) { UnBlockElement('alarmConfiguration'); $('#alarmConfigurationTable').html(response); })
+        .fail(function (response) { UnBlockElement('alarmConfiguration'); alert(response); });
+    }
+
+    function AlarmTypeChanged(e) {
+        var combobox = $("#HealthCheckVersion").data("kendoComboBox");
+        combobox.value("-- Select --");
+
+        var combobox = $("#DeviceType").data("kendoComboBox");
+        combobox.value("-- Select --");
+
+        $('#alarmConfigurationTable tbody').remove();
+    }
+
+    function CompanyChanged(e) {
+        var combobox = $("#AlarmType").data("kendoComboBox");
+        combobox.value("-- Select --");
+
+        var combobox = $("#HealthCheckVersion").data("kendoComboBox");
+        combobox.value("-- Select --");
+
+        var combobox = $("#DeviceType").data("kendoComboBox");
+        combobox.value("-- Select --");
+
+        $('#alarmConfigurationTable tbody').remove();
+    }
+
+    $(document).ready(function () {
+        $("#btnSubmit").click(function (e) {
+            ClearValidationSummary();
+            var errorList = customValidator();
+            if (errorList.length > 0) {
+                ShowValiationSummaryErrors(errorList);
+            }
+            else {
+                var oRows = document.getElementById('alarmConfigurationTable').getElementsByTagName('tr');
+                var iRowCount = oRows.length;
+                if (iRowCount > 1) {
+                    $("#CompanyId").val($("#CompanyName").data("kendoComboBox").value());
+                    $("#AlarmType").val($("#AlarmType").data("kendoComboBox").text());
+                    BlockElement('mainContainer', 'Connecting...');
+                    $('form').submit();
+                    UnBlockElement('mainContainer');
+                }
+                else { alert('No Records to Save.') }
+            }
+
+        });
+
+    });
+
+    function fnCancel() {
+        window.location.href = '@Url.Content("~/Alarm/Index")';
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("table.evenodd tr:not([th]):odd").addClass("odd");
+        $("table.evenodd tr:not([th]):even").addClass("even");
+    });
+
+    function customValidator() {
+
+        var errorList = [];
+        var cboCompanyName = $("#CompanyName").data("kendoComboBox").value();
+        if (cboCompanyName == null || cboCompanyName == '' || cboCompanyName == undefined) {
+            errorList.push('The Company Name: (*) field is required.');
+        }
+        else {
+            $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+        }
+
+        var cboAlarmType = $("#AlarmType").data("kendoComboBox").value();
+        if (cboAlarmType == null || cboAlarmType == '' || cboAlarmType == undefined || cboAlarmType == '-- Select --') {
+            errorList.push('The Device Type: (*) field is required.');
+        }
+        else {
+            $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+        }
+
+        var cboHealthCheckVersion = $("#HealthCheckVersion").data("kendoComboBox").value();
+        if (cboHealthCheckVersion == null || cboHealthCheckVersion == '' || cboHealthCheckVersion == undefined || cboHealthCheckVersion == '-- Select --') {
+            errorList.push('The Gateway Version: (*) field is required.');
+        }
+        else {
+            $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+        }
+
+        var cboDeviceType = $("#DeviceType").data("kendoComboBox").value();
+        if (cboDeviceType == null || cboDeviceType == '' || cboDeviceType == undefined || cboDeviceType == '-- Select --') {
+            errorList.push('The Device Model: (*) field is required.');
+        }
+        else {
+            $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+        }
+        return errorList;
+
+    }
+
+    function ShowValiationSummaryErrors(errorList) {
+        var container = $("[data-valmsg-summary=true]"), list = container.find("ul");
+
+        if (list && list.length && errorList.length) {
+            list.empty();
+            container.addClass("validation-summary-errors").removeClass("validation-summary-valid");
+
+            for (var i = 0; i < errorList.length; i++) {
+                $(list).append($("<li />").html(errorList[i]));
+            }
+        }
+    }
+
+    function ClearValidationSummary() {
+        var container = $('form').find('[data-valmsg-summary="true"]');
+        var list = container.find('ul');
+
+        if (list && list.length) {
+            list.empty();
+            container.addClass('validation-summary-valid').removeClass('validation-summary-errors');
+        }
+    }
+</script>
+<style type="text/css">
+    .editor-field
+    {
+        line-height: 32px;
+        padding: 5px;
+    }
+    #alarmConfigurationContainer
+    {
+        clear: both;
+        min-height: 224px;
+        width: 100%;
+        border-style: solid;
+    }
+    .ui-jqgrid-htable
+    {
+        width: 100%;
+        border: 0px;
+    }
+    .ui-jqgrid-htable thead, .ui-jqgrid .ui-jqgrid-hbox, #alarmConfigurationTable thead tr th
+    {
+        background: none repeat scroll 0 0 #CBCBCD;
+        height: 28px;
+    }
+    #alarmConfigurationTable th, #alarmConfigurationTable td
+    {
+        padding-left: 8px;
+        text-align: left;
+        padding-top: 10px;
+        color: #000;
+    }
+    #alarmConfigurationTable th, td
+    {
+    }
+    .ui-jqgrid-htable thead th
+    {
+        font-weight: bold;
+    }
+    .even
+    {
+        background-color: #e6e6e6;
+    }
+    .odd
+    {
+        background-color: #ffffff;
+    }
+    
+    #alarmConfigurationTable tr:nth-child(2n+1)
+    {
+        background: none repeat scroll 0 0 #FFF;
+    }
+    
+    #alarmConfigurationTable tr:nth-child(2n)
+    {
+        background: none repeat scroll 0 0 #F5F5F5;
+    }
+</style>

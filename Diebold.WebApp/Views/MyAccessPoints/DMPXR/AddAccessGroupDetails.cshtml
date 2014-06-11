@@ -1,0 +1,88 @@
+﻿<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>My Access Points - Add Access Group</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="fnCloseTimePeriods();"/></a>
+            </div>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">
+                <div class="my-access-titile bottom">
+                    <p>
+                        <strong>Step 1: Enter General Group Details</strong></p>
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Name:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    <input type="text" class="my-access-in" />
+                </div>
+                <div class="my-access-req">
+                    <p>
+                        *Required</p>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Description:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                    <input type="text" class="my-access-in" />
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Time Periods:</strong></p>
+                </div>
+                <div class="my-access-tables bottom">
+                    <div class="my-access-right-btn" style="width:137px;">
+                        <div class="add-link" align="center" style="float: left;">
+                            <input type="button" value="Add" onclick="fnShowTimePeriods();" />
+                        </div>
+                        <div class="add-link"  align="center" style="float: right;">
+                            <input type="button" value="Cancel" onclick="fnCloseTimePeriods();"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script language="javascript" type="text/javascript">
+    function fnShowTimePeriods() {       
+
+        centerViewPortDialog("#dvAddAccessTimePeriods");
+        document.getElementById('dvAddAccessGroup').style.visibility = 'hidden';       
+    }
+
+    function fnCloseTimePeriods() {
+        document.getElementById('dvAddAccessGroup').style.visibility = 'hidden';
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+    }
+</script>

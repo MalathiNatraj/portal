@@ -1,0 +1,106 @@
+﻿@using Diebold.Domain.Entities
+
+@model Diebold.WebApp.Models.UserViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(false, "There were errors while creating user.")
+
+    <fieldset>
+        <div id="singlePannel" class="leftPanel">
+            <div class="editor-field">
+                @Html.LabelFor(model => model.FirstName)
+                @Html.EditorFor(model => model.FirstName)                        
+            </div>
+
+            <div class="editor-field">
+                @Html.LabelFor(model => model.LastName)
+                @Html.EditorFor(model => model.LastName)
+            </div>
+            
+            <div class="editor-field">
+                @Html.LabelFor(model => model.Username)
+                @Html.EditorFor(model => model.Username)
+            </div>
+
+            <div class="editor-field">
+                @Html.LabelFor(model => model.Email)
+                @Html.EditorFor(model => model.Email)            
+            </div> 
+                   
+            <div class="editor-field">
+                @Html.LabelFor(model => model.Phone)
+                @Html.EditorFor(model => model.Phone)                
+            </div>
+
+            <div class="preferred-field">                
+                @Html.RadioButtonFor(model => model.PreferredContact, PreferredContact.Phone.ToString(), new {@class = "preferredContact"})
+                @Html.LabelFor(model => model.PreferredContact)
+            </div> 
+
+            <div class="editor-field">
+                @Html.LabelFor(model => model.OfficePhone)
+                @Html.EditorFor(model => model.OfficePhone)
+            </div>
+
+            <div class="preferred-field">
+                @Html.RadioButtonFor(model => model.PreferredContact, PreferredContact.Office.ToString(), new {@class = "preferredContact"})
+                @Html.LabelFor(model => model.PreferredContact)
+            </div> 
+
+            <div class="editor-field">
+                @Html.LabelFor(model => model.Extension)
+                @Html.EditorFor(model => model.Extension)
+            </div>
+
+            <div class="editor-field">
+                @Html.LabelFor(model => model.Mobile)
+                @Html.EditorFor(model => model.Mobile)            
+            </div>
+
+            <div class="preferred-field">                
+                @Html.RadioButtonFor(model => model.PreferredContact, PreferredContact.Mobile.ToString(), new {@class = "preferredContact"})
+                @Html.LabelFor(model => model.PreferredContact)
+            </div>
+
+            <div class="editor-field">
+                @Html.LabelFor(model => model.AvailableCompanies)
+                @Html.DropDownListFor(p => p.CompanyId, Model.AvailableCompanies, new {@class = "chzn-select"})
+            </div>
+
+            <div class="editor-field">
+                @Html.LabelFor(model => model.Title)
+                @Html.EditorFor(model => model.Title)            
+            </div>
+
+            <div class="editor-field">
+                @Html.LabelFor(model => model.Text1)
+                @Html.EditorFor(model => model.Text1)            
+            </div>
+
+            <div class="editor-field">
+                @Html.LabelFor(model => model.Text2)
+                @Html.EditorFor(model => model.Text2)            
+            </div>   
+
+            <div class="editor-field">
+                @Html.LabelFor(model => model.AvailableRoles)
+                @Html.DropDownListFor(p => p.RoleId, Model.AvailableRoles, new {@class = "chzn-select"})
+            </div>
+
+            <div class="editor-field">
+                @Html.LabelFor(model => model.AvailableTimeZones)
+                @Html.DropDownListFor(p => p.TimeZone, Model.AvailableTimeZones, new {@class = "chzn-select"})    
+            </div>
+
+            @Html.HiddenFor(x => x.OldCompanyId)
+        </div>
+
+    </fieldset>
+
+    <div class="footer marginCrud">        
+            
+        <input id="btnSubmit" type="submit" value="Save" class="btnNextStep" />
+        
+    </div>
+}

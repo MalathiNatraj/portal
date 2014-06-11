@@ -1,0 +1,224 @@
+﻿@{
+    ViewBag.Title = "Gateways";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div id="dvGatewayManagement" class="pallette-detail-header-bg">
+    <p>Gateways Management</p>
+</div>
+<div class="cont-creation">
+    <div class="sixteen columns">
+        <div class="clear">
+        </div>
+        <p>
+            @(Html.Kendo().Grid<Diebold.WebApp.Models.GatewayViewModel>()
+            .Name("GatewayGrid")
+            .HtmlAttributes(new { style = "height: 500px" })
+            .Resizable(resize => resize.Columns(true))
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.Id).Hidden().Width("1px");
+                columns.Bound(p => p.Name).Width("105px").Title("Gateway Name").Groupable(false);
+                columns.Bound(p => p.CompanyName).Width("112px").Title("Company Name");
+                columns.Bound(p => p.MacAddress).Width("101px").Title("Mac Address");
+                columns.Bound(p => p.Address1).Width("80px");
+                columns.Bound(p => p.Address2).Width("80px");
+                columns.Bound(p => p.City).Width("80px");
+                columns.Bound(p => p.State).Width("80px");
+                columns.Bound(p => p.Zip).Width("80px");
+                columns.Bound(p => p.Notes);
+                columns.Bound(p => p.ActionColumn).Width("115px").Filterable(false).Title("Available Actions").ClientTemplate("<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/edit.png") + "' alt='Edit'  title='Edit' onclick='doDiagnosticAction(#=Id#,\"Edit\",\"Edit\");' /></a>" +
+                                                                  "# if (IsDisabled != true) { #" + "<a class='showStatusLink' style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/disable.png") + "' alt='Disable' title='Disable' onclick='doDiagnosticAction(#=Id#,\"Disable\",\" Disable Gateway\");'/></a>" +
+                                                                        "# } else { #" + "<a class='showStatusLink' style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/Enable.png") + "' alt='Enable' title='Enable' onclick='doDiagnosticAction(#=Id#,\"Enable\",\"Enable Gateway\");' #}#</a>" +
+                                                                  "<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/revoke.png") + "' alt='Reassign'  title='Re-assign' onclick='doDiagnosticAction(#=Id#,\"Delete\",\"Delete Gateway\");'/></a>" +
+                                                                  "<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/Delete.png") + "' alt='Revoke'  title='Revoke Certificate' onclick='doDiagnosticAction(#=Id#,\"Revoke\",\"Revoke Gateway\");'/></a>");
+
+            })
+                    .ToolBar(toolbar => toolbar.Template("<a class='k-button k-button-icontext k-grid-update' onclick='fnCreateDevice()'>Create New Gateway</a>"))
+            .Pageable()
+            .Sortable()
+            .Scrollable()
+            .Filterable()
+            .Events(events => events.DataBound("LoadingDefaultFilter"))
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Read(read => read.Action("Gateway_Read", "Gateway"))
+                .ServerOperation(false)
+             )
+     
+        )
+        </p>
+        @(Html.Kendo().Window().Name("GatewayDetails")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(300)
+)
+    </div>
+</div>
+    <script type="text/javascript">
+        function fnCreateDevice() {
+            window.location.href = '@Url.Content("~/Gateway/Create")';
+        }
+
+
+        $(document).ready(function () {
+            $('.btnSearch').click(function () {
+                $('#gateways').trigger("reloadGrid");
+            });
+
+            $('#searchTextBox').keypress(function (e) {
+                if (e.keyCode == 13) {
+                    $('#gateways').trigger("reloadGrid");
+                }
+            });
+        });
+
+        $.actionColumnFormatter = function (cellvalue, options, rowObject) {
+
+            var links = "<a title='Edit' href='/Gateway/EditWithFieldsDisabled/" + options.rowId + "'><img src='../../Content/images/icons/edit.png'/></a>  ";
+
+            if (rowObject[rowObject.length - 2] == true) {
+                links += "<a title='Enable' onclick='enableItem(" + options.rowId + ",\"/Gateway/Enable\", \"#gateways\")'><img src='../../Content/images/icons/enable.png'/></a>";
+            } else {
+                links += "<a title='Disable' onclick='disableItem(" + options.rowId + ",\"/Gateway/Disable\", \"#gateways\")'><img src='../../Content/images/icons/disable.png'/></a>";
+            }
+
+            links += "<a title='Delete' onclick='removeItem(" + options.rowId + ",\"/Gateway/Delete\", \"#gateways\")'><img src='../../Content/images/icons/delete.png'/></a>";
+            links += "<a title='Revoke Certificate' onclick='revokeItem(" + options.rowId + ",\"/Gateway/Revoke\", \"#gateways\")'><img src='../../Content/images/icons/delete.png'/></a>";
+            return links;
+        };
+
+        function loadExtraParams() {
+            var jsObj = null;
+            var params = [];
+            params.push({ name: 'searchCriteria', value: $('#searchTextBox').val() });
+            jsObj = { Params: params };
+
+            return JSON.stringify(params);
+        };
+
+        function doDiagnosticAction(itemId, actionPath, title) {
+            if (actionPath == "Delete") {
+                ActPath = '@Url.Action("Delete")';
+            }
+            if (actionPath == "Edit") {
+                var strUrl = '@Url.Action("EditWithFieldsDisabled", "Gateway")' +"/" +itemId;
+                location.href = strUrl;
+                document.getElementById('macSection').style.display = 'none';
+            }
+            else if (actionPath == "Disable") {
+                ActPath = '@Url.Action("Disable")';
+            }
+            else if (actionPath == "Enable") {
+                ActPath = '@Url.Action("Enable")';
+            }
+            else if (actionPath == 'Revoke') {
+                ActPath = '@Url.Action("Revoke")';
+            }
+            bar = { item: itemId, ap: ActPath };
+            if (actionPath != "Delete") {
+                var wnd = $("#GatewayDetails").data("kendoWindow");
+            }
+            if (actionPath == "Delete") {
+                var dataItem = { "gatewayId": itemId };
+                var url = '@Url.Action("GetDeviceCountByGatewayId", "Gateway")';
+                $.post(url, dataItem, GetDeviceCountCallback, "json");
+            }
+            else if (actionPath == "Disable" || actionPath == "Enable") {
+                wnd.content("<p style='height:100px'>Do you want to continue?</p><p style='text-align:center;'>" +
+                "<input type='button' value='Ok' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='ConfirmOk(bar)'>" +
+                 "<input type='button' value='Cancel' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='ConfirmCancel()'></p>");
+            }
+            else if (actionPath == 'Revoke') {
+                wnd.content("<p style='height:100px'>Are you sure you want to revoke certificate of this item?</p><p style='text-align:center;'>" +
+                "<input type='button' value='Ok' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='ConfirmRevokeOk(bar)'>" +
+                 "<input type='button' value='Cancel' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='ConfirmCancel()'></p>");
+            }
+            if (actionPath != "Delete") {
+                wnd.title(title);
+                wnd.center().open();
+            }
+        }
+        function ConfirmOk(bar) {
+            $.ajax({
+                url: bar.ap,
+                type: 'POST',
+                data: { id: parseInt(bar.item) },
+                success: function (data) {
+                    fngetResponse(data);
+                },
+                error: function (errordata) {
+                    alert('Failure')
+                }
+            });
+        }
+
+        function ConfirmRevokeOk(bar) {
+            $.ajax({
+                url: bar.ap,
+                type: 'POST',
+                data: { id: parseInt(bar.item) },
+                success: function (data) {
+                    fngetResponse(data);
+                },
+                error: function (errordata) {
+                    alert('Failure')
+                }
+            });
+            $("#GatewayDetails").data("kendoWindow").close();
+        }
+
+        function GetDeviceCountCallback(Result) {            
+            var wndDelete = $("#GatewayDetails").data("kendoWindow");
+            if (Result > 0) {
+                wndDelete.content("<p style='height:100px'>Deleting the gateway, will delete the associated devices. Are you sure you want to delete this item?</p><p style='text-align:center;'>" +
+                "<input type='button' value='Ok' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='ConfirmDeleteOk(bar)'>" +
+                 "<input type='button' value='Cancel' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='ConfirmCancel()'></p>");
+            }
+            else {
+                wndDelete.content("<p style='height:100px'>Are you sure you want to delete this item?</p><p style='text-align:center;'>" +
+                "<input type='button' value='Ok' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='ConfirmDeleteOk(bar)'>" +
+                 "<input type='button' value='Cancel' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='ConfirmCancel()'></p>");
+            }
+            wndDelete.title("Delete Gateway");
+            wndDelete.center().open();
+        }
+
+        function ConfirmDeleteOk(bar) {
+            $.ajax({
+                url: bar.ap,
+                type: 'POST',
+                data: { id: parseInt(bar.item) },
+                success: function (data) {
+                    fngetResponse(data);
+                },
+                error: function (errordata) {
+                    alert('Failure')
+                }
+            });
+            $("#GatewayDetails").data("kendoWindow").close();
+        }
+        function ConfirmCancel() {
+            $("#GatewayDetails").data("kendoWindow").close();
+        }
+        function fngetResponse(data) {
+            var wnd = $("#GatewayDetails").data("kendoWindow");
+            wnd.close();
+            var url = '@Url.Action("GetGatewayDetails", "Gateway")';
+            $.post(url, null, GetGatwayCallback, "json");
+        }
+
+        function GetGatwayCallback(Result) {
+            var Grid = $("#GatewayGrid").data("kendoGrid");
+            Grid.dataSource.data(Result);
+        }
+
+     </script>
+     <style>
+     .k-block > .k-header, .k-window-titlebar
+     {
+        height: 1.6em;
+     }
+     </style>
+
+

@@ -1,0 +1,413 @@
+﻿@model IEnumerable<Diebold.WebApp.Models.MonitorAssignmentViewModel>
+@{
+    IList<Diebold.WebApp.Controllers.CompanyLevel1> objGroupLevel1 = new List<Diebold.WebApp.Controllers.CompanyLevel1>();
+    IList<Diebold.WebApp.Controllers.CompanyLevel2> objGroupLevel2 = new List<Diebold.WebApp.Controllers.CompanyLevel2>();
+}          
+@*<div style="width:100%;">
+    <p class="edit-cpny-grp-sub-title">Select Group Levels</p>
+</div>*@
+<div class="half columns"></div>
+<div class="seven columns">
+    <div class="edit-cpny-grp-sub-title" style="width:100%">
+        <p>Select Group Levels</p>
+    </div>
+    <div class="cont-lft">
+        <div class="comp-lft" style="width:40%">
+            @(Html.Kendo().ComboBox()
+                    .Name("FirstLevelGroup")
+                    .Placeholder("-- First Level Group --")
+                    .DataTextField("Name")
+                    .DataValueField("Id")
+                    .Events(events => events.Change("fnAddFirstLevelGroup"))
+                    .DataSource(source =>
+                    {
+                        source.Read(read =>
+                        {
+                            read.Action("GetFirstLevelGrouping", "Reporting");
+                        });
+                    })
+                )
+        </div>
+        <div class="comp-right" style="width:60%">
+            @(Html.Kendo().Grid(@objGroupLevel1)
+                .HtmlAttributes(new { style = "width:100%" })
+                .Name("grdFirstLevel")
+                .Selectable()
+                .DataSource(dataSource => dataSource        
+                .Ajax()
+                .Read(read => read.Action("GetFirstLevelGrouping", "Reporting"))
+                .ServerOperation(false)
+                )
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Name).Width("65%");
+                    columns.Command(command => command.Custom("Delete").Click("RemoveFirstLevel")).Title("Action");
+                })                    
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                )
+            )
+        </div>
+        <script type="text/javascript">
+            function filterOrders() {
+                return {
+                    users: $("#users").val()
+                };
+            }
+        </script>
+        <div class="clear">
+        </div>
+        <div class="comp-lft" style="width:40%">
+          @(Html.Kendo().ComboBox()
+              .Name("SecondLevelGroup")
+              .Placeholder("-- Second Level Group --")
+              .DataTextField("Name")
+              .DataValueField("Id")
+              .Events(events => events.Change("fnAddSecondLevelGroup"))
+              .DataSource(source =>
+              {
+                  source.Read(read =>
+                  {
+                      read.Action("AsyncSecondLevelGroup", "Reporting")
+                      .Data("filterGroup2");
+                  })
+                  .ServerFiltering(true);
+              })
+              .Enable(false)
+              .AutoBind(false)
+              .CascadeFrom("FirstLevelGroup")
+         )
+          <script type="text/javascript">
+              function filterGroup2() {
+                  return {
+                      FirstLevelGroup: $("#FirstLevelGroup").val()
+                  };
+              }
+            </script>
+        </div>
+        <div class="comp-right" style="width:60%">
+           @(Html.Kendo().Grid(@objGroupLevel2)
+                .HtmlAttributes(new { style = "width:100%" })
+                .Name("grdSecondLevel")
+                .Selectable()
+                .DataSource(dataSource => dataSource        
+                .Ajax()
+               // .Read(read => read.Action("AsyncSecondLevelGroup", "Reporting"))
+                .ServerOperation(false)
+                )
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Name).Width("65%");
+                    columns.Command(command => command.Custom("Delete").Click("RemoveSecondLevel")).Title("Action");
+                })                    
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                )
+            )
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="add-link" style="margin-left:10%; margin-bottom:5%;" align="center">
+    <input type="button" id="btnAddGroup" value="Add"  style="width: 30%;visibility:hidden;" onclick="AddGrpLevels();"/>
+</div>
+</div>
+<div class="one columns"></div>
+<div class="seven columns">
+<div class="edit-cpny-grp-sub-title" style="width:100%">
+    <p>Select Sites</p>
+</div>
+<div class="cont-right">
+<div id="selectedGroups" class="cont-right" style="padding-bottom:3%;">
+          <div class="comp-lft" style="width:40%">
+                @(Html.Kendo().ComboBox()
+                    .Name("Site")
+                    .Placeholder("-- Site --")
+                    .DataTextField("Name")
+                    .DataValueField("Id")
+                    .Events(events => events.Change("fnAddSiteGroup"))
+                    .DataSource(source =>
+                    {
+                        source.Read(read =>
+                        {
+                            read.Action("AsyncSites", "Reporting")
+                            .Data("filterSite");
+                        })
+                        .ServerFiltering(true);
+                    })
+                    .Enable(false)
+                    .AutoBind(false)
+                    .CascadeFrom("SecondLevelGroup")
+               )
+                <script type="text/javascript">
+                    function filterSite() {
+                        return {
+                            SecondLevelGroup: $("#SecondLevelGroup").val()
+                        };
+                    }
+            </script>
+        </div>
+        <div class="comp-right" style="width:60%">
+             @(Html.Kendo().Grid(@objGroupLevel2)
+                .HtmlAttributes(new { style = "width:100%" })
+                .Name("grdSiteLevel")
+                .Selectable()
+                .DataSource(dataSource => dataSource        
+                .Ajax()
+               // .Read(read => read.Action("AsyncSecondLevelGroup", "Reporting"))
+                .ServerOperation(false)
+                )
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Name).Width("65%");
+                    columns.Command(command => command.Custom("Delete").Click("RemoveSiteLevel")).Title("Action");
+                })                    
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                )
+            )                
+        </div>
+        <div class="clear">
+        </div>
+          <div class="comp-lft" style="width:40%">
+              @(Html.Kendo().ComboBox()
+                    .Name("Device")
+                    .Placeholder("-- Device --")
+                    .DataTextField("Name")
+                    .DataValueField("Id")
+                    .Events(events => events.Change("AddGrpLevels"))
+                    .DataSource(source =>
+                    {
+                        source.Read(read =>
+                            {
+                                read.Action("AsyncDevices", "Reporting")
+                                .Data("filterDevice");
+                            })
+                        .ServerFiltering(true);
+                    })
+                    .Enable(false)
+                    .AutoBind(false)
+                    .CascadeFrom("Site")
+            )
+            <script type="text/javascript">
+                function filterDevice() {
+                    return {
+                        Site: $("#Site").val()
+                    };
+                }
+            </script>
+        </div>
+        <div class="comp-right" style="width:60%">
+             @(Html.Kendo().Grid(Model)
+                .HtmlAttributes(new { style = "width:100%" })
+                .Name("grdGroupLevel")
+                .Selectable()
+                .DataSource(dataSource => dataSource        
+                .Ajax()
+                .Read(read => read.Action("Monitor_Read", "Monitor"))
+                .ServerOperation(false)
+                )
+                .Columns(columns =>
+                {
+                    //For width alignment of data column in Kendo Grid, we need to keep one column without "Width" property
+                    columns.Bound(p => p.GroupName).Title("Name").Width("65%");
+                    columns.Command(command => command.Custom("Delete").Click("RemoveGroupLevel")).Title("Action");
+                })                    
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                )
+            )        
+        </div>
+        <div class="clear">
+        </div>
+       
+    @(Html.Kendo().Window()
+    .Name("DuplicateGroupLevelWindow")
+    .Title("Error")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div style="padding: 5px">
+    <label id="lblDieboldAlert"></label>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(275)
+    .Height(170)
+)
+
+</div>
+</div>
+</div>
+<div class="half columns"></div>
+ <div class="clear">
+        </div>
+
+<script language="javascript" type="text/javascript">
+    function AddGrpLevels() {
+        var isDirty = true;
+        var grid = $("#grdGroupLevel").data("kendoGrid");
+        var Devicecombobox = $("#Device").data("kendoComboBox");
+        var data = grid.dataSource.data();
+        var totalNumber = data.length;
+        var datasource = grid.dataSource;
+        // datasource.insert({ GroupName: Devicecombobox.text(), GroupId: Devicecombobox.value() });
+        if (totalNumber > 0) {
+            for (var i = 0; i < totalNumber; i++) {
+                var currentDataItem = data[i].GroupName;
+                if (currentDataItem == Devicecombobox.text()) {
+                    fnShowDuplicateError("Same group name already added.");
+                    isDirty = true;
+                    break;
+                }
+                else {
+                    //  datasource.insert({ GroupName: Devicecombobox.text(), GroupId: Devicecombobox.value() });
+                    isDirty = false;
+                }
+            }
+        }
+        else {
+            datasource.insert({ GroupName: Devicecombobox.text(), GroupId: Devicecombobox.value() });
+        }
+        if (isDirty == false) {
+            datasource.insert({ GroupName: Devicecombobox.text(), GroupId: Devicecombobox.value() });
+        }
+    }
+
+    function RemoveGroupLevel(e) {
+        e.preventDefault();
+        var grid = $("#grdGroupLevel").data("kendoGrid");
+        var selectedRow = grid.select();
+        var index = selectedRow.index();
+        grid.removeRow(grid.tbody.find("tr")[index]);
+        var cboDevice = $("#Device").data("kendoComboBox");
+        cboDevice.value("-- Device --");
+    }
+
+    function fnShowDuplicateError(errormsg) {
+        $("#lblDieboldAlert").text(errormsg);
+        $("#DuplicateGroupLevelWindow").data("kendoWindow").center().open();
+    }
+
+    function fnAddFirstLevelGroup(e) {
+        var isDirtyFirstLevel = true;
+        var gridFirstLevel = $("#grdFirstLevel").data("kendoGrid");
+        var FirstGroupcombobox = $("#FirstLevelGroup").data("kendoComboBox");
+        var dataFirstLevel = gridFirstLevel.dataSource.data();
+        var totalNumberFirstLevel = dataFirstLevel.length;
+        var datasourceFirstLevel = gridFirstLevel.dataSource;
+        if (totalNumberFirstLevel > 0) {
+            for (var i = 0; i < totalNumberFirstLevel; i++) {
+                var currentDataItemFirstLevel = dataFirstLevel[i].Name;
+                if (currentDataItemFirstLevel == FirstGroupcombobox.text()) {
+                    fnShowDuplicateError("Same group name already added.");
+                    isDirtyFirstLevel = true;
+                    break;
+                }
+                else {
+                    //  datasource.insert({ GroupName: Devicecombobox.text(), GroupId: Devicecombobox.value() });
+                    isDirtyFirstLevel = false;
+                }
+            }
+        }
+        else {
+            datasourceFirstLevel.insert({ Name: FirstGroupcombobox.text(), Id: FirstGroupcombobox.value() });
+        }
+        if (isDirtyFirstLevel == false) {
+            datasourceFirstLevel.insert({ Name: FirstGroupcombobox.text(), Id: FirstGroupcombobox.value() });
+        }
+    }
+
+    function RemoveFirstLevel(e) {
+        e.preventDefault();
+        var gridFL = $("#grdFirstLevel").data("kendoGrid");
+        var selectedRowFL = gridFL.select();
+        var indexFL = selectedRowFL.index();
+        gridFL.removeRow(gridFL.tbody.find("tr")[indexFL]);
+        var cboFL = $("#FirstLevelGroup").data("kendoComboBox");
+        cboFL.value("-- First Level Group --");
+    }
+
+    function fnAddSecondLevelGroup(e) {
+        var isDirtySecondLevel = true;
+        var gridSecondLevel = $("#grdSecondLevel").data("kendoGrid");
+        var SecondGroupcombobox = $("#SecondLevelGroup").data("kendoComboBox");
+        var dataSecondLevel = gridSecondLevel.dataSource.data();
+        var totalNumberSecondLevel = dataSecondLevel.length;
+        var datasourceSecondLevel = gridSecondLevel.dataSource;
+        if (totalNumberSecondLevel > 0) {
+            for (var i = 0; i < totalNumberSecondLevel; i++) {
+                var currentDataItemSecondLevel = dataSecondLevel[i].Name;
+                if (currentDataItemSecondLevel == SecondGroupcombobox.text()) {
+                    fnShowDuplicateError("Same group name already added.");
+                    isDirtySecondLevel = true;
+                    break;
+                }
+                else {
+                    //  datasource.insert({ GroupName: Devicecombobox.text(), GroupId: Devicecombobox.value() });
+                    isDirtySecondLevel = false;
+                }
+            }
+        }
+        else {
+            datasourceSecondLevel.insert({ Name: SecondGroupcombobox.text(), Id: SecondGroupcombobox.value() });
+        }
+        if (isDirtySecondLevel == false) {
+            datasourceSecondLevel.insert({ Name: SecondGroupcombobox.text(), Id: SecondGroupcombobox.value() });
+        }
+    }
+
+    function RemoveSecondLevel(e) {
+        e.preventDefault();
+        var gridSL = $("#grdSecondLevel").data("kendoGrid");
+        var selectedRowSL = gridSL.select();
+        var indexSL = selectedRowSL.index();
+        gridSL.removeRow(gridSL.tbody.find("tr")[indexSL]);
+        var cboSL = $("#SecondLevelGroup").data("kendoComboBox");
+        cboSL.value("-- Second Level Group --");
+    }
+
+    function fnAddSiteGroup(e) {
+        var isDirtySiteLevel = true;
+        var gridSiteLevel = $("#grdSiteLevel").data("kendoGrid");
+        var SiteGroupcombobox = $("#Site").data("kendoComboBox");
+        var dataSiteLevel = gridSiteLevel.dataSource.data();
+        var totalNumberSiteLevel = dataSiteLevel.length;
+        var datasourceSiteLevel = gridSiteLevel.dataSource;
+        if (totalNumberSiteLevel > 0) {
+            for (var i = 0; i < totalNumberSiteLevel; i++) {
+                var currentDataItemSiteLevel = dataSiteLevel[i].Name;
+                if (currentDataItemSiteLevel == SiteGroupcombobox.text()) {
+                    fnShowDuplicateError("Same Site name already added.");
+                    isDirtySiteLevel = true;
+                    break;
+                }
+                else {
+                    //  datasource.insert({ GroupName: Devicecombobox.text(), GroupId: Devicecombobox.value() });
+                    isDirtySiteLevel = false;
+                }
+            }
+        }
+        else {
+            datasourceSiteLevel.insert({ Name: SiteGroupcombobox.text(), Id: SiteGroupcombobox.value() });
+        }
+        if (isDirtySiteLevel == false) {
+            datasourceSiteLevel.insert({ Name: SiteGroupcombobox.text(), Id: SiteGroupcombobox.value() });
+        }
+    }
+
+    function RemoveSiteLevel(e) {
+        e.preventDefault();
+        var gridSite = $("#grdSiteLevel").data("kendoGrid");
+        var selectedRowSite = gridSite.select();
+        var indexSite = selectedRowSite.index();
+        gridSite.removeRow(gridSite.tbody.find("tr")[indexSite]);
+        var cboSite = $("#Site").data("kendoComboBox");
+        cboSite.value("-- Site --");
+    }
+</script>
+

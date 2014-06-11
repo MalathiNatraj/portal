@@ -1,0 +1,70 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Diebold SecureStat</title>
+
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/style.css")" />
+     <!--[if gte IE 9]>
+        <link rel="stylesheet" type="text/css" href="css/gradient-ie6-and-up.css" />
+	<![endif]-->
+   
+</head>
+<body id="mainBody">
+    <div id="mainContainer">
+        <div class="row">
+            <div class="sixteen columns">
+                <header>
+                    <!--Top Navigation Buttons Starts-->
+                    <div class="row head-bg gradient">
+                        <div class="five columns logo">
+                            <a href="http://www.diebold.com/dnpssec/default.htm" target="_blank">DIEBOLD</a>
+                        </div>
+                        <div class="eleven columns top-nav" align="center">
+                           
+                        </div>
+                    </div>
+                    <!--Top Navigation Buttons Ends-->
+                </header>
+                <section >
+                	<article>
+                        <div id="contentWell" class="row body-bg">
+        	                 @RenderBody()
+                        </div>  
+                    </article>
+                </section>     
+                <!-- FOOTER STARTS HERE -->
+                <footer>
+                    <div class="row footer">
+        
+                       <div class="four columns">
+                            @* <div class="foot-logo" align="center">
+                                <a href="http://www.diebold.com/dnpssec/default.htm" target="_blank"><img src="@Url.Content("~/Content/images/footer-logo.png")" alt="" /></a>
+                            </div>*@
+                            <div class="foot-copy-bg" align="left" style="padding-left:1%;">
+                                <p>&copy; 2013 Diebold, Inc.</p>
+                            </div>
+                        </div>
+        
+                        <div class="eight columns">
+                        </div>
+        
+                        <div class="four columns top-nav" align="center">
+                            
+                        </div>
+                    </div>
+				</footer>
+                <!-- FOOTER ENDS HERE -->
+        		<div align="center">
+                	<img src="@Url.Content("~/Content/images/bottom-shdw.png")" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" value="BUILD42"/>
+    
+</body>
+</html>

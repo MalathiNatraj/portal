@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+    <div class="banner-bg">
+    <div id="banner">
+        <div id="slides">
+            <div class="slides_container">
+                <div class="slide">
+                    <img src="@Url.Content("~/Content/images/banner-img.png")" width="429" height="203" alt="Slide 1"/>
+                </div>
+                <div class="slide">
+                    <img src="@Url.Content("~/Content/images/banner-img1.png")" width="429" height="203" alt="Slide 1"/>
+                </div>
+				@*<div class="slide">
+                    <img src="@Url.Content("~/Content/images/banner-img2.jpg")" width="429" height="203" alt="Slide 1"/>
+                </div>*@
+            </div>
+            <a href="#" class="prev">
+                <img src="@Url.Content("~/Content/images/arrow-prev.png")" width="19" height="37" alt="Arrow Prev"/></a>
+            <a href="#" class="next">
+                <img src="@Url.Content("~/Content/images/arrow-next.png")" width="19" height="37" alt="Arrow Next"/></a>
+        </div>
+    </div>
+</div>
+</body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/style.css")" />
+    <script src="@Url.Content("~/Scripts/jquery.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/slides.min.jquery.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#slides').slides({
+                preload: true,
+                preloadImage: '@Url.Content("~/Content/images/loading.gif")',
+                play: 5000,
+                pause: 2500,
+                hoverPause: true,
+                generatePagination: false
+            });
+        });
+    </script>
+    
+</head>
+</html>

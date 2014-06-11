@@ -1,0 +1,217 @@
+﻿@{
+    ViewBag.Title = "LiveView";
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+
+	<!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=320,user-scalable=false" />
+
+	<link rel="stylesheet" type="text/css" href="../../Content/style.css">
+    <!--[if gte IE 9]>
+        <link rel="stylesheet" type="text/css" href="css/gradient-ie6-and-up.css" />
+	<![endif]-->
+
+	<title>Diebold</title>
+    
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            GetLiveViewDefaultValues();
+        });
+
+        function GetLiveViewDefaultValues() {
+
+            $.ajax({
+                url: '@Url.Action("GetLIVEVIEWValue", "Video")',
+                type: 'POST',
+                data: { InternalName: 'LIVEVIEW' },
+                success: function (data) {
+
+                    if (data != undefined && data != null) {
+                        var result = data.split("~");
+                        $('#ServerList').val('Select Server');
+                        $('#ServerList').append($('<option/>', { value: result[0], text: result[0] }));
+
+                        $('#CameraList').val('Select Camera');
+                        $('#CameraList').append($('<option/>', { value: result[1], text: result[1] }));
+                    }
+
+                },
+                error: function (errordata) {
+                    alert('Failure')
+                }
+            });
+    }
+
+    function GetLIVEVIEWValueCallback(ResultSet) {
+        alert('called2');
+        if (ResultSet != undefined && ResultSet != null) {
+            var result = ResultSet.split("~");
+            alert(result);
+            var cmbServerList = $('#ServerList');
+            var cmbCameraList = $('#CameraList');
+            cmbCameraList.value(result[1]);
+            cmbServerList.value(result[0]);
+            PlaySelectedCamera();
+        }
+    }
+
+    function PlaySelectedCamera() {
+        var varSelectedValue = $("#CameraList");
+        var cmbServerList = $('#CameraList');
+        var datasource = cmbServerList.dataSource._data;
+        var camera = null;
+        for (var i = 0; i < datasource.length; i++) {
+            if (parseInt(varSelectedValue) == datasource[i].CameraID) {
+                camera = datasource[i];
+            }
+        }
+        PlayCamera(camera);
+    }
+
+    function GetServerDetails() {
+        ipConfigure.Settings.ManagementUri = ManagementUri;
+        var cameras = $("#Cameras")
+        var playerdiv = $("#ipConfigure-player");
+        var player = new ipConfigure.Player(playerdiv);
+        $.ajax(ipConfigure.Settings.ManagementUri + "/services/API.svc/GetCameras",
+            { dataType: "jsonp" })
+            .done(function (data) {
+                data.d.sort(function (a, b) {
+                    if (a.Name > b.Name) return 1;
+                    else if (a.Name < b.Name) return -1;
+                    else return 0;
+                });
+                BindServerList(data.d)
+            })
+            .fail(function (data) { });
+        }
+
+        function BindServerList(dataSource) {
+            var cmbServerList = $('#ServerList');
+            cmbServerList.dataSource.data(dataSource);
+            var cmbCameraList = $('#CameraList');
+            cmbCameraList.dataSource.data(dataSource);
+        }
+
+        function changeImage(value) {
+            var pic1 = document.getElementById("pic");
+            if (value == 'Camera 1') {
+                pic1.src = "../../Content/images/cam-2.png";
+            }
+            if (value == 'Camera 2') {
+                pic1.src = "../../Content/images/cam-3.png";
+            }
+            if (value == 'Select Camera') {
+                pic1.src = "../../Content/images/cam-1.png";
+            }
+
+        }
+	
+	</script>
+
+	<script type="text/javascript">
+<!--
+	    function MM_swapImgRestore() { //v3.0
+	        var i, x, a = document.MM_sr; for (i = 0; a && i < a.length && (x = a[i]) && x.oSrc; i++) x.src = x.oSrc;
+	    }
+	    function MM_preloadImages() { //v3.0
+	        var d = document; if (d.images) {
+	            if (!d.MM_p) d.MM_p = new Array();
+	            var i, j = d.MM_p.length, a = MM_preloadImages.arguments; for (i = 0; i < a.length; i++)
+	                if (a[i].indexOf("#") != 0) { d.MM_p[j] = new Image; d.MM_p[j++].src = a[i]; }
+	        }
+	    }
+
+	    function MM_findObj(n, d) { //v4.01
+	        var p, i, x; if (!d) d = document; if ((p = n.indexOf("?")) > 0 && parent.frames.length) {
+	            d = parent.frames[n.substring(p + 1)].document; n = n.substring(0, p);
+	        }
+	        if (!(x = d[n]) && d.all) x = d.all[n]; for (i = 0; !x && i < d.forms.length; i++) x = d.forms[i][n];
+	        for (i = 0; !x && d.layers && i < d.layers.length; i++) x = MM_findObj(n, d.layers[i].document);
+	        if (!x && d.getElementById) x = d.getElementById(n); return x;
+	    }
+
+	    function MM_swapImage() { //v3.0
+	        var i, j = 0, x, a = MM_swapImage.arguments; document.MM_sr = new Array; for (i = 0; i < (a.length - 2); i += 3)
+	            if ((x = MM_findObj(a[i])) != null) { document.MM_sr[j++] = x; if (!x.oSrc) x.oSrc = x.src; x.src = a[i + 2]; }
+	    }
+//-->
+    </script>
+</head>
+
+<body onLoad="MM_preloadImages('../../Content/images/back-btn-hovr.png')">
+        <!-- Main Row Starts here -->
+      <div class="row">
+        	<div class="sixteen columns">
+            	<header>
+                    <div class="sixteen columns logo-small" align="center">
+                    
+                    	<div class="back">
+                       	  <a href="../Dashboard/Home" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('back btn','','../../Content/images/back-btn-hovr.png',1)"><img src="../../Content/images/back-btn.png" name="back btn" border="0"></a>
+<!--                        	<a href="index.html"><strong>Back</strong></a>-->
+                      </div>
+                        
+                    	<a href="#"><img src="../../Content/images/logo-small.png" alt="" /></a>
+	                    
+                        <div class="log-out">
+                        	<a href="../Account/LogOn"><img src="../../Content/images/logout-icon.png" alt="" /></a>
+                        </div>
+                    </div>
+				</header>
+                
+                <div class="clear"></div>	
+                
+                <!-- MAIN CONTAINER STARTS HERE -->
+                <section>
+                	<article>
+                                    
+                        <!-- VIDEO PAGE STARTS HERE -->
+                        <div class="video">
+                            
+                            <div class="drop-down-sel" align="center" style="margin:2% 0;">
+                                <select id="ServerList" name="ServerList">
+                                    <option>Select Server</option>
+                                </select>
+                            </div>
+                                        
+                            <div class="drop-down-sel" align="center" style="margin:2% 0;">
+                                <select id="CameraList" name="CameraList" onChange="changeImage(this.value);">
+                                    <option>Select Camera</option>
+                                </select>
+                            </div>
+                            
+                            <div class="cam-sel" id="videoImg">
+                            	<img src="../../Content/images/cam-1.png" alt="" id="pic" />    
+                            </div>
+                            
+                        </div>
+                        <!-- VIDEO PAGE ENDS HERE -->
+
+                    </article>
+                </section>
+
+				<section>
+                	<article>
+                	</article>
+				</section>
+                <!-- MAIN CONTAINER ENDS HERE -->
+                        
+                <!-- FOOTER STARTS HERE -->
+                <footer>
+				</footer>
+                <!-- FOOTER ENDS HERE -->
+                
+            </div>
+        </div>
+        <!-- Main Row Ends here -->
+	
+</body>
+</html>

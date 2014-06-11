@@ -1,0 +1,29 @@
+﻿@model Diebold.WebApp.Models.TestViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm("Index", "Test", FormMethod.Post))
+{
+    //@Html.ListBox("SelectStuffSelected", Model.SelectStuff, new { @class = "whatever here" })
+    @Html.ListBoxFor(p => p.SelectStuffSelected, Model.SelectStuff);
+
+        <p >
+            <input type="submit" value="Submit" />
+        </p> 
+}   
+
+@section Head {
+    <link href="../../Content/jquery.bsmselect.css" rel="stylesheet" type="text/css" />
+    <script src="../../Scripts/jquery.bsmselect.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("select").bsmSelect();
+
+        });
+    </script>
+}

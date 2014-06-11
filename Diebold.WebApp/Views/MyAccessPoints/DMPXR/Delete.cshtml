@@ -1,0 +1,118 @@
+﻿@model Diebold.WebApp.Models.AccessCardholderViewModel
+           
+<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>Cardholder Delete</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="CloseDeletePortlet();"/></a>
+            </div>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        <div id="dvCardDeleteContent">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">
+                <div class="my-access-titile bottom">
+                    <p>
+                        <strong>Step 1: Lookup Fields</strong></p>
+                </div>
+                <div id="dvErrCardholderDelete">
+                <ul>
+                
+                </ul>
+                </div>                 
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Name:</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                    @Html.TextBox("txtDeleteLastName", null, new { @class = "my-access-in", maxlength = 250 })
+                </div>                
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Card Number:</strong></p>
+                </div>
+                <div class="my-access-field bottom">                    
+                    @Html.TextBox("txtDeleteCardNumber", null, new { @class = "my-access-in"})
+                </div>                
+                <div class="clear">
+                </div>
+            </div>
+            <div class="my-access-right-btn" style="width:143px;">
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Next" onclick="CloseDeleteOpenConfirmation();" />
+                </div>
+                <div class="add-link"  align="center" style="float: right;">
+                    <input type="button" value="Cancel" onclick="CloseDeletePortlet();"/>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function CloseDeleteOpenConfirmation() {
+
+        $("#dvErrCardholderDelete ul").empty();
+        var deviceID = $("#AccessViewDeviceList").val();
+        //var deleteFName = $('#txtDeleteFirstName').val();
+        var deleteLName = $('#txtDeleteLastName').val();
+        var deleteCNumber = $('#txtDeleteCardNumber').val();
+        var regDelete = /^[0-9]+$/;
+        var isErrDeleteCH = "false";
+        //if (deleteFName == '' && deleteLName == '' && deleteCNumber == '') {
+        if (deleteLName == '' && deleteCNumber == '') {
+            $('#dvErrCardholderDelete ul').append('<li class="validation-summary-accesspopup">Any one of the fields is Required</li>');
+            isErrDeleteCH = "true";
+        }        
+        if (isErrDeleteCH == "false") {
+            //var dataItem = { "firstName": deleteFName, "lastName": deleteLName, "cardNumber": deleteCNumber, "deviceId": deviceID };
+            var dataItem = { "firstName": '', "lastName": deleteLName, "cardNumber": deleteCNumber, "deviceId": deviceID };
+            var url = '@Url.Action("GetCardHoldersInformation", "Access")';
+            BlockElement("dvCardDeleteContent", 'Connecting...');
+            $.post(url, dataItem, GetCardHolderDeleteFirstStepCallback, "json");
+        }
+    }
+
+    function GetCardHolderDeleteFirstStepCallback(ResultSet) {        
+        UnBlockElement("dvCardDeleteContent");
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                document.getElementById('dvDeleteCrdHldr').style.visibility = 'hidden';
+                var grid = $("#grdDMPXRDeleteCardHolderList").data("kendoGrid");                
+                grid.dataSource.data(ResultSet);                
+                centerViewPortDialog("#dvDMPXRDeleteCrdHldrList");
+            }
+        }
+    }
+
+    function CloseDeletePortlet() {
+        document.getElementById('dvDeleteCrdHldr').style.visibility = 'hidden';
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+    }
+</script>

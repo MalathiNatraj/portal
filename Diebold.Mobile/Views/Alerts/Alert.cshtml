@@ -1,0 +1,311 @@
+﻿@model IEnumerable<DieboldMobile.Models.DeviceListDashboardViewModel>
+@{
+    ViewBag.Title = "Alert";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+
+	<!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=320,user-scalable=false" />
+     <script src="@Url.Content("~/Scripts/app/Common.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.blockUI.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/BlockUIForms.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/BlockUIForms.css")" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="../../Content/style.css">
+    <!--[if gte IE 9]>
+        <link rel="stylesheet" type="text/css" href="css/gradient-ie6-and-up.css" />
+	<![endif]-->
+
+	<title>Diebold</title>
+    <style>
+        #alertTable 
+        {
+            border: 1px solid #CCCCCC;
+        }
+        
+        #alertTable thead 
+        {
+            text-align:left;
+        }
+        #alertTable thead tr 
+        {
+            height:22px;
+        }
+        #alertTable thead tr th
+        {
+            padding-left: 5px;
+            border: 1px solid #CCCCCC;
+            height:22px;
+        }
+        #alertTable tbody tr 
+        {
+            height:22px;
+        }
+        #alertTable tbody tr td
+        {
+            padding-left: 5px;
+            border: 1px solid #CCCCCC;
+            height:22px;
+        }
+    </style>
+	<script type="text/javascript">
+<!--
+	    var deviceSelectedData;
+	    function MM_swapImgRestore() { //v3.0
+	        var i, x, a = document.MM_sr; for (i = 0; a && i < a.length && (x = a[i]) && x.oSrc; i++) x.src = x.oSrc;
+	    }
+	    function MM_preloadImages() { //v3.0
+	        var d = document; if (d.images) {
+	            if (!d.MM_p) d.MM_p = new Array();
+	            var i, j = d.MM_p.length, a = MM_preloadImages.arguments; for (i = 0; i < a.length; i++)
+	                if (a[i].indexOf("#") != 0) { d.MM_p[j] = new Image; d.MM_p[j++].src = a[i]; }
+	        }
+	    }
+
+	    function MM_findObj(n, d) { //v4.01
+	        var p, i, x; if (!d) d = document; if ((p = n.indexOf("?")) > 0 && parent.frames.length) {
+	            d = parent.frames[n.substring(p + 1)].document; n = n.substring(0, p);
+	        }
+	        if (!(x = d[n]) && d.all) x = d.all[n]; for (i = 0; !x && i < d.forms.length; i++) x = d.forms[i][n];
+	        for (i = 0; !x && d.layers && i < d.layers.length; i++) x = MM_findObj(n, d.layers[i].document);
+	        if (!x && d.getElementById) x = d.getElementById(n); return x;
+	    }
+
+	    function MM_swapImage() { //v3.0
+	        var i, j = 0, x, a = MM_swapImage.arguments; document.MM_sr = new Array; for (i = 0; i < (a.length - 2); i += 3)
+	            if ((x = MM_findObj(a[i])) != null) { document.MM_sr[j++] = x; if (!x.oSrc) x.oSrc = x.src; x.src = a[i + 2]; }
+	    }
+
+	    $(document).ready(function () {
+	        loaddevice('ALL');
+	    });
+
+	    function loaddevice(value) {
+	        $.ajax({
+	            url: '@Url.Action("GetAllDevicebyParentType", "Alerts")',
+	            type: 'POST',
+	            //data: { parentType: 'DVR' },
+	            data: { parentType: value },
+	            success: function (data) {
+	                $('#cmbDeviceTypeList').val('');
+	                $('#cmbDeviceTypeList').val('Select Device Type');
+	                $.each(data, function (index, itemData) {
+	                    var addr = itemData.SiteName + '<br> ' + itemData.Address1 + '<br> ' + itemData.Address2 + '<br> ' + itemData.City;
+	                    //	                    cleardevice();
+	                    if (index == 0) {
+	                        $('#onelft').append('<p>' + itemData.Name + '</P>');
+	                        $('#onerit').append('<p>' + addr + '</P>');
+	                    }
+	                    if (index == 1) {
+	                        $('#twolft').append('<p>' + itemData.Name + '</P>');
+	                        $('#tworit').append('<p>' + addr + '</P>');
+	                        selectedState = itemData.Value;
+	                    }
+	                    if (index == 2) {
+	                        $('#thrlft').append('<p>' + itemData.Name + '</P>');
+	                        $('#thrrit').append('<p>' + addr + '</P>');
+	                    }
+
+	                    $('#cmbDeviceTypeList').append($('<option/>', {
+	                        value: itemData.Id,
+	                        text: itemData.SiteName + ' : '+ itemData.Name
+	                    })
+
+                        );
+	                });
+	            },
+	            error: function (errordata) {
+	                alert('Failure')
+	            }
+	        });
+	    }
+
+	    function DeviceTypeChanged() {
+	        var selectedDevice = $('#cmbDeviceTypeList option:selected').val();
+            var dataItem = { "deviceId": selectedDevice };
+	        deviceSelectedData = { "deviceId": dataItem.deviceId };
+	        var url = '@Url.Action("GetActiveAlertsbyDeviceId", "Alerts")';
+	        BlockElement("AlertsportletArea", 'Connecting...');
+	        $.post(url, deviceSelectedData, "application/html; charset=utf-8")
+            .done(function (response) { AssignCamerastoGrid(response) })
+            .fail(function (response) { alert(response); });
+
+	    }
+
+	    function AssignCamerastoGrid(ResultSet) {
+	        $("#alertTable > tbody").html("");
+            if (ResultSet != null && ResultSet.length > 0) {
+                $.each(ResultSet, function (index) {
+                    var LastAlertDate = this.LastAlertS;
+                    var ackS = this.Ack;
+                    if (this.LastAlertS == null) {
+                        LastAlertDate = '';
+                    }
+                    if (ackS == "True") {
+                        ackS = "Yes"
+                    }
+                    else {
+                        ackS = "No";
+                    }
+                    if (index == ResultSet.length + 1) {
+                        return false;
+                    }
+                    $('#alertTable tbody:last').append('<tr><td style="display:none">' + this.DeviceId + '</td><td>' + LastAlertDate + '</td><td>' + this.AlertName + '</td><td>' + this.Status + '</td><td>' + ackS + '</td></tr>');
+
+                    if (ResultSet.length >= 10) {
+                        document.getElementById('dvAlertsLayer').style.height = '200px';
+                        document.getElementById('dvAlertsLayer').style.overflow = 'auto';
+                    }
+                });
+            }
+            else {
+                $("#alertTable > tbody").html("<tr><td colspan='5'>There are no active alerts</td></tr>");
+            }
+            UnBlockElement("AlertsportletArea");
+        }
+
+	    function loaddevicechange(value) {
+	        $.ajax({
+	            url: '@Url.Action("GetActiveAlertsbyDeviceId", "Alerts")',
+	            type: 'POST',
+	            //data: { parentType: 'DVR' },
+	            data: { deviceId: value },
+	            success: function (data) {
+
+	                $.each(data, function (index, itemData) {
+//	                    cleardevice();
+	                    if (index == 0) {
+	                        $('#onelft').append(itemData.Name);
+	                        $('#onerit').append(itemData.SiteName);
+	                    }
+	                    if (index == 1) {
+	                        $('#twolft').append(itemData.Name);
+	                        $('#tworit').append(itemData.SiteName);
+	                        selectedState = itemData.Value;
+	                    }
+	                    if (index == 2) {
+	                        $('#thrlft').append(itemData.Name);
+	                        $('#thrrit').append(itemData.SiteName);
+	                    }
+
+	                    $('#cmbDeviceTypeList').append($('<option/>', {
+	                        value: itemData.Id,
+	                        text: itemData.Name
+	                    })
+
+                        );
+	                });
+	            },
+	            error: function (errordata) {
+	                alert('Failure')
+	            }
+	        });
+	    }
+
+        function cleardevice() {
+          $('#onelft').empty();
+          $('#onerit').empty();
+          $('#twolft').empty();
+          $('#tworit').empty();
+          $('#thrlft').empty();
+          $('#thrrit').empty();
+      }
+
+
+      function fnGetAllAlerts() {
+          if (document.getElementById('chkAll').checked == true) {
+             // var comboBox = $("#cmbDeviceTypeList").data("kendoComboBox");
+              // comboBox.enable(false);
+              document.getElementById('cmbDeviceTypeList').disabled = true;
+              // $('#cmbDeviceTypeList').data('kendoComboBox').value("Device List");
+              $('#cmbDeviceTypeList').val('Select Device Type');
+              var url = '@Url.Action("GetALLActiveAlerts", "Alerts")';
+              BlockElement("AlertsportletArea", 'Connecting...');
+              $.post(url, "application/html; charset=utf-8")
+            .done(function (response) { AssignCamerastoGrid(response) })
+            .fail(function (response) { alert(response); UnBlockElement("AlertsportletArea"); });
+          }
+          else {
+              //var comboBox = $("#cmbDeviceTypeList").data("kendoComboBox");
+              //comboBox.enable(true);
+              document.getElementById('cmbDeviceTypeList').disabled = false;
+             // $("#grdAlerts").data("kendoGrid").dataSource.data([]);
+             // $('#cmbDeviceTypeList').data('kendoComboBox').value("Device List");
+              $('#cmbDeviceTypeList').val('Select Device Type');
+              $("#alertTable > tbody").html("<tr><td colspan='5'>There are no active alerts</td></tr>");
+              UnBlockElement("AlertsportletArea");
+          }
+      }
+//-->
+    </script>
+</head>
+
+<body onLoad="MM_preloadImages('../../Content/images/back-btn-hovr.png')">
+        <!-- Main Row Starts here -->
+      <div class="row">
+        	<div class="sixteen columns">
+            	<header>
+                    <div class="sixteen columns logo-small" align="center">
+                    
+                    	<div class="back">
+                       	  <a href="../Dashboard/Home" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('back btn','','../../Content/images/back-btn-hovr.png',1)"><img src="../../Content/images/back-btn.png" name="back btn" border="0"></a>
+                      </div>
+                        
+                    	<a href="http://www.diebold.com/dnpssec/default.htm" target="_blank"><img src="../../Content/images/logo-small.png" alt="" /></a>
+	                    
+                        <div class="log-out">
+                        	<a href="@Url.Content("~/Account/LogOff")"><img src="../../Content/images/logout-icon.png" alt="" /></a>
+                        </div>
+                    </div>
+				</header>
+                
+                <div class="clear"></div>	
+                
+                <!-- MAIN CONTAINER STARTS HERE -->
+                <section>
+                	<article>
+                     <div id="AlertsportletArea">
+                                    
+                        <div class="drop-down-sel" align="center" style="margin:2% 0;">
+                            <select id="cmbDeviceTypeList" name="cmbDeviceTypeList" onchange="DeviceTypeChanged()">
+                                <option>Select Device</option>
+                            </select>
+                             <input type="checkbox" id="chkAll" name="ckeckAll" value="All" onclick="fnGetAllAlerts();"/><label id="lblAll" style="color:White;">All</label>
+                        </div>
+
+                        <div class="body-bg">
+                            <div id="dvAlertsLayer" class="inner-cont">
+                                <div class="alerts">
+                                    <div class="main-hdr" align="center">
+                                        <h1>Alerts</h1>
+                                    </div>
+                                </div>
+                                <table id="alertTable" cellspacing="0" style="width:100%">
+                                    <thead class="k-grid-header">
+                                        <tr>
+                                            <th style="display:none">Id</th>
+                                            <th>Date Time</th>
+                                            <th>Alert Name</th>
+                                            <th>Status</th>
+                                            <th>Ack</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
+                    </article>
+                </section>
+            </div>
+        </div>
+        <!-- Main Row Ends here -->
+	
+</body>
+</html>

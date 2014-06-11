@@ -1,0 +1,486 @@
+﻿@model Diebold.WebApp.Models.CompanyViewModel
+@{
+    ViewBag.Title = "Create Company";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    ViewBag.IsEdit = false;
+}
+    <script src="@Url.Content("~/Scripts/app/CompanyForm.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#PrimaryContactOfficePreferred').live('click', function () {
+            $('#PrimaryContactMobilePreferred').attr('checked', !$('input[name=PrimaryContactOfficePreferred]').is(':checked'));
+        });
+
+        $('#PrimaryContactMobilePreferred').live('click', function () {
+            $('#PrimaryContactOfficePreferred').attr('checked', !$('input[name=PrimaryContactMobilePreferred]').is(':checked'));
+        });
+        $('#back-Step').live('click', function () {
+            var $step = $(".wizard-step:visible");
+            if ($step.prev().hasClass("wizard-step")) {
+                $step.hide().prev().show();
+            }
+        });
+
+        $('#last-Step').live('click', function () {
+            var elementValue = $('#Grouping2LevelName').val();
+
+            if ($('.GroupingRelations_' + $("#Grouping1Selected").data("kendoComboBox").value() + '_Grouping2List_' + $('#Grouping2LevelName').val() + '_Grouping2Id').length > 0) {
+                alreadyExistsDialog('company grouping');
+            }
+            else {
+                if (elementValue != '') {
+                    AddNewG2ElementTo($("#Grouping1Selected").data("kendoComboBox").value(), $("#Grouping1Selected").data("kendoComboBox").text(), null, null, elementValue, elementValue, false);
+                }
+                var $step = $(".wizard-step:visible");
+                if (validateSection($step, customValidator($step))) {
+                    ClearValidationSummary();
+                    $("form").submit();
+                }
+            }
+        });
+
+        $('#anotherGroupLevel2').live('click', function () {
+            var elementValue = $('#Grouping2LevelName').val();
+
+            if ($('form').attr("action") != "/Company/CreateCompany") {
+
+                $(".Grouping1ItemSelected").change();
+
+                if ($('.GroupingRelations_' + $("#Grouping1Selected").data("kendoComboBox").value() + '_Grouping2List_' + $('#Grouping2LevelName').val() + '_Grouping2Id').length > 0
+                    || DdlContainsText('#groupingLevel2ItemsToValidate', $('#Grouping2LevelName').value()) || DdlContainsText('#Grouping2Selected', $('#Grouping2LevelName').val())) {
+                    alreadyExistsDialog('company grouping');
+                }
+                else {
+                    var e = $.Event();
+                    e.type = 'new';
+                    e.value = elementValue;
+                    e.text = elementValue;
+
+                    $('#Grouping2SelectedItems').trigger('change', e);
+                }
+            }
+            else {
+                if ($('.GroupingRelations_' + $("#Grouping1Selected").data("kendoComboBox").value() + '_Grouping2List_' + $('#Grouping2LevelName').val() + '_Grouping2Id').length > 0) {
+                    alreadyExistsDialog('company grouping');
+                }
+                else {
+                    AddNewG2ElementTo($("#Grouping1Selected").data("kendoComboBox").value(), $("#Grouping1Selected").data("kendoComboBox").text(), null, null, elementValue, elementValue, false);
+                    $('#Grouping2LevelName').val('');
+                }
+            }
+
+        });
+
+        $('#next-step').live('click', function () {
+            var cpnyName = $("#txtCpnyName").val();
+            if (cpnyName != undefined && cpnyName != "") {
+            var data = { Name: cpnyName };
+                var url = '@Url.Action("DuplicateCheck", "Company")';
+                $.post(url, data, "Json")
+                .done(function (response) {
+                if (response == true) {
+                    alert("Company with name " + $("#txtCpnyName").val() + " already in use.");
+                    return false;
+                }
+            })
+            .fail(function (response) {
+            });
+            }
+            var elementValue = $('#Grouping1LevelName').val();
+            var $step = $(".wizard-step:visible");
+
+            if ($step.next().hasClass("step2")) {
+                $('.grouping1DynamicName').text($('#FirstLevelGrouping').val());
+                $('.grouping2DynamicName').text($('#SecondLevelGrouping').val());
+
+                if (validateSection($step, customValidator($step))) {
+                    ClearValidationSummary();
+                    $step.hide().next().show();
+                }
+            }
+            else if ($step.next().hasClass("step3")) {
+                if ($('.GroupingRelations_' + $('#Grouping1LevelName').val() + '_Grouping1Id').length > 0) {
+                    alreadyExistsDialog('company grouping');
+                }
+                else {
+                    if (elementValue != '') {
+                        AddNewG1ElementTo('#Grouping1Selected', '.Grouping1ItemSelected', '#Grouping1LevelName');
+                    }
+                    if (validateSection($step, customValidator($step))) {
+                        ClearValidationSummary();
+                        $step.hide().next().show();
+                    }
+                }
+            }
+        });
+
+    });
+
+
+    function SelectSubscription(element, Name) {
+        var isChecked = $(element).is(':checked');
+        var data = { Name: Name, isSelected: isChecked }
+        var url = '@Url.Action("UpdateAlarmSelection", "Company")';
+        $.post(url, data, "json")
+                            .done(function (response) {
+                            })
+                            .fail(function (response) {
+                            });
+    }
+
+    function customValidator($step) {
+
+        var errorList = []; 
+        if ($step.next().hasClass("step2")) {
+            var chkSubscription = $('input[name=Subscription]').attr('checked')
+            if (chkSubscription == null || chkSubscription == '' || chkSubscription == undefined) {
+                errorList.push('The Default Subscriptions: (*) field is required.');
+            }
+            else {
+                $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+            }
+        }
+        else if ($step.next().hasClass("step3")) {
+            if ($('.GroupingRelations_Grouping1').length == 0) {
+                errorList.push('The company grouping field is required.');
+            }
+        }
+        else if ($step.hasClass("step3")) {
+            if ($('[class*="_Grouping2Id"]').length == 0) {
+                errorList.push('The company grouping field is required.');
+            }
+        }
+
+        return errorList;
+    }
+
+    function validateSection(section, errorList) {
+
+        if (errorList == undefined)
+            errorList = [];
+
+        var validator = $('form').validate();
+
+        $(section.selector + ' input[data-val=true]').each(function () {
+            if (validator.element(this) != undefined && !validator.element(this)) {
+                errorList.push(validator.errorList[0].message);
+            }
+        });
+
+        ShowValiationSummaryErrors(errorList);
+
+        var anyError = errorList.length > 0;
+        errorList = [];
+
+        if (anyError) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function ShowValiationSummaryErrors(errorList) {
+        var container = $("[data-valmsg-summary=true]"), list = container.find("ul");
+
+        if (list && list.length && errorList.length) {
+            list.empty();
+            container.addClass("validation-summary-errors").removeClass("validation-summary-valid");
+
+            for (var i = 0; i < errorList.length; i++) {
+                $(list).append($("<li />").html(errorList[i]));
+            }
+        }
+    }
+
+    function ClearValidationSummary() {
+        var container = $('form').find('[data-valmsg-summary="true"]');
+        var list = container.find('ul');
+
+        if (list && list.length) {
+            list.empty();
+            container.addClass('validation-summary-valid').removeClass('validation-summary-errors');
+        }
+    }
+
+
+    function AddNewG1ElementTo(ddlG1Control, ddlG1ItemControl, element) {
+        if ($(element).val() != '') {
+
+            if (!ExistsItemInDropDownList(ddlG1Control, $(element).val())) {
+
+                var ddlControl = $(ddlG1Control).data().kendoComboBox.dataSource;
+                var grouping1Value = $(element).val();
+                var grouping1Index = GetGrouping1NextIndex();
+                var cssClassG1 = 'GroupingRelations' + '_' + GetCustomValue(grouping1Value) + '_' + 'Grouping1Id';
+                AddG1Element(grouping1Index, grouping1Value, '[' + grouping1Index + '].', grouping1Value, 'GroupingRelations', cssClassG1);
+
+                //Refresh District Dropdownlist.
+                ddlControl.add({ Text: $(element).val(), Value: $(element).val() });
+                //Refresh District dropdownlist in create area.
+                $(ddlG1ItemControl).append($("<option></option>").attr("value", $(element).val()).text($(element).val()));
+
+                $(element).val('');
+            }
+        }
+        else {
+            //Needs to be confirmed with team - Ravindra
+            //inputFieldEmptyDialog('company grouping');
+        }
+    }
+
+    function AddNewG2ElementTo(ddlG1Value, ddlG1Name, ddlG2Control, ddlG2ItemControl, elementValue, elementText, isRemoved) {
+        if (elementValue != '') {
+            if (!ExistsItemInDropDownList(ddlG2Control, elementValue)) {
+                var grouping1Index = GetGrouping1Index(ddlG1Value);
+                if (grouping1Index == "") {
+                    grouping1Index = GetGrouping1NextIndex();
+                    var cssClassG1 = 'GroupingRelations' + '_' + GetCustomValue(ddlG1Value) + '_' + 'Grouping1Id';
+                    AddG1Element(grouping1Index, ddlG1Value, '[' + grouping1Index + '].', ddlG1Name, 'GroupingRelations', cssClassG1);
+                }
+                var grouping1Prefix = '[' + grouping1Index + '].';
+
+                var grouping2Value = elementValue;
+                var grouping2Index = GetGrouping2NextIndex(ddlG1Value);
+                var cssClassG2 = 'GroupingRelations_' + GetCustomValue(ddlG1Value) + '_Grouping2List_' + GetCustomValue(grouping2Value);
+                var grouping2Prefix = '[' + grouping2Index + '].';
+                AddG2Element(ddlG1Value, grouping1Prefix, grouping2Index, grouping2Value, elementText, grouping2Prefix, 'GroupingRelations', isRemoved, cssClassG2);
+            }
+        }
+        else {
+            //Needs to be confirmed with team - Ravindra
+            //inputFieldEmptyDialog('company grouping');
+        }
+    }
+
+    //Create grouping1 element
+    function AddG1Element(grouping1Index, grouping1Value, grouping1Prefix, grouping1Name, elementRelation, cssClass) {
+        AppendInput(elementRelation + grouping1Prefix + 'Grouping1Id', grouping1Value, '.groupingRelationContainer',
+                        cssClass + ' GroupingRelations_Grouping1', null, grouping1Index);
+        AppendInput(elementRelation + grouping1Prefix + 'Grouping1Name', grouping1Name, '.groupingRelationContainer', null);
+    }
+
+    //Create grouping2 element
+    function AddG2Element(grouping1Value, grouping1Prefix, grouping2Index, grouping2Value, grouping2Name, grouping2Prefix, elementRelation, isRemoved, cssClass) {
+
+        if (isRemoved == undefined)
+            isRemoved = false;
+
+        AppendInput(elementRelation + grouping1Prefix + 'Grouping2List' + grouping2Prefix + 'Grouping2Id', grouping2Value, '.groupingRelationContainer',
+        cssClass + '_Grouping2Id' + ' GroupingRelations_' + GetCustomValue(grouping1Value) + '_Grouping2List', null, grouping2Index);
+        AppendInput(elementRelation + grouping1Prefix + 'Grouping2List' + grouping2Prefix + 'Grouping2Name', grouping2Name, '.groupingRelationContainer',
+        cssClass + '_Grouping2Name');
+        AppendInput(elementRelation + grouping1Prefix + 'Grouping2List' + grouping2Prefix + 'IsRemoved', isRemoved, '.groupingRelationContainer', cssClass + '_IsRemoved');
+    }
+
+    //Create site element
+    function AddSiteElement(grouping1Value, grouping1Prefix, grouping2Value, grouping2Prefix, siteIndex, siteValue, sitePrefix, siteText, elementRelation, isRemoved, cssClass) {
+        AppendInput('GroupingRelations' + grouping1Prefix + 'Grouping2List' + grouping2Prefix + 'Sites' + sitePrefix + 'SiteId', siteValue, '.groupingRelationContainer',
+                cssClass + '_SiteId' + ' GroupingRelations_' + GetCustomValue(grouping1Value) + '_Grouping2List_' + GetCustomValue(grouping2Value) + '_Sites', null, siteIndex);
+        AppendInput('GroupingRelations' + grouping1Prefix + 'Grouping2List' + grouping2Prefix + 'Sites' + sitePrefix + 'SiteName', siteText, '.groupingRelationContainer', cssClass + '_SiteName');
+        AppendInput('GroupingRelations' + grouping1Prefix + 'Grouping2List' + grouping2Prefix + 'Sites' + sitePrefix + 'IsRemoved', isRemoved, '.groupingRelationContainer', cssClass + '_IsRemoved');
+    }
+
+    function AddNewSiteElementTo(e, isRemoved) {
+
+        var grouping1Value = $("#Grouping1Selected").data("kendoComboBox").value();
+        var grouping1Name = $("#Grouping1Selected").data("kendoComboBox").text();
+        var grouping2Value = $('#Grouping2Selected option:selected').val();
+
+        //Creating grouping1 to add grouping2 elements
+        var grouping1Index = GetGrouping1Index(grouping1Value);
+        if (grouping1Index == "") {
+            grouping1Index = GetGrouping1NextIndex();
+            var cssClassG1 = 'GroupingRelations' + '_' + GetCustomValue(grouping1Value) + '_' + 'Grouping1Id';
+            AddG1Element(grouping1Index, grouping1Value, '[' + grouping1Index + '].', grouping1Name, 'GroupingRelations', cssClassG1);
+        }
+        var grouping1Prefix = '[' + grouping1Index + '].';
+        //End creating grouping1
+
+        //Creating grouping2 to add site elements
+        var grouping2Index = GetGrouping2Index(grouping1Value, grouping2Value);
+        if (grouping2Index == "") {
+            grouping2Index = GetGrouping2NextIndex(grouping1Value);
+            var cssClassG2 = 'GroupingRelations_' + GetCustomValue(grouping1Value) + '_Grouping2List_' + GetCustomValue(grouping2Value);
+            AddG2Element(grouping1Value, grouping1Prefix, grouping2Index, grouping2Value, GetCustomValue(grouping2Value), '[' + grouping2Index + '].', 'GroupingRelations', false, cssClassG2);
+        }
+        var grouping2Prefix = '[' + grouping2Index + '].';
+        //End creating grouping2
+
+        var siteIndex = GetSiteIndex(grouping1Value, grouping2Value, e.value);
+        if (siteIndex == "") {
+            siteIndex = GetSiteNextIndex(grouping1Value, grouping2Value);
+            var cssClassSite = 'GroupingRelations_' + grouping1Value + '_Grouping2List_' + grouping2Value + '_Sites_' + e.value;
+            AddSiteElement(grouping1Value, grouping1Prefix, grouping2Value, grouping2Prefix, siteIndex, e.value,
+                               '[' + siteIndex + '].', e.option.text(), 'GroupingRelations', isRemoved, cssClassSite);
+        }
+    }
+
+    function RemoveSiteElementTo(e, ddlG1Value, ddlG2Value) {
+
+        var siteIndex = GetSiteIndex(ddlG1Value, ddlG2Value, e.value);
+        var cssClass = 'GroupingRelations_' + ddlG1Value + '_Grouping2List_' + ddlG2Value + '_Sites_' + GetCustomValue(e.value);
+
+        if (siteIndex != '') {
+            $('.' + cssClass + '_IsRemoved').val(true);
+        }
+        else {
+            AddNewSiteElementTo(e, true);
+        }
+    }
+
+    function RemoveG2ElementTo(e, ddlG1Value, ddlG1Name, ddlG2Control, ddlG2ItemControl) {
+
+        var grouping2Index = GetGrouping2Index(ddlG1Value, e.value);
+        var cssClass = 'GroupingRelations_' + ddlG1Value + '_Grouping2List_' + GetCustomValue(e.value);
+
+        if (grouping2Index != '') {
+            $('.' + cssClass + '_IsRemoved').val(true);
+        }
+        else {
+            AddNewG2ElementTo(ddlG1Value, ddlG1Name, ddlG2Control, ddlG2ItemControl, e.value, e.text, true);
+        }
+
+        $("#Grouping2Selected option[value='" + e.value + "']").remove();
+        $("#Grouping2Selected").trigger("change");
+    }
+
+    function RemoveSites() {
+        $('#Sites option:selected').each(function () {
+            $(this).removeAttr('selected');
+        });
+    }
+
+    function HideStep() {
+        $(".wizard-step:visible").hide();
+    }
+
+    function ExistsItemInDropDownList(element, itemValue) {
+        var exists = false;
+        $(element).each(function () {
+            if ($(this).text().toLowerCase() == itemValue.toLowerCase()) {
+                exists = true;
+            }
+
+        });
+        return exists;
+    }
+
+    function DdlContainsText(element, itemValue) {
+        var exists = false;
+
+        $(element + ' option').each(function () {
+            if ($(this).text().toLowerCase() == itemValue.toLowerCase()) {
+                exists = true;
+            }
+        });
+
+        return exists;
+    }
+
+    function DdlContainsValue(ddlControl, value) {
+        return (($(ddlControl).find(":contains('" + value + "')").length > 0) || ($(ddlControl).find(":contains('" + value.toLowerCase() + "')").length > 0));
+    }
+
+    function ExistsGroupingElement(cssClass) {
+        return ($('.' + cssClass).length > 0);
+    }
+
+    function GetGrouping1NextIndex() {
+        return $('input.GroupingRelations_Grouping1').length;
+    }
+
+    function GetGrouping1Index(grouping1Value) {
+        return $('input.GroupingRelations_' + GetCustomValue(grouping1Value) + '_Grouping1Id').text();
+    }
+
+    function GetGrouping2NextIndex(grouping1Value) {
+        return $('input.GroupingRelations_' + GetCustomValue(grouping1Value) + '_Grouping2List').length;
+    }
+
+    function GetGrouping2Index(grouping1Value, grouping2Value) {
+        return $('input.GroupingRelations_' + GetCustomValue(grouping1Value) + '_Grouping2List_' + GetCustomValue(grouping2Value) + '_Grouping2Id').text();
+    }
+
+    function GetSiteNextIndex(grouping1Value, grouping2Value) {
+        return $('input.GroupingRelations_' + GetCustomValue(grouping1Value) + '_Grouping2List_' + GetCustomValue(grouping2Value) + '_Sites').length;
+    }
+
+    function GetSiteIndex(grouping1Value, grouping2Value, siteValue) {
+        return $('input.GroupingRelations_' + GetCustomValue(grouping1Value) + '_Grouping2List_' + GetCustomValue(grouping2Value) + '_Sites_' + GetCustomValue(siteValue) + '_SiteId').text();
+    }
+
+    function GetCustomValue(elementValue) {
+        return elementValue.replace(/ /g, '_');
+    }
+
+    function myFunction(chk)
+    { }
+        
+</script>
+@using (Html.BeginForm("CreateCompany", "Company"))
+{               
+    <div class="wizard-step  step1">
+        <div id="dvCompanytitle" class="pallette-detail-header-bg">
+            <p>Create Company</p>
+        </div>
+        <div style="padding-left:5%;">
+            @Html.ValidationSummary(false, "There where errors creating the Company")
+        </div>
+        @Html.Partial("_CompanyEditableInfo")
+    </div>
+
+    <div class="wizard-step step2" style="display: none;">
+        <div id="dvGrouping1Title" class="pallette-detail-header-bg">
+            <p>Company Grouping</p>
+        </div>         
+        @Html.Partial("_CompanyEditableInfoGrouping1stLevel")
+    </div>
+
+    <div class="wizard-step step3" style="display: none;">
+        <div id="dvGrouping2Title" class="pallette-detail-header-bg">
+            <p>Company Grouping</p>
+        </div>
+        @Html.Partial("_CompanyEditableInfoGrouping2ndLevel")
+    </div>
+
+    <div class="wizard-step">
+    </div>        
+
+    <div class="groupingRelationContainer">
+   @{
+    if (Model.GroupingRelations != null)
+    {
+        int g1Index = 0;
+        int g2Index = 0;
+
+        foreach (Diebold.WebApp.Models.CompanyGrouping cg in Model.GroupingRelations)
+        {
+            @Html.Hidden("GroupingRelations[" + g1Index + "].Grouping1Id", cg.Grouping1Name,
+                                       new { @class = "GroupingRelations_" + cg.Grouping1Name + "_Grouping1Id GroupingRelations_Grouping1" })
+            @Html.Hidden("GroupingRelations[" + g1Index + "].Grouping1Name", cg.Grouping1Name)
+
+            foreach (Diebold.WebApp.Models.Grouping2Level g2L in cg.Grouping2List)
+            {
+            @Html.Hidden("GroupingRelations[" + g1Index + "].Grouping2List[" + g2Index + "].Grouping2Id", g2L.Grouping2Name,
+                                           new { @class = "GroupingRelations_" + cg.Grouping1Name + "_Grouping2List_" + g2L.Grouping2Name + "_Grouping2Id GroupingRelations_" + cg.Grouping1Name + "_Grouping2List" })
+
+
+            @Html.Hidden("GroupingRelations[" + g1Index + "].Grouping2List[" + g2Index + "].Grouping2Name", g2L.Grouping2Name,
+                                           new { @class = "GroupingRelations_" + cg.Grouping1Name + "_Grouping2List_" + g2L.Grouping2Name + "_Grouping2Name" })
+
+
+            @Html.Hidden("GroupingRelations[" + g1Index + "].Grouping2List[" + g2Index + "].IsRemoved", g2L.IsRemoved,
+                                           new { @class = "GroupingRelations_" + cg.Grouping1Name + "_Grouping2List_" + g2L.Grouping2Name + "_IsRemoved" })
+
+                g2Index++;
+            }
+
+            g1Index++;
+            g2Index = 0;
+        }
+    }
+        }
+    </div>
+}

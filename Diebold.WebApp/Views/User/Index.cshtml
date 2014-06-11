@@ -1,0 +1,185 @@
+﻿@{
+    ViewBag.Title = "UsersDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div id="dvUsrTitle" class="pallette-detail-header-bg">     
+    <p>
+        User Management</p>     
+</div>
+<br />
+
+@(Html.Kendo().Grid<Diebold.WebApp.Models.UserViewModel>()
+    .Name("grdUsers")
+    .Resizable(resize => resize.Columns(true))
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.FirstName).Title("First Name");
+        columns.Bound(p => p.LastName).Title("Last Name");
+        columns.Bound(p => p.Title).Title("Title");
+        columns.Bound(p => p.Username).Title("Username");
+        columns.Bound(p => p.Phone).Title("Phone").Title("Phone Nr.");
+        columns.Bound(p => p.Email).Title("Email");
+        columns.ForeignKey(p => p.RoleId, (System.Collections.IEnumerable)ViewData["roles"], "Id", "Name").EditorTemplateName("RoleViewModel").Title("Role Name");
+        columns.ForeignKey(p => p.CompanyId, (System.Collections.IEnumerable)ViewData["companies"], "Id", "Name").EditorTemplateName("CompanyViewModel").Title("Company Name").Width("120px");
+        columns.Bound(p => p.ActionColumn).Width("115px").Filterable(false).Title("Available Actions").ClientTemplate("<a style='cursor:pointer;margin-right:4px;' href='" + @Url.Content("~/User/EditUser/") + "#=Id#' ><img src='" + @Url.Content("~/Content/images/icons/edit.png") + "' alt='Edit'  title='Edit' /></a>" +
+            "# if (IsDisabled == true) { #" + "<a class='showStatusLink' style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/enable.png") + "' alt='enable' title='Enable' onclick='fnEnableUser(#=Id#,\"Enable\",\" Enable Device\");'/></a>" +
+            "# } else { #" + "<a class='showStatusLink' style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/disable.png") + "' alt='disable' title='Disable' onclick='fnEnableUser(#=Id#,\"Disable\",\" Disable Device\");' #}#</a>" +
+            "<a style='cursor:pointer;margin-right:4px;' onclick='deleteUser(#=Id#)'><img src='" + @Url.Content("~/Content/images/icons/delete.png") + "' alt='delete'  title='Delete'/></a>").Filterable(false); 
+        
+    })
+    .Selectable()
+    .ToolBar(toolbar => toolbar.Create())
+    .ToolBar(toolbar => toolbar.Template("<a class='k-button k-button-icontext k-grid-update' href='#' onclick='CreateUser()'>Create New User</a>"))
+    .Pageable()
+    .Sortable()
+    .Scrollable(scr => scr.Height(450))
+    .Groupable()
+    .Filterable()
+    .Events(events => events.DataBound("LoadingDefaultFilter"))
+    .DataSource(dataSource => dataSource
+    .Ajax()
+    .PageSize(10)
+    .Events(events => events.Error("error_handler")
+    .Change("change_handler"))
+    .Model(model => model.Id(p => p.Id))
+    .Read(read => read.Action("Users_Read", "User"))
+    .Create(create => create.Action("Users_Create", "User"))
+    .Update(update => update.Action("Users_Update", "User"))
+    .Destroy(destroy => destroy.Action("Users_Destroy", "User"))
+    )
+)
+
+<div id="viewUserEditableInfoPopUp" style="overflow: auto;"></div>
+@(Html.Kendo().Window().Name("Details")
+    .Visible(false)
+    .Modal(true)
+    .Title("Delete User")
+    .Draggable(true)
+    .Width(300)    
+)
+@(Html.Kendo().Window()
+    .Name("DieboldAlertWindow")
+    .Title("Information")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div style="padding: 5px">
+    <label id="lblDieboldAlert"></label>
+    <div style="margin: 20% 0 0 0;">
+    <div class="add-link" align="center">
+        <input type="button" value="OK" id="btnOkInfoWindow" style="width: 20%;" onclick="ClosewndAlertInformation();" />
+    </div>
+    </div>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(275)
+    .Height(170)
+)
+<script type="text/javascript">
+    function ClosewndAlertInformation() {
+        $("#DieboldAlertWindow").data("kendoWindow").close();
+    }
+    function fnEnableUser(userId, action, title) {
+        var url = "";
+        var Message = "";
+        var title = "";
+        if (action == "Enable") {
+            Message = "Are you sure you want to enable this user?";
+            title = "Enable User";
+            var wndContent = "<p style='height:100px'>" + Message + "</p><p>" +
+                "<input type='button' value='Ok' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='javascript:ConfirmEnable(" + userId + ");'>" +
+                 "<input type='button' value='Cancel' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='ConfirmCancel()'></p>";
+        }
+        else {
+            title = "Disable User";
+            Message = "Are you sure you want to disable this user?";
+            qryData = userId + "~Disable";
+            var wndContent = "<p style='height:100px'>" + Message + "</p><p>" +
+                "<input type='button' value='Ok' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='javascript:ConfirmDisable(" + userId + ");'>" +
+                 "<input type='button' value='Cancel' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='ConfirmCancel()'></p>";
+        }
+        
+        $("#Details").data("kendoWindow").title(title);
+        var wnd = $("#Details").data("kendoWindow");
+        wnd.content(wndContent);
+        wnd.center().open();
+    }
+
+
+    function CreateUser() {
+        var strUrl = "../User/Create";
+        location.href = strUrl;
+    }
+    function deleteUser(userID)
+    {
+        var wnd = $("#Details").data("kendoWindow");
+        wnd.content("<p style='height:100px'>Are you sure you want to delete this item?</p><p>" +
+                "<input type='button' value='Ok' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='javascript:ConfirmOk(" + userID + ");'>" +
+                 "<input type='button' value='Cancel' style='float:left;background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='ConfirmCancel()'></p>");
+        wnd.center().open();
+    }
+
+    function ConfirmCancel() {
+        $("#Details").data("kendoWindow").close();
+    }
+
+    function ConfirmDisable(userId) {
+        $("#Details").data("kendoWindow").close();
+        var dataItem = { id: userId };
+        var url = '@Url.Action("Disable", "User")';
+        $.post(url, dataItem, fnUpdateStatus, "json");
+    }
+
+    function ConfirmEnable(userId) {
+        $("#Details").data("kendoWindow").close();
+        var dataItem = { id: userId };
+        var url = '@Url.Action("Enable", "User")';
+        $.post(url, dataItem, fnUpdateStatus, "json");
+    }
+
+    function fnUpdateStatus(ResultSet) {
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                $("#grdUsers").data("kendoGrid").dataSource.read();
+            }
+        }
+    }
+
+
+    function ConfirmOk(userID, url) {
+        var url = '@Url.Action("Delete", "User")';
+        var data = { id: userID };
+        $("#Details").data("kendoWindow").close();
+        $.post(url, data, fnUpdateStatus, "json")
+    }
+
+    function error_handler(args) {
+        if (args.errors) {
+            var grid = $("#grdUsers").data("kendoGrid");
+            grid.one("dataBinding", function (e) {
+                e.preventDefault();   // cancel grid rebind if error occurs                             
+            });
+        }
+    }
+
+    function change_handler(e) {
+        if (e.items.length > 0) {
+            if (e.items[0].companies != null && e.items[0].companies != 'undefined')
+                e.items[0].CompanyId = e.items[0].companies.Id;
+            else if (e.items[0].Roles != null && e.items[0].Roles != 'undefined')
+                e.items[0].RoleId = e.items[0].Roles.Id;
+        }
+    }
+</script>
+<style>
+     .k-block > .k-header, .k-window-titlebar
+     {
+        height: 1.5em;
+     }
+</style>
+

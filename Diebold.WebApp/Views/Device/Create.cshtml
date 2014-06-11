@@ -1,0 +1,456 @@
+﻿@model Diebold.WebApp.Models.DeviceViewModel
+@{
+    ViewBag.Title = "Create Device";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    ViewBag.IsEdit = false;
+}
+<link href="@Url.Content("~/Content/themes/base/jquery.ui.theme.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/themes/base/jquery.ui.core.css")" rel="stylesheet" type="text/css" />
+
+@using (Html.BeginForm("Create","Device", FormMethod.Post))
+{
+    <div class="wizard-step step1">
+        <div class="pallette-detail-header-bg">
+            <p>Create Device</p>
+        </div>
+        <div style="padding-left:10px;">
+            @Html.ValidationSummary(false, "There where errors creating the Device")
+        </div>   
+         <div id="dvErrDeviceCreate">
+          <ul>
+          </ul>
+          </div>     
+        @Html.Partial("_DeviceEditableInfo")
+    </div>
+}
+<div id="dvViewDeviceCamera" style="overflow: auto; display: none;">
+    <div class="wizard-step step2">
+        @if (@ViewBag.CameraModel != null)
+        {
+            @Html.Partial("_ViewEditDeviceCamera", (IEnumerable<Diebold.WebApp.Models.CameraViewModel>)@ViewBag.CameraModel)
+        }
+    </div>
+</div>
+@(Html.Kendo().Window()
+    .Name("DieboldAlertWindow")
+    .Title("Information")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div style="padding: 5px">
+    <label id="lblDieboldAlert"></label>
+    <div style="margin: 20% 0 0 0;">
+    <div class="add-link" align="center">
+        <input type="button" value="OK" id="btnOkInfoWindow" style="width: 20%;" onclick="ClosewndAlertInformation();" />
+    </div>
+    </div>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(275)
+    .Height(170)
+)
+<script type="text/javascript">
+    function ClosewndAlertInformation() {
+       $("#DieboldAlertWindow").data("kendoWindow").close();
+    }
+    var selectedCpnyId;
+    function DeviceTypeChangedAlarms(e) {
+    ClearValidationSummary();
+     $("#dvErrDeviceCreate ul").empty();
+            var cboCompanyName = $("#CompanyId").data("kendoComboBox").value();
+            if (cboCompanyName == null || cboCompanyName == '' || cboCompanyName == undefined) { 
+                $('#dvErrDeviceCreate ul').append('<li class="validation-summary-createDevice_header">There where errors creating the Alarms</li>');               
+                $('#dvErrDeviceCreate ul').append('<li class="validation-summary-createDevice">The Company Name: (*) field is required.</li>');
+            }        
+
+            else {			
+        var deviceName = this.dataItem(e.item.index()).Text;
+        var dataItem = { "deviceType": deviceName, "companyId": selectedCpnyId };
+        var url = '@Url.Action("AsyncAlarmConfigurations", "Device")';
+        var deviceModelUpperCaseName = deviceName.toUpperCase();
+        if (deviceModelUpperCaseName == "COSTAR111" || deviceModelUpperCaseName == "IPCONFIGURE530" || deviceModelUpperCaseName =="VERINTEDGEVR200") {
+            $("#NumberOfCameraDiv").show();
+            $("#btnAddCameras").show();
+        }
+        else {
+            $("#NumberOfCameraDiv").hide();
+            $("#btnAddCameras").hide();
+        }
+        BlockElement('mainContainer', 'Connecting...');                                        
+        $.post(url, dataItem, "application/html; charset=utf-8")        
+            .done(function (response) {UnBlockElement('mainContainer');$('#dvPartialView').html(response); })
+            .fail(function (response) {UnBlockElement('mainContainer');alert(response); });
+            }
+    }
+
+    $(document).ready(function() {
+        @if (ViewBag.AnotherDeviceCreated == true)
+        {
+            @:SuccessfullyDialog("device");
+        }
+    });
+          
+        function DeviceCompanyChanged(e)
+        {
+             $("#dvErrDeviceCreate ul").empty();
+            var dataItem = { "id": this.dataItem(e.item.index()).Value };
+            selectedCpnyId = this.dataItem(e.item.index()).Value;
+            var url = '@Url.Action("AsyncSites", "Device")';
+            $.post(url, dataItem, GetSitebyCompanyIdCallback, "json");
+
+        // var url = '@Url.Action("AsyncGateways", "Device")';
+        //    $.post(url, dataItem, GetGatewaybyCompanyIdCallback, "json");
+        }
+
+        function GetSitebyCompanyIdCallback(ResultSet) {
+            if (ResultSet != null && ResultSet != undefined) {
+                if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                    fnShowAlertInfo(ResultSet.Message);
+                }
+                else {
+                    var combobox = $("#SiteId").data("kendoComboBox");
+                    combobox.dataSource.data(ResultSet);
+                }
+            }
+        }
+
+          
+        function DeviceSiteChanged(e)
+        {
+            var dataItem = { "id": this.dataItem(e.item.index()).Value };
+            var url = '@Url.Action("AsyncGateways", "Device")';
+            $.post(url, dataItem, GetGatewaybyCompanyIdCallback, "json");
+        }
+
+        function GetGatewaybyCompanyIdCallback(ResultSet) {
+            if (ResultSet != null && ResultSet != undefined) {
+                if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                    fnShowAlertInfo(ResultSet.Message);
+                }
+                else {
+                    var GWcombobox = $("#GatewayId").data("kendoComboBox");
+                    GWcombobox.dataSource.data(ResultSet);
+                }
+            }
+        }
+
+        function selectHealthCheck(e)
+        {
+            Diebold.Devices.selectHealthCheck(e);
+        }
+
+        function GetHealthbyCompanyIdCallback(ResultSet) {
+            if (ResultSet != null && ResultSet != undefined) {
+                if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                    fnShowAlertInfo(ResultSet.Message);
+                }
+                else {
+                    var DTcombobox = $("#DeviceType").data("kendoComboBox");
+                    DTcombobox.dataSource.data(ResultSet);
+                }
+            }
+        }
+
+        function fnAddCamerasClick(){ 
+            var CameraCount = { "CameraCount": $('#NumberOfCameras').val() };
+           
+            $("#dvViewDeviceCamera").load('@Url.Action("DisplayCameraDetails", "Device", new { CameraCount = 0 })'.replace("0",CameraCount.CameraCount))
+                    .dialog({                     
+                        dialogClass: 'fixed-dialog',
+                        autoOpen: true,
+                        resizable: false,
+                        width: 800,
+                        height: 650,
+                        modal: true,
+                        open: function(event, ui) {
+                        $('.ui-dialog-titlebar').hide();
+                    }                        
+                    });
+        }
+
+        function DisplayCameraCallback(resultSet)
+        {
+        var grd =  $("#grdDeviceCamera").data("kendoGrid");
+        grd.dataSource.data(resultSet);
+        $("#dvViewDeviceCamera").load()
+                    .dialog({                     
+                        dialogClass: 'fixed-dialog',
+                        autoOpen: true,
+                        resizable: false,
+                        width: 750,
+                        height: 650,                          
+                        modal: true, 
+                        open: function(event, ui) {
+                        $('.ui-dialog-titlebar').hide();
+                    }
+                    });
+        }
+
+    function customCancelCommand()
+    {
+        var grid = $("#grdDeviceCamera").data("kendoGrid");
+        grid.cancelChanges();
+    }
+
+        function customSaveCommand()
+    {
+        $("#dvViewDeviceCamera").hide();
+        $('.ui-widget-overlay').hide();
+        $('.ui-draggable').hide();
+        var grid = $("#grdDeviceCamera").data("kendoGrid");
+        var url= '@Url.Action("SelectedCameras_Update", "Device")';
+        var inputData="";
+        var objects = [];
+        for(var count=0; count<grid._data.length; count++)
+        {
+            if(count > 0)
+            {
+                inputData += "|"+ grid._data[count].CameraName+"," +grid._data[count].Channel+"," +grid._data[count].Active;
+            }
+            else
+            {
+                inputData = grid._data[count].CameraName+"," +grid._data[count].Channel+"," +grid._data[count].Active;
+            }
+        }
+        var data ={cameraView:inputData};
+        $.post(url,data, "json");
+    }
+
+    function validDeviceCamera() {
+        var deviceModelUpperCaseName = $('#DeviceType-list ul li.k-state-selected').text().toUpperCase();
+        if (deviceModelUpperCaseName == "COSTAR111" || deviceModelUpperCaseName == "IPCONFIGURE530" || deviceModelUpperCaseName =="VERINTEDGEVR200") {
+            return true;
+        }
+        return false;
+    }
+
+ 
+    function fnSaveDevice(e)
+    {
+        $('#CameraName').val('-');
+        $('#Channel').val('-');
+        ClearValidationSummary();
+        var errorList =  validateInputControls();
+            if (errorList.length > 0) {
+                ShowValiationSummaryErrors(errorList);
+            }
+            else if ( validDeviceCamera() && !ValidNumberOfCameras()) {
+                alert('The number of cameras should be between 1 and 32');
+                return false;
+            }
+//          else if (ValidIfNumberOfCamerasWasChanged()) {
+//                 confirmDialog('<div id="confirmDialog" title="Cameras"> <p>The Number of cameras was changed</p> <p>Do you want to add/remove the cameras automatically?</p></div>', false);
+//            } // Temprarily removed
+            else {
+        
+                if ($.contains($("form").attr("action"), "/Device/Edit") == true) {
+                    $("form").attr("action", $("form").attr("action"));
+                    $("form").submit();
+                }
+                else if ($.contains($("form").attr("action"), "/Device/Create") == true) {
+                    $("form").attr("action", $("form").attr("action"));
+                    BlockElement('mainContainer', 'Connecting...');
+                    $("form").submit();
+                    UnBlockElement('mainContainer');
+                }
+            }
+    }
+
+    function validateInputControls()
+    {
+        var errorList = [];
+            // Device Name Validation
+            var txtDeviceName = $("#Name").val();
+              if (txtDeviceName == null || txtDeviceName == '' || txtDeviceName == undefined) {
+                errorList.push('The Device Name is required.');
+            }
+            else if(txtDeviceName.length >32)
+            {
+                errorList.push('The field Device Name: (*) must be a string with a maximum length of 32.');
+            }
+            else {
+                $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+            }
+
+             // Device id Validation
+            var txtDeviceId = $("#DeviceKey").val();
+              if (txtDeviceId == null || txtDeviceId == '' || txtDeviceId == undefined) {
+                errorList.push('The Device Id is required.');
+            }
+            else if(txtDeviceId.length >32)
+            {
+                errorList.push('The field Device Id: (*) must be a string with a maximum length of 32.');
+            }
+            else {
+                $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+            }
+
+             // Company Name Validation
+            var cboCompanyName = $("#CompanyId").data("kendoComboBox").value();
+            if (cboCompanyName == null || cboCompanyName == '' || cboCompanyName == undefined) {
+                errorList.push('The Company Name: (*) field is required.');
+            }
+            else {
+                $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+            }
+
+              // Site Validation
+            var cboSite = $("#SiteId").data("kendoComboBox").value();
+            if (cboSite == null || cboSite == '' || cboSite == undefined) {
+                errorList.push('The Site Name: (*) field is required.');
+            }
+            else {
+                $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+            }
+
+               // Gateway Validation
+            var cboGateway = $("#GatewayId").data("kendoComboBox").value();
+            if (cboGateway == null || cboGateway == '' || cboGateway == undefined) {
+                errorList.push('The Gateway Name: (*) field is required.');
+            }
+            else {
+                $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+            }
+
+          // HealthCheck Validation
+            var cboHealthCheck = $("#HealthCheckVersion").data("kendoComboBox").value();
+            if (cboHealthCheck == null || cboHealthCheck == '' || cboHealthCheck == undefined) {
+                errorList.push('The Health Check : (*) field is required.');
+            }
+            else {
+                $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+            }
+
+              // DeviceType Validation
+            var cboDeviceType = $("#DeviceType").data("kendoComboBox").value();
+            if (cboDeviceType == null || cboDeviceType == '' || cboDeviceType == undefined) {
+                errorList.push('The Device Type : (*) field is required.');
+            }
+            else {
+                $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+            }
+
+              // IP Address Validation
+              var txtIP = $("#HostName").val();
+              if (txtIP == null || txtIP == '' || txtIP == undefined) {
+                errorList.push('The IP Address: (*) is required.');
+            }
+            else if(txtIP.length >32)
+            {
+                errorList.push('The field IP: (*) must be a string with a maximum length of 32.');
+            }
+            else {
+                $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+            }
+
+              // Local Time Validation
+            var cbolocalTime = $("#TimeZone").data("kendoComboBox").value();
+            if (cbolocalTime == null || cbolocalTime == '' || cbolocalTime == undefined) {
+                errorList.push('The Local Time: (*) field is required.');
+            }
+            else {
+                $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+            }
+
+              // Camera Validation
+              var txtCamera = $("#NumberOfCameras").val();
+              if (txtCamera == null || txtCamera == '' || txtCamera == undefined) {
+                errorList.push('The Number of camera:(*) is required.');
+            }
+            else if(txtCamera.length >32)
+            {
+                errorList.push('The field IP: (*) must be a string with a maximum length of 32.');
+            }
+            else {
+                $('#bsmSelectbsmContainer0').removeClass("input-validation-error").addClass("valid");
+            }
+             return errorList;
+    }
+    
+    function fnCancel()
+    { 
+        window.location.href = '@Url.Content("~/Device/Index")';
+    }
+
+    function ValidNumberOfCameras() {
+        if ($("#NumberOfCameras").val() > 0 && $("#NumberOfCameras").val() < 33) {
+            return true;
+        }
+        return false;
+    }
+
+     function ValidIfNumberOfCamerasWasChanged() {
+        var oRows = document.getElementById('deviceCameraTable').getElementsByTagName('tr');
+        var iRowCount = oRows.length - 1;
+        return (!($("#NumberOfCameras").val() == iRowCount));
+    }
+
+       $('#btnCreateAnother').click(function (e) {
+        $('#CameraName').val('-');
+        $('#Channel').val('-');
+
+        if ($("form").valid()) {
+            if (!ValidNumberOfCameras() && validDeviceCamera()) {
+                inputFieldDialog('The number of cameras should be between 1 and 32');
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            else if (ValidIfNumberOfCamerasWasChanged()) {
+                confirmDialog('<div id="confirmDialog" title="Cameras"> <p>The Number of cameras was changed</p> <p>Do you want to add/remove the cameras automatically?</p></div>', true);
+            }
+            else {
+                blockUI('html');
+                ChangeToCreateAnotherAction(e);
+            }
+        }
+    });
+
+    function createAnotherDevice()
+    {
+         $('#CameraName').val('-');
+         $('#Channel').val('-');
+           ClearValidationSummary();
+        var errorList =  validateInputControls();
+            if (errorList.length > 0) {
+                ShowValiationSummaryErrors(errorList);
+            }
+           else if (!ValidNumberOfCameras() && validDeviceCamera()) {
+            alert('The number of cameras should be between 1 and 32');
+           }
+//            else if (ValidIfNumberOfCamerasWasChanged()) {
+//                confirmDialog('<div id="confirmDialog" title="Cameras"> <p>The Number of cameras was changed</p> <p>Do you want to add/remove the cameras automatically?</p></div>', true);
+//            }
+            else {
+                 $("form").attr("action", "/Device/CreateAnother");
+                 $("form").submit();
+            }
+    }
+
+     function ShowValiationSummaryErrors(errorList) {
+        $("#dvErrDeviceCreate ul").empty();
+        var container = $("[data-valmsg-summary=true]"), list = container.find("ul");
+
+        if (list && list.length && errorList.length) {
+            list.empty();   
+            
+            
+            container.addClass("validation-summary-errors").removeClass("validation-summary-valid");
+
+            for (var i = 0; i < errorList.length; i++) {
+                $(list).append($("<li />").html(errorList[i]));
+            }
+        }
+    }
+     function ClearValidationSummary() {
+        var container = $('form').find('[data-valmsg-summary="true"]');
+        var list = container.find('ul');
+
+        if (list && list.length) {
+            list.empty();
+            container.addClass('validation-summary-valid').removeClass('validation-summary-errors');
+        }
+        
+    }
+</script>
+

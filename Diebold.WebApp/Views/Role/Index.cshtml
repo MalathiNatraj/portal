@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Roles";
+}
+
+@{
+    Layout = "~/Views/Shared/_CRUDGridLayout.cshtml";
+}
+
+@{    
+    var grid = new Lib.Web.Mvc.JQuery.JqGrid.JqGridHelper<Diebold.WebApp.Models.RoleViewModel>("roles",
+        dataType: Lib.Web.Mvc.JQuery.JqGrid.JqGridDataTypes.Json,
+        methodType: Lib.Web.Mvc.JQuery.JqGrid.JqGridMethodTypes.Post,
+        pager: true,
+        height: 400,
+        rowsNumber: 15,
+        sortingName: "Id",
+        sortingOrder: Lib.Web.Mvc.JQuery.JqGrid.JqGridSortingOrders.Asc,
+        url: Url.Action("Index"),
+        viewRecords: true,
+        width: 500,
+        altRows: true,
+        altClass: "dieboldAlternativeGridRow",
+        //autoWidth: true,
+        scrollOffset: 0
+        ).Navigator(new Lib.Web.Mvc.JQuery.JqGrid.JqGridNavigatorOptions()
+        {
+            Search = false,
+            Edit = false,
+            Add = false,
+            Delete = false
+        });        
+}
+
+<div id="dvRoleIndexTitle" class="pallette-detail-header-bg">
+        <p>ROLES MANAGEMENT</p>
+</div>
+<div class="tSpace"></div>
+
+<div class="newEntityButtton">
+    <a href='@Url.Action("Create", "Role")' >Create New Role</a>
+</div>
+
+@grid.GetHtml()
+
+@section Head {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            @grid.GetJavaScript()
+
+        });
+        
+        $.actionColumnFormatter = function(cellvalue, options, rowObject) {
+            var editUri = '@Url.Action("Edit", "Role", new { id = 0 })'.replace(0, options.rowId);
+            return "<a title='Edit' href='" + editUri + "'><img src='../../Content/images/icons/edit.png'/></a>  " +
+                   "<a title='Delete' onclick='removeItem("+ options.rowId + ", \"@Url.Action("Delete", "Role")\", \"#roles\")'><img src='../../Content/images/icons/delete.png'/></a>";
+        };
+    </script>
+}
+

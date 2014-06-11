@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Diebold.WebApp.Models.MonitorAssignmentViewModel>
+<div class="pallette-detail-subheader-bg" style="font-weight:bold;">Selected Group Levels</div>
+<script type="text/javascript">
+    function showDetails(e) {
+        e.preventDefault();
+        var SelectedId = this.dataItem($(e.currentTarget).closest("tr"));       
+        var grid = $("#grdGroupLevels").data("kendoGrid");        
+        grid.removeRow($(this));       
+        var url = '@Url.Action("RemoveSeletedItem", "Monitor")';
+
+        if (SelectedId.FirstGroupLevelName != null) {
+            var selectItem = { "SItem": SelectedId.FirstGroupLevelName };
+        }
+        else if (SelectedId.SecondGroupLevelName != null) {
+            var selectItem = { "SItem": SelectedId.SecondGroupLevelName };
+        }
+        else if (SelectedId.SiteName != null) {
+            var selectItem = { "SItem": SelectedId.SiteName };
+        }
+        else if (SelectedId.DeviceName != null) {
+            var selectItem = { "SItem": SelectedId.DeviceName };
+        }     
+        $.post(url, selectItem, GetMonitorsCallback, "json");
+    }
+
+    function GetMonitorsCallback(ResultSet) {
+
+        var grdGroupLevels = $("#grdGroupLevels").data("kendoGrid");        
+        grdGroupLevels.dataSource.data(ResultSet);
+             
+    }
+</script>
+<div id="selectedGroups" class="cont-right" style="padding-bottom:3%;">
+
+        @(Html.Kendo().Grid(Model)
+                    .HtmlAttributes(new { style = "width:100%" })
+                    .Name("grdGroupLevels")
+                    .DataSource(dataSource => dataSource        
+                        .Ajax()
+                            .Read(read => read.Action("Monitor_Read", "Monitor"))
+                    .ServerOperation(false)
+                    )
+                    .Columns(columns =>
+                    {
+                        //For width alignment of data column in Kendo Grid, we need to keep one column without "Width" property
+                        columns.Bound(p => p.GroupName).Width("80%");
+                        columns.Command(command => command.Custom("Delete").Click("showDetails")).Title("Action");
+                    })                    
+                    .Sortable()
+                    .Pageable()
+                    .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(4)
+                    )
+        )
+    
+</div>
+   

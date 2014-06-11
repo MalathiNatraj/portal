@@ -1,0 +1,567 @@
+﻿@{
+    IList<Diebold.WebApp.Models.SiteNoteViewModel> objSiteNoteViewModel = new List<Diebold.WebApp.Models.SiteNoteViewModel>();
+    IList<Diebold.WebApp.Models.SiteViewModel> objSiteViewModel = new List<Diebold.WebApp.Models.SiteViewModel>();
+    IList<Diebold.WebApp.Models.SiteDocumentViewModel> objSiteDocumentViewModel = new List<Diebold.WebApp.Models.SiteDocumentViewModel>();
+    IList<Diebold.WebApp.Models.SiteInventoryViewModel> objSiteInventoryViewModel = new List<Diebold.WebApp.Models.SiteInventoryViewModel>();
+}
+<div id="dvSettings" class="context-menu">
+</div>
+<div id="SiteInformation">
+    <div class="cont-inner-room">
+        <div id="light-green">
+            <div class="Dashbord-header">
+                <div class="light-green-head gradient">
+                    <div class="pallet-icon">
+                        <img id="imgLogo" src="@Url.Content("~/Content/images/site-info-icon.png")" alt="" />
+                    </div>
+                    <p>
+                        <strong>Site Information</strong></p>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgMasClose" onclick="javascript:fnCloseSiteInformation();return false;" src="@Url.Content("~/Content/images/close-icon.png")" alt="Close" /></a>
+                    </div>
+                    <div class="close-icon">
+                        <a href="#">
+                            <img id="imgMasExpColapse" onclick="javascript:fntoggleSiteInformation();return false;" src="@Url.Content("~/Content/images/collapse-icon.png")" alt="Expand/Collapse" /></a>
+                    </div>
+                </div>
+            </div>
+            <div id="divSiteInfoContent">
+                <div class="light-green-body gradient">
+                    <div class="site-info-body-cont">
+                        <div class="loc-list bottom">
+                            @(Html.Kendo().ComboBox()
+                            .HtmlAttributes(new { style = "width:190px" })                   
+                            .Name("LocationList")
+                            .Placeholder("Site List")
+                            .DataTextField("Name")
+                            .DataValueField("Id")
+                            .Suggest(true)
+                            .Template("<div><div id='rowcell'>${ Name }</div><div id='rowcell'>${ Address }</div><div id='rowcell'>${ City }</div><div id='rowcell'>${ State }</div><div id='rowcell' style='border-right:0px'>${ Zip }</div></div>")
+                            .Events(e =>
+                            {
+                                e.Open("openSite").Close("closeSite").Select("siteOnChange");
+                            })
+                        )
+                        <img id="imgsearchLogo" src="@Url.Content("~/Content/images/SearchIcon.png")" style="cursor:pointer;vertical-align:bottom; padding-bottom:5px;" alt=""  onclick="fnOpenSiteInfoDetails();"/>
+                        </div>  
+                        <div class="site-info-map bottom">
+                            <img id="imgsiteLogo" src="" width="215" height="122" alt="" />
+                            <input id="hdnsiteLogo" type="hidden"/>
+                        </div>
+                        <div class="site-details bottom">
+                            <p>
+                                <strong>Site Details</strong></p>
+                            <p>
+                                Site: <strong>
+                                    <label id="lblSitePortletLocation">
+                                    </label>
+                                </strong>
+                            </p>
+                            <p>
+                                Address:<strong>
+                                    <label id="lblSitePortletAddress" class="word-wrap">
+                                    </label>
+                                </strong>
+                            </p>
+                            <p>
+                                Location Contact: <strong>
+                                    <label id="lblSitePortletLocContact">
+                                    </label>
+                                </strong>
+                            </p>
+                            <p>
+                                Contact Email: <strong>
+                                    <label id="lblSiteContactEmail" onmouseout="hideTooltipSiteInfo(dvttSiteInfomail)" onmouseover="showTooltipSiteInfo(dvttSiteInfomail, '', 'Dynamic')">
+                                    </label>
+                                </strong>
+                            </p>
+                            <div style='display:none; z-index:9999999;' id='dvttSiteInfomail'></div>
+                            <p>
+                                Contact Phone: <strong>
+                                    <label id="lblSiteContactPhone">
+                                    </label>
+                                </strong>
+                            </p>
+                            <p>
+                                Default Document: <strong>
+                                    <label id="lblSiteDefaultDocument">
+                                    </label>
+                                </strong>
+                            </p>
+                        </div>
+                        <div class="device-count bottom">
+                            <p>
+                                Intrusion Devices:
+                                <label id="lblSPIntrusionDevices">
+                                </label>
+                            </p>
+                            <p>
+                                 Health Devices:
+                                <label id="lblSPVideoHealthCount">
+                                </label>
+                            </p>
+                            <p>
+                                Access Devices:
+                                <label id="lblSPAccessDevices">
+                                </label>
+                            </p>                            
+                        </div>
+                         <input id="hdnUserRole" type="hidden"/>
+                         <input id="hdnSiteNoteId" type="hidden"/>
+                         <input id="hdnIsNotesEditable" type="hidden"/>
+                         <input id="hdnIsDocumentEditable" type="hidden" />
+                         <input id="hdnIsInventoryEditable" type="hidden"/>
+                         <input id="hdnIsInventoryViewable" type="hidden" />
+                         <div class="btn-group" style="margin-top:10px;"> 
+                         
+                            <input type="button" value="Notes" class="gradient" onclick="fnshowViewMore();return false;" />
+                       
+                            <input type="button" value="Documents" class="gradient" onclick="fnshowDocument();" />
+                       
+                            <input type="button" value="Inventory" class="gradient" onclick="fnshowInventory();" />
+                       
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+            
+            <div class="light-green-set">
+                <div class="sett-icon">
+                    <a href="#">
+                        <img src="@Url.Content("~/Content/images/move-icon.png")" onclick="javascript:ShowSiteInformationPortletDes();return false;" alt="" /></a>
+                </div>
+                <div class="sett-icon">
+                    <a href="#">
+                        <img id="imgSiteInfoSettings" src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="hdnSiteInfoContactEmail" />
+@(Html.Kendo().Window()
+    .Name("SiteAddNotewindow")
+    .Title("Add Note")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+<div class="access-wid-cont">
+     
+     <div class="site-notes bottom">
+      <p style="margin-left:25px;margin-top:5px;">
+                                <strong>Site Notes:</strong></p>
+                                 <p style="margin-left:25px;">
+    <label id="lblExistNotes" style="margin-left:25px;"></label><br />
+
+                                 <p>
+        <textarea name="AddNotes" id="txtSiteAddNotes" class="usertxtboxEdit" style="margin-left:25px;margin-top:5px; resize:none" cols="65" rows="15"></textarea>
+        </p>
+    </div>
+    <div class="clear">
+    </div>
+    <div style="margin: 0 0 0 245px;">
+        <div class="add-link" style="float: left; margin-right: 3px; margin-top: 5px;">
+            <input type="button" value="OK" id="btnOk" onclick="javascript:btnOkSiteInfoClicked();" />
+        </div>
+        <div class="add-link" style="float: left; margin-top: 5px;">
+            <input type="button" value="Cancel" id="btnCancel" onclick="javascript:btnCancelSiteInfoClicked();" />
+        </div>
+    </div>
+</div>
+</text>)
+    .Draggable(false)
+    .Width(600)
+    .Height(450)
+)
+
+
+@(Html.Kendo().Window()
+    .Name("Imgwindow")
+    .Title("Site Image")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text> 
+<div class="access-wid-cont">
+    <div class="access-wid-lft">
+        
+    </div>
+    <div class="access-wid-right">
+        <img id="imgpopupSiteLogo" src="" width="500" height="400" style="float:left; margin-left:45px;"  alt="" />
+        <div class="add-link" id="dvActionButtonContent" style="float:left; margin-left:250px;margin-top:15px;">
+                            <input type="button" value="Close" onclick="javascript:fncloseImagepopup();return false;" />
+        </div>
+    </div>  
+</div>
+</text>)
+    .Draggable(false)
+            .Width(600)
+            .Height(500)
+            
+)
+
+<div id="dvSiteLogoPopup">
+</div>
+@(Html.Kendo().Window()
+    .Name("SiteInfoDeswindow")
+    .Title("Site Information Portlet Description")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+        <div>
+            <p>
+                Choose a site and immediately view its floor plan. See number of devices and local contact and address information.  
+                Add or review any pertinent site notes. 
+            </p>
+        </div>
+    </text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)
+
+@(Html.Kendo().Window()
+    .Name("SiteNoteDetail")
+    .Title("Site Note")
+    .Visible(false)
+    .Modal(true)
+    .Content(@<text>
+        <div>
+            <p>
+              
+            </p>
+        </div>
+    </text>)
+    .Draggable(false)
+    .Width(400)
+    .Height(250)
+)
+
+
+    <div id="wndSearchSiteInfoDetail" class="modelDialog" style="display: none;">
+    <div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Select a Site</label></strong></div>
+        <div style="width:90%; margin:3% 2% 0 5%;">
+            <p>
+              @(Html.Kendo().Grid(objSiteViewModel)
+                .Name("grdSearchSiteInfoDetails")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Id).Visible(false);
+                    columns.Bound(p => p.Name).Width("20%").Visible(true).Title("Site Name").Filterable(true).Sortable(true);
+                    columns.Bound(p => p.Address).Width("20%").Visible(true).Title("Address").Filterable(true);
+                    columns.Bound(p => p.City).Width("20%").Filterable(true).Title("City").Visible(true);
+                    columns.Bound(p => p.State).Width("20%").Visible(true).Title("State").Filterable(true);
+                    columns.Bound(p => p.Zip).Width("20%").Visible(true).Title("Zip").Filterable(true);
+                })
+                .Events(events => events.Change("grdSearchSiteChanged").DataBound("LoadingDefaultFilter"))
+                .Pageable()
+                .Filterable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .ServerOperation(false)
+                )
+            )
+            </p>
+            <div class="add-link" style="padding-top:5px; width:100px; margin-left: 43%;">
+            <input type="button" value="Close" id="btnSearchSiteCancel" onclick="javascript:btnSearchSiteCancelClicked();" />
+        </div>
+        </div>
+        <br />
+        </div>
+@* Site Note popup window starts *@
+<div id="dvSiteNotes" class="modelDialog" style="display: none;">
+<div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Site Notes</label></strong></div>
+<div style="width:90%; margin:3% 2% 0 5%;">
+        <p>
+            @(Html.Kendo().Grid(objSiteNoteViewModel)
+                .Name("grdSiteNoteViewMore")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.DisplayDate).Width("26%").Title("Display Date");
+                    columns.Bound(p => p.Text).Width("26%").Title("Note");
+                    columns.Bound(p => p.UserName).Width("26%").HtmlAttributes(new { style = "word-wrap: break-word;" });
+                    columns.Bound(p => p.UserName).Width("22%").Filterable(false).Title("Actions").ClientTemplate("# if (isNotesViewable == true) { #" + "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/view.png") + "' alt='View' title='View'  onclick='ViewSiteNote(#=Id#);'/></a>" +
+                                                                                                                    "# } else { #" + "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/view.png") + "' alt='View' title='View' style='opacity:.4' #}#</a>" +
+                                                                                                                    "# if (isNotesEditable == true) { #" + "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/edit.png") + "' alt='Edit' title='Edit'  onclick='EditSiteNote(#=Id#);'/></a>" +
+                                                                                                                    "# } else { #" + "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/edit.png") + "' alt='Edit' title='Edit' style='opacity:.4' #}#</a>" +
+                                                                                                                    "# if (isNotesDeleteable == true) { #" + "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/Delete.png") + "' alt='Delete' title='Delete'  onclick='DeleteSiteNote(#=Id#);'/></a>" +
+                                                                                                                    "# } else { #" + "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/Delete.png") + "' alt='Delete' title='Delete' style='opacity:.4' #}#</a>");
+                })
+                .Pageable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(5)
+                .ServerOperation(false)
+                )
+            )
+        </p>
+    <div style="margin: 0 0 0 170px;">
+        <div class="add-link" style="float: left; margin-right: 3px; margin-top: 5px; margin-bottom: 10px;">
+            <input type="button" value="Add Notes" id="btnInfoPopupAddNotes" onclick="javascript:fnshowAddNotes();" />
+        </div>
+        <div class="add-link" style="float: left; margin-top: 5px;">
+            <input type="button" value="Cancel" id="btnInfoPopupCancel" onclick="javascript:btnCancelViewNoteClicked();" />
+        </div>
+    </div>
+    </div>
+     <br />
+</div>
+@* Site Note popup window ends *@
+
+@* Site Document popup window starts *@
+<div id="dvSiteDocument" class="modelDialog" style="display: none;">
+<div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Site Document</label></strong></div>
+<div style="width:90%; margin:3% 2% 0 5%;">
+        <p>
+            @(Html.Kendo().Grid(objSiteDocumentViewModel)
+                .Name("grdSiteDocument")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(model => model.IsPrimary).Width("15%").ClientTemplate("<input name=\"IsPrimary\" class=\"chkbxq\" id=\"IsPrimary\" type=\"checkbox\" value=\"#=IsPrimary#\"  #= IsPrimary ? checked='checked':''# onclick='javascript:fnSetPrimary(#=Id#);'>");
+                    columns.Bound(p => p.DisplayDate).Width("20%").Title("Uploaded Date");
+                    columns.Bound(p => p.FileName).Width("25%").Title("File Name");
+                    columns.Bound(p => p.UserName).Width("25%").HtmlAttributes(new { style = "word-wrap: break-word;" });
+                    columns.Bound(p => p.FileURL).Title("Actions").Width("15%").ClientTemplate(
+                                    "# if (isDocumentsViewable == true) { #" +
+                                    "<a href='" +
+                                    Url.Action("ViewSiteDocumentFileContent", "SiteInformation") +
+                                    "/#= Id #'" +
+                                    "><img src= '" + @Url.Content("~/Content/images/icons/view.png") + "' alt='View' title='View'/></a>" +
+                                    "# } else { #" + 
+                                    "<a target='_blank' "+
+                                    "/#= Id #'" +
+                                    "><img src= '" + @Url.Content("~/Content/images/icons/view.png") + "' alt='View' title='View' style='opacity:.4'/></a>" + " #}#" +
+                                    "# if (isDocumentsDeleteable == true) { #" +
+                                     "<a style='cursor:pointer;margin-right:4px;'" +
+                                    "><img src= '" + @Url.Content("~/Content/images/icons/delete.png") + "' alt='delete' title='Delete' onclick='DeleteSiteDocument(#=Id#);'/></a>" +
+                                    "# } else { #" +
+                                    "<a style='cursor:pointer;margin-right:4px;'" +
+                                    "><img src= '" + @Url.Content("~/Content/images/icons/delete.png") + "' alt='delete' title='Delete' style='opacity:.4'/></a>" + "#}#"
+                                    ).HtmlAttributes(new { target = "_Blank" });	
+							
+                })
+                .Pageable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(5)
+                .ServerOperation(false)
+                )
+            )
+        </p>
+        <div id="dvUploadDocs" style="display:none;">
+        <p style="padding-top:5px;">
+              @(Html.Kendo().Upload()
+                .Name("files")
+                .Async(a => a
+                .Save("SaveSiteDocument", "SiteInformation")
+                // .Remove("RemoveSiteDocument", "SiteInformation")
+                .AutoUpload(true)
+                )
+                .Events(events => events
+                    .Select("onDocumentSelect")
+                    .Success("onDocumentUploadSuccess")
+                    .Error("onDocumnetUploadError")
+                    .Upload("onDocumentUpload")
+                )
+              )
+        </p>
+        </div>
+    <div style="margin: 0 0 0 170px;">
+        @* <div class="add-link" style="float: left; margin-top: 5px;">
+            <input type="button" value="Add Documents" id="btnInfoPopupAddDocuments" onclick="javascript:btnAddDocumentClicked();" />
+        </div>*@
+        <div class="add-link" style="margin-top: 5px; width:25%; margin-left:10%;" align="center">
+            <input type="button" value="OK" id="btnInfoPopupCancelDocuments" onclick="javascript:btnCancelViewDocumentClicked();" />
+        </div>
+    </div>
+    </div>
+     <br />
+</div>
+@* Site Document popup window ends *@
+
+@* Site Inventory popup window starts *@
+<div id="dvSiteInventory" class="modelDialog" style="display: none;">
+<div style="background-color:#C5C5C5; width:100%;color:#666666"><strong><label style="margin: 8% 0 0 1%;">Inventory</label></strong></div>
+<div style="width:90%; margin:3% 2% 0 5%;">
+        <p>
+            @(Html.Kendo().Grid(objSiteInventoryViewModel)
+                .Name("grdCompanyInventory")
+                .Selectable()
+                .Resizable(resize => resize.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.InventoryKey).Width("40%").Title("Field");
+                    columns.Bound(p => p.InventoryValue).Width("40%").Title("Value");
+                    columns.Bound(p => p.ExternalCompanyId).Visible(true).Width("20%").Filterable(false).Title("Actions").ClientTemplate("# if (isInventoryViewable == true) { #" + "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/view.png") + "' alt='View' title='View'  onclick='ViewSiteInventory(#=InventoryKeyId#,#='false'#);'/></a>" +
+                                                                                                                    "# } else { #" + "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/view.png") + "' alt='View' title='View' style='opacity:.4' #}#</a>" +
+                                                                                                                    "# if (isInventoryEditable == true) { #" + "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/edit.png") + "' alt='Edit' title='Edit'  onclick='EditSiteInventory(#=InventoryKeyId#,#='true'#);'/></a>" +
+                                                                                                                    "# } else { #" + "<a style='cursor:pointer;margin-right:4px;'><img src= '" + @Url.Content("~/Content/images/icons/edit.png") + "' alt='Edit' title='Edit' style='opacity:.4' #}#</a>");
+                })
+                .Pageable()
+                .Sortable()
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(5)
+                .ServerOperation(false)
+                )
+            )
+        </p>
+    <div style="margin: 0 0 0 170px;">
+        <div class="add-link" style="float: left; margin-top: 5px; margin-left: 20%;" align="center">
+            <input type="button" value="OK" id="btnSiteInventoryOK" onclick="javascript:btnSiteInventoryokClick();" />
+        </div>
+         <div class="clear">
+         </div>
+    </div>
+    </div>
+     <br />
+</div>
+@* Site Note popup window ends *@
+@(Html.Kendo().Window().Name("DeleteNote")
+    .Visible(false)
+    .Modal(true)
+    .Title("Delete Note")
+    .Draggable(true)
+    .Width(300)    
+)
+
+@(Html.Kendo().Window().Name("wndDocs")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(300)
+    .Title("Delete Documents")
+)
+
+@(Html.Kendo().Window().Name("SiteUDFDetails")
+    .Title("UDF Details")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Content(@<text>
+        <table>
+            <tr>
+                <th>
+                    Field
+                </th>
+                <th>
+                    Value
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="txtEditKey"  style="border-width:3px;border-style:groove;"/>
+                </td>
+                 <td>
+                    <input type="text" id="txtEditValue" style="border-width:3px;	border-style:groove;"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="add-link" style="margin-top: 5px; width:25%; margin-left:35%;" align="center">
+                        <input type="button" value="" id="btnSiteUDF"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </text>)
+    .Width(340)       
+)
+<script language="javascript" type="text/javascript">
+    var siteInformationUrl = '@Url.Action("GetAllSiteDetails", "SiteInformation")';
+    var siteInfoClearDefaultsUrl = '@Url.Action("ClearSiteInfoDefaultValue", "SiteInformation")';
+    var siteAddNotesUrl = '@Url.Action("AddsiteNotes", "SiteInformation")';
+    var siteGetLocationDetailByLocationIdUrl = '@Url.Action("GetLocationDetailByLocationId", "SiteInformation")';
+    var siteClosePortlet = '@Url.Action("ClosePortlet", "Preferences")';
+    var siteGetAllSiteDetailsforSearch = '@Url.Action("GetAllSiteDetailsforSearch", "SiteInformation")';
+    var siteRemoveSiteNote = '@Url.Action("RemoveSiteNote", "SiteInformation")';
+    var siteSaveDefaultValue = '@Url.Action("SaveDefaultValue", "SiteInformation")';
+    var siteLargeTransparentUrl = '@Url.Content("~/Content/images/largeTransparent.gif")';
+    var ViewEditSiteNoteUrl = '@Url.Action("ViewEditSiteNoteDetails", "SiteInformation")';
+    var siteEditNotesUrl = '@Url.Action("EditSiteNoteDetails", "SiteInformation")';
+    var siteDocumentGetUrl = '@Url.Action("GetSiteDocumentsbySiteId", "SiteInformation")';
+    var ViewSiteDocumentFile = '@Url.Action("ViewSiteDocumentFile", "SiteInformation")';
+    var GetsiteDocumentContentUrl = '@Url.Action("ViewSiteDocumentFileContent", "SiteInformation")';
+    var siteDocumentDeleteURL = '@Url.Action("DeleteSiteDocument", "SiteInformation")';
+    var siteDocumentUpdateURL = '@Url.Action("UpdateSiteDocumnet", "SiteInformation")';
+    var GetsiteInventoryUrl = '@Url.Action("GetSiteInventoryDetails","SiteInformation")';
+    var siteInventoryEditURL = '@Url.Action("EditSiteInventoryDetails", "SiteInformation")';
+    $(document).ready(function () {
+        GetSiteList();
+        var wWidth = $(window).width();
+        var dWidth = wWidth * 0.2;
+        $("#dvSettings").dialog(
+            {
+                draggable: false,
+                closeOnEscape: true,
+                resizable: false,
+                height: 'auto',
+                width: dWidth,
+                autoOpen: false,
+                show: 'blind'
+            }
+            );
+        $('#imgSiteInfoSettings').click(function (event) {
+            $("#dvSettings").dialog("option", "position", {
+                my: "left top",
+                at: "bottom",
+                collision: "flip",
+                of: event,
+                offset: "20 40"
+            });
+
+            $('#dvSettings').empty();
+            $('#dvSettings').append('<a href="#" id="imgSiteInfoDefaultValuesDetails" onclick="javascript:fnSaveDefaults();return false;" class="divdynamiclink">Save Defaults</a>');
+            $('#dvSettings').append('<a href="#" id="imgSiteInfoClearDefaultValues" onclick="javascript:fnSiteInfoClearDefaults();return false;" class="divdynamiclink">Clear Defaults</a>');
+            $('#dvSettings').dialog('open');
+            return false;
+        });
+        // Close Pop-up If the user clicks anywhere else on the page
+        jQuery('body').bind('click', function (e) {
+            if (jQuery('#dvSettings').dialog('isOpen')
+        && !jQuery(e.target).is('.ui-dialog, a')
+        && !jQuery(e.target).closest('.ui-dialog').length
+        ) {
+                jQuery('#dvSettings').dialog('close');
+            }
+        });
+    });
+
+    function showTooltipSiteInfo(div, title, desc) {
+        div.style.display = 'inline';
+        div.style.position = 'absolute';
+        div.style.width = '200';
+        div.style.backgroundColor = '#EFFCF0';
+        div.style.border = 'dashed 1px black';
+        div.style.padding = '10px';
+        desc = document.getElementById('hdnSiteInfoContactEmail').value;
+        var splitValues = addNewlines(desc);
+        div.innerHTML = '<b>' + title + '</b><div style="padding-left:10; padding-right:5; color:black;">' + splitValues + '</div>';
+    }
+
+    function hideTooltipSiteInfo(div) {
+        div.style.display = 'none';
+    }
+
+    function addNewlines(str) {
+        var result = '';
+        while (str.length > 0) {
+            result += str.substring(0, 75) + '\n';
+            str = str.substring(75);
+        }
+        return result;
+    }
+</script>

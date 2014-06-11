@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{31183438-F429-4B45-A3F0-3F3C3E1FDA17}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Diebold.Services</RootNamespace>
+    <AssemblyName>Diebold.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'TC-Demo|AnyCPU'">
+    <OutputPath>bin\TC-Demo\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'TC-QA|AnyCPU'">
+    <OutputPath>bin\TC-QA\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Prod|AnyCPU'">
+    <OutputPath>bin\Prod\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <OutputPath>bin\Dev\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.0.0\lib\net40-client\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dynamic">
+      <HintPath>..\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.2.0.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\System.Management.Automation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\MissingValidatorResolver.cs" />
+    <Compile Include="Config\ValidationModule.cs" />
+    <Compile Include="Contracts\IAccessService.cs" />
+    <Compile Include="Contracts\ICompanyInventoryService.cs" />
+    <Compile Include="Contracts\IEventDescriptionFiltersService.cs" />
+    <Compile Include="Contracts\IFireAlarmService.cs" />
+    <Compile Include="Contracts\IImpersonateService.cs" />
+    <Compile Include="Contracts\IIntrusionService.cs" />
+    <Compile Include="Contracts\ILinkService.cs" />
+    <Compile Include="Contracts\IActionDetailsService.cs" />
+    <Compile Include="Contracts\IMembershipService.cs" />
+    <Compile Include="Contracts\ILogService.cs" />
+    <Compile Include="Contracts\IAlarmConfigurationService.cs" />
+    <Compile Include="Contracts\IMonitoringService.cs" />
+    <Compile Include="Contracts\INoteService.cs" />
+    <Compile Include="Contracts\IAlertService.cs" />
+    <Compile Include="Contracts\ICameraService.cs" />
+    <Compile Include="Contracts\ICompanyService.cs" />
+    <Compile Include="Contracts\ICRUDTrackeableService.cs" />
+    <Compile Include="Contracts\IDvrService.cs" />
+    <Compile Include="Contracts\IGatewayService.cs" />
+    <Compile Include="Contracts\INotificationService.cs" />
+    <Compile Include="Contracts\IPortletService.cs" />
+    <Compile Include="Contracts\IRoleActionDetailsService.cs" />
+    <Compile Include="Contracts\IRoleService.cs" />
+    <Compile Include="Contracts\IRSSFeedService.cs" />
+    <Compile Include="Contracts\ISiteAccNumberService.cs" />
+    <Compile Include="Contracts\ISiteDocumentService.cs" />
+    <Compile Include="Contracts\ISiteInventoryService.cs" />
+    <Compile Include="Contracts\ISiteLogoDetailsService.cs" />
+    <Compile Include="Contracts\ISiteNoteSite.cs" />
+    <Compile Include="Contracts\ISiteService.cs" />
+    <Compile Include="Contracts\ISystemSummaryService.cs" />
+    <Compile Include="Contracts\ITrackeableService.cs" />
+    <Compile Include="Contracts\IUserDefaultsService.cs" />
+    <Compile Include="Contracts\IUserPortletsPreferences.cs" />
+    <Compile Include="Contracts\IUserService.cs" />
+    <Compile Include="Contracts\ICRUDService.cs" />
+    <Compile Include="Contracts\IRolePortletService.cs" />
+    <Compile Include="Exceptions\ServiceException.cs" />
+    <Compile Include="Exceptions\ValidationException.cs" />
+    <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Extensions\DateExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\PagingExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Helpers\TimeZoneHelper.cs" />
+    <Compile Include="Impl\AccessService.cs" />
+    <Compile Include="Impl\AlarmConfigurationService.cs" />
+    <Compile Include="Impl\AlertService.cs" />
+    <Compile Include="Impl\BaseCRUDService.cs" />
+    <Compile Include="Impl\BaseCRUDTrackeableService.cs" />
+    <Compile Include="Impl\BaseService.cs" />
+    <Compile Include="Impl\CompanyInventoryService.cs" />
+    <Compile Include="Impl\CompanyService.cs" />
+    <Compile Include="Impl\DeviceService.cs" />
+    <Compile Include="Contracts\IDeviceService.cs" />
+    <Compile Include="Impl\EventDescriptionFiltersService.cs" />
+    <Compile Include="Impl\FireAlarmService.cs" />
+    <Compile Include="Contracts\IDeviceMediaService.cs" />
+    <Compile Include="Impl\ImpersonateService.cs" />
+    <Compile Include="Impl\IntrusionService.cs" />
+    <Compile Include="Impl\LinkService.cs" />
+    <Compile Include="Impl\ActionDetailsService.cs" />
+    <Compile Include="Impl\MembershipService.cs" />
+    <Compile Include="Impl\LogService.cs" />
+    <Compile Include="Impl\MonitoringService.cs" />
+    <Compile Include="Impl\NoteService.cs" />
+    <Compile Include="Impl\DvrService.cs" />
+    <Compile Include="Impl\GatewayService.cs" />
+    <Compile Include="Impl\NotificationService.cs" />
+    <Compile Include="Impl\PortletService.cs" />
+    <Compile Include="Impl\RoleActionDetailsService.cs" />
+    <Compile Include="Impl\RolePortletService.cs" />
+    <Compile Include="Impl\RoleService.cs" />
+    <Compile Include="Impl\RSSFeedService.cs" />
+    <Compile Include="Impl\SiteAccNumberService.cs" />
+    <Compile Include="Impl\SiteDocumentService.cs" />
+    <Compile Include="Impl\SiteInventoryService.cs" />
+    <Compile Include="Impl\SiteLogoDetailsService.cs" />
+    <Compile Include="Impl\SiteNoteService.cs" />
+    <Compile Include="Impl\SiteService.cs" />
+    <Compile Include="Impl\SystemSummaryService.cs" />
+    <Compile Include="Impl\UserDefaultsService.cs" />
+    <Compile Include="Impl\UserPortletsPreferencesService.cs" />
+    <Compile Include="Impl\UserService.cs" />
+    <Compile Include="Impl\DeviceMediaService.cs" />
+    <Compile Include="Infrastructure\IValidationProvider.cs" />
+    <Compile Include="Infrastructure\ValidationProvider.cs" />
+    <Compile Include="Infrastructure\ValidationResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\CompanyValidator.cs" />
+    <Compile Include="Validators\DvrValidator.cs" />
+    <Compile Include="Validators\GatewayValidator.cs" />
+    <Compile Include="Validators\IValidator.cs" />
+    <Compile Include="Validators\NullValidator.cs" />
+    <Compile Include="Validators\RoleValidator.cs" />
+    <Compile Include="Validators\SiteValidator.cs" />
+    <Compile Include="Validators\Validator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Diebold.Domain\Diebold.Domain.csproj">
+      <Project>{E2272842-62E2-4E98-9002-BC852F5EB68F}</Project>
+      <Name>Diebold.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Diebold.RemoteService.Proxies\Diebold.RemoteService.Proxies.csproj">
+      <Project>{646BB304-74AA-4767-9E7D-8DAB1CEF21ED}</Project>
+      <Name>Diebold.RemoteService.Proxies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Diebold.Platform.Proxies\Diebold.Platform.Proxies.csproj">
+      <Project>{92277C40-A406-45BA-8A34-2C626082678F}</Project>
+      <Name>Diebold.Platform.Proxies</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dynamic Expressions.html" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

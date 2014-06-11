@@ -1,0 +1,164 @@
+﻿@model Diebold.WebApp.Models.DiagnosticConfigurationViewModel
+<div class="pallette-detail-subheader-bg">
+    <p>Gateway Filter</p>
+</div>
+<div class="filters">    
+  
+     @(Html.Kendo().ComboBox()
+          .Name("Status")
+          .Placeholder("-- Select Status --")
+          .DataTextField("Id")
+          .DataValueField("Name")
+          .Events(ev => ev.Change("StatusChanged"))
+          .DataSource(source => {
+               source.Read(read => {
+                   read.Action("GetAllStatus", "Diagnostic");
+               });
+          })
+    )
+</div>
+     <div class="clear"></div>         
+  <p>
+    @(Html.Kendo().Grid<Diebold.WebApp.Models.GatewayDiagnosticViewModel>()
+    .Name("GatewayGrid")
+    .HtmlAttributes(new { style = "height: 400px" })
+    .Resizable(resize => resize.Columns(true))
+    .Columns(columns => 
+        {
+            columns.Bound(p => p.Id).Hidden();
+            columns.Bound(p => p.GatewayName).Groupable(false).Width("150px");
+            columns.Bound(p => p.CompanyName);
+            // columns.Bound(p => p.SiteId).Width(75); Removed because there is no relation ship between Gateway and site
+            columns.Bound(p => p.MacAddress);
+            columns.Bound(p => p.LastUpdate).Format("{0:MM/dd H:mm tt}").Width("150px");
+            columns.Bound(p => p.ActionColumn).Filterable(false).Title("Available Actions").ClientTemplate("<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/test.png") + "' alt='test connection'  title='Test Connection' onclick='doDiagnosticActionGateway(#=Id#,\"Diagnostics\",\"Test Gateway Connection\");' /></a>" +
+                                                         "<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/refresh.png") + "' alt='reboot Gateway'  title='Reboot Gateway' onclick='doDiagnosticActionGateway(#=Id#,\"RestartGateway\",\"Reload Gateway\");'/></a>" +
+                                                         "<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/undo.png") + "' alt='restart service'  title='Restart Services' onclick='doDiagnosticActionGateway(#=Id#,\"RestartGateway\",\"Restart Gateway\");'/></a>" +
+                                                         "<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/new.png") + "' style='opacity:.4' alt='reboot service'  title='Audit'/></a>" +
+                                                         "<a style='cursor:pointer;margin-right:4px;'><img src='" + @Url.Content("~/Content/images/icons/view.png") + "'  title='Show Status' onclick='showGatewayStatus(\"ShowStatusDevice\",\"null\",\"onSuccess\",#=Id#);'/></a>");
+        })
+                .Pageable()
+            .Sortable()
+            .Scrollable()
+            .Filterable()
+            .Events(events => events.DataBound("LoadingDefaultFilter"))
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                                .Read(read => read.Action("GatewayDiagnostic_Read", "Diagnostic").Data("loadExtraGWParams"))
+                .ServerOperation(false)
+             )
+    
+    )
+  </p>
+
+  @(Html.Kendo().Window().Name("GateWayStatusInfo")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(500)
+    .Height(600)
+)
+
+<script type="text/javascript">
+
+    $.gatewayActionColumnFormatter = function(cellvalue, options, rowObject) {
+        var links = "<a title='Test Connection' class='testConnectionLink' rowId=" + options.rowId + "><img src='../../Content/images/icons/test.png'/></a>";
+        links += "<a title='Reboot Gateway' class='reloadLink' rowId=" + options.rowId + "><img src='../../Content/images/icons/refresh.png'/></a>";
+        links += "<a title='Restart Services' class='restartLink' rowId=" + options.rowId + "><img src='../../Content/images/icons/undo.png'/></a>";
+        links += "<a title='Audit' style='opacity:.4' href='#'><img src='../../Content/images/icons/new.png'/></a>";
+        links += "<a title='Show Status' class='showStatusLink' rowId=" + options.rowId + "><img src='../../Content/images/icons/view.png'/></a>";
+        return links;
+    };
+
+
+    var bar;
+    var ActPath;
+    function doDiagnosticActionGateway(itemId, actionPath, title) {
+        if (actionPath == "Diagnostics") {
+            ActPath = '@Url.Action("TestConnectionGateway")';
+        }
+        else if (actionPath == "ReloadGateway") {
+            ActPath = '@Url.Action("ReloadGateway")';
+        }
+        else if (actionPath == "RestartGateway") {
+            ActPath = '@Url.Action("RestartGateway")';
+        }
+        bar = { item: itemId, ap: ActPath };
+        var wnd = $("#Details").data("kendoWindow");
+        wnd.content("<p style='height:100px'>Do you want to continue?</p><p style='text-align:center;'>" +
+                "<input type='button' value='Ok' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-right:4px;' onclick='ConfirmOk(bar)'>" +
+                 "<input type='button' value='Cancel' style='background: none repeat scroll 0 0 #5E5E5E;border: medium none; color: #FFFFFF; cursor: pointer; font-size: 11px; font-weight: bold; margin: 0; padding: 6px 15px 6px 22px;margin-left:5px;' onclick='ConfirmCancel()'></p>");
+        wnd.title(title);
+        wnd.center().open();
+
+    }
+    function ConfirmCancel() {
+        $("#Details").data("kendoWindow").close();
+    }
+    function ConfirmOk(bar) {
+        $("#Details").data("kendoWindow").close();
+        BlockElement('mainContainer', 'Connecting...');
+        $.ajax({
+            url: bar.ap,
+            type: 'POST',
+            data: { Id: bar.item },
+            success: function (data) {
+                UnBlockElement('mainContainer');
+                fngetError(data);
+            },
+            error: function (errordata) {
+                UnBlockElement('mainContainer');
+                fnShowAlertInfo(errordata.Message);
+            }
+        });
+
+    }
+
+    function fngetError(data) {
+        fnShowAlertInfo(data.Message);
+    }
+
+    function showGatewayStatus(url, data, onSuccess, pk) {
+        ActPath = '@Url.Action("ShowStatusGateway", "Diagnostic", new { id = 0 })'.replace(0, pk);
+        $.ajax({
+            url: ActPath,
+            type: 'POST',
+            data: data,
+            success: function (ResultSet) {
+                UnBlockElement('mainContainer');
+                if (ResultSet != null && ResultSet != undefined) {
+                    if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                        fnShowAlertInfo(ResultSet.Message);
+                    }
+                    else {
+                        if (onSuccess) {
+                            showGatewayStatusInformation(ResultSet);
+                        }
+                    }
+                }
+            },
+            error: function (xhr) {
+                UnBlockElement('mainContainer');
+                var wnd = $("#GateWayStatusInfo").data("kendoWindow");
+                wnd.content("<p style='height:100px'>An error occurred while processing this action.</p>");
+                wnd.title("Error");
+                wnd.center().open();
+            },
+            beforeSend: function () {
+                BlockElement('mainContainer', 'Connecting...');
+            },
+            complete: function () {
+                UnBlockElement('mainContainer');
+            }
+        });
+    }
+    function showGatewayStatusInformation(result) {
+        $('.k-overlay').remove();
+        if (result != undefined)
+            result = "<div id='dvGatewayStatusInfo'>" + result + "</div>";
+        var wnd = $("#GateWayStatusInfo").data("kendoWindow");
+        wnd.content(result);
+        wnd.title("Current Readings");
+        wnd.center().open();
+    }
+</script>

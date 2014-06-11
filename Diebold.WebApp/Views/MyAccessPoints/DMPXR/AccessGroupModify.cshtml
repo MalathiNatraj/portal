@@ -1,0 +1,690 @@
+﻿@model Diebold.WebApp.Models.AccessCardholderViewModel
+<div class="cont-inner-room">
+    <div class="grey">
+        <div class="grey-head gradient">
+            <div class="grey-pallet-icon">
+            </div>
+            <p>
+                <strong>Modify Access Group</strong></p>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/close-icon.png")" alt="" onclick="fnDMPXRCloseModifyAccessGroup();"/></a>
+            </div>
+            <div class="close-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/collapse-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        <div id="dvDMPXRCardholderModifyContent">
+        <div class="grey-body gradient">
+            <div class="my-access-body-cont">                
+                <div id="dvAGModifyValidations">
+                    <ul>
+                    </ul>
+                </div>
+                <div id="dvcboAccessGroup">
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Name:(*)</strong></p>
+                </div>                                
+                <div class="my-access-field bottom">                                       
+                     @(Html.Kendo().ComboBox()
+                        .Name("cboCHModifyAG1")                        
+                        .Placeholder("-- Select --")
+                        .HtmlAttributes(new { style = "width:100%" })
+                        .DataTextField("Name")
+                        .DataValueField("Id")
+                        .BindTo(Model.AccessGroupList)
+                        .Suggest(true)
+                        .Events(events => events.Change("ModifyAGGroup1_SelectionChanged"))                        
+                        )
+                </div>
+                </div>
+                <div class="clear">
+                </div>
+                @*<div id="dvDMPXRModifyAGContent" style="display:none;">*@
+                <div id="dvModifyAGContent1" style="display:none;">
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Description:</strong></p>
+                </div>
+                <div class="my-access-field bottom">
+                     @Html.TextBox("txtEditAGDescriptionDMPXR", null, new { @class = "my-access-in", maxlength = 150 })
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Areas:(*)</strong></p>
+                </div>
+                <div class="my-access-tables bottom">
+                    <div class="sixteen columns">
+                        <div class="time-periods" id="dvAreaList">
+                             <table cellpadding="0" cellspacing="0" border="0" class="responsive" id="tblModifyAreas" >                               
+                                <tr style="height: 5px;">
+                                </tr>
+                                <tr class="time-periods-top">                                
+                                    <td>                                        
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1: </strong><input type="checkbox" name="chkAGArea1" id="chkAGArea1"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2: </strong><input type="checkbox" name="chkAGArea2" id="chkAGArea2"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3: </strong><input type="checkbox" name="chkAGArea3" id="chkAGArea3"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4: </strong><input type="checkbox" name="chkAGArea4" id="chkAGArea4"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5: </strong><input type="checkbox" name="chkAGArea5" id="chkAGArea5"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6: </strong><input type="checkbox" name="chkAGArea6" id="chkAGArea6"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7: </strong><input type="checkbox" name="chkAGArea7" id="chkAGArea7"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8: </strong><input type="checkbox" name="chkAGArea8" id="chkAGArea8"/>
+                                    </td>
+                                    <td>
+                                    </td>                                   
+                                </tr>
+                                 <tr class="time-periods-top">                                   
+                                    <td>                                        
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9: </strong><input type="checkbox" name="chkAGArea9" id="chkAGArea9"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;10: </strong><input type="checkbox" name="chkAGArea10" id="chkAGArea10"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;11: </strong><input type="checkbox" name="chkAGArea11" id="chkAGArea11"/>
+                                    </td>
+                                    <td>                                       
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;12: </strong><input type="checkbox" name="chkAGArea12" id="chkAGArea12"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;13: </strong><input type="checkbox" name="chkAGArea13" id="chkAGArea13"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;14: </strong><input type="checkbox" name="chkAGArea14" id="chkAGArea14"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;15: </strong><input type="checkbox" name="chkAGArea15" id="chkAGArea15"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;16: </strong><input type="checkbox" name="chkAGArea16" id="chkAGArea16"/>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                 <tr class="time-periods-top">                                   
+                                    <td>                                        
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;17: </strong><input type="checkbox" name="chkAGArea17" id="chkAGArea17"/>
+                                    </td>
+                                    <td>                                        
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;18: </strong><input type="checkbox" name="chkAGArea18" id="chkAGArea18"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;19: </strong><input type="checkbox" name="chkAGArea19" id="chkAGArea19"/>
+                                    </td>
+                                    <td>                                       
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;20: </strong><input type="checkbox" name="chkAGArea20" id="chkAGArea20"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;21: </strong><input type="checkbox" name="chkAGArea21" id="chkAGArea21"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;22: </strong><input type="checkbox" name="chkAGArea22" id="chkAGArea22"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;23: </strong><input type="checkbox" name="chkAGArea23" id="chkAGArea23"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;24: </strong><input type="checkbox" name="chkAGArea24" id="chkAGArea24"/>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                 <tr class="time-periods-top">                                   
+                                    <td>                                        
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;25: </strong><input type="checkbox" name="chkAGArea25" id="chkAGArea25"/>
+                                    </td>
+                                    <td>                                        
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;26: </strong><input type="checkbox" name="chkAGArea26" id="chkAGArea26"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;27: </strong><input type="checkbox" name="chkAGArea27" id="chkAGArea27"/>
+                                    </td>
+                                    <td>                                       
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;28: </strong><input type="checkbox" name="chkAGArea28" id="chkAGArea28"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;29: </strong><input type="checkbox" name="chkAGArea29" id="chkAGArea29"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;30: </strong><input type="checkbox" name="chkAGArea30" id="chkAGArea30"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;31: </strong><input type="checkbox" name="chkAGArea31" id="chkAGArea31"/>
+                                    </td>
+                                    <td>
+                                        <strong style="color:Black; vertical-align:top" >&nbsp;&nbsp;&nbsp;32: </strong><input type="checkbox" name="chkAGArea32" id="chkAGArea32"/>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>                             
+                                <tr style="height: 10px;">
+                                </tr>                            
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Shifts:(*)</strong></p>
+                </div>
+                 <div class="my-access-tables bottom">
+                    <div class="sixteen columns">
+                        <div class="time-periods">                            
+                            <table cellpadding="0" cellspacing="0" border="0" class="responsive" id="tblModifyShifts">                              
+                                <tr style="height: 5px;">
+                                </tr>
+                                <tr class="time-periods-top">     
+                                    <td >                                        
+                                        <strong style="color:Black;vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1: </strong><input type="checkbox" name="chkShift1" id="chkShift1"/>
+                                    </td>
+                                    <td >                                        
+                                        <strong style="color:Black;vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2: </strong><input type="checkbox" name="chkShift2" id="chkShift2"/>
+                                    </td>
+                                    <td >
+                                        <strong style="color:Black;vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3: </strong><input type="checkbox" name="chkShift3" id="chkShift3"/>
+                                    </td>
+                                    <td >                                       
+                                        <strong style="color:Black;vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4: </strong><input type="checkbox" name="chkShift4" id="chkShift4"/>
+                                    </td>
+                                    <td >
+                                        <strong style="color:Black;vertical-align:top" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Anytime: </strong><input type="checkbox" name="chkAnytime" id="chkAnytime"/>
+                                    </td>  
+                                    
+                                                                                                                                             
+                                </tr>                                
+                                <tr style="height: 10px;">
+                                </tr>
+                            </table>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="my-access-lbl bottom">
+                    <p>
+                        <strong>Door List:</strong></p>
+                </div>
+                <div style="font-size:13px;margin: 2% 0 4% 8%;">                   
+                    <p>
+                        <strong><label id="lblReaderName" ></label></strong></p>                        
+                   </div>
+                </div>
+            </div>           
+
+             <div class="my-access-right-btn" style="width: 45%;" id="dvMainbtns">                            
+                <div class="add-link" align="center" style="float: left; padding-right:2%; display:none;" id="dvSaveAGbtn1">
+                    <input type="button" value="Save" id="Save" onclick="fnSaveDMPXRModifyAccessGroup();" />
+                </div>                
+                <div class="add-link" align="center" style="float: left;">
+                    <input type="button" value="Cancel" id="Cancel" onclick="fnDMPXRCloseModifyAccessGroup();" />
+                </div>
+            </div>
+
+            <div class="clear">
+            </div>
+        </div>
+        <div class="grey-set">
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/move-icon.png")" alt="" /></a>
+            </div>
+            <div class="sett-icon">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/settings-icon.png")" alt="" /></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var deviceType = "@Model.DeviceType";
+        if (deviceType.toLowerCase() == 'dmpxr100access') {
+            document.getElementById("chkAGArea9").disabled = true;
+            document.getElementById("chkAGArea10").disabled = true;
+            document.getElementById("chkAGArea11").disabled = true;
+            document.getElementById("chkAGArea12").disabled = true;
+            document.getElementById("chkAGArea13").disabled = true;
+            document.getElementById("chkAGArea14").disabled = true;
+            document.getElementById("chkAGArea15").disabled = true;
+            document.getElementById("chkAGArea16").disabled = true;
+            document.getElementById("chkAGArea17").disabled = true;
+            document.getElementById("chkAGArea18").disabled = true;
+            document.getElementById("chkAGArea19").disabled = true;
+            document.getElementById("chkAGArea20").disabled = true;
+            document.getElementById("chkAGArea21").disabled = true;
+            document.getElementById("chkAGArea22").disabled = true;
+            document.getElementById("chkAGArea23").disabled = true;
+            document.getElementById("chkAGArea24").disabled = true;
+            document.getElementById("chkAGArea25").disabled = true;
+            document.getElementById("chkAGArea26").disabled = true;
+            document.getElementById("chkAGArea27").disabled = true;
+            document.getElementById("chkAGArea28").disabled = true;
+            document.getElementById("chkAGArea29").disabled = true;
+            document.getElementById("chkAGArea30").disabled = true;
+            document.getElementById("chkAGArea31").disabled = true;
+            document.getElementById("chkAGArea32").disabled = true;
+        }
+
+        var partsOfStrR1 = "@Model.readerName".split(',');
+        var result = '';
+        for (var i = 0; i < partsOfStrR1.length; i++) {
+            if (partsOfStrR1[i] != '')
+                result += '<br>' + partsOfStrR1[i];
+        }
+        document.getElementById("lblReaderName").innerHTML = result;
+
+    });
+    var isValidReader = false;
+    function CheckModifyAreaItems(aId) {
+        var collection = document.getElementById(aId).getElementsByTagName('INPUT');
+        for (var x = 0; x < collection.length; x++) {
+            if (collection[x].type.toUpperCase() == 'CHECKBOX') {
+                if (collection[x].checked == true) {
+                    isValidReader = true;
+                    break;
+                }
+                else {
+                    isValidReader = false;
+                }
+            }
+        }
+        return isValidReader;
+    }
+    var isValidShift = false;
+    function CheckModifyShiftItems(aId) {
+        var collection = document.getElementById(aId).getElementsByTagName('INPUT');
+        for (var x = 0; x < collection.length; x++) {
+            if (collection[x].type.toUpperCase() == 'CHECKBOX') {
+                if (collection[x].checked == true) {
+                    isValidShift = true;
+                    break;
+                }
+                else {
+                    isValidShift = false;
+                }
+            }
+        }
+        return isValidShift;
+    }
+
+    function fnSaveDMPXRModifyAccessGroup() {
+
+        // Changes starts here 
+
+        $("#dvAGModifyValidations ul").empty();
+        var ModifyAGName = $('#cboCHModifyAG1').val();
+        var ModifyAGDescription = $('#txtEditAGDescriptionDMPXR').val();
+        var deviceID = $("#AccessViewDeviceList").val();
+
+        var beginTime = "";
+        var endTime = "";
+        var selectedDays = '';
+        var selectedShifts = '';
+        var isModifyAreaChecked = false;
+        var isModifyShiftChecked = false;
+        isModifyAreaChecked = CheckModifyAreaItems('tblModifyAreas');
+        isModifyShiftChecked = CheckModifyShiftItems('tblModifyShifts');
+
+        if (ModifyAGName == '' && (!isModifyAreaChecked) && (!isModifyShiftChecked)) {
+            $('#dvAGModifyValidations ul').append('<li class="validation-summary-accesspopup">Name is required</li>');
+            $('#dvAGModifyValidations ul').append('<li class="validation-summary-accesspopup">Area information required</li>');
+            $('#dvAGModifyValidations ul').append('<li class="validation-summary-accesspopup">Shift information required</li>');
+        }
+        else if (ModifyAGName == '' && (!isModifyAreaChecked)) {
+            $('#dvAGModifyValidations ul').append('<li class="validation-summary-accesspopup">Name is required</li>');
+            $('#dvAGModifyValidations ul').append('<li class="validation-summary-accesspopup">Area information required</li>');
+        }
+        else if (ModifyAGName == '' && (!isModifyShiftChecked)) {
+            $('#dvAGModifyValidations ul').append('<li class="validation-summary-accesspopup">Name is required</li>');
+            $('#dvAGModifyValidations ul').append('<li class="validation-summary-accesspopup">Shift information required</li>');
+        }
+        else if ((!isModifyAreaChecked) && (!isModifyShiftChecked)) {
+            $('#dvAGModifyValidations ul').append('<li class="validation-summary-accesspopup">Area information required</li>');
+            $('#dvAGModifyValidations ul').append('<li class="validation-summary-accesspopup">Shift information required</li>');
+        }
+        else if (ModifyAGName == '') {
+            $('#dvAGModifyValidations ul').append('<li class="validation-summary-accesspopup">Name is required</li>');
+        }
+        else if (!isModifyAreaChecked) {
+            $('#dvAGModifyValidations ul').append('<li class="validation-summary-accesspopup">Area information required</li>');
+        }
+        else if (!isModifyShiftChecked) {
+            $('#dvAGModifyValidations ul').append('<li class="validation-summary-accesspopup">Shift information required</li>');
+        }
+        else {
+            var selectedDaysList = '';
+            selectedDays = GetSelectedTimePeriods('tblModifyAreas');
+            selectedShifts = GetSelectedTimePeriods('tblModifyShifts');
+
+
+            selectedShifts = selectedShifts.substring(0, selectedDays.length - 1);
+            selectedDaysList = selectedDays + selectedShifts;
+
+            var dataItem = { "Name": ModifyAGName, "Description": ModifyAGDescription, "BeginTime": beginTime, "EndTime": endTime, "Day": selectedDaysList,
+                "Reader": '', "deviceId": deviceID
+            };
+
+            var url = '@Url.Action("dmpXRAccessGroupModify", "Access")';
+            BlockElement("dvDMPXRCardholderModifyContent", 'Connecting...');
+            $.post(url, dataItem, GetAccessGroupModifyCallback, "json");
+        }
+    }
+
+    function GetAccessGroupModifyCallback(ResultSet) {
+        UnBlockElement("dvDMPXRCardholderModifyContent");
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                if (ResultSet == "OK") {
+                    fnShowAlertInfo('Access group modified successfully.');
+                    $('#cboCHModifyAG1').val('');                    
+                    document.getElementById('my_overlay').style.visibility = 'hidden';
+                    //document.getElementById('dvModifyAccessGroups').style.visibility = 'hidden';
+                    document.getElementById('dvDMPXRModifyAccessGroups').style.visibility = 'hidden';
+                    fnDMPXRCloseModifyAccessGroup();
+                }
+            }
+        }
+    }
+
+    var isValidReader = false;
+    function CheckReadersItems(aId) {
+        var collection = document.getElementById(aId).getElementsByTagName('INPUT');
+        for (var x = 0; x < collection.length; x++) {
+            if (collection[x].type.toUpperCase() == 'CHECKBOX') {
+                if (collection[x].checked == true) {
+                    isValidReader = true;
+                    break;
+                }
+            }
+        }
+        return isValidReader;
+    }
+    function fnShowHideAGReaders() {
+        // Show the tr when clicked on ADD
+        //        var FirstRowDiv = document.getElementById('trTimePeriodsFirstRow');
+        //        var SecondRowDiv = document.getElementById('trTimePeriodsSecondRow');
+        //        var ThirdRowDiv = document.getElementById('trTimePeriodsThirdRow');
+        //        var Row4Div = document.getElementById('trTimePeriods4Row')
+
+        //        if (FirstRowDiv.style.visibility == 'none') {
+        //            FirstRowDiv.style.visibility = 'hidden';
+        //        }
+    }
+    function fnDMPXRCloseModifyAccessGroup() {
+        //document.getElementById('dvModifyAccessGroups').style.visibility = 'hidden';        
+        document.getElementById('dvDMPXRModifyAccessGroups').style.visibility = 'hidden';
+        document.getElementById('my_overlay').style.visibility = 'hidden';
+        $('#cboCHModifyAG1').val('');        
+    }        
+    function ModifyAGGroup1_SelectionChanged(e) {    
+        document.getElementById('dvModifyAGContent1').style.display = 'block';
+        document.getElementById('dvMainbtns').style.display = 'block';
+        document.getElementById('dvSaveAGbtn1').style.display = 'block';
+
+        $("#txtEditAGDescriptionDMPXR").val('');
+
+        var selectedDMPXRAccGrpId = $("#cboCHModifyAG1").data("kendoComboBox").value();        
+        var deviceID = $("#AccessViewDeviceList").val();
+
+        var dataItem = { "AGroupId": selectedDMPXRAccGrpId, "deviceId": deviceID };
+        BlockElement("dvDMPXRCardholderModifyContent", 'Connecting...');
+        var url = '@Url.Action("GetAccessGroupInformation", "Access")';
+        $.post(url, dataItem, GetAccessGroupInfoCallback1, "json");
+    }
+    function GetAccessGroupInfoCallback1(ResultSet) {        
+        
+        if (ResultSet != null && ResultSet != undefined) {
+            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+                UnBlockElement("dvDMPXRCardholderModifyContent");
+                fnShowAlertInfo(ResultSet.Message);
+            }
+            else {
+                UnBlockElement("dvDMPXRCardholderModifyContent");
+                var AGDescription = $('#txtEditAGDescriptionDMPXR').val();
+                $("#txtEditAGDescriptionDMPXR").val(ResultSet.Description);                
+                var AccGroupLength = ResultSet.AccessGroupInformation.length;                
+                if (AccGroupLength >= 0) {
+                    var AGdays = '';
+                    var daysDeviceType = 0;                    
+                    var daysLength = ResultSet.AccessGroupInformation[0].days.length;
+                     var deviceType = "@Model.DeviceType";
+                     if (deviceType.toLowerCase() == 'dmpxr100access') {
+                         daysDeviceType = 8;
+                     }
+                     else {
+                         daysDeviceType = daysLength;
+                     }                     
+                    AGdays = ResultSet.AccessGroupInformation[0].days;
+                    for (j = 0; j < daysDeviceType; j++) {
+                            switch (j) {
+                                case 0:
+                                    BindCheckboxValues(document.getElementById('chkAGArea1'), AGdays.charAt(j));
+                                    break;
+                                case 1:
+                                    BindCheckboxValues(document.getElementById('chkAGArea2'), AGdays.charAt(j));
+                                    break;
+                                case 2:
+                                    BindCheckboxValues(document.getElementById('chkAGArea3'), AGdays.charAt(j));
+                                    break;
+                                case 3:
+                                    BindCheckboxValues(document.getElementById('chkAGArea4'), AGdays.charAt(j));
+                                    break;                                
+                                case 4:
+                                    BindCheckboxValues(document.getElementById('chkAGArea5'), AGdays.charAt(j));
+                                    break;
+                                case 5:
+                                    BindCheckboxValues(document.getElementById('chkAGArea6'), AGdays.charAt(j));
+                                    break;
+                                case 6:
+                                    BindCheckboxValues(document.getElementById('chkAGArea7'), AGdays.charAt(j));
+                                    break;
+                                case 7:
+                                    BindCheckboxValues(document.getElementById('chkAGArea8'), AGdays.charAt(j));
+                                    break;
+                                case 8:
+                                    BindCheckboxValues(document.getElementById('chkAGArea9'), AGdays.charAt(j));
+                                    break;
+                                case 9:
+                                    BindCheckboxValues(document.getElementById('chkAGArea10'), AGdays.charAt(j));
+                                    break;
+                                case 10:
+                                    BindCheckboxValues(document.getElementById('chkAGArea11'), AGdays.charAt(j));
+                                    break;                                    
+                                case 11:
+                                    BindCheckboxValues(document.getElementById('chkAGArea12'), AGdays.charAt(j));
+                                    break;
+                                case 12:
+                                    BindCheckboxValues(document.getElementById('chkAGArea13'), AGdays.charAt(j));
+                                    break;
+                                case 13:
+                                    BindCheckboxValues(document.getElementById('chkAGArea14'), AGdays.charAt(j));
+                                    break;
+                                case 14:
+                                    BindCheckboxValues(document.getElementById('chkAGArea15'), AGdays.charAt(j));
+                                    break;
+                                case 15:
+                                    BindCheckboxValues(document.getElementById('chkAGArea16'), AGdays.charAt(j));
+                                    break;
+                                case 16:
+                                    BindCheckboxValues(document.getElementById('chkAGArea17'), AGdays.charAt(j));
+                                    break;
+                                case 17:
+                                    BindCheckboxValues(document.getElementById('chkAGArea18'), AGdays.charAt(j));
+                                    break;
+                                case 18:
+                                    BindCheckboxValues(document.getElementById('chkAGArea19'), AGdays.charAt(j));
+                                    break;
+                                case 19:
+                                    BindCheckboxValues(document.getElementById('chkAGArea20'), AGdays.charAt(j));
+                                    break;
+                                case 20:
+                                    BindCheckboxValues(document.getElementById('chkAGArea21'), AGdays.charAt(j));
+                                    break;
+                                case 21:
+                                    BindCheckboxValues(document.getElementById('chkAGArea22'), AGdays.charAt(j));
+                                    break;
+                                case 22:
+                                    BindCheckboxValues(document.getElementById('chkAGArea23'), AGdays.charAt(j));
+                                    break;
+                                case 23:
+                                    BindCheckboxValues(document.getElementById('chkAGArea24'), AGdays.charAt(j));
+                                    break;
+                                case 24:
+                                    BindCheckboxValues(document.getElementById('chkAGArea25'), AGdays.charAt(j));
+                                    break;
+                                case 25:
+                                    BindCheckboxValues(document.getElementById('chkAGArea26'), AGdays.charAt(j));
+                                    break;
+                                case 26:
+                                    BindCheckboxValues(document.getElementById('chkAGArea27'), AGdays.charAt(j));
+                                    break;
+                                case 27:
+                                    BindCheckboxValues(document.getElementById('chkAGArea28'), AGdays.charAt(j));
+                                    break;
+                                case 28:
+                                    BindCheckboxValues(document.getElementById('chkAGArea29'), AGdays.charAt(j));
+                                    break;
+                                case 29:
+                                    BindCheckboxValues(document.getElementById('chkAGArea30'), AGdays.charAt(j));
+                                    break;
+                                case 30:
+                                    BindCheckboxValues(document.getElementById('chkAGArea31'), AGdays.charAt(j));
+                                    break;
+                                case 31:
+                                    BindCheckboxValues(document.getElementById('chkAGArea32'), AGdays.charAt(j));
+                                    break;
+                            }
+                        }
+                        for (j = 32; j < daysLength; j++) {
+                            switch (j) {
+                                case 32:
+                                    BindCheckboxValues(document.getElementById('chkShift1'), AGdays.charAt(j));
+                                    break;
+                                case 33:
+                                    BindCheckboxValues(document.getElementById('chkShift2'), AGdays.charAt(j));
+                                    break;
+                                case 34:
+                                    BindCheckboxValues(document.getElementById('chkShift3'), AGdays.charAt(j));
+                                    break;
+                                case 35:
+                                    BindCheckboxValues(document.getElementById('chkShift4'), AGdays.charAt(j));
+                                    break;
+                                case 36:
+                                    BindCheckboxValues(document.getElementById('chkAnytime'), AGdays.charAt(j));
+                                    break;
+                            }
+                        }
+
+                   // }
+                    //BindDynamicReadersValues();
+                }
+
+            }
+        }           
+    }
+    
+    function BindCheckboxValues(chkBoxId, chkValue) {
+        if (chkValue == 1) {
+            chkBoxId.checked = true;
+        }
+        else if (chkValue == 0) {
+            chkBoxId.checked = false;
+        }
+    }
+
+    function BindReadersValues(AGReadersList) {
+        //var readerListNew = AGReadersList.split('_#');
+        //var partsOfStr = readerListNew[1].split(',');
+        //for (var i = 0; i < partsOfStr.length; i++) {
+        //            if (readerListNew[0] == 'Readers1') {
+        //                if (partsOfStr[i] != '')
+        //                    document.getElementById('chkR1_' + partsOfStr[i]).checked = true;
+        //            }
+        //}
+    }
+
+//        function BindDynamicReadersValues() {
+//            var parameters = { "deviceId": $("#AccessViewDeviceList").val() };
+//            var url = '@Url.Action("GetReadersList", "Access")';
+//            $.post(url, parameters, GetReadersListCallback_ModifyAccessGroup, "json");
+//        }
+
+    //    function GetReadersListCallback_ModifyAccessGroup(ResultSet) {
+    //        if (ResultSet != null && ResultSet != undefined) {
+    //            if (ResultSet.Message != null && ResultSet.Message != undefined && ResultSet.Message != "") {
+    //                fnShowAlertInfo(ResultSet.Message);
+    //            }
+    //            else {               
+    //                for (i = 0; i < ResultSet.length; i++) {
+    //                    //$("#trReadersList1").append("<input type='checkbox' Id=chkR1_" + ResultSet[i].Id + " style='margin-left:1%;'><label id='lblReader1_" + i + "' style='color:Black;margin-left:1%;'></label>")
+    //                    //$("#lblReader1_" + i).text(ResultSet[i].Name);                   
+    //                }
+    //            }
+    //        }
+    ////        var partsOfStrR1 = $("#hdnReaderList1").val().split(',');
+    ////        for (var i = 0; i < partsOfStrR1.length; i++) {
+    ////            if (partsOfStrR1[i] != '')
+    ////                document.getElementById('chkR1_' + partsOfStrR1[i]).checked = true;
+    ////        }
+    //        
+    //        UnBlockElement("dvDMPXRCardholderModifyContent");
+    //    }
+    function uncheckByParent(aId, aChecked) {
+        //        var collection = document.getElementById(aId).getElementsByTagName('INPUT');
+        //        for (var x = 0; x < collection.length; x++) {
+        //            if (collection[x].type.toUpperCase() == 'CHECKBOX')
+        //                collection[x].checked = aChecked;
+        //        }
+    }
+
+    //function deleteRow(rowid) {
+    //var arrayofRows = rowid.split("~");
+    // for (var i = 0; i < arrayofRows.length; i++) {
+    //            var row = document.getElementById(arrayofRows[i]);
+    //            row.style.visibility = 'hidden';
+    // }        
+    //}
+
+    var daysList = '';
+    function GetSelectedTimePeriods(parentID) {
+        var collection = document.getElementById(parentID).getElementsByTagName('INPUT');
+        daysList = '';
+        for (var x = 0; x < collection.length; x++) {
+            if (collection[x].type.toUpperCase() == 'CHECKBOX') {
+                if (collection[x].checked == true) {
+                    daysList += "1" + ",";
+                }
+                else {
+                    daysList += "0" + ",";
+                }
+            }
+        }
+        return daysList;
+    }
+</script>
+

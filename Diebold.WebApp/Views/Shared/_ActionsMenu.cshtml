@@ -1,0 +1,174 @@
+<div class="row main-nav-bg gradient">
+    <div class="sixteen columns">
+        <nav>
+   <ul id="menu">
+
+    <!--Home Menu Starts Here-->
+    @if (Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ViewDashboard))
+    {         
+        <li>
+            <a href="@Url.Content("~/Dashboard/Home")">HOME</a>
+        </li>
+        <li class="lft-sidebar"></li>                    
+    }
+    <!--Home Menu Ends Here-->
+
+    <!--Monitoring Menu Starts Here-->
+    @if (Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ViewMonitoring))
+    {         
+        <li>
+            <a href="@System.Configuration.ConfigurationManager.AppSettings["MonitoringmenuURL"]" target="_blank">MONITORING</a>
+        </li>
+        <li class="lft-sidebar"></li>   
+    }
+    <!--Monitoring Menu Ends Here-->
+     
+    <!--Video Menu Starts Here-->
+    @if (Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ViewVideo))
+    {
+        <li>
+             <a href="@System.Configuration.ConfigurationManager.AppSettings["VideomenuURL"]" target="_blank">VIDEO</a>
+        </li>
+        <li class="lft-sidebar"></li>        
+    }
+    <!--Video Menu Ends Here--> 
+
+    <!--Service Menu Starts Here-->
+    @if (Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ViewServices))
+    {
+        <li>
+            <a href="@System.Configuration.ConfigurationManager.AppSettings["ServicemenuURL"]" target="_blank">SERVICE</a>
+        </li>
+        <li class="lft-sidebar"></li>
+    }
+    <!--Service Menu Ends Here-->
+
+    <!--Reports Menu Starts Here-->
+    @{
+        bool ViewReports = Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ViewReports);
+        bool ViewLogHistory = Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ViewLogHistory);
+    }
+    @if (ViewReports || ViewLogHistory)
+    {        
+        <li>
+           <a>REPORTS</a>
+             <ul class="submenu">
+               @if (ViewReports)
+               {
+@*                  <li><a href="@Url.Content("~/Reporting/Index")">Activity</a></li>*@
+                   <li><a>Standard</a>
+                   <ul class="subsubmenu">
+                       <li><a href="@Url.Content("~/AuditLogHistory/Index")">Audit</a></li>
+                       <li><a href="@Url.Content("~/StandardAlertReport/Index")">Alert</a></li>
+                   </ul>
+                   </li>
+               }
+               @if (ViewLogHistory)
+               {
+@*                  <li><a href="@Url.Content("~/LogHistory/Index")">Audit</a></li>     *@
+                   <li><a>Custom</a>
+                   <ul class="subsubmenu">
+                        <li><a href="@Url.Content("~/LogHistory/Index")">Audit</a></li>
+                        <li><a href="@Url.Content("~/Reporting/Index")">Activity</a></li>
+                   </ul>
+                   </li>                
+               }  
+             </ul>
+        </li>
+        <li class="lft-sidebar"></li>
+    }              
+   <!--Reports Menu Ends Here-->  
+   
+   <!--Administration Menu Starts Here-->                     
+   @{       
+       bool ManageUser = Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ManageUsers);
+       bool ManageRoles = Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ManageRoles);
+       bool ManageViews = Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ManageViews);
+   }
+
+   @if (@ManageUser || @ManageRoles || @ManageViews)
+   {       
+        <li>
+           <a>ADMINISTRATION</a>
+             <ul>
+               @if (@ManageUser)
+               {
+                   <li><a href="@Url.Content("~/User/UserDetails")">Users</a></li>
+               }
+               @if (@ManageViews)
+               {
+                   <li><a href="@Url.Content("~/Monitor/Index")">Views</a></li>
+               } 
+               @if (@ManageRoles)
+               {
+                  <li><a href="@Url.Content("~/Role/List")">Roles</a></li>            
+               }  
+             </ul>
+        </li>
+        <li class="lft-sidebar"></li>
+   }     
+    <!--Administration Menu Ends Here-->
+
+    <!--Configuration Menu Starts Here-->                 
+   @{       
+       bool ManageCompanies = Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ManageCompanies);
+       bool ManageAlarms = Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ManageAlarms);
+       bool ManageSites = Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ManageSites);
+       bool ManageGateways = Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ManageGateways);
+       bool ManageDevices = Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ManageDevices);
+       bool ViewDiagnostics = Diebold.WebApp.Infrastructure.Helpers.ActionsForUserHelper.ActionAllowedForUser(this.User.Identity.Name, Diebold.Domain.Entities.Action.ViewDiagnostics);
+   }
+
+   @if (@ManageCompanies || @ManageAlarms || @ManageSites || @ManageGateways || @ManageDevices || @ViewDiagnostics)
+   {       
+        <li>
+           <a>CONFIGURATION</a>
+             <ul>
+               @if (@ManageCompanies)
+               {
+                   <li><a href="@Url.Content("~/Company/Index")">Companies</a></li>
+               }
+               @if (@ManageAlarms)
+               {
+                   <li><a href="@Url.Content("~/Alarm/Index")">Alarms</a></li>
+               } 
+               @if (@ManageSites)
+               {
+                   <li><a href="@Url.Content("~/Site/Index")">Sites</a></li>         
+               } 
+               @if (@ManageGateways)
+               {
+                  <li><a href="@Url.Content("~/Gateway/Index")">Gateways</a></li>
+               } 
+               @if (@ManageDevices)
+               {
+                 <li><a href="@Url.Content("~/Device/Index")">Devices</a></li>  
+               } 
+               @if (@ViewDiagnostics)
+               {
+                  <li><a href="@Url.Content("~/Diagnostic/Index")">Diagnostics</a></li>
+               }  
+             </ul>
+        </li>
+        <li class="lft-sidebar"></li>
+   }                                  
+
+ </ul>
+</nav>
+        <script type="text/javascript">
+            var navElement = $('nav');
+            navElement.slider().multilevel().responder({
+                breakpoints: [
+                new $.responsive.Breakpoint(0, "mobile", function () {
+                    navElement.trigger('destroymultilevel');
+                    navElement.trigger('createslider');
+                }),
+                new $.responsive.Breakpoint(767, "desktop", function () {
+                    navElement.trigger('destroyslider');
+                    navElement.trigger('createmultilevel');
+                })
+            ]
+            });
+        </script>
+    </div>
+</div>
